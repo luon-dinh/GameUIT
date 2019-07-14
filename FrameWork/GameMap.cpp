@@ -9,13 +9,10 @@ GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _ma
 	this->mapObjectPath = _mapObjectPath;
 	tMap = new TileMap(imgPath, txtPath);
 	camera = Camera::getCameraInstance();
-	/*D3DXIMAGE_INFO mapInfo;
-
-	TextureManager::getInstance()->addTexture(Tag::MAP1, _imgPath);
 	
-	mapHeight = mapInfo.Height;
-	mapWidth = mapInfo.Width;
-*/
+	mapHeight = tMap->GetMapHeight();
+	mapWidth = tMap->GetMapWidth();
+
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
 	//LoadContent();
 }

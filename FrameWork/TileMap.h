@@ -15,6 +15,8 @@ public:
 	//TileMap load theo hàng trước xong mới đến cột.
 	TileMap(const char * tileSetFile, const char * tileMapFile);
 	~TileMap();
+	long GetMapHeight() { return maxRow * tileSize; };
+	long GetMapWidth() { return maxCol * tileSize; };
 	void Update();
 	void Draw(Camera* camera);
 };
