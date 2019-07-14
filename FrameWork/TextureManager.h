@@ -14,9 +14,24 @@ public:
 	}
 	~Texture() { texture->Release(); };
 	LPDIRECT3DTEXTURE9 getTexture() { return texture; };
+	int getTextureHeight()
+	{
+		D3DSURFACE_DESC desc;
+		LPDIRECT3DTEXTURE9 tex = getTexture();
+		tex->GetLevelDesc(0, &desc);
+		return desc.Height;
+	}
+	int getTextureWidth()
+	{
+		D3DSURFACE_DESC desc;
+		LPDIRECT3DTEXTURE9 tex = getTexture();
+		tex->GetLevelDesc(0, &desc);
+		return desc.Width;
+	}
 };
 class TextureManager {
 private:
+
 	static TextureManager* instance;
 	std::unordered_map<Tag, LPDIRECT3DTEXTURE9> textures;
 

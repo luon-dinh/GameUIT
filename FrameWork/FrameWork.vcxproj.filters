@@ -28,6 +28,27 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{86538106-f18a-4404-84f1-808d2614d6cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene">
+      <UniqueIdentifier>{368fe591-5fbf-4920-b40c-be2e2dbb257e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap">
+      <UniqueIdentifier>{f72549de-a88f-4dea-bae5-604bbfc221e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap\TileMap">
+      <UniqueIdentifier>{2147c3d9-6733-4096-94a4-1524e0ce16c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{b9f5272b-27a8-46de-ad89-d1a8ec97702a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{32f35d5f-6eb6-4072-8bc5-33390fa89825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\SceneManager">
+      <UniqueIdentifier>{9b32e595-94d2-4d4b-9a9d-21208f67e823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap\TileSet">
+      <UniqueIdentifier>{eea7ac48-ad28-4743-a907-e5b05f0855d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -75,23 +96,32 @@
     <ClCompile Include="PlayerStandingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="PlayerRunningState.cpp">
+      <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scene\PlayScene</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>GameMap</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>GameMap\TileMap</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>Objects\Player</Filter>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>GameMap\TileSet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,26 +167,32 @@
     <ClInclude Include="PlayerStandingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="PlayerRunningState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scene\PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="GameMap.h">
+      <Filter>GameMap</Filter>
     </ClInclude>
-    <ClInclude Include="MapManager.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="TileMap.h">
+      <Filter>GameMap\TileMap</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerRunningState.h">
-      <Filter>Objects\Player</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>GameMap\TileSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

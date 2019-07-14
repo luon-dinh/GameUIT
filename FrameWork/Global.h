@@ -31,6 +31,7 @@ enum Tag {
 	ITEM,
 	GROUND,
 	MAP1,
+	TileSet1,
 	MAP2,
 	MAP3,
 	MAP4,
