@@ -1,4 +1,5 @@
 #include"Animation.h"
+#include"Camera.h"
 void Animation::Render(float x, float y)
 {
 	if (sprites.size()==0)
