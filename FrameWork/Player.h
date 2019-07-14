@@ -3,6 +3,7 @@
 #include"KeyboardManager.h"
 #include"PlayerState.h"
 #include"PlayerStandingState.h"
+#include"PlayerRunningState.h"
 #include"Object.h"
 
 class Player :public Object

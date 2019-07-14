@@ -15,8 +15,20 @@ void PlayerStandingState::Update(float dt)
 
 void PlayerStandingState::InputHandler()
 {
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_A)||KeyboardManager::getInstance()->isKeyDown(DIK_D))
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
 	{
-		
+		Player::getInstance()->posY++;
+	}
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
+	{
+		Player::getInstance()->posY--;
+	}
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
+	{
+		Player::getInstance()->posX++;
+	}
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
+	{
+		Player::getInstance()->posX--;
 	}
 }

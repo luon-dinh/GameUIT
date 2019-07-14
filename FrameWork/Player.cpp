@@ -5,6 +5,7 @@ Player* Player::instance = NULL;
 Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER,0);
+	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
 	this->posX = SCREEN_WIDTH / 2;
 	this->posY = SCREEN_HEIGHT / 2;
@@ -25,10 +26,15 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-
-	this->KeyDown();
 	this->animations[this->state]->Update(dt);
-
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_A))
+	{
+		ChangeState(new PlayerStandingState());
+	}
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_D))
+	{
+		ChangeState(new PlayerRunningState());
+	}
 }
 
 void Player::Render()

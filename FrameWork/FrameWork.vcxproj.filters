@@ -90,6 +90,9 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerRunningState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="MapManager.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRunningState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
