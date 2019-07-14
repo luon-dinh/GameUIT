@@ -1,16 +1,82 @@
-﻿  Game.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\gameuitnew\framework\collision.h(18): warning C4552: '-': result of expression not used
-d:\github\gameuitnew\framework\game.cpp(57): warning C4018: '>': signed/unsigned mismatch
-d:\github\gameuitnew\framework\game.cpp(60): warning C4244: 'argument': conversion from 'unsigned long' to 'float', possible loss of data
-  PlayScene.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\gameuitnew\framework\collision.h(18): warning C4552: '-': result of expression not used
-  SceneManager.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\gameuitnew\framework\collision.h(18): warning C4552: '-': result of expression not used
+﻿  Animation.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\animation.cpp(41): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\animation.cpp(61): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Camera.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\camera.cpp(45): warning C4244: '=': conversion from 'float' to 'long', possible loss of data
+e:\github\gameuit\framework\camera.cpp(46): warning C4244: '=': conversion from 'float' to 'long', possible loss of data
+e:\github\gameuit\framework\camera.cpp(97): warning C4244: '=': conversion from 'long' to 'float', possible loss of data
+e:\github\gameuit\framework\camera.cpp(98): warning C4244: '=': conversion from 'long' to 'float', possible loss of data
+  Collision.cpp
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\collision.cpp(80): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(81): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(85): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(86): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(94): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(95): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(99): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\collision.cpp(100): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Debug.cpp
+  dsutil.cpp
+  Game.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\game.cpp(57): warning C4018: '>': signed/unsigned mismatch
+e:\github\gameuit\framework\game.cpp(60): warning C4244: 'argument': conversion from 'unsigned long' to 'float', possible loss of data
+  GameMap.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Global.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  KeyboardManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   main.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\gameuitnew\framework\collision.h(18): warning C4552: '-': result of expression not used
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Object.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\object.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\github\gameuit\framework\object.cpp(11): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Player.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  PlayerRunningState.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  PlayerStandingState.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  PlayerState.cpp
+  PlayScene.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Scene.cpp
+  SceneManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  SoundManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Sprite.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\sprite.cpp(25): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
   Generating Code...
-  FrameWork.vcxproj -> D:\GitHub\GameUITNew\x64\Debug\FrameWork.exe
+  Compiling...
+  SpriteManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  TextureManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  TileMap.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\github\gameuit\framework\tilemap.cpp(120): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  TileSet.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\github\gameuit\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Generating Code...
+  FrameWork.vcxproj -> E:\GitHub\GameUIT\x64\Debug\FrameWork.exe
