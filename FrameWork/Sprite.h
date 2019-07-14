@@ -13,6 +13,7 @@ public:
 
 	Sprite() {};
 	virtual void Render(float x, float y);
+	virtual void Render(D3DXVECTOR2 pos);
 	Tag tag;
 
 	float posX;

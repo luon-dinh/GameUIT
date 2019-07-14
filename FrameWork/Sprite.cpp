@@ -7,6 +7,13 @@ void Sprite::Render(float x, float y)
 	spriteHandler->Draw(texture, &this->rect, &center, &position, D3DCOLOR_XRGB(255, 255, 255));
 }
 
+void Sprite::Render(D3DXVECTOR2 pos)
+{
+	texture = TextureManager::getInstance()->getTexture(this->tag);
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(pos.x,pos.y,0), D3DCOLOR_XRGB(255, 255, 255));
+}
+
+
 Sprite::Sprite(Tag tag, int top, int left, int bottom, int right)
 {
 	this->tag = tag;
