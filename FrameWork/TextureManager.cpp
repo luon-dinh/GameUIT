@@ -11,6 +11,7 @@ void TextureManager::loadResources()
 void TextureManager::addTexture(Tag tag, const char* path)
 {
 	textures[tag] = (new Texture(path))->getTexture();
+	
 }
 
 LPDIRECT3DTEXTURE9 TextureManager::getTexture(Tag tag)

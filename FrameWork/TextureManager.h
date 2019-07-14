@@ -14,20 +14,6 @@ public:
 	}
 	~Texture() { texture->Release(); };
 	LPDIRECT3DTEXTURE9 getTexture() { return texture; };
-	int getTextureHeight()
-	{
-		D3DSURFACE_DESC desc;
-		LPDIRECT3DTEXTURE9 tex = getTexture();
-		tex->GetLevelDesc(0, &desc);
-		return desc.Height;
-	}
-	int getTextureWidth()
-	{
-		D3DSURFACE_DESC desc;
-		LPDIRECT3DTEXTURE9 tex = getTexture();
-		tex->GetLevelDesc(0, &desc);
-		return desc.Width;
-	}
 };
 class TextureManager {
 private:
@@ -36,6 +22,20 @@ private:
 	std::unordered_map<Tag, LPDIRECT3DTEXTURE9> textures;
 
 public:
+	int getTextureHeight(Tag tag)
+	{
+		D3DSURFACE_DESC desc;
+		LPDIRECT3DTEXTURE9 tex = textures[tag];
+		tex->GetLevelDesc(0, &desc);
+		return desc.Height;
+	}
+	int getTextureWidth(Tag tag)
+	{
+		D3DSURFACE_DESC desc;
+		LPDIRECT3DTEXTURE9 tex = textures[tag];
+		tex->GetLevelDesc(0, &desc);
+		return desc.Width;
+	}
 	void loadResources();
 	void addTexture(Tag tag, const char* filePath);
 	static TextureManager* getInstance();
