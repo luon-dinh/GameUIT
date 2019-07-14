@@ -1,4 +1,4 @@
-﻿#include"Game.h"
+﻿#include "Game.h"
 Game::Game(HWND hwnd,HINSTANCE hInstance)
 {
 	this->Init(hwnd, hInstance);
