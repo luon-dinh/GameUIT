@@ -1,36 +1,39 @@
 #include "TileSet.h"
+#include "Debug.h"
 
 TileSet::TileSet(const char *tileSetFile, int _numOfTileType)
 {
 	TextureManager::getInstance()->addTexture(Tag::MAP1, tileSetFile);
+	PrintDebug(tileSetFile);
 	numOfTileType = _numOfTileType;
 
-	tileSet = new Sprite[numOfTileType];
+	tileSet = new Sprite*[numOfTileType];
+	tileSize = TextureManager::getInstance()->getTextureHeight(Tag::MAP1);
 
 	for (int i = 0; i < numOfTileType; ++i)
 	{
-		tileSet = new Sprite(Tag::MAP1, 0, i*tileSize, tileSize, (i + 1)*tileSize);
+		tileSet[i] = new Sprite(Tag::MAP1, 0, i*tileSize, tileSize, (i + 1)*tileSize);
 	}
 		
-	tileSize = 
+	
 }
 
 TileSet::~TileSet()
 {
+	for (int i = 0; i < numOfTileType; ++i)
+	{
+		delete tileSet[i];
+	}
 	delete tileSet;
 }
 
 void TileSet::DrawTile(int tileNum, D3DXVECTOR3 position)
 {
-	RECT cutRECT;
-	cutRECT.top = 0;
-	cutRECT.left = tileNum * tileSize;
-	cutRECT.bottom = tileSize;
-	cutRECT.right = cutRECT.left + tileSize;
+	Sprite* selectedSprite = tileSet[tileNum];
+	
+	D3DXVECTOR2 position2(position.x, position.y);
 
-	D3DXVECTOR3 center(tileSize / 2, tileSize / 2, 0);
-
-	tileSet->Draw(cutRECT, center, position);
+	selectedSprite->Render(position2);
 }
 
 int TileSet::getTileSize()

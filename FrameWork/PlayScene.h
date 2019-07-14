@@ -19,9 +19,9 @@ private:
 	void UpdateCameraWithPlayerPos(double dt);
 	void CollisionProcess(double dt);
 	void EnvironmentUpdate(double dt);
-	const char * world11tile = ".\\MapResources\\cap_charile_16_16.png";
-	const char * world11map = ".\\MapResources\\cap_charile_16_16.txt";
-	const char * world11MapObject = ".\\MapResources\\cap_charile_map_object.txt";
+	const char * world11tile = (char*)"D:\\GitHub\\GameUITNew\\Resources\\Images\\Maps\\Charles\\charles_map.png";
+	const char * world11map = (char*)"D:\\GitHub\\GameUITNew\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
+	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
 	GameMap* world11;
 	Player* player;
 	Camera * camera;

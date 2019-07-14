@@ -30,20 +30,13 @@ void Game::Init(HWND hwnd, HINSTANCE hInstance)
 
 
 	SoundManager::getinstance()->Create(hwnd);
-
-	
-
-
-	
-
 }
 void Game::LoadResources()
 {
 	TextureManager::getInstance()->loadResources();
 	SpriteManager::getInstance()->LoadResources();
 	SoundManager::getinstance()->loadResources();
-	MapManager::getInstance()->loadResource();
-	SceneManager::GetInstance()->ReplaceScene(new PlayScene(1));
+	SceneManager::getInstance();
 }
 void Game::Run()
 {
@@ -65,9 +58,9 @@ void Game::Run()
 		{
 			frameStart = now;
 			Update(dt);
-
+			KeyboardManager::getInstance()->getState();
 			// chac bat key handler o day
-
+			ProcessAllInput();
 			Render();
 		}
 		else
@@ -76,16 +69,22 @@ void Game::Run()
 		}
 	}
 }
+
+void Game::ProcessAllInput()
+{
+
+}
+
 void Game::Update(float dt)
 {
-	SceneManager::GetInstance()->CurScene->Update(dt);
+	SceneManager::getInstance()->Update(dt);
 }
 void Game::Render()
 {
-	d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR(D3DCOLOR_XRGB(255, 255, 255)), 1, NULL);
-	d3ddev->BeginScene();
-	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-	SceneManager::GetInstance()->CurScene->Render();
+	//d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR(D3DCOLOR_XRGB(255, 0, 255)), 1, NULL);
+	while (!d3ddev->BeginScene());
+	while (!spriteHandler->Begin(D3DXSPRITE_ALPHABLEND));
+	SceneManager::getInstance()->Draw();
 	spriteHandler->End();
 	d3ddev->EndScene();
 	d3ddev->Present(NULL, NULL, NULL, NULL);

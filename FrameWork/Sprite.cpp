@@ -14,9 +14,9 @@ void Sprite::Render(D3DXVECTOR2 pos)
 }
 
 
-Sprite::Sprite(Tag tag, int top, int left, int bottom, int right)
+Sprite::Sprite(Tag _tag, int top, int left, int bottom, int right)
 {
-	this->tag = tag;
+	this->tag = _tag;
 	this->texture = TextureManager::getInstance()->getTexture(tag);
 	this->rect.top = top;
 	this->rect.bottom = bottom;

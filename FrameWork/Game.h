@@ -2,7 +2,7 @@
 #include"Global.h"
 #include"TextureManager.h"
 #include<WinUser.h>
-#include"MapManager.h"
+#include "SceneManager.h"
 #include"KeyboardManager.h"
 #include"Sprite.h"
 #include"SoundManager.h"
@@ -19,7 +19,8 @@ public:
 	void Init(HWND hwnd, HINSTANCE hInstance);
 	void LoadResources();
 	void Run();						
-	void Update(float dt);			
+	void Update(float dt);	
+	void ProcessAllInput();
 	void Render();					
 	~Game();
 };

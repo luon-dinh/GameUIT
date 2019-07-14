@@ -5,7 +5,7 @@
 
 class TileSet
 {
-	Sprite* tileSet;
+	Sprite** tileSet;
 	int tileSize;
 	int numOfTileType;
 public:

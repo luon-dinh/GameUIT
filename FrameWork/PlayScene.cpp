@@ -60,7 +60,6 @@ void PlayScene::CollisionProcess(double dt)
 
 void PlayScene::ProcessKeyBoardInput(double dt)
 {
-	ProcessKeyBoardInput(dt);
 	KeyboardManager* inputInstance = KeyboardManager::getInstance();
 
 	if (inputInstance->isKeyDown(DIK_LEFT))
