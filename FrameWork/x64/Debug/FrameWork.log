@@ -1,0 +1,61 @@
+﻿  Animation.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\animation.cpp(41): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+e:\visual\framework\framework\animation.cpp(61): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Camera.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\camera.cpp(20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Game.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\game.cpp(66): warning C4018: '>': signed/unsigned mismatch
+e:\visual\framework\framework\game.cpp(69): warning C4244: 'argument': conversion from 'unsigned long' to 'float', possible loss of data
+  Global.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  KeyboardManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Map.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\map.cpp(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+e:\visual\framework\framework\map.cpp(26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+e:\visual\framework\framework\map.cpp(50): warning C4554: '<<': check operator precedence for possible error; use parentheses to clarify precedence
+e:\visual\framework\framework\map.cpp(69): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\visual\framework\framework\map.cpp(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  MapManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Object.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\object.cpp(10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\visual\framework\framework\object.cpp(11): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  PlayScene.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Player.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  PlayerStandingState.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  SceneManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  SoundManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Sprite.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+e:\visual\framework\framework\sprite.cpp(18): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  SpriteManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  TextureManager.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  main.cpp
+  d:\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\visual\framework\framework\collision.h(18): warning C4552: '-': result of expression not used
+  Generating Code...
+  FrameWork.vcxproj -> E:\Visual\FrameWork\x64\Debug\FrameWork.exe
