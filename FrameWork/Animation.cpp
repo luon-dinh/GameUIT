@@ -1,5 +1,4 @@
 #include"Animation.h"
-#include"Camera.h"
 void Animation::Render(float x, float y)
 {
 	if (sprites.size()==0)
@@ -8,6 +7,16 @@ void Animation::Render(float x, float y)
 	{
 		sprites[curframeindex]->Render(x, y);	
 	}
+}
+
+void Animation::Render(D3DXVECTOR2 pos)
+{
+	Render(pos.x, pos.y);
+}
+
+void Animation::Render(D3DXVECTOR3 pos)
+{
+	Render(D3DXVECTOR2(pos.x,pos.y));
 }
 
 void Animation::Render(float x, float y, int first, int last)

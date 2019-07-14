@@ -1,5 +1,5 @@
 ﻿#include"Player.h"
-
+#include"Camera.h"
 Player* Player::instance = NULL;
 
 Player::Player()
@@ -39,7 +39,8 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	curanimation->Render(this->posX,this->posY);
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->posX, this->posY, 0));
+	curanimation->Render(pos);
 }
 
 Player* Player::getInstance()

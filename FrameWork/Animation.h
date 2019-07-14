@@ -15,7 +15,9 @@ public:
 	Animation(Tag tag, int first, int last, int tipeframe=TIME_PER_FRAME);
 	Sprite* getSprite(int index);
 	void Update(float dt);
+	void Render(D3DXVECTOR2 pos);
 	void Render(float x, float y);
+	void Render(D3DXVECTOR3 pos);
 	void Render(float x, float y, int first, int last);
 	int curframeindex;
 };
