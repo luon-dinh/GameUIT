@@ -6,6 +6,7 @@
 
 class TileMap
 {
+protected:
 	TileSet* tileSet; //Sprite của các loại tile.
 	int maxCol;
 	int maxRow;
@@ -18,6 +19,6 @@ public:
 	~TileMap();
 	long GetMapHeight() { return maxRow * tileSize; };
 	long GetMapWidth() { return maxCol * tileSize; };
-	void Update();
-	void Draw(Camera* camera);
+	virtual void Update(double dt);
+	virtual void Draw(Camera* camera);
 };

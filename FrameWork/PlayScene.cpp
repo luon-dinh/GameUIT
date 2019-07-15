@@ -34,6 +34,9 @@ void PlayScene::Draw()
 
 void PlayScene::Update(double dt)
 {
+	//Update map trước.
+	world11->Update(dt);
+
 	//Kiểm tra va chạm.
 	CollisionProcess(dt);
 

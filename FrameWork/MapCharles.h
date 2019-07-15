@@ -1,12 +1,20 @@
-#pragma once
-#include "GameMap.h"
+﻿#pragma once
+#include "TileMap.h"
 
-class MapCharles : public GameMap
+class MapCharles : public TileMap
 {
 private:
-	Animation * water;
-	Animation * sewer;
+	const int SEWER_ANIM_ID = 69;
+	const int WATER_TOP_ANIM_ID = 72;
+	const int WATER_BOTTOM_ANIM_ID = 75;
+	Animation * waterTopAnim;
+	Animation * waterBottomAnim;
+	Animation * sewerAnim;
+	const int delayWaterFlow = 150; //Khoảng thời gian chuyển giữa các frame water flow.
+	const int delaySewerFlow = 150; //Khoảng thời gian chuyển giữa các frame sewer.
 public:
-	MapCharles(const char * imgPath, const char * txtPath, const char * mapObjectPath, const char * waterTopPath, const char * waterBottomPath, const char * sewerPath);
+	MapCharles(const char * imgPath, const char * txtPath);
 	~MapCharles();
+	void Draw(Camera* camera) override;
+	void Update(double dt) override;
 };

@@ -81,7 +81,7 @@ TileMap::TileMap(const char * tileSetFile,const char * tileMapFile)
 	tileSize = tileSet->getTileSize();
 }
 
-void TileMap::Update()
+void TileMap::Update(double dt)
 {
 
 }

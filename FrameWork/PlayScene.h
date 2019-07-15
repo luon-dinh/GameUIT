@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "MapCharles.h"
+#include "GameMap.h"
 #include "KeyboardManager.h"
 #include "Object.h"
 #include "Player.h"
@@ -21,12 +21,9 @@ private:
 	void UpdateCameraWithPlayerPos(double dt);
 	void CollisionProcess(double dt);
 	void EnvironmentUpdate(double dt);
-	const char * world11tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.png";
-	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
+	const char * world11tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.png";
+	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.txt";
 	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
-	const char * animWaterFlowTop = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\water_1.png";
-	const char * animWaterFlowBottom = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\water_2.png";
-	const char * animSewer = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\sewer.png";
 	
 	GameMap* world11;	
 	Player* player;
