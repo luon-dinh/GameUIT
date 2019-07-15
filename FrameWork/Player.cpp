@@ -7,8 +7,8 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER,0);
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
-	this->posX = 0;
-	this->posY = SCREEN_HEIGHT / 2;
+	this->pos.x = 0;
+	this->pos.y = SCREEN_HEIGHT / 2;
 	this->tag = Tag::PLAYER;
 	this->width = NORMALPLAYER_WIDTH;
 	this->height = NORMALPALYER_HEIGHT;
@@ -39,7 +39,7 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	curanimation->Render(this->posX,this->posY);
+	curanimation->Render(this->pos.x,this->pos.y);
 }
 
 Player* Player::getInstance()
@@ -75,4 +75,13 @@ void Player::ChangeState(PlayerState* newplayerstate)
 	playerstate->state = newplayerstate->state;
 	curanimation = animations[playerstate->state];
 	this->state = playerstate->state;
+}
+int Player::getWidth()
+{
+	return this->curanimation->getWidth();
+}
+
+int Player::getHeight()
+{
+	return this->curanimation->getHeight();
 }
