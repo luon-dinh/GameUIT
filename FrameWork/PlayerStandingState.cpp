@@ -2,8 +2,6 @@
 
 PlayerStandingState::PlayerStandingState()
 {
-	Player::getInstance()->vx = 0;
-	Player::getInstance()->vy = 0;
 	//Player::getInstance()->state = standing;
 	state = STANDING;
 }

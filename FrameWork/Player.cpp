@@ -8,16 +8,14 @@ Player::Player()
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
 	this->pos.x = 0;
-	this->pos.y = SCREEN_HEIGHT / 2;
+	this->pos.y = 0;
 	this->tag = Tag::PLAYER;
-	this->width = NORMALPLAYER_WIDTH;
-	this->height = NORMALPALYER_HEIGHT;
 	this->health = 100;
 	this->energy = 0;
 	curanimation = animations[this->state];
 
-
 	LoadAllStates();
+	this->playerstate = standingState;
 }
 
 void Player::LoadAllStates() {
@@ -34,15 +32,7 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	this->animations[this->state]->Update(dt);
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_A))
-	{
-		ChangeState(new PlayerStandingState());
-	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_D))
-	{
-		ChangeState(new PlayerRunningState());
-	}
+	this->playerstate->Update(dt);
 }
 
 void Player::Render()
