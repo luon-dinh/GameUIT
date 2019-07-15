@@ -14,48 +14,49 @@ GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _ma
 	mapWidth = tMap->GetMapWidth();
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
-	//LoadContent();
+	LoadContent();
 }
 
 void GameMap::LoadContent()
 {
-	////Load tất cả các Map Object (Ground, Non-Ground,...).
-	//std::ifstream inFile;
-	//inFile.open(mapObjectPath);
-	//if (!inFile)
-	//	PrintDebug("MapObject file not exist ! \n");
-	//std::string sInputString;
+	//Load tất cả các Map Object (Ground, Non-Ground,...).
+	std::ifstream inFile;
+	inFile.open(mapObjectPath);
+	if (!inFile)
+		PrintDebug("MapObject file not exist ! \n");
+	std::string sInputString;
 
-	//std::getline(inFile, sInputString);
+	std::getline(inFile, sInputString);
 
-	//std::istringstream iss(sInputString);
+	std::istringstream iss(sInputString);
 
-	//int numOfObject;
+	int numOfObject;
 
-	//iss >> numOfObject;
+	iss >> numOfObject;
 
-	//Tag entityTag;
+	Tag entityTag;
 
-	//int objectID = -1;
-	//int objectTopLeftX = -1;
-	//int objectTopLeftY = -1;
-	//int objectWidth = -1;
-	//int objectHeight = -1;
+	int objectID = -1;
+	int objectTopLeftX = -1;
+	int objectTopLeftY = -1;
+	int objectWidth = -1;
+	int objectHeight = -1;
 
-	//for (int i = 0; i < numOfObject; ++i)
-	//{
-	//	std::getline(inFile, sInputString);
-	//	std::istringstream iss(sInputString);
-	//	iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
-	//	if (objectID == 0)
-	//		entityTag = Tag::ground;
-	//	Entity* mapObject = new Entity();
-	//	mapObject->SetTag(entityTag);
-	//	mapObject->SetHeight(objectHeight);
-	//	mapObject->SetWidth(objectWidth);
-	//	mapObject->setPos(objectTopLeftX + (float)objectWidth/2, objectTopLeftY + (float)objectHeight/2);
-	//	staticObject.push_back(mapObject);
-	//}
+	for (int i = 0; i < numOfObject; ++i)
+	{
+		std::getline(inFile, sInputString);
+		std::istringstream iss(sInputString);
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+		if (objectID == 0)
+			entityTag = Tag::GROUND;
+		Object* mapObject = new Object();
+		mapObject->tag = entityTag;
+		mapObject->height = objectHeight;
+		mapObject->width = objectWidth;
+		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
+		mapObject->pos.y = objectTopLeftY + (float)objectHeight / 2;
+		staticObject.push_back(mapObject);
+	}
 }
 
 std::vector<Object*> &GameMap::getStaticObject()

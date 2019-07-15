@@ -33,23 +33,35 @@ void PlayScene::Draw()
 
 void PlayScene::Update(double dt)
 {
-	//Xử lý input và move camera (nếu có).
-	ProcessKeyBoardInput(dt);
 	//Kiểm tra va chạm.
 	CollisionProcess(dt);
 
+	//Xử lý input và cập nhật (nếu có) cho các đối tượng mà PlayScene quản lý.
+	//(Thông thường chỉ có player).
+	ProcessUpdates(dt);
+
 	//Sau khi xử lý input và kiểm tra va chạm thì mình mới Update lại Camera dựa trên vị trí mới của player.
-	UpdateCameraWithPlayerPos(dt);
+	UpdateCameraWithPlayerPos(dt); 
 
 	//Thêm gia tốc (ngoại cảnh tác động nhân vật).
 }
 
+void PlayScene::ProcessUpdates(double dt)
+{
+	player->Update(dt);
+}
+
 void PlayScene::UpdateCameraWithPlayerPos(double dt)
 {
-	float playerPosX = 0;
-	float playerPosY = 0;
+	D3DXVECTOR2 playerPos = player->pos;
+
+	int playerWidth = player->width;
+	int playerHeight = player->height;
 
 	RECT cameraBoundBox = Camera::getCameraInstance()->getBoundingBox();
+
+	//Chuyển player từ world view sang view port để xét với các bound.
+	D3DXVECTOR3 playerViewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(playerPos.x, playerPos.y, 0));
 
 	int leftBound = cameraBoundBox.left;
 	int rightBound = cameraBoundBox.right;
@@ -57,20 +69,21 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int bottomBound = cameraBoundBox.bottom;
 
 	//Chúng ta sẽ chỉnh lại Camera sao cho khi Player rời khỏi vị trí Critical Line, Camera sẽ bám theo.
-	float deltaMoveCamLeft = leftBound - (playerPosX - player->width / 2);
-	float deltaMoveCamRight = (playerPosX + player->width / 2) - rightBound;
-	float deltaMoveCamTop = (playerPosY + player->height / 2) - topBound;
-	float deltaMoveCamBottom = topBound - (playerPosY - player->height / 2);
+	//Đầu tiên chúng ta xem player đang cách các cạnh của player một khoảng bao nhiêu.
+	int fromPlayerToTop = playerViewPort.y - playerHeight / 2;
+	int fromPlayerToBottom = SCREEN_HEIGHT - playerViewPort.y + playerHeight / 2;
+	int fromPlayerToLeft = playerViewPort.x - playerWidth / 2;
+	int fromPlayerToRight = SCREEN_WIDTH - playerViewPort.x + playerWidth / 2;
 
-	if (deltaMoveCamLeft > 0)
-		camera->MoveLeft(deltaMoveCamLeft);
-	else if (deltaMoveCamRight > 0)
-		camera->MoveRight(deltaMoveCamRight);
+	if (fromPlayerToTop < topBound)
+		camera->MoveUp(topBound - fromPlayerToTop);
+	else if (fromPlayerToBottom < bottomBound)
+		camera->MoveDown(bottomBound - fromPlayerToBottom);
 
-	if (deltaMoveCamTop > 0)
-		camera->MoveUp(deltaMoveCamTop);
-	else if (deltaMoveCamBottom > 0)
-		camera->MoveDown(deltaMoveCamBottom);
+	if (fromPlayerToLeft < leftBound)
+		camera->MoveLeft(leftBound - fromPlayerToLeft);
+	else if (fromPlayerToRight < rightBound)
+		camera->MoveRight(rightBound - fromPlayerToRight);
 
 }
 
@@ -81,42 +94,23 @@ void PlayScene::EnvironmentUpdate(double dt)
 
 void PlayScene::CollisionProcess(double dt)
 {
-	////Kiểm tra collision với ground.
-	//for (int i = 0; i < mapStaticObject.size(); ++i)
-	//{
-	//	//Lấy BoxRect của Player.
-	//	BoundingBox playerBox = player->GetBoundingBox();
-	//	BoundingBox objectBox = mapStaticObject[i]->GetBoundingBox();
-	//	collisionOut colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
-	//	
-	//}
+	//Kiểm tra collision với ground.
+	for (int i = 0; i < mapStaticObject.size(); ++i)
+	{
+		//Lấy BoxRect của Player.
+		BoundingBox playerBox = player->getBoundingBox();
+		//Lấy BoxRect của MapObject.
+		BoundingBox objectBox = mapStaticObject[i]->getBoundingBox();
+
+		collisionOut colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
+
+		//Gọi đến hàm xử lý va chạm của player.	
+
+	}
 }
 
-void PlayScene::ProcessKeyBoardInput(double dt)
+void PlayScene::ProcessUpdates(double dt)
 {
 	KeyboardManager* inputInstance = KeyboardManager::getInstance();
-
-	if (inputInstance->isKeyDown(DIK_LEFT))
-	{
-		PrintDebug("LEFT\n");
-		camera->MoveLeft();
-	}
-
-	if (inputInstance->isKeyDown(DIK_RIGHT))
-	{
-		PrintDebug("RIGHT\n");
-		camera->MoveRight();
-	}
-
-	if (inputInstance->isKeyDown(DIK_UP))
-	{
-		PrintDebug("UP\n");
-		camera->MoveUp();
-	}
-
-	if (inputInstance->isKeyDown(DIK_DOWN))
-	{
-		PrintDebug("DOWN\n");
-		camera->MoveDown();
-	}
+	player->Update(dt);
 }

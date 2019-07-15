@@ -4,6 +4,7 @@
 #include "KeyboardManager.h"
 #include "Object.h"
 #include "Player.h"
+#include "Global.h"
 
 class PlayScene : public Scene
 {
@@ -15,7 +16,7 @@ public:
 	PlayScene();
 	~PlayScene();
 private:
-	void ProcessKeyBoardInput(double dt);
+	void ProcessUpdates(double dt);
 	void UpdateCameraWithPlayerPos(double dt);
 	void CollisionProcess(double dt);
 	void EnvironmentUpdate(double dt);
