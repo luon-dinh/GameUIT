@@ -20,6 +20,8 @@ public:
 	BoundingBox getBoundingBox();
 	int getWidth();
 	int getHeight();
+	
+	BoundingBox getStaticObjectBoundingBox();
 
 	virtual void Render();
 

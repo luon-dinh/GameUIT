@@ -12,6 +12,17 @@ BoundingBox Object::getBoundingBox()
 	return box;
 }
 
+BoundingBox Object::getStaticObjectBoundingBox()
+{
+	BoundingBox box;
+	box.top = this->pos.y - this->height / 2;
+	box.left = this->pos.x - this->width / 2;
+	box.bottom = box.top + this->height;
+	box.right = box.left + this->width;
+	box.vx = box.vy = 0;
+	return box;
+}
+
 void Object::Render()
 {
 	

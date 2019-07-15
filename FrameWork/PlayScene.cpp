@@ -99,7 +99,7 @@ void PlayScene::CollisionProcess(double dt)
 		//Lấy BoxRect của Player.
 		BoundingBox playerBox = player->getBoundingBox();
 		//Lấy BoxRect của MapObject.
-		BoundingBox objectBox = mapStaticObject[i]->getBoundingBox();
+		BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
 
 		collisionOut colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
 
