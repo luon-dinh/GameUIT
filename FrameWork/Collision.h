@@ -1,9 +1,15 @@
 #pragma once
 #include<Windows.h>
+enum CollisionSide {
+	none,
+	top,
+	left,
+	right,
+	bottom
+};
 struct collisionOut {
 	float collisionTime;
-	int x;
-	int y;
+	CollisionSide side;
 };
 
 struct BoundingBox {

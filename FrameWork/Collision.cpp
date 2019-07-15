@@ -15,9 +15,8 @@ Collision* Collision::getInstance()
 collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 {
 	collisionOut out;
-	out.collisionTime = 0;
-	out.x = 0;
-	out.y = 0;
+	out.collisionTime = 1;
+	out.side = CollisionSide::none;
 	if (recta.vx > 0.0f)
 	{
 		dxEntry = rectb.left - recta.right;
@@ -65,9 +64,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 
 	if ((entryTime > exitTime || (txEntry < 0.0f && tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f))
 	{
-		out.x = 1;
-		out.y = 1;
-		out.collisionTime = 0.0f;
+		out.collisionTime = 1;
 		return out;
 	}
 
@@ -77,13 +74,11 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	{
 		if (dyEntry > 0.0f)
 		{
-			out.y = 1.0f;
-			out.x = 0.0f;
+			out.side = CollisionSide::top;
 		}
 		else
 		{
-			out.y = -1.0f;
-			out.x = 0.0f;
+			out.side = CollisionSide::bottom;
 		}
 
 	}
@@ -91,13 +86,11 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	{
 		if (dxEntry > 0.0f)
 		{
-			out.x = 1.0f;
-			out.y = 0.0f;
+			out.side= CollisionSide::right;
 		}
 		else
 		{
-			out.x = -1.0f;
-			out.y = 0.0f;
+			out.side = CollisionSide::bottom;
 		}
 	}
 	return out;
