@@ -4,9 +4,7 @@
 
 PlayerRunningState::PlayerRunningState()
 {
-	Player::getInstance()->vx = 1;
-	Player::getInstance()->vy = 1;
-	state = RUNNING;
+
 }
 
 

@@ -14,8 +14,8 @@ Player::Player()
 	this->energy = 0;
 	curanimation = animations[this->state];
 
-
 	LoadAllStates();
+	this->playerstate = standingState;
 }
 
 void Player::LoadAllStates() {
