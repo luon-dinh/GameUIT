@@ -10,8 +10,8 @@ class Camera
 private:
 	const int topBound = 128;
 	const int bottomBound = 88;
-	const int leftBound = 120;
-	const int rightBound = 120;
+	const int leftBound = 70;
+	const int rightBound = 145;
 	Camera();
 	~Camera();
 	long topLeftX;

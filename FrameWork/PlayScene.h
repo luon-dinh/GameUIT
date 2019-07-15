@@ -25,6 +25,7 @@ private:
 	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.txt";
 	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
 	
+
 	GameMap* world11;	
 	Player* player;
 	Camera * camera;
