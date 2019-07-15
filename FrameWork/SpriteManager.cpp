@@ -18,9 +18,6 @@ void SpriteManager::LoadResources()
 {
 	auto spriteManager = SpriteManager::getInstance();
 	//load resources
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 40, 40));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 80, 80));
-
 	//Cắt sprite cho water top.
 	//Lấy ra chiều cao để biết load như thế nào.
 	LPDIRECT3DTEXTURE9 waterTopTexture = TextureManager::getInstance()->getTexture(Tag::WATERTOP);
@@ -48,6 +45,10 @@ void SpriteManager::LoadResources()
 	numOfFrames = desc.Width / desc.Height;
 	for (int i = 0; i < numOfFrames; ++i)
 		spriteManager->addSprite(new Sprite(Tag::SEWER, 0, i*sewerTextureSize, sewerTextureSize, (i + 1)*sewerTextureSize));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 56, 60));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 60, 56, 120));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 120, 56, 180));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 180, 56, 240));
 }
 
 Sprite* SpriteManager::getSprite(Tag tag, int index)

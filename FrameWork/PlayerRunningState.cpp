@@ -4,7 +4,7 @@
 
 PlayerRunningState::PlayerRunningState()
 {
-	
+	state = RUNNING;
 }
 
 
@@ -18,7 +18,7 @@ void PlayerRunningState::InputHandler()
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
 	{
 		player->pos.y += player->vy;
-		player->ChangeState(State::JUMPING);
+		//player->ChangeState(State::JUMPING);
 		return;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
@@ -28,11 +28,21 @@ void PlayerRunningState::InputHandler()
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
+		if (player->direction == Player::MoveDirection::LeftToRight) {
+			player->direction = Player::MoveDirection::RightToLeft;
+			player->vx *= -1;
+			return;
+		}
 		player->pos.x += player->vx;
 		return;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
+		if (player->direction == Player::MoveDirection::RightToLeft) {
+			player->direction = Player::MoveDirection::LeftToRight;
+			player->vx *= -1;
+			return;
+		}
 		player->pos.x += player->vx;
 		return;
 	}
@@ -54,4 +64,5 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
+	Player::getInstance()->curanimation->Update(dt);
 }
