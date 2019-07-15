@@ -1,6 +1,7 @@
 #pragma once
 #include"Global.h"
 #include<unordered_map>
+
 class Texture {
 private:
 	LPDIRECT3DTEXTURE9 texture;
@@ -15,6 +16,7 @@ public:
 	~Texture() { texture->Release(); };
 	LPDIRECT3DTEXTURE9 getTexture() { return texture; };
 };
+
 class TextureManager {
 private:
 

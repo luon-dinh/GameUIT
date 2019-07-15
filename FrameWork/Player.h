@@ -11,6 +11,14 @@ class Player :public Object
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
 	static Player* instance;
+
+	PlayerState
+		*runningState,
+		*standingState;
+
+	void InnerChangeState(PlayerState* state);
+	void LoadAllStates();
+
 public:
 	int health;
 	int live;
@@ -20,6 +28,7 @@ public:
 	int getWidth();
 	int getHeight();
 	void ChangeState(PlayerState* newplayerstate);
+	void ChangeState(State stateName);
 	void Update(float dt);
 	void Render();
 	void KeyDown();
@@ -31,5 +40,7 @@ public:
 
 	Player();
 	~Player();
+
+
 };
 

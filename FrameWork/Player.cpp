@@ -13,6 +13,14 @@ Player::Player()
 	this->health = 100;
 	this->energy = 0;
 	curanimation = animations[this->state];
+
+
+	LoadAllStates();
+}
+
+void Player::LoadAllStates() {
+	this->runningState = new PlayerRunningState();
+	this->standingState = new PlayerStandingState();
 }
 
 
@@ -57,7 +65,7 @@ void Player::KeyDown()
 	}
 
 }
-//
+
 void Player::ChangeState(PlayerState* newplayerstate)
 {
 	delete playerstate;
@@ -65,6 +73,18 @@ void Player::ChangeState(PlayerState* newplayerstate)
 	playerstate->state = newplayerstate->state;
 	curanimation = animations[playerstate->state];
 	this->state = playerstate->state;
+}
+void Player::ChangeState(State stateName) {
+	switch (stateName) {
+	case State::STANDING: InnerChangeState(standingState);break;
+	case State::RUNNING: InnerChangeState(runningState);break;
+	}
+}
+
+void Player::InnerChangeState(PlayerState* state) {
+	this->state = playerstate->state;
+	playerstate = state;
+	curanimation = animations[playerstate->state];
 }
 int Player::getWidth()
 {

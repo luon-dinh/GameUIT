@@ -25,6 +25,15 @@ void Animation::Render(float x, float y, int first, int last)
 
 }
 
+void Animation::Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio) {
+	if (sprites.size() == 0)
+		return;
+	if (sprites[curframeindex] != NULL)
+	{
+		sprites[curframeindex]->Render(transMode, scaleRatio, pos);
+	}
+}
+
 Animation::~Animation()
 {
 	for (auto s : sprites)
