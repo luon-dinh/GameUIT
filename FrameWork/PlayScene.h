@@ -23,7 +23,7 @@ private:
 	void EnvironmentUpdate(double dt);
 	const char * world11tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.png";
 	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.txt";
-	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
+	const char * world11MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\cap_charile_map_object.txt";
 	
 
 	GameMap* world11;	
