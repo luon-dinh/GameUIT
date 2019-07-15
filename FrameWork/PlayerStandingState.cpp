@@ -10,8 +10,8 @@ void PlayerStandingState::Update(float dt)
 {
 	this->InputHandler();
 	Player* player = Player::getInstance();
-	player->vy = player->vy - 0.035 ;
 	player->pos.y = player->pos.y + player->vy;
+	player->vy -= 0.035;
 	Player::getInstance()->curanimation->Update(dt);
 }
 
