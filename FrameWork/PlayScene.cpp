@@ -17,7 +17,7 @@ PlayScene::PlayScene()
 
 void PlayScene::LoadContent()
 {
-	world11 = new Map1(world11tile,world11map, world11MapObject);
+	world11 = new GameMap(world11tile,world11map, world11MapObject);
 	camera = Camera::getCameraInstance();
 	world11->SetCamera(camera);
 	camera->SetMapProperties(world11->getMapHeight(), world11->getMapWidth());
@@ -29,6 +29,7 @@ void PlayScene::LoadContent()
 void PlayScene::Draw()
 {
 	world11->Draw();
+	player->Render();
 }
 
 void PlayScene::Update(double dt)

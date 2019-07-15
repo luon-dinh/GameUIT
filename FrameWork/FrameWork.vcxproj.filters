@@ -123,6 +123,9 @@
     <ClCompile Include="TileSet.cpp">
       <Filter>GameMap\TileSet</Filter>
     </ClCompile>
+    <ClCompile Include="MapCharles.cpp">
+      <Filter>GameMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="TileSet.h">
       <Filter>GameMap\TileSet</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCharles.h">
+      <Filter>GameMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

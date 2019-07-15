@@ -46,7 +46,6 @@ public:
 
 	//Lấy vector dùng để vẽ Map lên màn hình D3D (thường là vị trí 0,0,0).
 	D3DXVECTOR3 getPositionVector();
-
 	//Lấy BOUND (BOUND này dùng để giới hạn lại phạm vi của player trước khi camera di chuyển).
 	RECT getBoundingBox();
 
