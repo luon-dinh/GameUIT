@@ -8,7 +8,7 @@ public:
 	Object() {};
 	virtual ~Object() {};
 
-	float posX, posY;
+	D3DXVECTOR2 pos;
 	float vx, vy;
 
 	Tag tag;
