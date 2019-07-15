@@ -1,4 +1,5 @@
 ﻿#include"Player.h"
+#include"Camera.h"
 
 Player* Player::instance = NULL;
 
@@ -12,6 +13,8 @@ Player::Player()
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
+	this->vx = 1;
+	this->vy = 1;
 	curanimation = animations[this->state];
 
 	LoadAllStates();
@@ -37,13 +40,14 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
+	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,pos.y,0));
 	if (this->vx != 0) {
 		// move from right to left
 		if (this->vx < 0) {
-			curanimation->Render(this->pos, TransformationMode::FlipHorizontal);
+			curanimation->Render(D3DXVECTOR2(vectortoDraw.x,vectortoDraw.y), TransformationMode::FlipHorizontal);
 		}
 		else {
-			curanimation->Render(this->pos);
+			curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
 		}
 	}
 }
