@@ -9,7 +9,7 @@ Player::Player()
 	animations[RUNNING] = new Animation(PLAYER, 0, 3, TIME_PER_FRAME / 4);
 	this->state = STANDING;
 	this->pos.x = 0;
-	this->pos.y = NORMALPALYER_HEIGHT;
+	this->pos.y = 100;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
@@ -37,6 +37,7 @@ Player::~Player()
 void Player::Update(float dt)
 {
 	this->playerstate->Update(dt);
+	
 }
 
 void Player::Render()
