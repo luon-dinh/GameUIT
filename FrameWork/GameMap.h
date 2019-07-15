@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Camera.h"
-#include "TileMap.h"
+#include "MapCharles.h"
 #include "Sprite.h"
 #include "KeyboardManager.h"
 #include <d3d9.h>
@@ -13,9 +13,17 @@
 class GameMap
 {
 public:
+	enum MapType
+	{
+		Map01,
+		Map01Boss,
+		Map02,
+		Map02Boss
+	};
 	long getMapHeight() { return mapHeight; }
 	long getMapWidth() { return mapWidth; }
 	void Draw();
+	void Update(double dt);
 	void SetCamera(Camera*);
 	void LoadContent();
 	std::vector<Object*> &getStaticObject();

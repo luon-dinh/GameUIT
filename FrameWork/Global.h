@@ -25,6 +25,14 @@
 #define TILE_SIZE 16
 #define NUMBER_MAP 190
 
+class AnimFilePath
+{
+public:
+	static char * WATER_TOP_ANIM;
+	static char * WATER_BOTTOM_ANIM;
+	static char * SEWER_ANIM;
+};
+
 enum Tag {
 
 	PLAYER,
@@ -36,7 +44,10 @@ enum Tag {
 	MAP4,
 	ENERMY,
 	BULLET,
-	SHIELD
+	SHIELD,
+	WATERTOP,
+	WATERBOTTOM,
+	SEWER
 };
 enum Type {
 	NONE,
@@ -45,7 +56,7 @@ enum Type {
 	WIZARD,
 	MINIBOSS,
 	LOCOT,
-	GROUND
+	GROUND,
 	//cac loai dan
 };
 enum State {

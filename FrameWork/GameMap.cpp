@@ -7,7 +7,7 @@ GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _ma
 	this->imgPath = _imgPath;
 	this->txtPath = _txtPath;
 	this->mapObjectPath = _mapObjectPath;
-	tMap = new TileMap(imgPath, txtPath);
+	tMap = new MapCharles(imgPath, txtPath);
 	camera = Camera::getCameraInstance();
 	
 	mapHeight = tMap->GetMapHeight();
@@ -15,6 +15,11 @@ GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _ma
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
 	//LoadContent();
+}
+
+void GameMap::Update(double dt)
+{
+	tMap->Update(dt);
 }
 
 void GameMap::LoadContent()
