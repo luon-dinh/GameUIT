@@ -40,6 +40,10 @@ void Player::Render()
 	curanimation->Render(this->pos.x,this->pos.y);
 }
 
+void Player::OnCollision(Object* object, collisionOut* collisionOut) {
+	this->playerstate->OnCollision(object, collisionOut);
+}
+
 Player* Player::getInstance()
 {
 	if (!instance)
@@ -74,6 +78,7 @@ void Player::ChangeState(PlayerState* newplayerstate)
 	curanimation = animations[playerstate->state];
 	this->state = playerstate->state;
 }
+
 void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
@@ -86,6 +91,7 @@ void Player::InnerChangeState(PlayerState* state) {
 	playerstate = state;
 	curanimation = animations[playerstate->state];
 }
+
 int Player::getWidth()
 {
 	return this->curanimation->getWidth();

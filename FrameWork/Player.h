@@ -5,6 +5,7 @@
 #include"PlayerStandingState.h"
 #include"PlayerRunningState.h"
 #include"Object.h"
+#include "Collision.h"
 
 class Player :public Object
 {
@@ -30,6 +31,7 @@ public:
 	void ChangeState(PlayerState* newplayerstate);
 	void ChangeState(State stateName);
 	void Update(float dt);
+	void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
 	void KeyDown();
 	State state;
