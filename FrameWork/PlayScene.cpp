@@ -46,11 +46,6 @@ void PlayScene::Update(double dt)
 	//Thêm gia tốc (ngoại cảnh tác động nhân vật).
 }
 
-void PlayScene::ProcessUpdates(double dt)
-{
-	player->Update(dt);
-}
-
 void PlayScene::UpdateCameraWithPlayerPos(double dt)
 {
 	D3DXVECTOR2 playerPos = player->pos;

@@ -34,15 +34,7 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	this->animations[this->state]->Update(dt);
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_A))
-	{
-		ChangeState(new PlayerStandingState());
-	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_D))
-	{
-		ChangeState(new PlayerRunningState());
-	}
+	this->playerstate->Update(dt);
 }
 
 void Player::Render()

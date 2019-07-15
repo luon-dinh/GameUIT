@@ -14,7 +14,7 @@ GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _ma
 	mapWidth = tMap->GetMapWidth();
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
-	LoadContent();
+	//LoadContent();
 }
 
 void GameMap::LoadContent()
