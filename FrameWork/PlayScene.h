@@ -14,6 +14,7 @@ public:
 	std::vector<Object*> mapStaticObject;
 	PlayScene();
 	~PlayScene();
+
 private:
 	void ProcessKeyBoardInput(double dt);
 	void UpdateCameraWithPlayerPos(double dt);
@@ -22,7 +23,7 @@ private:
 	const char * world11tile = (char*)".\\..\\\\Resources\\Images\\Maps\\Charles\\charles_map.png";
 	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
 	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
-	GameMap* world11;
+	GameMap* world11;	
 	Player* player;
 	Camera * camera;
 };

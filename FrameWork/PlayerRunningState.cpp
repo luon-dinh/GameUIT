@@ -34,6 +34,10 @@ void PlayerRunningState::InputHandler()
 	}
 }
 
+void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
+	BoundingBox bounding = object->getBoundingBox();
+}
+
 void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
