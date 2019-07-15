@@ -7,7 +7,7 @@ class PlayerRunningState :
 public:
 	void InputHandler();
 	void Update(float dt);
-	void OnCollision(Object* object, collisionOut* collision) override;
+	void OnCollision(Object* object, collisionOut* collision);
 	PlayerRunningState();
 	~PlayerRunningState();
 };

@@ -3,6 +3,7 @@
 #include"Sprite.h"
 #include"Collision.h"
 #include"Animation.h"
+
 class Object {
 public:
 	Object() {};

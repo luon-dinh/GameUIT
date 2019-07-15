@@ -24,11 +24,13 @@ void PlayerStandingState::InputHandler()
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
+		player->vx = 10;
 		player->ChangeState(State::RUNNING);
 		player->pos.x += player->vx;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
+		player->vx = -10;
 		player->ChangeState(State::RUNNING);
 		player->pos.x += player->vx;
 	}

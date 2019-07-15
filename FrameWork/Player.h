@@ -1,7 +1,6 @@
 #pragma once
 #include"SoundManager.h"
 #include"KeyboardManager.h"
-#include"PlayerState.h"
 #include"PlayerStandingState.h"
 #include"PlayerRunningState.h"
 #include"Object.h"

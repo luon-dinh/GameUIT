@@ -1,11 +1,12 @@
 #pragma once
 #include"PlayerState.h"
 #include"Player.h"
-class PlayerStandingState:public PlayerState {
+
+class PlayerStandingState: public PlayerState {
 public:
 	PlayerStandingState();
 	~PlayerStandingState() {};
 	void Update(float dt) ;
-	void OnCollision(Object* object, collisionOut* collision) override;
+	void OnCollision(Object* object, collisionOut* collision);
 	void InputHandler() ;
 };

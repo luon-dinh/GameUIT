@@ -19,19 +19,25 @@ void PlayerRunningState::InputHandler()
 	{
 		player->pos.y += player->vy;
 		player->ChangeState(State::JUMPING);
+		return;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
 	{
 		player->pos.y += player->vy;
+		return;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
 		player->pos.x += player->vx;
+		return;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
 		player->pos.x += player->vx;
+		return;
 	}
+	player->vx = 0;
+	player->ChangeState(State::STANDING);
 }
 
 void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {

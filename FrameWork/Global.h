@@ -5,68 +5,68 @@
 #include <dinput.h>
 #include <WinUser.h>
 #include <unordered_map>
-#define WINDOW_CLASS_NAME "Frame Work"		
-#define GAME_TITLE "Frame Work"		
-#define SCREEN_WIDTH 256						
-#define SCREEN_HEIGHT 224			
-#define MAX_FRAME_RATE 90						
-#define BALL_WIDTH 40
-#define BALL_HEIGHT 40
-#define BAT_WIDTH 90
-#define BAT_HEIGHT 30
-#define TIME_PER_FRAME 150
 
-			//Normal Player Define
-#define NORMALPLAYER_WIDTH 40
-#define NORMALPALYER_HEIGHT 40
-#define SCREEN_TRANSLATEY 60
+class Global{
+public:
+	static LPCSTR WINDOW_CLASS_NAME;
+	static LPCSTR GAME_TITLE;
+	static int SCREEN_WIDTH;
+	static int SCREEN_HEIGHT;
+	static int MAX_FRAME_RATE;
+	static int BALL_WIDTH;
+	static int BALL_HEIGHT;
+	static int BAT_WIDTH;
+	static int BAT_HEIGHT;
+	static int TIME_PER_FRAME;
+	static int NORMALPLAYER_WIDTH;
+	static int NORMALPLAYER_HEIGHT;
+	static int SCREEN_TRANSLATEY;
+	static int TILE_SIZE;
+	static int NUMBER_MAP;
 
-#define TILE_SIZE 16
-#define NUMBER_MAP 1
+	enum Tag {
 
-
-enum Tag {
-
-	PLAYER,
-	ITEM,
-	GROUND,
-	MAP1,
-	TileSet1,
-	MAP2,
-	MAP3,
-	MAP4,
-	ENERMY,
-	BULLET,
-	SHIELD
+		PLAYER,
+		ITEM,
+		GROUND,
+		MAP1,
+		TileSet1,
+		MAP2,
+		MAP3,
+		MAP4,
+		ENERMY,
+		BULLET,
+		SHIELD
+	};
+	enum Type {
+		NONE,
+		CLOUD,
+		BRICK,
+		WIZARD,
+		MINIBOSS,
+		LOCOT,
+		GROUND,
+		//cac loai dan
+	};
+	enum State {
+		STANDING,
+		RUNNING,
+		WALKING,
+		JUMPING,
+		DASHING,
+		FLYING,
+		SITTING,
+		DEAD,
+		ATTACKING,
+		ATTACKING_STAND,
+		ATTACKING_SIT,
+		SWIMING,
+		ATTACKING_FLY,
+		FALLING
+	};
 };
 
-enum Type {
-	NONE,
-	CLOUD,
-	BRICK,
-	WIZARD,
-	MINIBOSS,
-	LOCOT,
-	GROUND,
-	//cac loai dan
-};
 
-enum State {
-	STANDING,
-	RUNNING,
-	WALKING,
-	JUMPING,
-	DASHING,
-	FLYING,
-	SITTING,
-	DEAD,
-	ATTACKING,
-	ATTACKING_STAND,
-	ATTACKING_SIT,
-	SWIMING,
-	ATTACKING_FLY,
-	FALLING
-};
 
 
 
