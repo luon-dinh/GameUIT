@@ -46,7 +46,8 @@ enum Tag {
 	SHIELD,
 	WATERTOP,
 	WATERBOTTOM,
-	SEWER
+	SEWER,
+	NONE
 };
 enum Type {
 	NONE,

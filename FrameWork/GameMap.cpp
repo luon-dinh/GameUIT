@@ -56,6 +56,7 @@ void GameMap::LoadContent()
 			entityTag = Type::GROUND;
 		Object* mapObject = new Object();
 		mapObject->type = entityTag;
+		mapObject->tag = Tag::NONE;
 		mapObject->height = objectHeight;
 		mapObject->width = objectWidth;
 		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
