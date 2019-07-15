@@ -10,6 +10,7 @@ private:
 	int  tiperframe;
 	int ticurframe;
 	std::vector<Sprite*>sprites;
+	Tag tag;
 public:
 	~Animation();
 	Animation() {};
@@ -23,5 +24,7 @@ public:
 	void Render(float x, float y, int first, int last);
 	void Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio = 1.0f);
 	int curframeindex;
+	int getWidth();
+	int getHeight();
 };
 

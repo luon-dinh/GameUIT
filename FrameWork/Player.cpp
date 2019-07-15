@@ -1,5 +1,5 @@
 ﻿#include"Player.h"
-#include"Camera.h"
+
 Player* Player::instance = NULL;
 
 Player::Player()
@@ -7,7 +7,7 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER,0);
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
-	this->pos.x = SCREEN_WIDTH / 2;
+	this->pos.x = 0;
 	this->pos.y = SCREEN_HEIGHT / 2;
 	this->tag = Tag::PLAYER;
 	this->width = NORMALPLAYER_WIDTH;
@@ -47,8 +47,7 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
-	curanimation->Render(pos);
+	curanimation->Render(this->pos.x,this->pos.y);
 }
 
 Player* Player::getInstance()
@@ -85,7 +84,6 @@ void Player::ChangeState(PlayerState* newplayerstate)
 	curanimation = animations[playerstate->state];
 	this->state = playerstate->state;
 }
-
 void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
@@ -97,4 +95,13 @@ void Player::InnerChangeState(PlayerState* state) {
 	this->state = playerstate->state;
 	playerstate = state;
 	curanimation = animations[playerstate->state];
+}
+int Player::getWidth()
+{
+	return this->curanimation->getWidth();
+}
+
+int Player::getHeight()
+{
+	return this->curanimation->getHeight();
 }

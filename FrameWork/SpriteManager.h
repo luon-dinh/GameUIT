@@ -9,6 +9,6 @@ public:
 	void LoadResources();
 	static SpriteManager* getInstance();
 	void addSprite(Sprite *);
-	Sprite* getSprite(Tag tag, int index);
+	Sprite* getSprite(Tag tag, int index=0);
 	std::vector<Sprite*> getSprites(Tag tag, int first, int last);
 };

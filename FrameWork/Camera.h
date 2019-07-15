@@ -8,6 +8,10 @@ const auto cameraSpeed = 1;
 class Camera
 {
 private:
+	const int topBound = 128;
+	const int bottomBound = 88;
+	const int leftBound = 120;
+	const int rightBound = 120;
 	Camera();
 	~Camera();
 	long topLeftX;
@@ -42,6 +46,9 @@ public:
 
 	//Lấy vector dùng để vẽ Map lên màn hình D3D (thường là vị trí 0,0,0).
 	D3DXVECTOR3 getPositionVector();
+
+	//Lấy BOUND (BOUND này dùng để giới hạn lại phạm vi của player trước khi camera di chuyển).
+	RECT getBoundingBox();
 
 	//Hàm này sẽ hỗ trợ chuyển từ WorldPort sang ViewPort
 	D3DXVECTOR3 convertWorldToViewPort(D3DXVECTOR3 worldPortPos);

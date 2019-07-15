@@ -20,6 +20,16 @@ Camera::Camera(Camera * anotherCam)
 	height = anotherCam->height;
 }
 
+RECT Camera::getBoundingBox()
+{
+	RECT boundBox;
+	boundBox.top = topBound;
+	boundBox.left = leftBound;
+	boundBox.right = rightBound;
+	boundBox.bottom = bottomBound;
+	return boundBox;
+}
+
 Camera::~Camera()
 {
 
