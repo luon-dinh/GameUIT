@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "GameMap.h"
+#include "Map1.h"
 #include "KeyboardManager.h"
 #include "Object.h"
 #include "Player.h"
@@ -24,7 +24,11 @@ private:
 	const char * world11tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.png";
 	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
 	const char * world11MapObject = (char*) ".\\MapResources\\cap_charile_map_object.txt";
-	GameMap* world11;	
+	const char * animWaterFlowTop = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\water_1.png";
+	const char * animWaterFlowBottom = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\water_2.png";
+	const char * animSewer = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\sewer.png";
+	
+	Map1* world11;	
 	Player* player;
 	Camera * camera;
 };

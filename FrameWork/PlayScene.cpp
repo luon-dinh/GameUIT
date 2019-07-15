@@ -17,7 +17,7 @@ PlayScene::PlayScene()
 
 void PlayScene::LoadContent()
 {
-	world11 = new GameMap(world11tile,world11map, world11MapObject);
+	world11 = new Map1(world11tile,world11map, world11MapObject);
 	camera = Camera::getCameraInstance();
 	world11->SetCamera(camera);
 	camera->SetMapProperties(world11->getMapHeight(), world11->getMapWidth());
@@ -50,8 +50,8 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 {
 	D3DXVECTOR2 playerPos = player->pos;
 
-	int playerWidth = player->width;
-	int playerHeight = player->height;
+	int playerWidth = player->getWidth();
+	int playerHeight = player->getHeight();
 
 	RECT cameraBoundBox = Camera::getCameraInstance()->getBoundingBox();
 

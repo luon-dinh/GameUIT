@@ -7,8 +7,8 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER,0);
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
-	this->pos.x = 0;
-	this->pos.y = 0;
+	this->pos.x = NORMALPLAYER_WIDTH/2;
+	this->pos.y = NORMALPALYER_HEIGHT/2;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;

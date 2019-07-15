@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "TileSet.h"
 #include "Camera.h"
+#include "Animation.h"
 
 class TileMap
 {
