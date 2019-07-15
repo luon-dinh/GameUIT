@@ -53,6 +53,6 @@ private:
 public:
 	static Collision * getInstance();
 	collisionOut SweptAABB(BoundingBox recta, BoundingBox rectb);
-
+	bool IsCollide(BoundingBox box1, BoundingBox box2);
 };
 

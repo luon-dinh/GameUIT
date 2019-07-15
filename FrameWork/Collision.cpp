@@ -102,3 +102,9 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	return out;
 }
+
+
+bool Collision::IsCollide(BoundingBox box1, BoundingBox box2)
+{
+	return !(box1.left > box2.right || box1.right < box2.left || box1.top > box2.bottom || box1.bottom < box2.top);
+}

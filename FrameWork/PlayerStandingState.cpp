@@ -17,18 +17,18 @@ void PlayerStandingState::InputHandler()
 {
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
 	{
-		Player::getInstance()->posY++;
+		Player::getInstance()->pos.y++;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
 	{
-		Player::getInstance()->posY--;
+		Player::getInstance()->pos.y--;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
-		Player::getInstance()->posX++;
+		Player::getInstance()->pos.x--;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
-		Player::getInstance()->posX--;
+		Player::getInstance()->pos.x++;
 	}
 }
