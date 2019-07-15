@@ -8,10 +8,8 @@ Player::Player()
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
 	this->pos.x = 0;
-	this->pos.y = SCREEN_HEIGHT / 2;
+	this->pos.y = 0;
 	this->tag = Tag::PLAYER;
-	this->width = NORMALPLAYER_WIDTH;
-	this->height = NORMALPALYER_HEIGHT;
 	this->health = 100;
 	this->energy = 0;
 	curanimation = animations[this->state];
