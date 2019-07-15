@@ -1,5 +1,5 @@
 ﻿#include"Player.h"
-#include"Camera.h"
+
 Player* Player::instance = NULL;
 
 Player::Player()
@@ -7,8 +7,8 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER,0);
 	animations[RUNNING] = new Animation(PLAYER, 1);
 	this->state = STANDING;
-	this->pos.x = SCREEN_WIDTH / 2;
-	this->pos.y = SCREEN_HEIGHT / 2;
+	this->posX = 0;
+	this->posY = SCREEN_HEIGHT / 2;
 	this->tag = Tag::PLAYER;
 	this->width = NORMALPLAYER_WIDTH;
 	this->height = NORMALPALYER_HEIGHT;
@@ -39,8 +39,7 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
-	curanimation->Render(pos);
+	curanimation->Render(this->posX,this->posY);
 }
 
 Player* Player::getInstance()
