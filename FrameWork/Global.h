@@ -29,7 +29,6 @@ enum Tag {
 
 	PLAYER,
 	ITEM,
-	GROUND,
 	MAP1,
 	TileSet1,
 	MAP2,
@@ -46,7 +45,7 @@ enum Type {
 	WIZARD,
 	MINIBOSS,
 	LOCOT,
-	GROUND,
+	GROUND
 	//cac loai dan
 };
 enum State {

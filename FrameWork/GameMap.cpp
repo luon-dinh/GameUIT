@@ -34,7 +34,7 @@ void GameMap::LoadContent()
 
 	iss >> numOfObject;
 
-	Tag entityTag;
+	Type entityTag;
 
 	int objectID = -1;
 	int objectTopLeftX = -1;
@@ -48,9 +48,9 @@ void GameMap::LoadContent()
 		std::istringstream iss(sInputString);
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 		if (objectID == 0)
-			entityTag = Tag::GROUND;
+			entityTag = Type::GROUND;
 		Object* mapObject = new Object();
-		mapObject->tag = entityTag;
+		mapObject->type = entityTag;
 		mapObject->height = objectHeight;
 		mapObject->width = objectWidth;
 		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
