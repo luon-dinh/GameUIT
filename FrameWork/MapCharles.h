@@ -10,8 +10,8 @@ private:
 	Animation * waterTopAnim;
 	Animation * waterBottomAnim;
 	Animation * sewerAnim;
-	const int delayWaterFlow = 150; //Khoảng thời gian chuyển giữa các frame water flow.
-	const int delaySewerFlow = 150; //Khoảng thời gian chuyển giữa các frame sewer.
+	const int delayWaterFlow = 50; //Khoảng thời gian chuyển giữa các frame water flow.
+	const int delaySewerFlow = 50; //Khoảng thời gian chuyển giữa các frame sewer.
 public:
 	MapCharles(const char * imgPath, const char * txtPath);
 	~MapCharles();

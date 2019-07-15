@@ -20,7 +20,6 @@
 //Normal Player Define
 #define NORMALPLAYER_WIDTH 40
 #define NORMALPALYER_HEIGHT 40
-#define SCREEN_TRANSLATEY 60
 
 #define TILE_SIZE 16
 #define NUMBER_MAP 190
