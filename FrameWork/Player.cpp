@@ -5,16 +5,17 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[STANDING] = new Animation(PLAYER,0);
-	animations[RUNNING] = new Animation(PLAYER, 1);
+	animations[STANDING] = new Animation(PLAYER, 0);
+	animations[RUNNING] = new Animation(PLAYER, 0, 3, TIME_PER_FRAME / 4);
 	this->state = STANDING;
 	this->pos.x = 0;
 	this->pos.y = NORMALPALYER_HEIGHT;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
-	this->vx = 1;
-	this->vy = 1;
+	this->vx = 0;
+	this->vy = 0;
+	this->direction = MoveDirection::LeftToRight;
 	curanimation = animations[this->state];
 
 	LoadAllStates();
@@ -41,14 +42,12 @@ void Player::Update(float dt)
 void Player::Render()
 {
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,pos.y,0));
-	if (this->vx != 0) {
+	if (this->direction == Player::MoveDirection::LeftToRight) {
 		// move from right to left
-		if (this->vx < 0) {
-			curanimation->Render(D3DXVECTOR2(vectortoDraw.x,vectortoDraw.y), TransformationMode::FlipHorizontal);
-		}
-		else {
-			curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
-		}
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+	}
+	else {
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
 	}
 }
 
@@ -99,7 +98,7 @@ void Player::ChangeState(State stateName) {
 }
 
 void Player::InnerChangeState(PlayerState* state) {
-	this->state = playerstate->state;
+	this->state = state->state;
 	playerstate = state;
 	curanimation = animations[playerstate->state];
 }

@@ -18,8 +18,10 @@ void SpriteManager::LoadResources()
 {
 	auto spriteManager = SpriteManager::getInstance();
 	//load resources
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 40, 40));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 80, 80));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 56, 60));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 60, 56, 120));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 120, 56, 180));
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 180, 56, 240));
 }
 
 Sprite* SpriteManager::getSprite(Tag tag, int index)

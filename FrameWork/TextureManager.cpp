@@ -5,7 +5,8 @@ TextureManager* TextureManager::instance = NULL;
 void TextureManager::loadResources()
 {
 	auto textures = TextureManager::getInstance();
-	textures->addTexture(Tag::PLAYER,".\\..\\Resources\\Images\\charleston_boss_map.png");
+	textures->addTexture(Tag::PLAYER,".\\..\\Resources\\Images\\captain.png");
+	textures->addTexture(Tag::ITEM, ".\\..\\Resources\\Images\\captainstand.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)

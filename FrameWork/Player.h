@@ -24,6 +24,11 @@ public:
 	int live;
 	int energy;
 
+	enum MoveDirection {
+		LeftToRight,
+		RightToLeft
+	};
+
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
 	int getWidth();
 	int getHeight();
@@ -33,7 +38,9 @@ public:
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
 	void KeyDown();
+
 	State state;
+	MoveDirection direction;
 	Type type;
 	static Player* getInstance();
 	Animation * curanimation;

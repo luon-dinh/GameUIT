@@ -9,6 +9,7 @@ PlayerStandingState::PlayerStandingState()
 void PlayerStandingState::Update(float dt)
 {
 	this->InputHandler();
+	Player::getInstance()->curanimation->Update(dt);
 }
 
 void PlayerStandingState::InputHandler()
@@ -16,23 +17,25 @@ void PlayerStandingState::InputHandler()
 	Player* player = Player::getInstance();
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
 	{
+		player->vy = 10;
 		player->pos.y += player->vy;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
 	{
+		player->vy = -10;
 		player->pos.y += player->vy;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
-		player->vx = 10;
+		player->vx = -10;
 		player->ChangeState(State::RUNNING);
-		player->pos.x += player->vx;
+		player->direction = Player::MoveDirection::RightToLeft;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
-		player->vx = -10;
+		player->vx = 10;
 		player->ChangeState(State::RUNNING);
-		player->pos.x += player->vx;
+		player->direction = Player::MoveDirection::LeftToRight;
 	}
 }
 
