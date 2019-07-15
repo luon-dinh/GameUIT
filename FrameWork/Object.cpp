@@ -22,4 +22,13 @@ void Object::Update(float dt)
 
 }
 
+int Object::getWidth()
+{
+	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().right - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().left;
+}
+
+int Object::getHeight()
+{
+	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().bottom - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().top;
+}
 

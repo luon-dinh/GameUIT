@@ -25,6 +25,15 @@ void Animation::Render(float x, float y, int first, int last)
 
 }
 
+void Animation::Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio) {
+	if (sprites.size() == 0)
+		return;
+	if (sprites[curframeindex] != NULL)
+	{
+		sprites[curframeindex]->Render(transMode, scaleRatio, pos);
+	}
+}
+
 Animation::~Animation()
 {
 	for (auto s : sprites)
@@ -59,6 +68,7 @@ Sprite* Animation::getSprite(int index)
 
 Animation::Animation(Tag tag, int index)
 {
+	this->tag = tag;
 	sprites.push_back(SpriteManager::getInstance()->getSprite(tag, index));
 	toframe = 1;
 	curframeindex = 0;
@@ -67,8 +77,21 @@ Animation::Animation(Tag tag, int index)
 
 Animation::Animation(Tag tag, int first, int last, int timeperframe)
 {
+	this->tag = tag;
 	sprites = SpriteManager::getInstance()->getSprites(tag, first, last);
 	toframe = sprites.size();
 	curframeindex = 0;
 	tiperframe = timeperframe;
+}
+
+int Animation::getWidth()
+{
+	auto spriteManager = SpriteManager::getInstance();
+	return spriteManager->getSprite(this->tag, curframeindex)->getRECT().right - spriteManager->getSprite(this->tag, curframeindex)->getRECT().left;
+}
+
+int Animation::getHeight()
+{
+	auto spriteManager = SpriteManager::getInstance();
+	return spriteManager->getSprite(this->tag, curframeindex)->getRECT().top - spriteManager->getSprite(this->tag, curframeindex)->getRECT().bottom;
 }

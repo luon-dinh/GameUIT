@@ -17,10 +17,11 @@ public:
 	int width, height;
 
 	BoundingBox getBoundingBox();
-
+	int getWidth();
+	int getHeight();
 
 	virtual void Render();
 
 	virtual void Update(float dt);
-
+	
 };
