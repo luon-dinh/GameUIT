@@ -13,21 +13,36 @@ void PlayerStandingState::Update(float dt)
 
 void PlayerStandingState::InputHandler()
 {
+	Player* player = Player::getInstance();
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
 	{
-		Player::getInstance()->pos.y++;
+		player->pos.y += player->vy;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
 	{
-		Player::getInstance()->ChangeState(State::RUNNING);
-		Player::getInstance()->pos.y--;
+		player->pos.y += player->vy;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
 	{
-		Player::getInstance()->pos.x--;
+		player->vx = 10;
+		player->ChangeState(State::RUNNING);
+		player->pos.x += player->vx;
 	}
 	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
 	{
-		Player::getInstance()->pos.x++;
+		player->vx = -10;
+		player->ChangeState(State::RUNNING);
+		player->pos.x += player->vx;
+	}
+}
+
+void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
+	auto side = collision->side;
+
+	// collide with ground
+	if (object->type == Type::GROUND) {
+		if (side == CollisionSide::top || side == CollisionSide::bottom) {
+			Player::getInstance()->vy = 0;
+		}
 	}
 }

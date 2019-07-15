@@ -5,6 +5,7 @@
 #include <dinput.h>
 #include <WinUser.h>
 #include <unordered_map>
+
 #define WINDOW_CLASS_NAME "Frame Work"		
 #define GAME_TITLE "Frame Work"		
 #define SCREEN_WIDTH 256						
@@ -16,14 +17,13 @@
 #define BAT_HEIGHT 30
 #define TIME_PER_FRAME 150
 
-			//Normal Player Define
+//Normal Player Define
 #define NORMALPLAYER_WIDTH 40
 #define NORMALPALYER_HEIGHT 40
 #define SCREEN_TRANSLATEY 60
 
 #define TILE_SIZE 16
-#define NUMBER_MAP 1
-
+#define NUMBER_MAP 190
 
 enum Tag {
 
@@ -39,7 +39,6 @@ enum Tag {
 	BULLET,
 	SHIELD
 };
-
 enum Type {
 	NONE,
 	CLOUD,
@@ -47,9 +46,9 @@ enum Type {
 	WIZARD,
 	MINIBOSS,
 	LOCOT,
+	GROUND,
 	//cac loai dan
 };
-
 enum State {
 	STANDING,
 	RUNNING,
@@ -67,9 +66,7 @@ enum State {
 	FALLING
 };
 
-
-
-extern HINSTANCE hInstance;									
-extern HWND hwnd;												
-extern LPD3DXSPRITE spriteHandler;								
-extern LPDIRECT3DDEVICE9 d3ddev;								
+extern HINSTANCE hInstance;
+extern HWND hwnd;
+extern LPD3DXSPRITE spriteHandler;
+extern LPDIRECT3DDEVICE9 d3ddev;
