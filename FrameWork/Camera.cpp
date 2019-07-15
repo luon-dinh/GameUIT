@@ -1,5 +1,6 @@
 ﻿#include "Camera.h"
 #include "Player.h"
+#include "Debug.h"
 
 Camera* Camera::cameraInstance = nullptr;
 
@@ -59,22 +60,26 @@ void Camera::SetPosition(float x, float y)
 
 void Camera::MoveLeft(long s)
 {
-	topLeftX -= s;
+	if (topLeftX - s >= 0)
+		topLeftX -= s;
 }
 
 void Camera::MoveRight(long s)
 {
-	topLeftX += s;
+	if (topLeftX + SCREEN_WIDTH + s < mapWidth)
+		topLeftX += s;
 }
 
 void Camera::MoveUp(long s)
 {
-	topLeftY += s;
+	if (topLeftY + s < mapHeight)
+		topLeftY += s;
 }
 
 void Camera::MoveDown(long s)
 {
-	topLeftY -= s;
+	if (topLeftY - SCREEN_HEIGHT - s >= 0)
+		topLeftY -= s;
 }
 
 RECT Camera::getCameraRECT()
