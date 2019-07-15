@@ -37,7 +37,15 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
-	curanimation->Render(this->pos.x,this->pos.y);
+	if (this->vx != 0) {
+		// move from right to left
+		if (this->vx < 0) {
+			curanimation->Render(this->pos, TransformationMode::FlipHorizontal);
+		}
+		else {
+			curanimation->Render(this->pos);
+		}
+	}
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
@@ -82,7 +90,7 @@ void Player::ChangeState(PlayerState* newplayerstate)
 void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
-	case State::RUNNING: InnerChangeState(runningState);break;
+	case State::RUNNING:  InnerChangeState(runningState);break;
 	}
 }
 

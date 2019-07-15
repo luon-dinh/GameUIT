@@ -47,6 +47,7 @@ enum Type {
 	WIZARD,
 	MINIBOSS,
 	LOCOT,
+	GROUND,
 	//cac loai dan
 };
 

@@ -6,5 +6,6 @@ public:
 	PlayerStandingState();
 	~PlayerStandingState() {};
 	void Update(float dt) ;
+	void OnCollision(Object* object, collisionOut* collision) override;
 	void InputHandler() ;
 };
