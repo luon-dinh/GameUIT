@@ -19,7 +19,7 @@ void PlayerJumpingState::InputHandler() {
 		return;
 	}
 	// nhảy tới max tầm
-	if (player->pos.y >= PLAYER_MAX_JUMPING_HEIGHT) {
+	if (player->onAirState == Player::OnAir::Jumping && player->vy <= 0) {
 		player->SetAirState(Player::OnAir::Falling);
 		return;
 	}
@@ -41,8 +41,11 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 			player->SetAirState(Player::OnAir::Falling);
 		}
 		else {
+			// chạm nền dưới
 			if (side == CollisionSide::bottom) {
+				player->pos.y = object->pos.y + player->getHeight() / 2 + object->height / 2;
 				player->SetAirState(Player::OnAir::None);
+				player->ChangeState(State::STANDING);
 			}
 		}
 	}

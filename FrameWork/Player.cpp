@@ -20,11 +20,14 @@ Player::Player()
 
 	LoadAllStates();
 
+	ChangeState(State::JUMPING);
+	SetAirState(OnAir::Falling);
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
+	this->jumpingState = new PlayerJumpingState();
 }
 
 
@@ -168,6 +171,8 @@ void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 }
 
 void Player::SetAirState(OnAir onAirState) {
+	if (this->onAirState == onAirState)
+		return;
 	auto oldState = this->onAirState;
 	this->onAirState = onAirState;
 

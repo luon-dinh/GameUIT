@@ -24,11 +24,11 @@ Sprite::Sprite(Tag _tag, int top, int left, int bottom, int right)
 {
 	this->tag = _tag;
 	this->texture = TextureManager::getInstance()->getTexture(tag);
-	this->rect.top = top;
-	this->rect.bottom = bottom;
+	this->rect.top = bottom;
+	this->rect.bottom = top;
 	this->rect.left = left;
 	this->rect.right = right;
-	center = D3DXVECTOR3((right -left) / 2, (bottom -top) / 2, 0);
+	center = D3DXVECTOR3((right -left) / 2, (top - bottom) / 2, 0);
 }
 
 #pragma region Transformation Draw  - Minhnd

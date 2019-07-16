@@ -38,18 +38,18 @@ void PlayerStandingState::InputHandler()
 	if (keyboard->isKeyDown(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
 		player->SetAirState(Player::OnAir::Jumping);
-		player->SetVy(PLAYER_NORMAL_SPEED);
 		return;
 	}
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
+	auto player = Player::getInstance();
 	
 	// collide with ground
 	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::bottom) {
-			Player::getInstance()->SetAirState(Player::OnAir::None);
+		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+			player->SetAirState(Player::OnAir::None);
 		}
 	}
 }

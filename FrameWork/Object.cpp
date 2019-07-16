@@ -40,6 +40,9 @@ int Object::getWidth()
 
 int Object::getHeight()
 {
-	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().bottom - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().top;
+	auto rect = SpriteManager::getInstance()->getSprite(this->tag)->getRECT();
+	auto height =  rect.top - rect.bottom;
+
+	return height;
 }
 
