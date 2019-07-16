@@ -3,6 +3,7 @@
 #include"KeyboardManager.h"
 #include"PlayerStandingState.h"
 #include"PlayerRunningState.h"
+#include"PlayerFallingState.h"
 #include"Object.h"
 #include "Collision.h"
 
@@ -14,7 +15,8 @@ private:
 
 	PlayerState
 		*runningState,
-		*standingState;
+		*standingState,
+		*fallingState;
 
 	void InnerChangeState(PlayerState* state);
 	void LoadAllStates();

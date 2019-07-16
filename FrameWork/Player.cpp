@@ -7,7 +7,8 @@ Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 0, 3, TIME_PER_FRAME / 4);
-	this->state = STANDING;
+	animations[FALLING] = animations[STANDING];
+	this->state = FALLING;
 	this->pos.x = 0;
 	this->pos.y = 100;
 	this->tag = Tag::PLAYER;
@@ -19,12 +20,13 @@ Player::Player()
 	curanimation = animations[this->state];
 
 	LoadAllStates();
-	this->playerstate = standingState;
+	this->playerstate = fallingState;
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
+	this->fallingState = new PlayerFallingState();
 }
 
 
@@ -95,6 +97,7 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
+	case State::FALLING:  InnerChangeState(fallingState); break;
 	}
 }
 
