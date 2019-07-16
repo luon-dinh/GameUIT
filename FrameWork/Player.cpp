@@ -6,8 +6,8 @@ Player* Player::instance = NULL;
 Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
-	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
-	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
+	animations[RUNNING] = new Animation(PLAYER, 1, 4);
+	animations[JUMPING] = new Animation(PLAYER, 2, 1);
 
 	this->pos.x = 0;
 	this->pos.y = 100;
@@ -116,13 +116,13 @@ void Player::SetVx(float vx) {
 	if (this->direction == MoveDirection::LeftToRight) {
 		if (vx < 0) {
 			this->direction = MoveDirection::RightToLeft;
-			this->accelerate.x = -PLAYER_ACCELERATE;
+			this->accelerate.x = -GROUND_GRAVITY;
 		}
 	}
 	else {
 		if (vx > 0) {
 			this->direction = MoveDirection::LeftToRight;
-			this->accelerate.x = PLAYER_ACCELERATE;
+			this->accelerate.x = GROUND_GRAVITY;
 		}
 	}
 }
@@ -157,10 +157,11 @@ void Player::SetMoveDirection(MoveDirection moveDir) {
 	auto curMoveDir = this->direction;
 	this->direction = moveDir;
 	if (this->direction != curMoveDir) {
-		if (this->direction == MoveDirection::LeftToRight)
-			SetAccelerate(D3DXVECTOR2(PLAYER_ACCELERATE, this->accelerate.y));
+		if (this->direction == MoveDirection::LeftToRight) {
+			this->vx = PLAYER_NORMAL_SPEED;
+		}
 		else {
-			SetAccelerate(D3DXVECTOR2(-PLAYER_ACCELERATE, this->accelerate.y));
+			this->vx = -PLAYER_NORMAL_SPEED;
 		}
 	}
 }
@@ -182,13 +183,13 @@ void Player::SetAirState(OnAir onAirState) {
 		return;
 	}
 	if (this->onAirState == OnAir::Jumping) {
-		this->accelerate.y = -PLAYER_ACCELERATE;
-		this->vy = PLAYER_NORMAL_SPEED;
+		this->accelerate.y = -GROUND_GRAVITY;
+		this->vy = PLAYER_JUMP_SPEED;
 		return;
 	}
 	if (this->onAirState == OnAir::Falling) {
 		this->vy = 0;
-		this->accelerate.y = -PLAYER_ACCELERATE;
+		this->accelerate.y = -GROUND_GRAVITY;
 	}
 }
 

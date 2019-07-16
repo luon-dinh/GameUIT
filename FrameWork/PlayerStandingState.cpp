@@ -43,13 +43,13 @@ void PlayerStandingState::InputHandler()
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
-	auto side = collision->side;
-	auto player = Player::getInstance();
-	
-	// collide with ground
-	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
-			player->SetAirState(Player::OnAir::None);
-		}
-	}
+	//auto side = collision->side;
+	//auto player = Player::getInstance();
+	//
+	//// collide with ground
+	//if (object->type == Type::GROUND) {
+	//	if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+	//		player->SetAirState(Player::OnAir::None);
+	//	}
+	//}
 }

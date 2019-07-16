@@ -25,12 +25,21 @@ void PlayerRunningState::InputHandler()
 	}
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
+		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
+	}
+	else {
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
+		{
+			player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+		}
+	}
+
+	if (keyboard->isKeyDown(PLAYER_JUMP)) {
+		player->ChangeState(State::JUMPING);
+		player->SetAirState(Player::OnAir::Jumping);
 		return;
 	}
-	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
-	{
-		return;
-	}
+
 	player->SetVx(0);
 	player->ChangeState(State::STANDING);
 }
@@ -49,6 +58,5 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
-	Player::getInstance()->AddPos();
 	Player::getInstance()->curanimation->Update(dt);
 }

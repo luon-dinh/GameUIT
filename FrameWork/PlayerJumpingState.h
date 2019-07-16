@@ -5,6 +5,9 @@
 
 
 class PlayerJumpingState : public PlayerState{
+public:
+	PlayerJumpingState();
+	~PlayerJumpingState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
