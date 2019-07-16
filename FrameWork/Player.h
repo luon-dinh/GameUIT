@@ -2,9 +2,9 @@
 #include"SoundManager.h"
 #include"KeyboardManager.h"
 #include"PlayerStandingState.h"
-#include"PlayerRunningState.h"
+#include "PlayerRunningState.h"
 #include "PlayerJumpingState.h"
-#include"Object.h"
+#include "Object.h"
 #include "Collision.h"
 
 class Player :public Object
