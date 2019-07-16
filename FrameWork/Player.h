@@ -31,6 +31,11 @@ public:
 		RightToLeft
 	};
 
+	enum OnAir {
+		Jumping,
+		Falling
+	};
+
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
 	int getWidth();
 	int getHeight();
@@ -47,10 +52,24 @@ public:
 	static Player* getInstance();
 	Animation * curanimation;
 	PlayerState * playerstate;
+	OnAir onAirState;
+	D3DXVECTOR2 accelerate;
 
 	Player();
 	~Player();
+	
 
+#pragma region MyRegion
+	void SetVx(float vx);
+	void SetVy(float vy);
+	void SetVelocity(D3DXVECTOR2 veloc);
+	void SetAccelerate(D3DXVECTOR2 acclerate);
+	void AddPosX();
+	void AddPosY();
+	void AddPos();
+	void SetAirState(OnAir onAirState);
+	void SetMoveDirection(MoveDirection moveDir);
+#pragma endregion
 
 };
 

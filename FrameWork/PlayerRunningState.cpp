@@ -15,38 +15,24 @@ PlayerRunningState::~PlayerRunningState()
 void PlayerRunningState::InputHandler()
 {
 	Player* player = Player::getInstance();
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
+	auto keyboard = KeyboardManager::getInstance();
+	if (player == NULL || keyboard == NULL)
+		return;
+
+	if (keyboard->isKeyDown(DIK_DOWN))
 	{
 		player->pos.y += player->vy;
-		//player->ChangeState(State::JUMPING);
 		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
-		player->pos.y += player->vy;
 		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
-		if (player->direction == Player::MoveDirection::LeftToRight) {
-			player->direction = Player::MoveDirection::RightToLeft;
-			player->vx *= -1;
-			return;
-		}
-		player->pos.x += player->vx;
 		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
-	{
-		if (player->direction == Player::MoveDirection::RightToLeft) {
-			player->direction = Player::MoveDirection::LeftToRight;
-			player->vx *= -1;
-			return;
-		}
-		player->pos.x += player->vx;
-		return;
-	}
-	player->vx = 0;
+	player->SetVx(0);
 	player->ChangeState(State::STANDING);
 }
 
@@ -64,5 +50,6 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
+	Player::getInstance()->AddPos();
 	Player::getInstance()->curanimation->Update(dt);
 }

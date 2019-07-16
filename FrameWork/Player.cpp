@@ -38,8 +38,9 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
+	this->AddPos();
+	// Update state
 	this->playerstate->Update(dt);
-	
 }
 
 void Player::Render()
@@ -106,6 +107,84 @@ void Player::InnerChangeState(PlayerState* state) {
 	playerstate = state;
 	curanimation = animations[playerstate->state];
 }
+
+void Player::SetVx(float vx) {
+	this->vx = vx;
+	if (vx == 0)
+		return;
+	if (this->direction == MoveDirection::LeftToRight) {
+		if (vx < 0) {
+			this->direction = MoveDirection::RightToLeft;
+			this->accelerate.x = -PLAYER_ACCELERATE;
+		}
+	}
+	else {
+		if (vx > 0) {
+			this->direction = MoveDirection::LeftToRight;
+			this->accelerate.x = PLAYER_ACCELERATE;
+		}
+	}
+}
+
+void Player::SetVy(float vy) {
+	this->vy = vy;
+}
+
+
+void Player::SetVelocity(D3DXVECTOR2 veloc) {
+	this->vx = veloc.x;
+	this->vy = veloc.y;
+}
+
+void Player::AddPosX() {
+	this->vx += this->accelerate.x;
+	this->pos.x += this->vx;
+}
+
+void Player::AddPosY() {
+	this->vy += this->accelerate.y;
+	this->pos.y += this->vy;
+}
+
+void Player::AddPos() {
+	AddPosX();
+	AddPosY();
+}
+
+void Player::SetMoveDirection(MoveDirection moveDir) {
+	auto curMoveDir = this->direction;
+	this->direction = moveDir;
+	if (this->direction != curMoveDir) {
+		if (this->direction == MoveDirection::LeftToRight)
+			SetAccelerate(D3DXVECTOR2(PLAYER_ACCELERATE, this->accelerate.y));
+		else {
+			SetAccelerate(D3DXVECTOR2(-PLAYER_ACCELERATE, this->accelerate.y));
+		}
+	}
+}
+
+void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
+	this->accelerate.x = accelerate.x;
+	this->accelerate.y = accelerate.y;
+}
+
+void Player::SetAirState(OnAir onAirState) {
+	if (this->onAirState == OnAir::Jumping) {
+		if (onAirState == OnAir::Jumping) {
+			return;
+		}
+		else {
+			// chuyển từ jumping sang falling
+			this->onAirState = OnAir::Jumping;
+			this->vy = 0;
+			this->accelerate.y = -PLAYER_ACCELERATE;
+		}
+	}
+	else {
+		this->accelerate.y = PLAYER_ACCELERATE;
+	}
+}
+
 
 int Player::getWidth()
 {

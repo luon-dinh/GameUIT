@@ -20,9 +20,19 @@
 //Normal Player Define
 #define NORMALPLAYER_WIDTH 40
 #define NORMALPALYER_HEIGHT 40
+#define PLAYER_MAX_JUMPING_HEIGHT 200
+#define PLAYER_NORMAL_SPEED 10
+#define PLAYER_ACCELERATE 1
+
+// Moving keyboard input
+#define PLAYER_MOVE_LEFT DIK_A
+#define PLAYER_MOVE_RIGHT DIK_D
+#define PLAYER_JUMP DIK_SPACE
+
 
 #define TILE_SIZE 16
 #define NUMBER_MAP 190
+
 
 class AnimFilePath
 {

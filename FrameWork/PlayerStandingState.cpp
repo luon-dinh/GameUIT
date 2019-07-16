@@ -1,4 +1,4 @@
-#include"PlayerStandingState.h"
+﻿#include"PlayerStandingState.h"
 
 PlayerStandingState::PlayerStandingState()
 {
@@ -15,27 +15,31 @@ void PlayerStandingState::Update(float dt)
 void PlayerStandingState::InputHandler()
 {
 	Player* player = Player::getInstance();
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
+	auto keyboard = KeyboardManager::getInstance();
+
+	if (player == NULL || keyboard == NULL)
+		return;
+
+	// di chuyển qua trái
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
-		player->vy = 10;
-		player->pos.y += player->vy;
-	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
-	{
-		player->vy = -10;
-		player->pos.y += player->vy;
-	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
-	{
-		player->vx = -10;
+		player->SetVx(-PLAYER_NORMAL_SPEED);
 		player->ChangeState(State::RUNNING);
-		player->direction = Player::MoveDirection::RightToLeft;
+		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
+	// di chuyển qua phải
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
-		player->vx = 10;
+		player->SetVx(PLAYER_NORMAL_SPEED);
 		player->ChangeState(State::RUNNING);
-		player->direction = Player::MoveDirection::LeftToRight;
+		return;
+	}
+	// nhảy lên
+	if (keyboard->isKeyDown(PLAYER_JUMP)) {
+		player->ChangeState(State::JUMPING);
+		player->SetAirState(Player::OnAir::Jumping);
+		player->SetVy(PLAYER_NORMAL_SPEED);
+		return;
 	}
 }
 
@@ -45,7 +49,7 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	// collide with ground
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {
-			Player::getInstance()->vy = 0;
+			Player::getInstance()->SetVy(0);
 		}
 	}
 }

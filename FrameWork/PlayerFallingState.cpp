@@ -24,27 +24,33 @@ void PlayerFallingState::Update(float dt)
 void PlayerFallingState::InputHandler()
 {
 	Player* player = Player::getInstance();
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
+	auto keyboard = KeyboardManager::getInstance();
+	if (player == NULL || keyboard == NULL)
+		return;
+
+	if (keyboard->isKeyDown(PLAYER_JUMP))
 	{
-		player->vy = 10;
-		player->pos.y += player->vy;
+		player->SetVy(10);
+		player->AddPosY();
+		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
+	if (keyboard->isKeyDown(DIK_DOWN))
 	{
-		player->vy = -10;
-		player->pos.y += player->vy;
+		player->SetVy(-10);
+		player->AddPosY();
+		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_LEFT))
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
-		player->vx = -10;
+		player->SetVx(-10);
 		player->ChangeState(State::RUNNING);
-		player->direction = Player::MoveDirection::RightToLeft;
+		return;
 	}
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_RIGHT))
+	if (KeyboardManager::getInstance()->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
-		player->vx = 10;
+		player->SetVx(10);
 		player->ChangeState(State::RUNNING);
-		player->direction = Player::MoveDirection::LeftToRight;
+		return;
 	}
 }
 
@@ -55,7 +61,7 @@ void PlayerFallingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {
 			Player *player = Player::getInstance();
-			player->pos.y = player->pos.y + collision->collisionTime*player->vy;
+			player->SetVy(0);
 			player->vy = 0;
 			player->ChangeState(State::STANDING);
 		}
