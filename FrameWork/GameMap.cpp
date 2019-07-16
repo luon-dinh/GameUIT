@@ -59,7 +59,7 @@ void GameMap::LoadContent()
 		mapObject->height = objectHeight;
 		mapObject->width = objectWidth;
 		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
-		mapObject->pos.y = objectTopLeftY + (float)objectHeight / 2;
+		mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
 		staticObject.push_back(mapObject);
 	}
 }
