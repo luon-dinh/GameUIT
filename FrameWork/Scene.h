@@ -13,7 +13,11 @@ public:
 	//Hàm này dùng để vẽ một Scene lên màn hình.
 	virtual void Draw() {};
 
+	//Hàm dùng để kiểm tra xem scene này đã hoàn tất chưa.
+	bool isDone() { return done; }
+
 protected:
 	Scene();
 private:
+	bool done = false;
 };

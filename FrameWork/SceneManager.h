@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Sprite.h"
-#include "Scene.h"
+#include "TextureManager.h"
+#include "KeyboardManager.h"
+#include "PlayScene01.h"
 
 class SceneManager
 {

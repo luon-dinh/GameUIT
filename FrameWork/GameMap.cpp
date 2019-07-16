@@ -2,12 +2,15 @@
 #include <fstream>
 #include <sstream>
 
-GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _mapObjectPath)
+GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _mapObjectPath, MapName map)
 {
 	this->imgPath = _imgPath;
 	this->txtPath = _txtPath;
 	this->mapObjectPath = _mapObjectPath;
-	tMap = new MapCharles(imgPath, txtPath);
+	
+	if (map == MapName::CHARLES)
+		tMap = new MapCharles(imgPath, txtPath);
+
 	camera = Camera::getCameraInstance();
 	
 	mapHeight = tMap->GetMapHeight();

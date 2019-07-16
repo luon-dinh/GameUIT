@@ -4,10 +4,12 @@
 
 PlayScene::~PlayScene()
 {
-	if (world11 != nullptr)
-		delete world11;
+	if (world != nullptr)
+		delete world;
 	if (camera != nullptr)
 		camera->ReleaseCameraInstance();
+	
+	//Còn thiếu hàm release player.
 }
 
 PlayScene::PlayScene()
@@ -17,25 +19,20 @@ PlayScene::PlayScene()
 
 void PlayScene::LoadContent()
 {
-	world11 = new GameMap(world11tile,world11map, world11MapObject);
 	camera = Camera::getCameraInstance();
-	world11->SetCamera(camera);
-	camera->SetMapProperties(world11->getMapHeight(), world11->getMapWidth());
-	mapStaticObject = world11->getStaticObject(); //Lấy entity của tất cả các object.
-
 	player = Player::getInstance(); //Lấy instance của player.
 }
 
 void PlayScene::Draw()
 {
-	world11->Draw();
+	world->Draw();
 	player->Render();
 }
 
 void PlayScene::Update(double dt)
 {
 	//Update map trước.
-	world11->Update(dt);
+	world->Update(dt);
 
 	//Kiểm tra va chạm.
 	CollisionProcess(dt);
@@ -68,7 +65,7 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int bottomBound = cameraBoundBox.bottom;
 
 	//Chúng ta sẽ chỉnh lại Camera sao cho khi Player rời khỏi vị trí Critical Line, Camera sẽ bám theo.
-	//Đầu tiên chúng ta xem player đang cách các cạnh của player một khoảng bao nhiêu.
+	//Đầu tiên chúng ta xem player đang cách các cạnh của màn hình một khoảng bao nhiêu.
 	int fromPlayerToTop = playerViewPort.y - playerHeight / 2;
 	int fromPlayerToBottom = SCREEN_HEIGHT - playerViewPort.y + playerHeight / 2;
 	int fromPlayerToLeft = playerViewPort.x - playerWidth / 2;

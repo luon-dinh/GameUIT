@@ -27,7 +27,7 @@ public:
 	void SetCamera(Camera*);
 	void LoadContent();
 	std::vector<Object*> &getStaticObject();
-	GameMap(const char * imgPath, const char * txtPath, const char * mapObjectPath);
+	GameMap(const char * imgPath, const char * txtPath, const char * mapObjectPath, MapName map);
 	~GameMap();
 private:
 	long mapHeight;
