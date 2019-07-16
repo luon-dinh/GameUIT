@@ -38,7 +38,12 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		// chạm vào ground trên đầu
 		if (side == CollisionSide::top) {
 			player->SetVy(0);
-			player->ChangeState(State::FALLING);
+			player->SetAirState(Player::OnAir::Falling);
+		}
+		else {
+			if (side == CollisionSide::bottom) {
+				player->SetAirState(Player::OnAir::None);
+			}
 		}
 	}
 }

@@ -8,25 +8,26 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
 	animations[FALLING] = animations[STANDING];
-	this->state = FALLING;
+	this->state = STANDING;
 	this->pos.x = 0;
-	this->pos.y = 100;
+	this->pos.y = 50;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
 	this->vx = 0;
 	this->vy = 0;
+	this->onAirState = OnAir::None;
 	this->direction = MoveDirection::LeftToRight;
 	curanimation = animations[this->state];
 
 	LoadAllStates();
-	this->playerstate = fallingState;
+	ChangeState(State::STANDING);
+	SetAirState(OnAir::None);
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
-	this->fallingState = new PlayerFallingState();
 }
 
 
@@ -98,7 +99,6 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
-	case State::FALLING:  InnerChangeState(fallingState); break;
 	}
 }
 
@@ -147,6 +147,7 @@ void Player::AddPosY() {
 }
 
 void Player::AddPos() {
+	this->accelerate.x = 0;
 	AddPosX();
 	AddPosY();
 }
@@ -169,18 +170,21 @@ void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 }
 
 void Player::SetAirState(OnAir onAirState) {
-	if (this->onAirState == OnAir::Jumping) {
-		if (onAirState == OnAir::Jumping) {
-			return;
-		}
-		else {
-			// chuyển từ jumping sang falling
-			this->onAirState = OnAir::Jumping;
-			this->vy = 0;
-			this->accelerate.y = -PLAYER_ACCELERATE;
-		}
+	auto oldState = this->onAirState;
+	this->onAirState = onAirState;
+
+	if (this->onAirState == OnAir::None) {
+		this->accelerate.y = 0;
+		this->vy = 0;
+		return;
 	}
-	else {
+	if (this->onAirState == OnAir::Jumping) {
+		this->accelerate.y = -PLAYER_ACCELERATE;
+		this->vy = PLAYER_NORMAL_SPEED;
+		return;
+	}
+	if (this->onAirState == OnAir::Falling) {
+		this->vy = 0;
 		this->accelerate.y = PLAYER_ACCELERATE;
 	}
 }

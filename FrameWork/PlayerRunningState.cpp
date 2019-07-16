@@ -21,7 +21,6 @@ void PlayerRunningState::InputHandler()
 
 	if (keyboard->isKeyDown(DIK_DOWN))
 	{
-		player->pos.y += player->vy;
 		return;
 	}
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))

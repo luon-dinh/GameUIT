@@ -49,7 +49,7 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	// collide with ground
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {
-			Player::getInstance()->SetVy(0);
+			Player::getInstance()->SetAirState(Player::OnAir::None);
 		}
 	}
 }
