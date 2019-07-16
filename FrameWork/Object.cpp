@@ -3,10 +3,10 @@
 BoundingBox Object::getBoundingBox()
 {
 	BoundingBox box;
-	box.top=this->pos.y-this->getHeight()/2;
+	box.top=this->pos.y+this->getHeight()/2;
 	box.left = this->pos.x-this->getWidth()/2;
 	box.right = box.left + this->getWidth();
-	box.bottom = box.top + this->getHeight();
+	box.bottom = box.top - this->getHeight();
 	box.vx = this->vx;
 	box.vy = this->vy;
 	return box;
@@ -15,9 +15,9 @@ BoundingBox Object::getBoundingBox()
 BoundingBox Object::getStaticObjectBoundingBox()
 {
 	BoundingBox box;
-	box.top = this->pos.y - this->height / 2;
+	box.top = this->pos.y + this->height / 2;
 	box.left = this->pos.x - this->width / 2;
-	box.bottom = box.top + this->height;
+	box.bottom = box.top - this->height;
 	box.right = box.left + this->width;
 	box.vx = box.vy = 0;
 	return box;
