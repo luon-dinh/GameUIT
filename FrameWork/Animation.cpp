@@ -91,6 +91,8 @@ Animation::Animation(Tag tag, int rowindex, int numofsprites)
 	{
 		sprites.push_back(new Sprite(this->tag, rowindex * 56, i * 60, (rowindex + 1) * 56, (i + 1) * 60));
 	}
+	toframe = sprites.size();
+	curframeindex = 0;
 }
 
 int Animation::getWidth()

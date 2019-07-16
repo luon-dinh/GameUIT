@@ -5,12 +5,12 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[STANDING] = new Animation(PLAYER, 0);
+	animations[STANDING] = new Animation(PLAYER, 0,1);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4);
 	animations[JUMPING] = new Animation(PLAYER, 2, 1);
 
-	this->pos.x = 0;
-	this->pos.y = 100;
+	this->pos.x = 30;
+	this->pos.y = 200;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
@@ -97,9 +97,9 @@ void Player::ChangeState(PlayerState* newplayerstate)
 
 void Player::ChangeState(State stateName) {
 	switch (stateName) {
-	case State::STANDING: InnerChangeState(standingState);break;
-	case State::RUNNING:  InnerChangeState(runningState);break;
-	case State::JUMPING: InnerChangeState(jumpingState);break;
+	case State::STANDING: {InnerChangeState(standingState);curanimation=animations[STANDING]; break; }
+	case State::RUNNING:  InnerChangeState(runningState); curanimation = animations[RUNNING]; break;
+	case State::JUMPING: InnerChangeState(jumpingState); curanimation = animations[JUMPING]; break;
 	}
 }
 

@@ -9,7 +9,7 @@
 #define WINDOW_CLASS_NAME "Frame Work"		
 #define GAME_TITLE "Frame Work"		
 #define SCREEN_WIDTH 256						
-#define SCREEN_HEIGHT 224			
+#define SCREEN_HEIGHT 240			
 #define MAX_FRAME_RATE 90						
 #define BALL_WIDTH 40
 #define BALL_HEIGHT 40
