@@ -129,6 +129,12 @@
     <ClCompile Include="PlayerJumpingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerSittingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFloatingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -204,6 +210,12 @@
       <Filter>GameMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJumpingState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSittingState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFloatingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>

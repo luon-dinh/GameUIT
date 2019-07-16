@@ -20,6 +20,8 @@ private:
 
 	void InnerChangeState(PlayerState* state);
 	void LoadAllStates();
+	void AddPosX();
+	void AddPosY();
 
 public:
 	int health;
@@ -45,7 +47,6 @@ public:
 	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
-	void KeyDown();
 
 	State state;
 	MoveDirection direction;
@@ -65,9 +66,7 @@ public:
 	void SetVy(float vy);
 	void SetVelocity(D3DXVECTOR2 veloc);
 	void SetAccelerate(D3DXVECTOR2 acclerate);
-	void AddPosX();
-	void AddPosY();
-	void AddPos();
+	virtual void UpdatePosition();
 	void SetAirState(OnAir onAirState);
 	void SetMoveDirection(MoveDirection moveDir);
 #pragma endregion

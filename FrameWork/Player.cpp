@@ -39,9 +39,12 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	this->AddPos();
+	// Update lại vị trí của position sau mỗi frame
+	this->UpdatePosition();
 	// Update state
 	this->playerstate->Update(dt);
+	// Update animation
+	this->curanimation->Update(dt);
 }
 
 void Player::Render()
@@ -49,10 +52,10 @@ void Player::Render()
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,pos.y,0));
 	if (this->direction == Player::MoveDirection::LeftToRight) {
 		// move from right to left
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y),TransformationMode::FlipHorizontal);
 	}
 	else {
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
 	}
 }
 
@@ -68,24 +71,6 @@ Player* Player::getInstance()
 }
 
 
-
-
-void Player::KeyDown()
-{
-
-
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_UP))
-	{
-		
-	}
-
-	if (KeyboardManager::getInstance()->isKeyDown(DIK_DOWN))
-	{
-		
-	}
-
-}
-
 void Player::ChangeState(PlayerState* newplayerstate)
 {
 	delete playerstate;
@@ -99,7 +84,12 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
-	case State::JUMPING: InnerChangeState(jumpingState);break;
+	case State::JUMPING: 
+	{
+		InnerChangeState(jumpingState);
+		this->SetAirState(OnAir::Jumping);
+		break;
+	}
 	}
 }
 
@@ -147,7 +137,7 @@ void Player::AddPosY() {
 	this->pos.y += this->vy;
 }
 
-void Player::AddPos() {
+void Player::UpdatePosition() {
 	this->accelerate.x = 0;
 	AddPosX();
 	AddPosY();
@@ -157,12 +147,13 @@ void Player::SetMoveDirection(MoveDirection moveDir) {
 	auto curMoveDir = this->direction;
 	this->direction = moveDir;
 	if (this->direction != curMoveDir) {
-		if (this->direction == MoveDirection::LeftToRight) {
-			this->vx = PLAYER_NORMAL_SPEED;
-		}
-		else {
-			this->vx = -PLAYER_NORMAL_SPEED;
-		}
+		//if (this->direction == MoveDirection::LeftToRight) {
+		//	this->vx = PLAYER_NORMAL_SPEED;
+		//}
+		//else {
+		//	this->vx = -PLAYER_NORMAL_SPEED;
+		//}
+		//this->vx *= -1;
 	}
 }
 

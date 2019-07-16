@@ -1,9 +1,6 @@
 ﻿#include "PlayerJumpingState.h"
 
 
-PlayerJumpingState::PlayerJumpingState() {
-	this->state = State::JUMPING;
-}
 
 
 void PlayerJumpingState::InputHandler() {
@@ -12,7 +9,6 @@ void PlayerJumpingState::InputHandler() {
 
 	if (player == NULL || keyboard == NULL)
 		return;
-
 
 	// nhảy và chạy qua phải
 	if (keyboard->getKeyPressedOnce(PLAYER_MOVE_RIGHT)) {
@@ -34,17 +30,14 @@ void PlayerJumpingState::InputHandler() {
 		player->SetVy(0);
 	}
 
-	// nhảy tới max tầm
+	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->onAirState == Player::OnAir::Jumping && player->vy <= 0) {
 		player->SetAirState(Player::OnAir::Falling);
 	}
-	
-
 }
 
 void PlayerJumpingState::Update(float dt) {
 	this->InputHandler();
-	Player::getInstance()->curanimation->Update(dt);
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {

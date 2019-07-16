@@ -1,4 +1,4 @@
-#include "PlayerRunningState.h"
+﻿#include "PlayerRunningState.h"
 
 
 
@@ -19,27 +19,36 @@ void PlayerRunningState::InputHandler()
 	if (player == NULL || keyboard == NULL)
 		return;
 
-	if (keyboard->isKeyDown(DIK_DOWN))
+	// đang chạy và nhấn xuống thì không có hiệu ứng gì
+	if (keyboard->isKeyDown(PLAYER_SIT))
 	{
 		return;
 	}
+
+
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
-	}
-	else {
-		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
-		{
-			player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+		if (keyboard->isKeyDown(PLAYER_JUMP)) {
+			player->ChangeState(State::JUMPING);
+			
 		}
-	}
+		return;
+	} 
 
-	if (keyboard->isKeyDown(PLAYER_JUMP)) {
-		player->ChangeState(State::JUMPING);
-		player->SetAirState(Player::OnAir::Jumping);
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
+	{
+		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+		if (keyboard->isKeyDown(PLAYER_JUMP)) {
+			player->ChangeState(State::JUMPING);
+
+		}
 		return;
 	}
 
+
+
+	// Không phím nào được nhấn thì chuyển sang trạng thái đứng yên
 	player->SetVx(0);
 	player->ChangeState(State::STANDING);
 }
@@ -58,5 +67,4 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
-	Player::getInstance()->curanimation->Update(dt);
 }

@@ -9,7 +9,6 @@ PlayerStandingState::PlayerStandingState()
 void PlayerStandingState::Update(float dt)
 {
 	this->InputHandler();
-	Player::getInstance()->curanimation->Update(dt);
 }
 
 void PlayerStandingState::InputHandler()
@@ -38,6 +37,11 @@ void PlayerStandingState::InputHandler()
 	if (keyboard->isKeyDown(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
 		player->SetAirState(Player::OnAir::Jumping);
+		return;
+	}
+	// ngồi xuống
+	if (keyboard->isKeyDown(PLAYER_SIT)) {
+		player->ChangeState(State::SITTING);
 		return;
 	}
 }
