@@ -54,6 +54,10 @@ void GameMap::LoadContent()
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 		if (objectID == 0)
 			entityTag = Type::GROUND;
+		else if (objectID == 1)
+			entityTag = Type::SOLIDBOX;
+		else if (objectID == 2)
+			entityTag = Type::WATERRL;
 		Object* mapObject = new Object();
 		mapObject->type = entityTag;
 		mapObject->height = objectHeight;
