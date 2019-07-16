@@ -6,7 +6,7 @@ Player* Player::instance = NULL;
 Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
-	animations[RUNNING] = new Animation(PLAYER, 0, 3, TIME_PER_FRAME / 4);
+	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
 	animations[FALLING] = animations[STANDING];
 	this->state = FALLING;
 	this->pos.x = 0;

@@ -126,6 +126,9 @@
     <ClCompile Include="MapCharles.cpp">
       <Filter>GameMap</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerFallingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="MapCharles.h">
       <Filter>GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFallingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

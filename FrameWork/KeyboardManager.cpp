@@ -55,3 +55,8 @@ bool KeyboardManager::isKeyDown(int key)
 {
 	return key_buffer[key] && 0x80;
 }
+
+bool KeyboardManager::isKeyUp(int key)
+{
+	return !(key_buffer[key] && 0x80);
+}

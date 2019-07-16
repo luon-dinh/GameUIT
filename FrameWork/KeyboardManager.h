@@ -12,6 +12,7 @@ public:
 	static KeyboardManager* getInstance();
 	void getState();
 	bool isKeyDown(int key);
+	bool isKeyUp(int key);
 	KeyboardManager();
 	~KeyboardManager();
 };
