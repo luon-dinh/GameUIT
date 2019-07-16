@@ -8,6 +8,7 @@ Player::Player()
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
 	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
+
 	this->pos.x = 0;
 	this->pos.y = 100;
 	this->tag = Tag::PLAYER;
@@ -18,15 +19,12 @@ Player::Player()
 	this->direction = MoveDirection::LeftToRight;
 
 	LoadAllStates();
-	ChangeState(State::JUMPING);
-	SetAirState(OnAir::Falling);
-	curanimation = animations[this->state];
+
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
-	this->jumpingState = new PlayerJumpingState();
 }
 
 

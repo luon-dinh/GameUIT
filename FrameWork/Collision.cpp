@@ -29,13 +29,13 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	if (recta.vy > 0.0f)
 	{
-		dyEntry = rectb.top - recta.bottom;
-		dyExit = rectb.bottom - recta.top;
+		dyEntry = rectb.bottom - recta.top;
+		dyExit = rectb.top - recta.bottom;
 	}
 	else
 	{
-		dyEntry = rectb.bottom - recta.top;
-		dyExit = rectb.top - recta.bottom;
+		dyEntry = rectb.top - recta.bottom;
+		dyExit = rectb.bottom - recta.top;
 	}
 
 	if (recta.vx == 0.0f)
