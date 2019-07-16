@@ -86,6 +86,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	{
 		if (dyEntry > 0.0f)
 		{
+			out.side= CollisionSide::top;
 		}
 		else
 		{
