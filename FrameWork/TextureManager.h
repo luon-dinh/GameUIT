@@ -11,7 +11,7 @@ public:
 		D3DXIMAGE_INFO imageInfo;
 		D3DXGetImageInfoFromFile(filePath, &imageInfo);
 		D3DXCreateTextureFromFileEx(d3ddev, filePath, imageInfo.Width, imageInfo.Height, 1, D3DUSAGE_DYNAMIC,
-			D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT,D3DCOLOR_XRGB(255,0,255), &imageInfo, NULL, &texture);
+			D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT,D3DCOLOR_XRGB(255,255,255), &imageInfo, NULL, &texture);
 	}
 	~Texture() { texture->Release(); };
 	LPDIRECT3DTEXTURE9 getTexture() { return texture; };

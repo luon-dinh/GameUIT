@@ -9,7 +9,7 @@ class Camera
 {
 private:
 	const int topBound = 128;
-	const int bottomBound = 88;
+	const int bottomBound = 118;
 	const int leftBound = 70;
 	const int rightBound = 145;
 	Camera();

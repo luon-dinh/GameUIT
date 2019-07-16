@@ -22,7 +22,7 @@ struct BoundingBox {
 		left = left_;
 		bottom=bottom_;
 		right = right_;
-		vx - vx_;
+		vx = vx_;
 		vy = vy_;
 	}
 	BoundingBox() {};

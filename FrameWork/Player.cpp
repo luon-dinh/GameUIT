@@ -5,12 +5,12 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[STANDING] = new Animation(PLAYER, 0);
+	animations[STANDING] = new Animation(PLAYER, 0,1);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4);
 	animations[JUMPING] = new Animation(PLAYER, 2, 1);
 
-	this->pos.x = 0;
-	this->pos.y = 100;
+	this->pos.x = 30;
+	this->pos.y = 200;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;

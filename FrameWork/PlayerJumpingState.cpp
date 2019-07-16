@@ -1,8 +1,5 @@
 ﻿#include "PlayerJumpingState.h"
 
-
-
-
 void PlayerJumpingState::InputHandler() {
 	auto player = Player::getInstance();	
 	auto keyboard = KeyboardManager::getInstance();
@@ -21,14 +18,14 @@ void PlayerJumpingState::InputHandler() {
 		}
 	}
 
-	// tạm thời set ground giả lập
-	if (player->pos.y <= 100 && player->onAirState == Player::OnAir::Falling) {
-		player->pos.y = 100;
-		player->SetAirState(Player::OnAir::None);
-		player->ChangeState(State::STANDING);
-		player->SetVx(0);
-		player->SetVy(0);
-	}
+	//// tạm thời set ground giả lập
+	//if (player->pos.y <= 100 && player->onAirState == Player::OnAir::Falling) {
+	//	player->pos.y = 100;
+	//	player->SetAirState(Player::OnAir::None);
+	//	player->ChangeState(State::STANDING);
+	//	player->SetVx(0);
+	//	player->SetVy(0);
+	//}
 
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->onAirState == Player::OnAir::Jumping && player->vy <= 0) {
@@ -41,22 +38,22 @@ void PlayerJumpingState::Update(float dt) {
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto player = Player::getInstance();
-	//auto side = collision->side;
+	auto player = Player::getInstance();
+	auto side = collision->side;
 
-	//if (object->type == Type::GROUND) {
-	//	// chạm vào ground trên đầu
-	//	if (side == CollisionSide::top) {
-	//		player->SetVy(0);
-	//		player->SetAirState(Player::OnAir::Falling);
-	//	}
-	//	else {
-	//		// chạm nền dưới
-	//		if (side == CollisionSide::bottom) {
-	//			player->pos.y = object->pos.y + player->getHeight() / 2 + object->height / 2;
-	//			player->SetAirState(Player::OnAir::None);
-	//			player->ChangeState(State::STANDING);
-	//		}
-	//	}
-	//}
+	if (object->type == Type::GROUND) {
+		// chạm vào ground trên đầu
+		if (side == CollisionSide::top) {
+			player->SetVy(0);
+			player->SetAirState(Player::OnAir::Falling);
+		}
+		else {
+			// chạm nền dưới
+			if (side == CollisionSide::bottom) {
+				player->pos.y += player->vy*collision->collisionTime;
+				player->SetAirState(Player::OnAir::None);
+				player->ChangeState(State::STANDING);
+			}
+		}
+	}
 }
