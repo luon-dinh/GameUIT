@@ -45,10 +45,51 @@ void SpriteManager::LoadResources()
 	numOfFrames = desc.Width / desc.Height;
 	for (int i = 0; i < numOfFrames; ++i)
 		spriteManager->addSprite(new Sprite(Tag::SEWER, 0, i*sewerTextureSize, sewerTextureSize, (i + 1)*sewerTextureSize));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 0, 56, 60));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 60, 56, 120));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 120, 56, 180));
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 0, 180, 56, 240));
+	//PLAYER STANDING 0
+	spriteManager->addSprite(Tag::PLAYER,0,1);
+	//PLAYER RUNNING 1-4
+	spriteManager->addSprite(Tag::PLAYER, 1, 4);
+	//PLAYER SHIELDUP 5
+	spriteManager->addSprite(Tag::PLAYER, 2, 1);
+	//PLAYER SITTING 6
+	spriteManager->addSprite(Tag::PLAYER, 3, 1);
+	//PLAYER JUMPING 7
+	spriteManager->addSprite(Tag::PLAYER, 4, 1);
+	//PLAYER ROLLING 8-9
+	spriteManager->addSprite(Tag::PLAYER, 5, 2);
+	//PLAYER KICKING 10
+	spriteManager->addSprite(Tag::PLAYER, 6, 1);
+	// PLAYER ATTACKING
+	spriteManager->addSprite(Tag::PLAYER, 7, 2);
+	//PLAYER PUNCHING
+	spriteManager->addSprite(Tag::PLAYER, 8, 2);
+	//PLAYER ATTACKING_SIT
+	spriteManager->addSprite(Tag::PLAYER, 9, 2);
+	//PLAYER DASHING
+	spriteManager->addSprite(Tag::PLAYER, 10, 2);
+	// PLAYER SHIELDOWN
+	spriteManager->addSprite(Tag::PLAYER,11, 1);
+	//PLAYER HANGON
+	spriteManager->addSprite(Tag::PLAYER, 12, 2);
+	//PLAYER JUMP DOWN
+	spriteManager->addSprite(Tag::PLAYER, 13, 1);
+	//PLAYER JUMP FROM ROTATE
+	spriteManager->addSprite(Tag::PLAYER, 14, 1);
+	//PLAYER DIE
+	spriteManager->addSprite(Tag::PLAYER, 15, 2);
+	//PLAYER DIE ON AIR
+	spriteManager->addSprite(Tag::PLAYER, 16, 3);
+	//PLAYER FLOWING
+	spriteManager->addSprite(Tag::PLAYER, 17, 9);
+}
+
+void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
+{
+	SpriteManager *spriteManager = SpriteManager::getInstance();
+	for (int i = 0; i < numberofsprites; i++)
+	{
+		spriteManager->addSprite(new Sprite(tag, rowindex * 56, i * 60, (rowindex + 1) * 56, (i + 1) * 60));
+	}
 }
 
 Sprite* SpriteManager::getSprite(Tag tag, int index)
