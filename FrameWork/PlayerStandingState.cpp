@@ -45,11 +45,11 @@ void PlayerStandingState::InputHandler()
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
-
+	
 	// collide with ground
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {
-			Player::getInstance()->SetVy(0);
+			Player::getInstance()->SetAirState(Player::OnAir::None);
 		}
 	}
 }

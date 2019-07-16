@@ -7,7 +7,8 @@ Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
-	this->state = STANDING;
+	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
+
 	this->pos.x = 0;
 	this->pos.y = 100;
 	this->tag = Tag::PLAYER;
@@ -16,10 +17,9 @@ Player::Player()
 	this->vx = 0;
 	this->vy = 0;
 	this->direction = MoveDirection::LeftToRight;
-	curanimation = animations[this->state];
 
 	LoadAllStates();
-	this->playerstate = standingState;
+
 }
 
 void Player::LoadAllStates() {
@@ -96,7 +96,7 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
-	case State::FALLING:  InnerChangeState(fallingState); break;
+	case State::JUMPING: InnerChangeState(jumpingState);break;
 	}
 }
 
@@ -145,6 +145,7 @@ void Player::AddPosY() {
 }
 
 void Player::AddPos() {
+	this->accelerate.x = 0;
 	AddPosX();
 	AddPosY();
 }
@@ -167,19 +168,22 @@ void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 }
 
 void Player::SetAirState(OnAir onAirState) {
-	if (this->onAirState == OnAir::Jumping) {
-		if (onAirState == OnAir::Jumping) {
-			return;
-		}
-		else {
-			// chuyển từ jumping sang falling
-			this->onAirState = OnAir::Jumping;
-			this->vy = 0;
-			this->accelerate.y = -PLAYER_ACCELERATE;
-		}
+	auto oldState = this->onAirState;
+	this->onAirState = onAirState;
+
+	if (this->onAirState == OnAir::None) {
+		this->accelerate.y = 0;
+		this->vy = 0;
+		return;
 	}
-	else {
-		this->accelerate.y = PLAYER_ACCELERATE;
+	if (this->onAirState == OnAir::Jumping) {
+		this->accelerate.y = -PLAYER_ACCELERATE;
+		this->vy = PLAYER_NORMAL_SPEED;
+		return;
+	}
+	if (this->onAirState == OnAir::Falling) {
+		this->vy = 0;
+		this->accelerate.y = -PLAYER_ACCELERATE;
 	}
 }
 
