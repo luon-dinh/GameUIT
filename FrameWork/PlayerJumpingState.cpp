@@ -5,9 +5,6 @@ PlayerJumpingState::PlayerJumpingState() {
 	this->state = State::JUMPING;
 }
 
-PlayerJumpingState::~PlayerJumpingState() {
-
-}
 
 void PlayerJumpingState::InputHandler() {
 	auto player = Player::getInstance();	
