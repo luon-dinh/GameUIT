@@ -44,7 +44,7 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 
 	// collide with ground
 	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::top || side == CollisionSide::bottom) {
+		if (side == CollisionSide::bottom) {
 			Player::getInstance()->vy = 0;
 		}
 	}
