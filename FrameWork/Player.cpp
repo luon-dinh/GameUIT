@@ -7,6 +7,7 @@ Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
+	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
 	this->state = STANDING;
 	this->pos.x = 0;
 	this->pos.y = 50;
@@ -20,11 +21,14 @@ Player::Player()
 	curanimation = animations[this->state];
 
 	LoadAllStates();
+	ChangeState(State::RUNNING);
+	SetMoveDirection(MoveDirection::LeftToRight);
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
+	this->jumpingState = new PlayerJumpingState();
 }
 
 
@@ -96,6 +100,7 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
+	case State::JUMPING:  InnerChangeState(jumpingState); break;
 	}
 }
 
