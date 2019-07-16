@@ -45,7 +45,7 @@ void PlayerStandingState::InputHandler()
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
-
+	
 	// collide with ground
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {

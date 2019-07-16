@@ -7,24 +7,26 @@ Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
 	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
-	this->state = STANDING;
+	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
 	this->pos.x = 0;
-	this->pos.y = 50;
+	this->pos.y = 100;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
 	this->vx = 0;
 	this->vy = 0;
-	this->onAirState = OnAir::None;
 	this->direction = MoveDirection::LeftToRight;
-	curanimation = animations[this->state];
 
 	LoadAllStates();
+	ChangeState(State::JUMPING);
+	SetAirState(OnAir::Falling);
+	curanimation = animations[this->state];
 }
 
 void Player::LoadAllStates() {
 	this->runningState = new PlayerRunningState();
 	this->standingState = new PlayerStandingState();
+	this->jumpingState = new PlayerJumpingState();
 }
 
 
@@ -96,6 +98,7 @@ void Player::ChangeState(State stateName) {
 	switch (stateName) {
 	case State::STANDING: InnerChangeState(standingState);break;
 	case State::RUNNING:  InnerChangeState(runningState);break;
+	case State::JUMPING: InnerChangeState(jumpingState);break;
 	}
 }
 
@@ -182,7 +185,7 @@ void Player::SetAirState(OnAir onAirState) {
 	}
 	if (this->onAirState == OnAir::Falling) {
 		this->vy = 0;
-		this->accelerate.y = PLAYER_ACCELERATE;
+		this->accelerate.y = -PLAYER_ACCELERATE;
 	}
 }
 
