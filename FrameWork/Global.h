@@ -66,6 +66,8 @@ enum Type {
 	MINIBOSS,
 	LOCOT,
 	GROUND,
+	SOLIDBOX,
+	WATERRL
 	//cac loai dan
 };
 enum State {
