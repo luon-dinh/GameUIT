@@ -29,13 +29,13 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	if (recta.vy > 0.0f)
 	{
-		dyEntry = rectb.bottom - recta.top;
-		dyExit = rectb.top - recta.bottom;
+		dyEntry = rectb.top - recta.bottom;
+		dyExit = rectb.bottom - recta.top;
 	}
 	else
 	{
-		dyEntry = recta.bottom - rectb.top;
-		dyExit = recta.top - rectb.bottom;
+		dyEntry = rectb.bottom - recta.top;
+		dyExit = rectb.top - recta.bottom;
 	}
 
 	if (recta.vx == 0.0f)
@@ -62,37 +62,40 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	float entryTime = max(txEntry, tyEntry);
 	float exitTime = min(tyExit, txExit);
 
-	if ((entryTime > exitTime || (txEntry < 0.0f && tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f))
+	out.collisionTime = entryTime;
+	if (entryTime > exitTime || txEntry < 0.0f && tyEntry < 0.0f || txEntry > 1.0f || tyEntry > 1.0f)
 	{
 		out.collisionTime = 2;
 		return out;
 	}
-
-	out.collisionTime = entryTime;
-
-	if (txEntry > tyEntry)
-	{
-		if (dxEntry > 0.0f)
-		{
-			out.side = CollisionSide::right;
-		}
-		else
-		{
-			out.side = CollisionSide::left;
-		}
-
-	}
 	else
 	{
-		if (dyEntry > 0.0f)
+		if (txEntry > tyEntry)
 		{
-			out.side= CollisionSide::top;
+			if (dxEntry < 0.0f)
+			{
+				out.side = CollisionSide::right;
+			}
+			else
+			{
+				out.side = CollisionSide::left;
+			}
+
 		}
 		else
 		{
-			out.side = CollisionSide::bottom;
+			if (dyEntry < 0.0f)
+			{
+				out.side = CollisionSide::top;
+			}
+			else
+			{
+				out.side = CollisionSide::bottom;
+			}
 		}
 	}
+	
+	
 	return out;
 }
 

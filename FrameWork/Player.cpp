@@ -6,8 +6,8 @@ Player* Player::instance = NULL;
 Player::Player()
 {
 	animations[STANDING] = new Animation(PLAYER, 0);
-	animations[RUNNING] = new Animation(PLAYER, 1, 4, TIME_PER_FRAME / 4);
-	animations[JUMPING] = new Animation(PLAYER, 3, 1, TIME_PER_FRAME);
+	animations[RUNNING] = new Animation(PLAYER, 1, 4);
+	animations[JUMPING] = new Animation(PLAYER, 2, 1);
 
 	this->pos.x = 0;
 	this->pos.y = 100;
