@@ -51,7 +51,9 @@ BoundingBox Player::getBoundingBox()
 
 void Player::Update(float dt)
 {
-	// Update state
+	if (this->vy <= PLAYER_MAX_FALLING_VELOCITY)
+		this->vy = PLAYER_MAX_FALLING_VELOCITY;
+		// Update state
 	this->playerstate->Update(dt);
 	// Update lại vị trí của position sau mỗi frame
 	this->UpdatePosition();
