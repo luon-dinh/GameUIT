@@ -22,7 +22,7 @@
 #define NORMALPALYER_HEIGHT			40
 #define PLAYER_MAX_JUMPING_HEIGHT	500
 #define PLAYER_NORMAL_SPEED			2
-#define PLAYER_JUMP_SPEED			5
+#define PLAYER_JUMP_SPEED			8
 #define GROUND_GRAVITY				0.3
 
 // Moving keyboard input

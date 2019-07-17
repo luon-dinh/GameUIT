@@ -25,6 +25,6 @@ BoundingBox PlayerFloatingState::getBoundingBox()
 	box.top = player->pos.y + 13;
 	box.bottom = player->pos.y - 12;
 	box.left = player->pos.x - 18;
-	box.right = player->pos.y + 14;
+	box.right = player->pos.x + 14;
 	return box;
 }
