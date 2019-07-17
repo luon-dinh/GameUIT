@@ -40,6 +40,8 @@ void SceneManager::ChangeScene(PlayScene* newScene)
 	Player * player = Player::getInstance();
 	player->pos.x = 0;
 	player->pos.y = SCREEN_HEIGHT;
+	player->ChangeState(State::JUMPING);
+	player->SetAirState(Player::OnAir::Falling);
 }
 
 void SceneManager::Draw()
