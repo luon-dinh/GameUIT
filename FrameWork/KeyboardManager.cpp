@@ -11,11 +11,6 @@ KeyboardManager::~KeyboardManager()
 {
 }
 
-bool KeyboardManager::getKeyPressedOnce(int key)
-{
-	return (clickedKeys[key]);
-}
-
 void KeyboardManager::Create(HINSTANCE hInstance,HWND hwnd)
 {
 	HRESULT hr = DirectInput8Create(
@@ -47,7 +42,7 @@ KeyboardManager* KeyboardManager::getInstance()
 	return instance;
 }
 
-void KeyboardManager::getState()
+void KeyboardManager::getState(double dt)
 {
 	HRESULT hr = this->did8->GetDeviceState(sizeof(this->key_buffer), (LPVOID)&this->key_buffer);
 	if (FAILED(hr))
@@ -55,6 +50,8 @@ void KeyboardManager::getState()
 		while (this->did8->Acquire() == DIERR_INPUTLOST);
 		this->did8->GetDeviceState(sizeof(this->key_buffer), (LPVOID)&this->key_buffer);
 	}
+
+	//Xét trạng thái để dùng cho hàm kiểm tra click một lần.
 	for (int i = 0; i < 256; ++i)
 	{
 		//Đầu tiên ta gán activatedKeys (những phím được nhấn trong vòng lặp này).
@@ -78,11 +75,37 @@ void KeyboardManager::getState()
 			prevClicked[i] = false;
 		}
 	}
+
+	//Cập nhật thời gian click.
+	//Xét nếu phím đã nhả ra thì ta reset lại thời gian click về = 0.
+	//Nếu phím đang được ấn thì cập nhật lại dt.
+	for (int i = 0; i < 256; ++i)
+	{
+		if (!activatedKeys[i]) //Nếu phím không được ấn.
+			timeSinceLastClicked[i] = -1;
+		else if (activatedKeys[i] && clickedKeys[i]) //Nếu phím đang được ấn và hiện tại là lần click đầu tiên.
+			timeSinceLastClicked[i] = 0;
+		else if (activatedKeys[i] && !clickedKeys[i]) //Nếu đây là frame thứ 2 sau khi click thì ta mới cập nhật thời gian.
+			timeSinceLastClicked[i] += dt;
+	}
 }
 
 bool KeyboardManager::isKeyDown(int key)
 {
 	return key_buffer[key] && 0x80;
+}
+
+bool KeyboardManager::getKeyPressedOnce(int key)
+{
+	return clickedKeys[key];
+}
+
+bool KeyboardManager::getKeyPressedOnce(int key, int& timeSinceLastPressed)
+{
+	//Ta gán thời gian.
+	timeSinceLastPressed = timeSinceLastClicked[key];
+	//Trả về clicked.
+	return clickedKeys[key];
 }
 
 bool KeyboardManager::isKeyUp(int key)
