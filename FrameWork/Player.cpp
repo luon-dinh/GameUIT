@@ -5,12 +5,11 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[STANDING] = new Animation(PLAYER, 0,1);
-	animations[RUNNING] = new Animation(PLAYER, 1, 4);
-	animations[JUMPING] = new Animation(PLAYER, 2, 1);
+	LoadAllAnimations();
+	LoadAllStates();
 
 	this->pos.x = 30;
-	this->pos.y = 200;
+	this->pos.y = 400;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
@@ -18,17 +17,25 @@ Player::Player()
 	this->vy = 0;
 	this->direction = MoveDirection::LeftToRight;
 
-	LoadAllStates();
+	this->state = State::JUMPING;
+	this->playerstate = playerStates[State::JUMPING];
+	this->curanimation = animations[this->state];
+}
 
-	ChangeState(State::JUMPING);
-	SetAirState(OnAir::Falling);
+void Player::LoadAllAnimations() {
+	animations[STANDING] = new Animation(PLAYER, 0, 1);
+	animations[RUNNING] = new Animation(PLAYER, 1, 4);
+	animations[JUMPING] = new Animation(PLAYER, 4, 1);
+	animations[SITTING] = new Animation(PLAYER, 3, 1);
 }
 
 void Player::LoadAllStates() {
-	this->runningState = new PlayerRunningState();
-	this->standingState = new PlayerStandingState();
-	this->jumpingState = new PlayerJumpingState();
+	this->playerStates[State::STANDING] = new PlayerStandingState();
+	this->playerStates[State::RUNNING]  = new PlayerRunningState();
+	this->playerStates[State::JUMPING]  = new PlayerJumpingState();
+	this->playerStates[State::SITTING]  = new PlayerSittingState();
 }
+
 
 
 Player::~Player()
@@ -51,7 +58,7 @@ void Player::Render()
 {
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,pos.y,0));
 	if (this->direction == Player::MoveDirection::LeftToRight) {
-		// move from right to left
+		// move from left to right
 		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y),TransformationMode::FlipHorizontal);
 	}
 	else {
@@ -81,22 +88,41 @@ void Player::ChangeState(PlayerState* newplayerstate)
 }
 
 void Player::ChangeState(State stateName) {
+	if (this->state == stateName)
+		return;
+
+	InnerChangeState(stateName);
+
+	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
-	case State::STANDING: InnerChangeState(standingState);break;
-	case State::RUNNING:  InnerChangeState(runningState);break;
-	case State::JUMPING: 
-	{
-		InnerChangeState(jumpingState);
-		this->SetAirState(OnAir::Jumping);
-		break;
-	}
+		case State::STANDING: {
+			this->SetAirState(Player::OnAir::None);
+			this->SetVx(0);
+			this->SetVy(0);
+			break;
+		}
+		case State::RUNNING:
+		{
+			this->SetAirState(Player::OnAir::None);
+			if (this->direction == MoveDirection::LeftToRight)
+				SetVx(PLAYER_NORMAL_SPEED);
+			else {
+				SetVx(-PLAYER_NORMAL_SPEED);
+			}
+			break;
+		}
+		case State::JUMPING: 
+		{
+			this->SetAirState(OnAir::Jumping);
+			break;
+		}
 	}
 }
 
-void Player::InnerChangeState(PlayerState* state) {
-	this->state = state->state;
-	playerstate = state;
-	curanimation = animations[playerstate->state];
+void Player::InnerChangeState(State stateName) {
+	this->state = stateName;
+	this->playerstate = playerStates[stateName];
+	curanimation = animations[stateName];
 }
 
 void Player::SetVx(float vx) {
@@ -106,19 +132,22 @@ void Player::SetVx(float vx) {
 	if (this->direction == MoveDirection::LeftToRight) {
 		if (vx < 0) {
 			this->direction = MoveDirection::RightToLeft;
-			this->accelerate.x = -GROUND_GRAVITY;
 		}
 	}
 	else {
 		if (vx > 0) {
 			this->direction = MoveDirection::LeftToRight;
-			this->accelerate.x = GROUND_GRAVITY;
 		}
 	}
 }
 
 void Player::SetVy(float vy) {
 	this->vy = vy;
+	if (this->vy == 0) {
+		// Nếu vận tốc bằng 0 khi đang nhảy thì rơi xuống lại
+		if (this->onAirState == OnAir::Jumping)
+			SetAirState(OnAir::Falling);
+	}
 }
 
 
@@ -147,19 +176,17 @@ void Player::SetMoveDirection(MoveDirection moveDir) {
 	auto curMoveDir = this->direction;
 	this->direction = moveDir;
 	if (this->direction != curMoveDir) {
-		//if (this->direction == MoveDirection::LeftToRight) {
-		//	this->vx = PLAYER_NORMAL_SPEED;
-		//}
-		//else {
-		//	this->vx = -PLAYER_NORMAL_SPEED;
-		//}
-		//this->vx *= -1;
+		this->vx *= -1;
 	}
 }
 
 void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 	this->accelerate.x = accelerate.x;
 	this->accelerate.y = accelerate.y;
+}
+
+Player::OnAir Player::GetOnAirState() {
+	return this->onAirState;
 }
 
 void Player::SetAirState(OnAir onAirState) {

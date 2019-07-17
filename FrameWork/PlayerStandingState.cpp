@@ -2,7 +2,6 @@
 
 PlayerStandingState::PlayerStandingState()
 {
-	//Player::getInstance()->state = standing;
 	state = STANDING;
 }
 
@@ -22,21 +21,20 @@ void PlayerStandingState::InputHandler()
 	// di chuyển qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
-		player->SetVx(-PLAYER_NORMAL_SPEED);
+		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
 		player->ChangeState(State::RUNNING);
 		return;
 	}
 	// di chuyển qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
-		player->SetVx(PLAYER_NORMAL_SPEED);
+		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		player->ChangeState(State::RUNNING);
 		return;
 	}
 	// nhảy lên
-	if (keyboard->isKeyDown(PLAYER_JUMP)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
-		player->SetAirState(Player::OnAir::Jumping);
 		return;
 	}
 	// ngồi xuống
@@ -47,13 +45,13 @@ void PlayerStandingState::InputHandler()
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
-	auto side = collision->side;
-	auto player = Player::getInstance();
-	
-	// collide with ground
-	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
-			player->SetAirState(Player::OnAir::None);
-		}
-	}
+	//auto side = collision->side;
+	//auto player = Player::getInstance();
+	//
+	//// collide with ground
+	//if (object->type == Type::GROUND) {
+	//	if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+	//		player->SetAirState(Player::OnAir::None);
+	//	}
+	//}
 }

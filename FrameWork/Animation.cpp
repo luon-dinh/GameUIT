@@ -90,7 +90,6 @@ Animation::Animation(Tag tag, int rowindex, int numofsprites)
 	for (int i = 0; i < numofsprites; i++)
 	{
 		sprites.push_back(new Sprite(this->tag, rowindex * 56, i * 60, (rowindex + 1) * 56, (i + 1) * 60));
-
 	}
 	this->toframe = sprites.size();
 	this->tiperframe = TIME_PER_FRAME / this->toframe;
