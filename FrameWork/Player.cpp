@@ -9,7 +9,7 @@ Player::Player()
 	LoadAllStates();
 
 	this->pos.x = 30;
-	this->pos.y = 150;
+	this->pos.y = 80;
 	this->tag = Tag::PLAYER;
 	this->health = 100;
 	this->energy = 0;
@@ -43,6 +43,11 @@ Player::~Player()
 
 }
 
+
+BoundingBox Player::getBoundingBox()
+{
+	return this->playerstate->getBoundingBox();
+}
 
 void Player::Update(float dt)
 {

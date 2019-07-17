@@ -1,4 +1,4 @@
-#include"Animation.h"
+﻿#include"Animation.h"
 void Animation::Render(float x, float y)
 {
 	if (sprites.size()==0)
@@ -95,4 +95,11 @@ int Animation::getHeight()
 {
 	auto spriteManager = SpriteManager::getInstance();
 	return spriteManager->getSprite(this->tag, curframeindex)->getRECT().top - spriteManager->getSprite(this->tag, curframeindex)->getRECT().bottom;
+}
+
+void Animation::ReplaceSprite(int index, Sprite* sprite)
+{
+	if (index > sprites.size())//index truyền vào lớn hơn số sprite hiện có
+		return;
+	sprites[index] = sprite;
 }
