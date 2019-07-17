@@ -20,13 +20,26 @@ Player::Player()
 	this->state = State::JUMPING;
 	this->playerstate = playerStates[State::JUMPING];
 	this->curanimation = animations[this->state];
+	this->prevState = NULL;
+}
+
+PlayerState* Player::GetPreviousState() {
+	return this->prevState;
+}
+
+void Player::SetPreviousState(State stateName) {
+	this->prevState = playerStates[stateName];
 }
 
 void Player::LoadAllAnimations() {
 	animations[STANDING] = new Animation(PLAYER, 0, 1);
 	animations[RUNNING] = new Animation(PLAYER, 1, 5);
 	animations[JUMPING] = new Animation(PLAYER, 7, 8);
-	animations[DUCKING] = new Animation(PLAYER, 6, 7);
+	animations[DUCKING]	= new Animation(PLAYER, 6, 7);
+	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 15, 17);
+	animations[SHIELD_UP] = new Animation(PLAYER, 2, 1);
+	animations[ROLLING] = new Animation(PLAYER, 8, 10);
+	animations[KICKING] = new Animation(PLAYER, 10, 11);
 }
 
 void Player::LoadAllStates() {
@@ -34,6 +47,10 @@ void Player::LoadAllStates() {
 	this->playerStates[State::RUNNING]  = new PlayerRunningState();
 	this->playerStates[State::JUMPING]  = new PlayerJumpingState();
 	this->playerStates[State::DUCKING]  = new PlayerSittingState();
+	this->playerStates[State::DUCKING_PUNCHING] = new PlayerDuckingPunchingState();
+	this->playerStates[State::SHIELD_UP] = new PlayerShieldUpState();
+	this->playerStates[State::KICKING] = new PlayerKickingState();
+	this->playerStates[State::ROLLING] = new PlayerRollingState();
 }
 
 
@@ -118,6 +135,9 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::JUMPING: 
 		{
+			// nếu trước đó đang falling tiếp tục là falling
+			if (this->onAirState == OnAir::Falling)
+				break;
 			this->SetAirState(OnAir::Jumping);
 			break;
 		}
@@ -125,6 +145,7 @@ void Player::ChangeState(State stateName) {
 }
 
 void Player::InnerChangeState(State stateName) {
+	SetPreviousState(this->state);
 	this->state = stateName;
 	this->playerstate = playerStates[stateName];
 	curanimation = animations[stateName];

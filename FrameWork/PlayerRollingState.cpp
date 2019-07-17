@@ -1,11 +1,11 @@
 ﻿#include "PlayerRollingState.h"
 
 
+int PlayerRollingState::curRollTime = 0;
 
 PlayerRollingState::PlayerRollingState()
 {
 	state = State::ROLLING;
-	this->curRollTime = 0;
 }
 
 
@@ -20,15 +20,21 @@ void PlayerRollingState::InputHandler()
 	
 	// chuyển sang trạng thái nhảy
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
-		player->ChangeState(State::JUMPING);
+  		player->ChangeState(State::JUMPING);
+		PlayerRollingState::curRollTime = 0;
 	}
 
 	// chuyển sang trạng thái đá
 	if (keyboard->isKeyDown(PLAYER_ATTACK)) {
-		
+		player->ChangeState(State::KICKING);
+		return;
 	}
+	
+	PlayerRollingState::curRollTime += 40;
+}
 
-	this->curRollTime += 10;
+BOOL PlayerRollingState::HasRollFullTime() {
+	return curRollTime >= MAX_ROLLING_TIME;
 }
 
 void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {

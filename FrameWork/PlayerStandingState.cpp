@@ -1,4 +1,5 @@
 ﻿#include"PlayerStandingState.h"
+#include "Debug.h"
 
 PlayerStandingState::PlayerStandingState()
 {
@@ -35,7 +36,7 @@ void PlayerStandingState::InputHandler()
 	// nhảy lên
 	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
-		return;
+		return;	
 	}
 	// ngồi xuống
 	if (keyboard->isKeyDown(PLAYER_SIT)) {
@@ -51,6 +52,7 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	//// collide with ground
 	//if (object->type == Type::GROUND) {
 	//	if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+	//		DebugOut(L"Collision Stand\n");
 	//		player->SetAirState(Player::OnAir::None);
 	//	}
 	//}

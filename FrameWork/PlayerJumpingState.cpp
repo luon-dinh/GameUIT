@@ -1,6 +1,7 @@
 ﻿#include "PlayerJumpingState.h"
-
+#include"Debug.h"
 void PlayerJumpingState::InputHandler() {
+
 	auto player = Player::getInstance();	
 	auto keyboard = KeyboardManager::getInstance();
 	int timePressedJump = 0;
@@ -8,7 +9,7 @@ void PlayerJumpingState::InputHandler() {
 		return;
 
 	// xét thời gian đã press phím jump
-	if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump)) {
+	if (player->GetOnAirState() == Player::OnAir::Jumping && !keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump)) {
 
   		if (timePressedJump <=0)
 			goto SkipPlayerJump;
@@ -24,14 +25,16 @@ void PlayerJumpingState::InputHandler() {
 			//chuyển sang trạng thái roll
 			else 
 			{
-
+				player->ChangeState(State::ROLLING);
 			}
 		}
 	}
+
 SkipPlayerJump:
-	if (keyboard->isKeyDown(PLAYER_ATTACK)) {
+	// Nhấn phím tấn công thì chuyển sang trạng thái đá
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);
-		goto SetAirState;
+		return;
 	}
 	// nhảy và chạy qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
@@ -59,26 +62,30 @@ SkipPlayerJump:
 }
 
 void PlayerJumpingState::Update(float dt) {
+
 	this->InputHandler();
+	if (Player::getInstance()->GetOnAirState() == Player::OnAir::Falling) {
+		//DebugOut(L"Falling\n");
+	}
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
-	auto player = Player::getInstance();
-	auto side = collision->side;
+	//auto player = Player::getInstance();
+	//auto side = collision->side;
 
-	if (object->type == Type::GROUND) {
-		// chạm vào ground trên đầu
-		if (side == CollisionSide::top) {
-			player->SetVy(0);
-		}
-		else {
-			// chạm nền dưới
-			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
-				player->pos.y -= player->vy * collision->collisionTime + object->height / 2;
-				player->ChangeState(State::STANDING);
-			}
-		}
-	}
+	//if (object->type == Type::GROUND) {
+	//	// chạm vào ground trên đầu
+	//	if (side == CollisionSide::top) {
+	//		//player->SetVy(0);
+	//	}
+	//	else {
+	//		// chạm nền dưới
+	//		if (side == CollisionSide::bottom && player->GetOnAirState()) {
+ //				player->pos.y -= player->vy * collision->collisionTime + object->height / 2;
+	//			player->ChangeState(State::STANDING);
+	//		}
+	//	}
+	//}
 }
 
 BoundingBox PlayerJumpingState::getBoundingBox()
