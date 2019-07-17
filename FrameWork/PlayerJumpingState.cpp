@@ -19,8 +19,8 @@ void PlayerJumpingState::InputHandler() {
 	}
 
 	 //tạm thời set ground giả lập
-	if (player->pos.y < 300 && player->GetOnAirState() == Player::OnAir::Falling) {
-		player->pos.y = 300;
+	if (player->pos.y < 70 && player->GetOnAirState() == Player::OnAir::Falling) {
+		player->pos.y = 70;
 		player->ChangeState(State::STANDING);
 		return;
 	}
@@ -46,8 +46,8 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	//	}
 	//	else {
 	//		// chạm nền dưới
-	//		if (side == CollisionSide::bottom) {
-	//			player->pos.y += player->vy*collision->collisionTime;
+	//		if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+	//			player->pos.y -= player->vy * collision->collisionTime + object->height / 2;
 	//			player->ChangeState(State::STANDING);
 	//		}
 	//	}
