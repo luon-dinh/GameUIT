@@ -14,9 +14,8 @@ private:
 public:
 	~Animation();
 	Animation() {};
-	Animation(Tag tag, int rowindex, int numofsprites);
 	Animation(Tag tag, int idex);
-	Animation(Tag tag, int first, int last, int tipeframe);
+	Animation(Tag tag, int first, int last, int tipeframe=TIME_PER_FRAME);
 	Sprite* getSprite(int index);
 	void Update(float dt);
 	void Render(D3DXVECTOR2 pos);

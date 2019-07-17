@@ -23,19 +23,20 @@ void PlayerSittingState::InputHandler() {
 	else {
 		// Đổi sang trạng thái nổi trên nước
 		if (keyboard->isKeyDown(PLAYER_JUMP)) {
-			player->ChangeState(State::FLOATING);
+			//player->ChangeState(State::FLOATING);
 			return;
 		}
 	}
 	// khi nhấn phím qua trái, ưu tiên qua đi qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
-		player->ChangeState(State::RUNNING);
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
+		player->ChangeState(State::RUNNING);
 		return;
 	}
 
 	// khi nhấn phím qua phải, ưu tiên đi qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+		player->SetVx(PLAYER_NORMAL_SPEED);
 		player->ChangeState(State::RUNNING);
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		return;

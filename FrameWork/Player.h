@@ -4,6 +4,7 @@
 #include"PlayerStandingState.h"
 #include "PlayerRunningState.h"
 #include "PlayerJumpingState.h"
+#include "PlayerSittingState.h"
 #include "Object.h"
 #include "Collision.h"
 
@@ -11,15 +12,18 @@ class Player :public Object
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
+	std::unordered_map<State, PlayerState*> playerStates;
 	static Player* instance;
 
 	PlayerState
 		*runningState,
 		*standingState,
-		*jumpingState;
+		*jumpingState,
+		*sittingState;
 
-	void InnerChangeState(PlayerState* state);
+	void InnerChangeState(State stateName);
 	void LoadAllStates();
+	void LoadAllAnimations();
 	void AddPosX();
 	void AddPosY();
 
@@ -69,6 +73,7 @@ public:
 	virtual void UpdatePosition();
 	void SetAirState(OnAir onAirState);
 	void SetMoveDirection(MoveDirection moveDir);
+	OnAir GetOnAirState();
 #pragma endregion
 
 };
