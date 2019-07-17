@@ -84,17 +84,6 @@ Animation::Animation(Tag tag, int first, int last, int timeperframe)
 	tiperframe = timeperframe;
 }
 
-Animation::Animation(Tag tag, int rowindex, int numofsprites)
-{
-	this->tag = tag;
-	for (int i = 0; i < numofsprites; i++)
-	{
-		sprites.push_back(new Sprite(this->tag, rowindex * 56, i * 60, (rowindex + 1) * 56, (i + 1) * 60));
-	}
-	this->toframe = sprites.size();
-	this->tiperframe = TIME_PER_FRAME / this->toframe;
-	this->curframeindex = 0;
-}
 
 int Animation::getWidth()
 {
