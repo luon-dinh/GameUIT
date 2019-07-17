@@ -58,7 +58,7 @@ void Game::Run()
 		{
 			frameStart = now;
 			Update(dt);
-			KeyboardManager::getInstance()->getState();
+			KeyboardManager::getInstance()->getState(dt);
 			// chac bat key handler o day
 			ProcessAllInput();
 			Render();
