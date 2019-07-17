@@ -49,3 +49,16 @@ void PlayerSittingState::Update(float dt) {
 void PlayerSittingState::OnCollision(Object* object, collisionOut* collision) {
 
 }
+
+BoundingBox PlayerSittingState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 7;
+	box.bottom = player->pos.y - 21;
+	box.left = player->pos.x - 12;
+	box.right = player->pos.y + 12;
+	return box;
+}

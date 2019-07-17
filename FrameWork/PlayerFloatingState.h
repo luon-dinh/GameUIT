@@ -6,6 +6,7 @@
 
 class PlayerFloatingState : public PlayerState {
 public:
+	BoundingBox getBoundingBox();
 	PlayerFloatingState();
 	void InputHandler() override;
 	void Update(float dt) override;

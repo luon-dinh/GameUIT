@@ -53,3 +53,16 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	//	}
 	//}
 }
+
+BoundingBox PlayerJumpingState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 20;
+	box.bottom = player->pos.y - 18;
+	box.left = player->pos.x - 11;
+	box.right = player->pos.y + 11;
+	return box;
+}

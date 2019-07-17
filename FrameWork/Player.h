@@ -51,7 +51,7 @@ public:
 	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
-
+	BoundingBox getBoundingBox();
 	State state;
 	MoveDirection direction;
 	Type type;

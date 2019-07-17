@@ -4,6 +4,7 @@
 
 class PlayerDuckingPunchingState : public PlayerState {
 public:
+	BoundingBox getBoundingBox();
 	PlayerDuckingPunchingState();
 	void InputHandler() override;
 	void Update(float dt) override;

@@ -9,4 +9,5 @@ public:
 	void Update(float dt) ;
 	void OnCollision(Object* object, collisionOut* collision);
 	void InputHandler();
+	BoundingBox getBoundingBox();
 };

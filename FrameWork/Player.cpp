@@ -44,6 +44,11 @@ Player::~Player()
 }
 
 
+BoundingBox Player::getBoundingBox()
+{
+	return this->playerstate->getBoundingBox();
+}
+
 void Player::Update(float dt)
 {
 	// Update state
