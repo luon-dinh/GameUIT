@@ -17,19 +17,20 @@ void PlayerKickingState::InputHandler()
 {
 	Player* player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
-
-	// chuyển sang trạng thái nhảy
-	if (this->curKickTime >= this->MAX_KICKING_TIME) {
-		player->ChangeState(State::JUMPING);
+	
+	if (this->curKickTime > MAX_KICKING_TIME) {
+		// trạng thái trước đó là ROLLING thì chuyển về lại ROLLING
+		if (player->GetPreviousState()->state == State::ROLLING)
+			player->ChangeState(State::ROLLING);
+		else
+			player->ChangeState(State::JUMPING);
+		this->curKickTime = 0;
+		return;
 	}
-
-	// chuyển sang trạng thái đá
-	if (keyboard->isKeyDown(PLAYER_ATTACK)) {
-
-	}
-
-	this->curKickTime += 10;
+	this->curKickTime += 30;
 }
+
+
 
 void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 	//auto side = collision->side;

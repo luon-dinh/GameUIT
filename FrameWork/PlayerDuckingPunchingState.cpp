@@ -7,12 +7,14 @@ PlayerDuckingPunchingState::PlayerDuckingPunchingState() {
 void PlayerDuckingPunchingState::InputHandler() {
 	auto player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
+	int timePunching = 0;
 	if (player == NULL || keyboard == NULL)
 		return;
 
 	// khi đang ngồi nhưng phím đánh đang được giữ
-	if (!keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
-		player->ChangeState(State::DUCKING);
+	if (!keyboard->getKeyPressedOnce(PLAYER_ATTACK, timePunching)) {
+		if (timePunching < 0 || timePunching >= MAX_PUNCH_TIME)
+			player->ChangeState(State::DUCKING);
 	}
 }
 

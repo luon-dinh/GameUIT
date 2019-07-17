@@ -105,9 +105,11 @@ void PlayScene::CollisionProcess(double dt)
 		//}
 	
 		collisionOut colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
+
 		//Gọi đến hàm xử lý va chạm của player.
-		if (colOut.side != CollisionSide::none)
- 			player->OnCollision(mapStaticObject[i], &colOut);
+		if (colOut.side != CollisionSide::none) {
+			player->OnCollision(mapStaticObject[i], &colOut);	
+		}
 
 	}
 }

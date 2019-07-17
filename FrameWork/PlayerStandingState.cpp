@@ -1,4 +1,5 @@
 ﻿#include"PlayerStandingState.h"
+#include "Debug.h"
 
 PlayerStandingState::PlayerStandingState()
 {
@@ -35,7 +36,7 @@ void PlayerStandingState::InputHandler()
 	// nhảy lên
 	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
-		return;
+		return;	
 	}
 	// ngồi xuống
 	if (keyboard->isKeyDown(PLAYER_SIT)) {
