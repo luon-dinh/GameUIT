@@ -147,6 +147,12 @@
     <ClCompile Include="PlayScene01.cpp">
       <Filter>Scene\PlayScene01</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDuckingPunchingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShieldUpState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -235,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="PlayScene01.h">
       <Filter>Scene\PlayScene01</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDuckingPunchingState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShieldUpState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

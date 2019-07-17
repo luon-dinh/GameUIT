@@ -24,16 +24,16 @@ Player::Player()
 
 void Player::LoadAllAnimations() {
 	animations[STANDING] = new Animation(PLAYER, 0, 1);
-	animations[RUNNING] = new Animation(PLAYER, 1, 4);
-	animations[JUMPING] = new Animation(PLAYER, 4, 1);
-	animations[SITTING] = new Animation(PLAYER, 3, 1);
+	animations[RUNNING] = new Animation(PLAYER, 1, 5);
+	animations[JUMPING] = new Animation(PLAYER, 7, 8);
+	animations[DUCKING] = new Animation(PLAYER, 6, 7);
 }
 
 void Player::LoadAllStates() {
 	this->playerStates[State::STANDING] = new PlayerStandingState();
 	this->playerStates[State::RUNNING]  = new PlayerRunningState();
 	this->playerStates[State::JUMPING]  = new PlayerJumpingState();
-	this->playerStates[State::SITTING]  = new PlayerSittingState();
+	this->playerStates[State::DUCKING]  = new PlayerSittingState();
 }
 
 
@@ -46,10 +46,10 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	// Update lại vị trí của position sau mỗi frame
-	this->UpdatePosition();
 	// Update state
 	this->playerstate->Update(dt);
+	// Update lại vị trí của position sau mỗi frame
+	this->UpdatePosition();
 	// Update animation
 	this->curanimation->Update(dt);
 }

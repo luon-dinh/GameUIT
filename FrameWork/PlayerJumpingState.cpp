@@ -21,7 +21,7 @@ void PlayerJumpingState::InputHandler() {
 	 //tạm thời set ground giả lập
 	if (player->pos.y < 70 && player->GetOnAirState() == Player::OnAir::Falling) {
 		player->pos.y = 70;
-		player->ChangeState(State::STANDING);
+		player->ChangeState(State::DUCKING);
 		return;
 	}
 

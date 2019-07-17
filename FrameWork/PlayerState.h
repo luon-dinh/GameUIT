@@ -1,6 +1,7 @@
 #pragma once
 #include"Collision.h"
 #include"Object.h"
+#include "Global.h"
 
 class PlayerState {
 public:

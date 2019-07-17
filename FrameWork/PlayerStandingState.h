@@ -8,5 +8,5 @@ public:
 	~PlayerStandingState() {};
 	void Update(float dt) ;
 	void OnCollision(Object* object, collisionOut* collision);
-	void InputHandler() ;
+	void InputHandler();
 };

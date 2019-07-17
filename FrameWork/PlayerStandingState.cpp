@@ -39,7 +39,7 @@ void PlayerStandingState::InputHandler()
 	}
 	// ngồi xuống
 	if (keyboard->isKeyDown(PLAYER_SIT)) {
-		player->ChangeState(State::SITTING);
+		player->ChangeState(State::DUCKING);
 		return;
 	}
 }
