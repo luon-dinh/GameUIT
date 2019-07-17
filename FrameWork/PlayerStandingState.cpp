@@ -45,15 +45,15 @@ void PlayerStandingState::InputHandler()
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto side = collision->side;
-	//auto player = Player::getInstance();
-	//
-	//// collide with ground
-	//if (object->type == Type::GROUND) {
-	//	if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
-	//		player->SetAirState(Player::OnAir::None);
-	//	}
-	//}
+	auto side = collision->side;
+	auto player = Player::getInstance();
+	
+	// collide with ground
+	if (object->type == Type::GROUND) {
+		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+			player->SetAirState(Player::OnAir::None);
+		}
+	}
 }
 
 
@@ -66,6 +66,6 @@ BoundingBox PlayerStandingState::getBoundingBox()
 	box.top = player->pos.y + 24;
 	box.bottom = player->pos.y - 21;
 	box.left = player->pos.x - 11;
-	box.right = player->pos.y + 11;
+	box.right = player->pos.x + 11;
 	return box;
 }
