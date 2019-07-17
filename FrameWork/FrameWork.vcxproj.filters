@@ -55,6 +55,9 @@
     <Filter Include="Scene\PlayScene01">
       <UniqueIdentifier>{be0fb39b-d8cc-4435-b469-9aef449306e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMap\Maps">
+      <UniqueIdentifier>{1c1be5cd-f2af-47e2-b86f-3e65d2ea3dc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -129,9 +132,6 @@
     <ClCompile Include="TileSet.cpp">
       <Filter>GameMap\TileSet</Filter>
     </ClCompile>
-    <ClCompile Include="MapCharles.cpp">
-      <Filter>GameMap</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerJumpingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
@@ -152,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="PlayerShieldUpState.cpp">
       <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MapCharles.cpp">
+      <Filter>GameMap\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="MapCharlesBoss.cpp">
+      <Filter>GameMap\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,9 +230,6 @@
     <ClInclude Include="TileSet.h">
       <Filter>GameMap\TileSet</Filter>
     </ClInclude>
-    <ClInclude Include="MapCharles.h">
-      <Filter>GameMap</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerJumpingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
@@ -247,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="PlayerShieldUpState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCharles.h">
+      <Filter>GameMap\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCharlesBoss.h">
+      <Filter>GameMap\Maps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Camera.h"
 #include "MapCharles.h"
+#include "MapCharlesBoss.h"
 #include "Sprite.h"
 #include "KeyboardManager.h"
 #include <d3d9.h>
@@ -25,9 +26,8 @@ public:
 	void Draw();
 	void Update(double dt);
 	void SetCamera(Camera*);
-	void LoadContent();
 	std::vector<Object*> &getStaticObject();
-	GameMap(const char * imgPath, const char * txtPath, const char * mapObjectPath, MapName map);
+	GameMap(const char * imgPath, const char * txtPath,  const char * mapObjectPath, MapName map);
 	~GameMap();
 private:
 	long mapHeight;
@@ -35,7 +35,9 @@ private:
 	const char * imgPath;
 	const char * txtPath;
 	const char * mapObjectPath;
+	
 	std::vector<Object*> staticObject;
 	Camera * camera;
 	TileMap *tMap;
+	void LoadMapObject();
 };

@@ -21,10 +21,17 @@ public:
 
 private:
 	
-	const char * world01BossMap = "";
-	const char * world01BossTile = "";
-	const char * world01BossMapObject = "";
+	GameMap* worldDark;
 
+	const char * world01BossMapLight = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_light_map.txt";
+	const char * world01BossTileLight = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_light_tile.png";
+	const char * world01BossMapDark = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_dark_map.txt";
+	const char * world01BossTileDark = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_dark_tile.png";
+	const char * world01BossMapObject = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_light_map_object.txt";
+
+	bool isLightOn = true;
+
+	void TurnOnOffLight();
 	void ProcessUpdates(double dt) override;
 	void UpdateCameraWithPlayerPos(double dt) override;
 	void CollisionProcess(double dt) override;

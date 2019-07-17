@@ -29,6 +29,12 @@ void PlayScene::Draw()
 	player->Render();
 }
 
+void PlayScene::ResetCamera()
+{
+	camera->SetMapProperties(world->getMapHeight(), world->getMapWidth()); //Set properties để camera biết khi nào thì dừng.
+	camera->ResetCameraPosition();
+}
+
 void PlayScene::Update(double dt)
 {
 	//Update map trước.

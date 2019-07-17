@@ -49,6 +49,9 @@ public:
 	//Lấy BOUND (BOUND này dùng để giới hạn lại phạm vi của player trước khi camera di chuyển).
 	RECT getBoundingBox();
 
+	//Hàm dùng để reset lại toạ độ của camera khi vào map mới.
+	void ResetCameraPosition() { topLeftX = 0, topLeftY = SCREEN_HEIGHT; }
+
 	//Hàm này sẽ hỗ trợ chuyển từ WorldPort sang ViewPort
 	D3DXVECTOR3 convertWorldToViewPort(D3DXVECTOR3 worldPortPos);
 	Camera(Camera*);

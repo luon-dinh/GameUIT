@@ -18,7 +18,7 @@ TileMap::~TileMap()
 	delete tileMap;
 }
 
-TileMap::TileMap(const char * tileSetFile,const char * tileMapFile)
+TileMap::TileMap(const char * tileSetFile,const char * tileMapFile, Tag tag)
 {
 
 	//Đọc tileMapFile từ file txt và lưu vào ma trận map.
@@ -74,7 +74,7 @@ TileMap::TileMap(const char * tileSetFile,const char * tileMapFile)
 	}
 
 	//Ta tạo TileSet.
-	tileSet = new TileSet(tileSetFile, numOfTileType);
+	tileSet = new TileSet(tileSetFile, numOfTileType, tag);
 
 	//Sau khi xong thì thông tin map đã được load đầy đủ.
 	//Tiếp theo ta cần lấy thông tin kích cỡ tile.

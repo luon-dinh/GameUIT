@@ -149,6 +149,7 @@
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapCharles.cpp" />
+    <ClCompile Include="MapCharlesBoss.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDuckingPunchingState.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="MapCharles.h" />
+    <ClInclude Include="MapCharlesBoss.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDuckingPunchingState.h" />

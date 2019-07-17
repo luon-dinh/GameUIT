@@ -1,18 +1,18 @@
 #include "TileSet.h"
 #include "Debug.h"
 
-TileSet::TileSet(const char *tileSetFile, int _numOfTileType)
+TileSet::TileSet(const char *tileSetFile, int _numOfTileType, Tag tag)
 {
-	TextureManager::getInstance()->addTexture(Tag::MAP1, tileSetFile);
+	TextureManager::getInstance()->addTexture(tag, tileSetFile);
 	PrintDebug(tileSetFile);
 	numOfTileType = _numOfTileType;
 
 	tileSet = new Sprite*[numOfTileType];
-	tileSize = TextureManager::getInstance()->getTextureHeight(Tag::MAP1);
+	tileSize = TextureManager::getInstance()->getTextureHeight(tag);
 
 	for (int i = 0; i < numOfTileType; ++i)
 	{
-		tileSet[i] = new Sprite(Tag::MAP1, 0, i*tileSize, tileSize, (i + 1)*tileSize);
+		tileSet[i] = new Sprite(tag, 0, i*tileSize, tileSize, (i + 1)*tileSize);
 	}
 		
 	

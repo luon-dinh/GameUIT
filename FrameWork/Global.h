@@ -50,11 +50,11 @@ enum Tag {
 
 	PLAYER,
 	ITEM,
-	MAP1,
+	MAPCHARLES,
+	MAPCHARLESBOSS,
 	TileSet1,
-	MAP2,
-	MAP3,
-	MAP4,
+	MAPPITTSBURGH,
+	MAPPITTSBURGHBOSS,
 	ENERMY,
 	BULLET,
 	SHIELD,
@@ -71,7 +71,9 @@ enum Type {
 	LOCOT,
 	GROUND,
 	SOLIDBOX,
-	WATERRL
+	WATERRL,
+	ROPE,
+	ONOFF
 	//cac loai dan
 };
 enum State {
@@ -98,7 +100,7 @@ enum MapName
 	CHARLES,
 	CHARLESBOSS,
 	PITTSBURGH,
-	PITTSBURGHBOSS
+	PITTSBURGHBOSS,
 };
 
 extern HINSTANCE hInstance;

@@ -9,7 +9,7 @@ class TileSet
 	int tileSize;
 	int numOfTileType;
 public:
-	TileSet(const char * tileSetFile, int _numOfTileType);
+	TileSet(const char * tileSetFile, int _numOfTileType, Tag tag);
 	~TileSet();
 	void DrawTile(int tileNum, D3DXVECTOR3 position); //Vẽ một tile với tileNum tương ứng lên vị trí position.
 	int getTileSize();
