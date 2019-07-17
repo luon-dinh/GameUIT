@@ -1,4 +1,5 @@
 ﻿#include"PlayerStandingState.h"
+#include "Debug.h"
 
 PlayerStandingState::PlayerStandingState()
 {
@@ -35,7 +36,7 @@ void PlayerStandingState::InputHandler()
 	// nhảy lên
 	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
-		return;
+		return;	
 	}
 	// ngồi xuống
 	if (keyboard->isKeyDown(PLAYER_SIT)) {
@@ -45,13 +46,27 @@ void PlayerStandingState::InputHandler()
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto side = collision->side;
-	//auto player = Player::getInstance();
-	//
-	//// collide with ground
-	//if (object->type == Type::GROUND) {
-	//	if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
-	//		player->SetAirState(Player::OnAir::None);
-	//	}
-	//}
+	auto side = collision->side;
+	auto player = Player::getInstance();
+	
+	// collide with ground
+	if (object->type == Type::GROUND) {
+		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
+			player->SetAirState(Player::OnAir::None);
+		}
+	}
+}
+
+
+BoundingBox PlayerStandingState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 24;
+	box.bottom = player->pos.y - 21;
+	box.left = player->pos.x - 11;
+	box.right = player->pos.x + 11;
+	return box;
 }

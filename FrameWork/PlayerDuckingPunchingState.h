@@ -4,8 +4,12 @@
 
 class PlayerDuckingPunchingState : public PlayerState {
 public:
+	BoundingBox getBoundingBox();
 	PlayerDuckingPunchingState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
+
+
+	const int MAX_PUNCH_TIME = 400;
 };

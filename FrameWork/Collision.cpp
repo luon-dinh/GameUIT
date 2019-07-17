@@ -17,11 +17,36 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	collisionOut out;
 	out.collisionTime = 2;
 	out.side = CollisionSide::none;
-	//recta.vx = rectb.vx - recta.vx;
-	//recta.vy = rectb.vy - recta.vy;
-	if (!IsCollide(recta, rectb))
+	recta.vx = recta.vx - rectb.vx;
+	recta.vy = recta.vy - rectb.vy;
+	/*BoundingBox test;
+	if (recta.vy > 0)
 	{
-		int a = 1;
+		test.top = recta.top + recta.vy;
+		test.bottom = recta.bottom;
+	}
+	else
+	{
+		test.top = recta.top;
+		test.bottom = recta.bottom + recta.vy;
+	}
+	if (recta.vx>0)
+	{
+		test.right = recta.right + recta.vx;
+		test.left = recta.left;
+	}
+	else
+	{
+		test.right = recta.right;
+		test.left = recta.left + recta.vx;
+	}*/
+	BoundingBox test;
+	test.top = recta.vy > 0 ? recta.top + recta.vy : recta.top;
+	test.bottom = recta.vy > 0 ? recta.bottom : recta.bottom + recta.vy;
+	test.left = recta.vx > 0 ? recta.left : recta.left + recta.vx;
+	test.right = recta.vx > 0 ? recta.right + recta.vx : recta.right;
+	if (!IsCollide(test, rectb))
+	{
 		return out;
 	}
 	if (recta.vx > 0.0f)
@@ -31,10 +56,10 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	else
 	{
-		/*dxEntry = rectb.right - recta.left;
-		dxExit = rectb.left - recta.right;*/
-		dxEntry = recta.left - rectb.right;
-		dxExit = recta.right - rectb.left;
+		dxEntry = rectb.right - recta.left;
+		dxExit = rectb.left - recta.right;
+		/*dxEntry = recta.left - rectb.right;
+		dxExit = recta.right - rectb.left;*/
 	}
 	if (recta.vy > 0.0f)
 	{
@@ -43,10 +68,10 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	else
 	{
-		/*dyEntry = rectb.bottom - recta.top;
-		dyExit = rectb.top - recta.bottom;*/
-		dyEntry = recta.bottom - rectb.top;
-		dyExit = recta.top - rectb.bottom;
+		dyEntry = rectb.top - recta.bottom;
+		dyExit = rectb.bottom - recta.top;
+		/*dyEntry = recta.bottom - rectb.top;
+		dyExit = recta.top - rectb.bottom;*/
 	}
 
 	
@@ -74,8 +99,25 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	float entryTime = max(txEntry, tyEntry);
 	float exitTime = min(tyExit, txExit);
 	out.collisionTime = entryTime;
-	
-	if (txEntry < tyEntry)
+	if (txEntry > tyEntry)
+	{
+		if (dxEntry > 0)
+			out.side = CollisionSide::right;
+		else
+		{
+			out.side = CollisionSide::left;
+		}
+	}
+	else
+	{
+		if (dyEntry > 0)
+			out.side = CollisionSide::top;
+		else
+		{
+			out.side = CollisionSide::bottom;
+		}
+	}
+	/*if (txEntry < tyEntry)
 	{
 		if (dyEntry > 0.0f)
 		{
@@ -95,9 +137,9 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 		}
 		else
 		{
-			out.side = CollisionSide::bottom;
+			out.side = CollisionSide::left;
 		}
-	}
+	}*/
 	if (out.side == CollisionSide::bottom)
 	{
 		int a = 1;

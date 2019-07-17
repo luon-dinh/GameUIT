@@ -24,7 +24,7 @@
 #define PLAYER_NORMAL_SPEED			2
 #define PLAYER_JUMP_SPEED			8
 #define GROUND_GRAVITY				0.3
-
+#define PLAYER_MAX_FALLING_VELOCITY -300
 // Moving keyboard input
 #define PLAYER_MOVE_LEFT			DIK_LEFTARROW
 #define PLAYER_MOVE_RIGHT			DIK_RIGHTARROW
@@ -76,6 +76,7 @@ enum Type {
 	ONOFF
 	//cac loai dan
 };
+
 enum State {
 	STANDING,
 	RUNNING,
@@ -92,7 +93,9 @@ enum State {
 	ATTACKING_FLY,
 	FALLING,
 	FLOATING,
-	SHIELD_UP
+	SHIELD_UP,
+	ROLLING,
+	KICKING
 };
 
 enum MapName

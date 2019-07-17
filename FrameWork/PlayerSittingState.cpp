@@ -27,6 +27,7 @@ void PlayerSittingState::InputHandler() {
 			return;
 		} 
 	}
+
 	// khi nhấn phím qua trái, ưu tiên qua đi qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
@@ -40,6 +41,10 @@ void PlayerSittingState::InputHandler() {
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		return;
 	}
+
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
+		player->ChangeState(State::DUCKING_PUNCHING);
+	}
 }
 
 void PlayerSittingState::Update(float dt) {
@@ -48,4 +53,17 @@ void PlayerSittingState::Update(float dt) {
 
 void PlayerSittingState::OnCollision(Object* object, collisionOut* collision) {
 
+}
+
+BoundingBox PlayerSittingState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 7;
+	box.bottom = player->pos.y - 21;
+	box.left = player->pos.x - 12;
+	box.right = player->pos.x + 12;
+	return box;
 }

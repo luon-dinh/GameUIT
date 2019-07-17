@@ -5,6 +5,10 @@
 #include "PlayerRunningState.h"
 #include "PlayerJumpingState.h"
 #include "PlayerSittingState.h"
+#include "PlayerDuckingPunchingState.h"
+#include "PlayerKickingState.h"
+#include "PlayerShieldUpState.h"
+#include "PlayerRollingState.h"
 #include "Object.h"
 #include "Collision.h"
 
@@ -26,6 +30,8 @@ private:
 	void LoadAllAnimations();
 	void AddPosX();
 	void AddPosY();
+
+	PlayerState* prevState;
 
 public:
 	int health;
@@ -51,7 +57,9 @@ public:
 	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
-
+	PlayerState* GetPreviousState();
+	void SetPreviousState(State stateName);
+	BoundingBox getBoundingBox();
 	State state;
 	MoveDirection direction;
 	Type type;
