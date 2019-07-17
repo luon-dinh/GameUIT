@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Scene.h"
 #include "GameMap.h"
 #include "KeyboardManager.h"
@@ -6,27 +6,29 @@
 #include "Player.h"
 #include "Global.h"
 
+
+//Các PlayScene khác nhau sẽ có nhiều đoạn code có thể dùng chung được.
+//Ý tưởng ở đây của việc kế thừa là những đoạn code dùng chung sẽ được gom lại ở lớp cha PlayScene này.
+//Lớp con sẽ override lại tất cả phương thức virtual của lớp cha.
+//Những chỗ nào code không đổi thì các lớp con sẽ gọi phương thức của lớp cha.
+//Những chỗ nào có đổi thì lớp con sẽ tự implement lại phương thức đó.
+
 class PlayScene : public Scene
 {
 public:
-	void Update(double dt);
-	void LoadContent();
-	void Draw();
+	virtual void Update(double dt);
+	virtual void LoadContent();
+	virtual void Draw();
 	std::vector<Object*> mapStaticObject;
-	PlayScene();
+
+protected:
+	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
-
-private:
-	void ProcessUpdates(double dt);
-	void UpdateCameraWithPlayerPos(double dt);
-	void CollisionProcess(double dt);
-	void EnvironmentUpdate(double dt);
-	const char * world11tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.png";
-	const char * world11map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.txt";
-	const char * world11MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_obj_new.txt";
-	
-
-	GameMap* world11;	
+	virtual void ProcessUpdates(double dt);
+	virtual void UpdateCameraWithPlayerPos(double dt);
+	virtual void CollisionProcess(double dt);
+	virtual void EnvironmentUpdate(double dt);
+	GameMap* world;
 	Player* player;
 	Camera * camera;
 };

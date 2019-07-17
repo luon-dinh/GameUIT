@@ -1,13 +1,10 @@
 #include "SceneManager.h"
-#include "TextureManager.h"
-#include "KeyboardManager.h"
-#include "PlayScene.h"
 
 SceneManager* SceneManager::sceneManagerInstance = nullptr;
 
 SceneManager::SceneManager()
 {
-	currentScene = new PlayScene();
+	currentScene = new PlayScene01();
 }
 
 SceneManager::~SceneManager()

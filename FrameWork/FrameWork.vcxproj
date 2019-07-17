@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -158,6 +158,8 @@
     <ClCompile Include="PlayerStandingState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PlayScene01.cpp" />
+    <ClCompile Include="PlayScene01Boss.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -187,6 +189,8 @@
     <ClInclude Include="PlayerStandingState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlayScene01.h" />
+    <ClInclude Include="PlayScene01Boss.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundManager.h" />

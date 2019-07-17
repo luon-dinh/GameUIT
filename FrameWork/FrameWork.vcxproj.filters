@@ -49,6 +49,12 @@
     <Filter Include="GameMap\TileSet">
       <UniqueIdentifier>{eea7ac48-ad28-4743-a907-e5b05f0855d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene01Boss">
+      <UniqueIdentifier>{23647728-e8f5-4733-92ba-c97e601c62e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene01">
+      <UniqueIdentifier>{be0fb39b-d8cc-4435-b469-9aef449306e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -135,6 +141,12 @@
     <ClCompile Include="PlayerFloatingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayScene01Boss.cpp">
+      <Filter>Scene\PlayScene01Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene01.cpp">
+      <Filter>Scene\PlayScene01</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -217,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="PlayerFloatingState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene01Boss.h">
+      <Filter>Scene\PlayScene01Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene01.h">
+      <Filter>Scene\PlayScene01</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

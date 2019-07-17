@@ -91,6 +91,14 @@ enum State {
 	FLOATING
 };
 
+enum MapName
+{
+	CHARLES,
+	CHARLESBOSS,
+	PITTSBURGH,
+	PITTSBURGHBOSS
+};
+
 extern HINSTANCE hInstance;
 extern HWND hwnd;
 extern LPD3DXSPRITE spriteHandler;
