@@ -50,7 +50,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom) {
-				player->pos.y += player->vy*collision->collisionTime;
+				player->pos.y -= player->vy*collision->collisionTime + object->height / 2;
 				player->SetAirState(Player::OnAir::None);
 				player->ChangeState(State::STANDING);
 			}
