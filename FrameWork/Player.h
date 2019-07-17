@@ -27,6 +27,7 @@ private:
 	void AddPosX();
 	void AddPosY();
 
+
 public:
 	int health;
 	int live;

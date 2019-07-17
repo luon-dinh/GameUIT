@@ -22,7 +22,7 @@
 #define NORMALPALYER_HEIGHT			40
 #define PLAYER_MAX_JUMPING_HEIGHT	500
 #define PLAYER_NORMAL_SPEED			2
-#define PLAYER_JUMP_SPEED			8
+#define PLAYER_JUMP_SPEED			5
 #define GROUND_GRAVITY				0.3
 
 // Moving keyboard input
@@ -74,6 +74,7 @@ enum Type {
 	WATERRL
 	//cac loai dan
 };
+
 enum State {
 	STANDING,
 	RUNNING,
@@ -90,7 +91,9 @@ enum State {
 	ATTACKING_FLY,
 	FALLING,
 	FLOATING,
-	SHIELD_UP
+	SHIELD_UP,
+	ROLLING,
+	KICKING
 };
 
 enum MapName
