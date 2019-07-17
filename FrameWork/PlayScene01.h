@@ -19,9 +19,9 @@ public:
 private:
 
 	//Hằng số dùng để lưu địa chỉ đến các file.
-	const char * world01tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.png";
-	const char * world01map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Charleston_new.txt";
-	const char * world01MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_obj_new.txt";
+	const char * world01tile = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_tile.png";
+	const char * world01map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
+	const char * world01MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_object.txt";
 
 	void ProcessUpdates(double dt) override;
 	void UpdateCameraWithPlayerPos(double dt) override;
