@@ -32,6 +32,16 @@ RECT Camera::getBoundingBox()
 	return boundBox;
 }
 
+RECT Camera::getBoundingBoxAdvanced()
+{
+	RECT boundBox;
+	boundBox.top = topBoundAdvanced;
+	boundBox.bottom = bottomBoundAdvanced;
+	boundBox.left = leftBoundAdvanced;
+	boundBox.right = rightBoundAdvanced;
+	return boundBox;
+}
+
 Camera::~Camera()
 {
 

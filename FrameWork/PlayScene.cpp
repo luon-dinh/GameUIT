@@ -62,6 +62,7 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int playerHeight = player->getHeight();
 
 	RECT cameraBoundBox = Camera::getCameraInstance()->getBoundingBox();
+	RECT cameraBoundBoxAdvanced = Camera::getCameraInstance()->getBoundingBoxAdvanced();
 
 	//Chuyển player từ world view sang view port để xét với các bound.
 	D3DXVECTOR3 playerViewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(playerPos.x, playerPos.y, 0));
@@ -71,6 +72,11 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int topBound = cameraBoundBox.top;
 	int bottomBound = cameraBoundBox.bottom;
 
+	int leftBoundAdvanced = cameraBoundBoxAdvanced.left;
+	int rightBoundAdvanced = cameraBoundBoxAdvanced.right;
+	int topBoundAdvanced = cameraBoundBoxAdvanced.top;
+	int bottomBoundAdvanced = cameraBoundBoxAdvanced.bottom;
+
 	//Chúng ta sẽ chỉnh lại Camera sao cho khi Player rời khỏi vị trí Critical Line, Camera sẽ bám theo.
 	//Đầu tiên chúng ta xem player đang cách các cạnh của màn hình một khoảng bao nhiêu.
 	int fromPlayerToTop = playerViewPort.y - playerHeight / 2;
@@ -78,6 +84,7 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int fromPlayerToLeft = playerViewPort.x - playerWidth / 2;
 	int fromPlayerToRight = SCREEN_WIDTH - playerViewPort.x + playerWidth / 2;
 
+	//Bám theo cơ bản (giữ player trong bounding box của camera).
 	if (fromPlayerToTop < topBound)
 		camera->MoveUp(topBound - fromPlayerToTop);
 	else if (fromPlayerToBottom < bottomBound)
@@ -87,6 +94,17 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 		camera->MoveLeft(leftBound - fromPlayerToLeft);
 	else if (fromPlayerToRight < rightBound)
 		camera->MoveRight(rightBound - fromPlayerToRight);
+
+	//Bám theo nâng cao (giữ player trong bounding box nhưng đẹp hơn).
+	//if (fromPlayerToTop < topBoundAdvanced)
+	//	camera->MoveUp(SCREEN_HEIGHT - fromPlayerToTop - bottomBoundAdvanced);
+	//else if (fromPlayerToBottom < bottomBoundAdvanced)
+	//	camera->MoveDown(SCREEN_HEIGHT - fromPlayerToBottom - topBoundAdvanced);
+
+	//if (fromPlayerToLeft < leftBoundAdvanced)
+	//	camera->MoveLeft(leftBoundAdvanced - fromPlayerToLeft);
+	//else if (fromPlayerToRight < rightBoundAdvanced)
+	//	camera->MoveRight(rightBoundAdvanced - fromPlayerToRight);
 
 }
 

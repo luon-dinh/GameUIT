@@ -18,10 +18,10 @@ SceneManager::~SceneManager()
 		delete charles;
 	if (charlesBoss != nullptr)
 		delete charlesBoss;
-	if (pittsburge != nullptr)
-		delete pittsburge;
-	if (pittsburgeBoss != nullptr)
-		delete pittsburgeBoss;
+	if (pittsburgh != nullptr)
+		delete pittsburgh;
+	if (pittsburghBoss != nullptr)
+		delete pittsburghBoss;
 }
 
 void SceneManager::Update(double dt)

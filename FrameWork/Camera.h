@@ -8,10 +8,19 @@ const auto cameraSpeed = 1;
 class Camera
 {
 private:
+	//Toạ độ bounding box cho việc dời camera thường.
+	//Toạ độ này là từ màn hình vào 4 cạnh của camera.
 	const int topBound = 128;
 	const int bottomBound = 88;
 	const int leftBound = 70;
 	const int rightBound = 145;
+	
+	//Toạ độ bounding box cho việc dời camera nâng cao.
+	const int topBoundAdvanced = 60;
+	const int bottomBoundAdvanced = 60;
+	const int leftBoundAdvanced = 70;
+	const int rightBoundAdvanced = 145;
+
 	Camera();
 	~Camera();
 	long topLeftX;
@@ -48,6 +57,9 @@ public:
 	D3DXVECTOR3 getPositionVector();
 	//Lấy BOUND (BOUND này dùng để giới hạn lại phạm vi của player trước khi camera di chuyển).
 	RECT getBoundingBox();
+
+	//Lấy BOUND dùng cho việc dịch camera nâng cao.
+	RECT getBoundingBoxAdvanced();
 
 	//Hàm dùng để reset lại toạ độ của camera khi vào map mới.
 	void ResetCameraPosition() { topLeftX = 0, topLeftY = SCREEN_HEIGHT; }
