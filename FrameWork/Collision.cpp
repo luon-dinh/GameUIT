@@ -19,27 +19,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	out.side = CollisionSide::none;
 	recta.vx = recta.vx - rectb.vx;
 	recta.vy = recta.vy - rectb.vy;
-	/*BoundingBox test;
-	if (recta.vy > 0)
-	{
-		test.top = recta.top + recta.vy;
-		test.bottom = recta.bottom;
-	}
-	else
-	{
-		test.top = recta.top;
-		test.bottom = recta.bottom + recta.vy;
-	}
-	if (recta.vx>0)
-	{
-		test.right = recta.right + recta.vx;
-		test.left = recta.left;
-	}
-	else
-	{
-		test.right = recta.right;
-		test.left = recta.left + recta.vx;
-	}*/
+	
 	BoundingBox test;
 	test.top = recta.vy > 0 ? recta.top + recta.vy : recta.top;
 	test.bottom = recta.vy > 0 ? recta.bottom : recta.bottom + recta.vy;
@@ -58,8 +38,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	{
 		dxEntry = rectb.right - recta.left;
 		dxExit = rectb.left - recta.right;
-		/*dxEntry = recta.left - rectb.right;
-		dxExit = recta.right - rectb.left;*/
+		
 	}
 	if (recta.vy > 0.0f)
 	{
@@ -70,8 +49,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	{
 		dyEntry = rectb.top - recta.bottom;
 		dyExit = rectb.bottom - recta.top;
-		/*dyEntry = recta.bottom - rectb.top;
-		dyExit = recta.top - rectb.bottom;*/
+		
 	}
 
 	
@@ -98,51 +76,26 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 
 	float entryTime = max(txEntry, tyEntry);
 	float exitTime = min(tyExit, txExit);
+	if (entryTime > exitTime || (txEntry < 0.0f&&tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f)
+		return out;
 	out.collisionTime = entryTime;
 	if (txEntry > tyEntry)
 	{
 		if (dxEntry < 0)
-			out.side = CollisionSide::right;
+			out.side = CollisionSide::left;
 		else
 		{
-			out.side = CollisionSide::left;
+			out.side = CollisionSide::right;
 		}
 	}
 	else
 	{
 		if (dyEntry < 0)
-			out.side = CollisionSide::top;
-		else
-		{
 			out.side = CollisionSide::bottom;
-		}
-	}
-	/*if (txEntry < tyEntry)
-	{
-		if (dyEntry > 0.0f)
+		else
 		{
 			out.side = CollisionSide::top;
 		}
-		else
-		{
-			out.side = CollisionSide::bottom;
-		}
-
-	}
-	else
-	{
-		if (dxEntry > 0.0f)
-		{
-			out.side = CollisionSide::right;
-		}
-		else
-		{
-			out.side = CollisionSide::left;
-		}
-	}*/
-	if (out.side == CollisionSide::bottom)
-	{
-		int a = 1;
 	}
 	return out;
 }

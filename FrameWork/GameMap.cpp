@@ -14,6 +14,10 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSLIGHT);
 	else if (map == MapName::CHARLESBOSSDARK)
 		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSDARK);
+	else if (map == MapName::PITTSBURGHLIGHT)
+		tMap = new MapPittsburgh(imgPath, txtPath, Tag::MAPPITTSBURGHLIGHT);
+	else if (map == MapName::PITTSBURGHDARK)
+		tMap = new MapPittsburgh(imgPath, txtPath, Tag::MAPPITTSBURGHDARK);
 
 	camera = Camera::getCameraInstance();
 
@@ -89,8 +93,6 @@ std::vector<Object*> &GameMap::getStaticObject()
 
 GameMap::~GameMap()
 {
-	if (camera != nullptr)
-		camera->ReleaseCameraInstance();
 	if (tMap != nullptr)
 		delete tMap;
 	for (int i = 0; i < staticObject.size(); ++i)

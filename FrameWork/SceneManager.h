@@ -2,8 +2,9 @@
 #include "Sprite.h"
 #include "TextureManager.h"
 #include "KeyboardManager.h"
-#include "PlayScene01.h"
-#include "PlayScene01Boss.h"
+#include "PlaySceneCharles.h"
+#include "PlaySceneCharlesBoss.h"
+#include "PlayScenePittsburgh.h"
 
 class SceneManager
 {
@@ -28,7 +29,7 @@ public:
 	void Update(double dt);
 	
 	//Hàm dùng để load một Scene khác.
-	void ReplaceScreen(PlayScene *);
+	void ChangeScene(PlayScene *);
 
 
 	//Hàm dùng để vẽ những gì có trong Scene lên màn hình.
@@ -45,5 +46,5 @@ private:
 	~SceneManager();
 
 	//Hàm dùng để gọi các thủ tục khi thay scene như cập nhật vị trí camera, player,...
-	void ChangeScene(PlayScene * newScene);
+	void ReplaceScene(PlayScene * newScene);
 };

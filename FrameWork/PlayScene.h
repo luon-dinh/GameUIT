@@ -16,7 +16,6 @@ class PlayScene : public Scene
 {
 public:
 	virtual void Update(double dt);
-	virtual void LoadContent();
 	virtual void Draw();
 	bool isDone() { return Done; }
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).

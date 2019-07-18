@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapCharles.cpp" />
     <ClCompile Include="MapCharlesBoss.cpp" />
+    <ClCompile Include="MapPittsburgh.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDuckingPunchingState.cpp" />
@@ -164,8 +165,10 @@
     <ClCompile Include="PlayerStandingState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="PlayScene01.cpp" />
-    <ClCompile Include="PlayScene01Boss.cpp" />
+    <ClCompile Include="PlaySceneCharles.cpp" />
+    <ClCompile Include="PlaySceneCharlesBoss.cpp" />
+    <ClCompile Include="PlayScenePittsburgh.cpp" />
+    <ClCompile Include="PlaySceneWithLight.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -188,6 +191,7 @@
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="MapCharles.h" />
     <ClInclude Include="MapCharlesBoss.h" />
+    <ClInclude Include="MapPittsburgh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDuckingPunchingState.h" />
@@ -201,8 +205,10 @@
     <ClInclude Include="PlayerStandingState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="PlayScene01.h" />
-    <ClInclude Include="PlayScene01Boss.h" />
+    <ClInclude Include="PlaySceneCharles.h" />
+    <ClInclude Include="PlaySceneCharlesBoss.h" />
+    <ClInclude Include="PlayScenePittsburgh.h" />
+    <ClInclude Include="PlaySceneWithLight.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundManager.h" />

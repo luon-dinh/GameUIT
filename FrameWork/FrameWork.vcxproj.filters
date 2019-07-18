@@ -49,17 +49,23 @@
     <Filter Include="GameMap\TileSet">
       <UniqueIdentifier>{eea7ac48-ad28-4743-a907-e5b05f0855d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\PlayScene01Boss">
-      <UniqueIdentifier>{23647728-e8f5-4733-92ba-c97e601c62e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\PlayScene01">
-      <UniqueIdentifier>{be0fb39b-d8cc-4435-b469-9aef449306e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameMap\TileMap\MapCharles">
       <UniqueIdentifier>{7c848010-598c-4fa0-88f2-bd974fbe461a}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameMap\TileMap\MapCharlesBoss">
       <UniqueIdentifier>{2bf589dd-22b1-446b-94d9-d81c3b4e8e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\PlaySceneCharles">
+      <UniqueIdentifier>{be0fb39b-d8cc-4435-b469-9aef449306e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\PlaySceneCharlesBoss">
+      <UniqueIdentifier>{23647728-e8f5-4733-92ba-c97e601c62e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\PlayScenePittsburgh">
+      <UniqueIdentifier>{2bde7efa-4752-48a0-8db6-512429bb6c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap\TileMap\MapPittsburgh">
+      <UniqueIdentifier>{54cb4e7a-3209-4ea4-ad9c-5d2baeff936b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,12 +150,6 @@
     <ClCompile Include="PlayerFloatingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene01Boss.cpp">
-      <Filter>Scene\PlayScene01Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene01.cpp">
-      <Filter>Scene\PlayScene01</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerDuckingPunchingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
@@ -168,8 +168,20 @@
     <ClCompile Include="MapCharlesBoss.cpp">
       <Filter>GameMap\TileMap\MapCharlesBoss</Filter>
     </ClCompile>
-    <ClCompile Include="GroundCollision.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="PlayScenePittsburgh.cpp">
+      <Filter>Scene\PlayScene\PlayScenePittsburgh</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneCharles.cpp">
+      <Filter>Scene\PlayScene\PlaySceneCharles</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneCharlesBoss.cpp">
+      <Filter>Scene\PlayScene\PlaySceneCharlesBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneWithLight.cpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPittsburgh.cpp">
+      <Filter>GameMap\TileMap\MapPittsburgh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,12 +263,6 @@
     <ClInclude Include="PlayerFloatingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene01Boss.h">
-      <Filter>Scene\PlayScene01Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene01.h">
-      <Filter>Scene\PlayScene01</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerDuckingPunchingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
@@ -275,8 +281,20 @@
     <ClInclude Include="MapCharlesBoss.h">
       <Filter>GameMap\TileMap\MapCharlesBoss</Filter>
     </ClInclude>
-    <ClInclude Include="GroundCollision.h">
-      <Filter>Objects</Filter>
+    <ClInclude Include="PlayScenePittsburgh.h">
+      <Filter>Scene\PlayScene\PlayScenePittsburgh</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneCharles.h">
+      <Filter>Scene\PlayScene\PlaySceneCharles</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneCharlesBoss.h">
+      <Filter>Scene\PlayScene\PlaySceneCharlesBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneWithLight.h">
+      <Filter>Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPittsburgh.h">
+      <Filter>GameMap\TileMap\MapPittsburgh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
