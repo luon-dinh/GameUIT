@@ -26,6 +26,10 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
 	LoadMapObject();
+
+	//Sau đó ta tính toạ độ cần vẽ những Map Object để debug.
+	debugSprite = new Sprite(Tag::TESTMAPOBJECT, 0, 0, debugTileSize, debugTileSize);
+	CalculateAllDebugDrawingVectors();
 }
 
 void GameMap::Update(double dt)
@@ -86,6 +90,38 @@ void GameMap::LoadMapObject()
 	}
 }
 
+void GameMap::CalculateAllDebugDrawingVectors()
+{
+	for (int i = 0; i < staticObject.size(); ++i)
+	{
+		int objectWidth = staticObject[i]->width;
+		int objectHeight = staticObject[i]->height;
+		BoundingBox objectBox = staticObject[i]->getStaticObjectBoundingBox();
+		int objTopLeftX = objectBox.left;
+		int objTopLeftY = objectBox.top;
+		int curX = objTopLeftX;
+		int curY = objTopLeftY;
+		//Vẽ từ dưới lên, từ trái qua phải.
+		while (curY >= objTopLeftY - objectHeight)
+		{
+			while (curX < objectWidth + objTopLeftX)
+			{
+				staticObjectDrawingPosition.push_back(D3DXVECTOR3(curX + debugTileSize / 2, curY - debugTileSize / 2, 0));
+				curX += debugTileSize;
+			}
+			curY -= debugTileSize;
+			curX = objTopLeftX;
+			//curY -= 1;
+		}
+	}
+}
+
+void GameMap::DrawAllDebugVector()
+{
+	for (int i = 0; i < staticObjectDrawingPosition.size(); ++i)
+		debugSprite->Render(Camera::getCameraInstance()->convertWorldToViewPort(staticObjectDrawingPosition[i]));
+}
+
 std::vector<Object*> &GameMap::getStaticObject()
 {
 	return staticObject;
@@ -109,35 +145,7 @@ void GameMap::Draw()
 	tMap->Draw(camera);
 	
 	//Vẽ debug map object.
-
-	const int debugTileSize = 8;
-
-	//Animation * debugAnim = new Animation(Tag::TESTMAPOBJECT, 0, 0, 150);
-
-	Sprite * debugSprite = new Sprite(Tag::TESTMAPOBJECT, 0, 0, debugTileSize, debugTileSize);
-
-	for (int i = 0; i < staticObject.size(); ++i)
-	{
-		int objectWidth = staticObject[i]->width;
-		int objectHeight = staticObject[i]->height;
-		BoundingBox objectBox = staticObject[i]->getStaticObjectBoundingBox();
-		int objTopLeftX = objectBox.left;
-		int objTopLeftY = objectBox.top;
-		int curX = objTopLeftX;
-		int curY = objTopLeftY;
-		//Vẽ từ dưới lên, từ trái qua phải.
-		while (curY >= objTopLeftY - objectHeight)
-		{
-			while (curX < objectWidth + objTopLeftX)
-			{
-				debugSprite->Render(camera->convertWorldToViewPort(D3DXVECTOR3(curX + debugTileSize / 2, curY - debugTileSize / 2,0)));
-				curX += debugTileSize;
-			}
-			curY -= debugTileSize;
-			curX = objTopLeftX;
-			//curY -= 1;
-		}
-	}
+	DrawAllDebugVector();
 }
 
 void GameMap::SetCamera(Camera* newCamera)
