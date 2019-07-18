@@ -24,3 +24,10 @@ PlaySceneCharlesBoss::~PlaySceneCharlesBoss()
 	if (worldDark != nullptr)
 		delete worldDark;
 }
+
+void PlaySceneCharlesBoss::Update(double dt)
+{
+	PlaySceneWithLight::Update(dt);
+	if (player->pos.x > SCREEN_WIDTH - 50)
+		Done = true;
+}

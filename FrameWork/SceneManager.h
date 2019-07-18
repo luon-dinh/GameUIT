@@ -4,6 +4,7 @@
 #include "KeyboardManager.h"
 #include "PlaySceneCharles.h"
 #include "PlaySceneCharlesBoss.h"
+#include "PlayScenePittsburgh.h"
 
 class SceneManager
 {

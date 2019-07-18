@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "MapCharles.h"
 #include "MapCharlesBoss.h"
+#include "MapPittsburgh.h"
 #include "Sprite.h"
 #include "KeyboardManager.h"
 #include <d3d9.h>
