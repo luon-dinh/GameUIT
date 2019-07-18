@@ -28,7 +28,7 @@ public:
 	void Update(double dt);
 	
 	//Hàm dùng để load một Scene khác.
-	void ReplaceScreen(PlayScene *);
+	void ChangeScene(PlayScene *);
 
 
 	//Hàm dùng để vẽ những gì có trong Scene lên màn hình.
@@ -45,5 +45,5 @@ private:
 	~SceneManager();
 
 	//Hàm dùng để gọi các thủ tục khi thay scene như cập nhật vị trí camera, player,...
-	void ChangeScene(PlayScene * newScene);
+	void ReplaceScene(PlayScene * newScene);
 };

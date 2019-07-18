@@ -6,8 +6,6 @@ PlayScene::~PlayScene()
 {
 	if (world != nullptr)
 		delete world;
-	if (camera != nullptr)
-		camera->ReleaseCameraInstance();
 	//Còn thiếu hàm release player.
 }
 

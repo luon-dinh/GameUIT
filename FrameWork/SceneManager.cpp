@@ -6,7 +6,8 @@ SceneManager::SceneManager()
 {
 	charles = new PlaySceneCharles();
 	charlesBoss = new PlaySceneCharlesBoss();
-	ChangeScene(charles);
+	currentScene = nullptr;
+	ReplaceScene(charles);
 	Player * player = Player::getInstance();
 	player->pos.x = 50;
 }
@@ -30,11 +31,13 @@ void SceneManager::Update(double dt)
 	if (!currentScene->isDone())
 		currentScene->Update(dt);
 	else
-		ChangeScene(charlesBoss);
+		ReplaceScene(charlesBoss);
 }
 
-void SceneManager::ChangeScene(PlayScene* newScene)
+void SceneManager::ReplaceScene(PlayScene* newScene)
 {
+	if (currentScene != nullptr)
+		delete currentScene;
 	currentScene = newScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 
@@ -46,15 +49,17 @@ void SceneManager::ChangeScene(PlayScene* newScene)
 	player->SetAirState(Player::OnAir::Falling);
 }
 
+void SceneManager::ChangeScene(PlayScene * newScene)
+{
+	currentScene = newScene;
+}
+
 void SceneManager::Draw()
 {
 	currentScene->Draw();
 }
 
-void SceneManager::ReplaceScreen(PlayScene * newScene)
-{
-	currentScene = newScene;
-}
+
 
 Scene* SceneManager::getCurrentScene()
 {
