@@ -2,8 +2,8 @@
 #include "Sprite.h"
 #include "TextureManager.h"
 #include "KeyboardManager.h"
-#include "PlayScene01.h"
-#include "PlayScene01Boss.h"
+#include "PlaySceneCharles.h"
+#include "PlaySceneCharlesBoss.h"
 
 class SceneManager
 {

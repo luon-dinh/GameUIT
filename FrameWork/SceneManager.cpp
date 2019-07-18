@@ -4,8 +4,8 @@ SceneManager* SceneManager::sceneManagerInstance = nullptr;
 
 SceneManager::SceneManager()
 {
-	charles = new PlayScene01();
-	charlesBoss = new PlayScene01Boss();
+	charles = new PlaySceneCharles();
+	charlesBoss = new PlaySceneCharlesBoss();
 	ChangeScene(charles);
 	Player * player = Player::getInstance();
 	player->pos.x = 50;

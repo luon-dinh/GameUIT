@@ -8,19 +8,13 @@ PlayScene::~PlayScene()
 		delete world;
 	if (camera != nullptr)
 		camera->ReleaseCameraInstance();
-	
 	//Còn thiếu hàm release player.
 }
 
 PlayScene::PlayScene()
 {
-	LoadContent();
-}
-
-void PlayScene::LoadContent()
-{
 	camera = Camera::getCameraInstance();
-	player = Player::getInstance(); //Lấy instance của player.
+	player = Player::getInstance();
 }
 
 void PlayScene::Draw()
