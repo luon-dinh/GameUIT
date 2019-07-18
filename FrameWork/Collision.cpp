@@ -101,7 +101,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	out.collisionTime = entryTime;
 	if (txEntry > tyEntry)
 	{
-		if (dxEntry > 0)
+		if (dxEntry < 0)
 			out.side = CollisionSide::right;
 		else
 		{
@@ -110,7 +110,7 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	}
 	else
 	{
-		if (dyEntry > 0)
+		if (dyEntry < 0)
 			out.side = CollisionSide::top;
 		else
 		{

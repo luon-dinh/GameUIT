@@ -48,11 +48,12 @@ BOOL PlayerRollingState::HasRollFullTime() {
 
 void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
-
+	auto player = Player::getInstance();
 	// collide with ground
 	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::top || side == CollisionSide::bottom) {
-			Player::getInstance()->SetVy(0);
+		if (side == CollisionSide::bottom) {
+ 			player->pos.y += collision->collisionTime * player->vy;
+			player->ChangeState(State::STANDING);
 		}
 	}
 }

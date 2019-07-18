@@ -168,6 +168,9 @@
     <ClCompile Include="MapCharlesBoss.cpp">
       <Filter>GameMap\TileMap\MapCharlesBoss</Filter>
     </ClCompile>
+    <ClCompile Include="GroundCollision.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="MapCharlesBoss.h">
       <Filter>GameMap\TileMap\MapCharlesBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundCollision.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
