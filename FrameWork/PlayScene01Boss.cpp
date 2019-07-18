@@ -4,6 +4,7 @@
 PlayScene01Boss::PlayScene01Boss()
 {
 	LoadContent();
+	currentWorld = world;
 }
 
 PlayScene01Boss::~PlayScene01Boss()
@@ -23,8 +24,8 @@ void PlayScene01Boss::LoadContent()
 	//Vì vậy chúng ta không cần thực hiện lại việc load singleton.
 
 	//Chúng ta tạo ra 2 GameMap : Một sáng một tối dùng để chuyển khi bật đèn sáng/tối.
-	world = new GameMap( world01BossTileLight,  world01BossMapLight, world01BossMapObject, MapName::CHARLESBOSS);
-	worldDark = new GameMap(world01BossTileDark, world01BossMapDark, world01BossMapObject, MapName::CHARLESBOSS);
+	world = new GameMap( world01BossTileLight,  world01BossMapLight, world01BossMapObject, MapName::CHARLESBOSSLIGHT);
+	worldDark = new GameMap(world01BossTileDark, world01BossMapDark, world01BossMapObject, MapName::CHARLESBOSSDARK);
 
 	world->SetCamera(camera);
 	worldDark->SetCamera(camera);
@@ -40,13 +41,8 @@ void PlayScene01Boss::TurnOnOffLight()
 
 void PlayScene01Boss::Draw()
 {
-	//Nếu đèn đang sáng thì ta vẽ world bình thường.
-	if (isLightOn)
-		world->Draw();
-	//Ngược lại nếu đèn tắt rồi thì ta render world tối.
-	else
-		worldDark->Draw();
-
+	currentWorld->Draw();
+	
 	//Xong xuôi thì ta vẽ player.
 	player->Render();
 }

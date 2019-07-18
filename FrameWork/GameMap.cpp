@@ -10,8 +10,10 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 
 	if (map == MapName::CHARLES)
 		tMap = new MapCharles(imgPath, txtPath);
-	else if (map == MapName::CHARLESBOSS)
-		tMap = new MapCharlesBoss(imgPath, txtPath);
+	else if (map == MapName::CHARLESBOSSLIGHT)
+		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSLIGHT);
+	else if (map == MapName::CHARLESBOSSDARK)
+		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSDARK);
 
 	camera = Camera::getCameraInstance();
 
