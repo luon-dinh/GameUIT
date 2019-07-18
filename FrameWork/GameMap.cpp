@@ -107,6 +107,35 @@ void GameMap::Draw()
 	//RECT srcRECT = camera->getCameraRECT();
 	//D3DXVECTOR3 position(0, 0, 0);
 	tMap->Draw(camera);
+	
+	//Vẽ debug map object.
+
+	const int debugTileSize = 8;
+
+	//Animation * debugAnim = new Animation(Tag::TESTMAPOBJECT, 0, 0, 150);
+
+	Sprite * debugSprite = new Sprite(Tag::TESTMAPOBJECT, 0, 0, debugTileSize, debugTileSize);
+
+	for (int i = 0; i < staticObject.size(); ++i)
+	{
+		int objectWidth = staticObject[i]->width;
+		int objectHeight = staticObject[i]->height;
+		BoundingBox objectBox = staticObject[i]->getStaticObjectBoundingBox();
+		int objTopLeftX = objectBox.left;
+		int objTopLeftY = objectBox.top;
+		int curX = objTopLeftX;
+		int curY = objTopLeftY;
+		//Vẽ từ dưới lên, từ trái qua phải.
+		while (curY >= objTopLeftY - objectHeight)
+		{
+			while (curX < objectWidth + objTopLeftX)
+			{
+				debugSprite->Render(camera->convertWorldToViewPort(D3DXVECTOR3(curX + debugTileSize / 2, curY - debugTileSize / 2,0)));
+				curX += debugTileSize;
+			}
+			curY -= debugTileSize;
+		}
+	}
 }
 
 void GameMap::SetCamera(Camera* newCamera)
