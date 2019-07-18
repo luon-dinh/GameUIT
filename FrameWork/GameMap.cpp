@@ -134,6 +134,8 @@ void GameMap::Draw()
 				curX += debugTileSize;
 			}
 			curY -= debugTileSize;
+			curX = objTopLeftX;
+			//curY -= 1;
 		}
 	}
 }
