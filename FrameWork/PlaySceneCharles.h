@@ -8,6 +8,8 @@ public:
 	//Đồng thời cũng dùng để cập nhật biến trạng thái hoàn thành.
 	void Update(double dt) override;
 
+	void ResetPlayerPosition() override;
+
 	PlaySceneCharles();
 	~PlaySceneCharles();
 

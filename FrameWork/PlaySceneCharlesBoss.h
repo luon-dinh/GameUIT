@@ -10,6 +10,7 @@ public:
 	PlaySceneCharlesBoss();
 	~PlaySceneCharlesBoss();
 	void Update(double dt);
+	void ResetPlayerPosition() override;
 private:
 	const char * world01BossMapLight = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_light.txt";
 	const char * world01BossTileLight = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_light.png";

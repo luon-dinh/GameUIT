@@ -115,7 +115,10 @@ void PlayScene::CollisionProcess(double dt)
 		//Lấy BoxRect của MapObject.
 		BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
 		
-		
+
+
+		bool isCollide = false;
+
 		//if (Collision::getInstance()->IsCollide(playerBox, objectBox))
 		//{
 		//	int a = 1;
@@ -123,11 +126,20 @@ void PlayScene::CollisionProcess(double dt)
 	
 		collisionOut colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
 
+		if (colOut.side == CollisionSide::bottom)
+		{
+			DebugOut(L"\nBottom");
+		}
+
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
 			player->OnCollision(mapStaticObject[i], &colOut);
+			isCollide = true;
 			if (mapStaticObject[i]->type == Type::GROUND)
+			{
 				player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
+			}
+				
 		}
 		else {
 			// trong trường hợp không còn chạm đất
@@ -140,6 +152,25 @@ void PlayScene::CollisionProcess(double dt)
 					}
 				}
 			}
+		}
+		if (isCollide)
+			PrintDebug("\nCollision detected !");
+		else
+			PrintDebug("\nNo collision !");
+		PrintDebug("\n Player Jumping State : ");
+		PrintDebugNumber(player->onAirState);
+		PrintDebug("\nPlayer X = ");
+		PrintDebugNumber(player->pos.x);
+		PrintDebug("\nPlayer Y = ");
+		PrintDebugNumber(player->pos.y);
+		PrintDebug("\nPlayer VX = ");
+		PrintDebugNumber(playerBox.vx);
+		PrintDebug("\nPlayer VY = ");
+		PrintDebugNumber(playerBox.vy);
+		PrintDebug("\n");
+		if (player->pos.y < 40)
+		{
+ 			PrintDebug("FUCK");
 		}
 	}
 }

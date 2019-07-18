@@ -15,14 +15,14 @@
 #define BALL_HEIGHT 40
 #define BAT_WIDTH 90
 #define BAT_HEIGHT 30
-#define TIME_PER_FRAME 150
+#define TIME_PER_FRAME 120
 
 //Normal Player Define
 #define NORMALPLAYER_WIDTH			40
 #define NORMALPALYER_HEIGHT			40
 #define PLAYER_MAX_JUMPING_HEIGHT	500
 #define PLAYER_NORMAL_SPEED			1.5
-#define PLAYER_JUMP_SPEED			4
+#define PLAYER_JUMP_SPEED			7
 #define GROUND_GRAVITY				0.25
 #define PLAYER_MAX_FALLING_VELOCITY -300
 // Moving keyboard input

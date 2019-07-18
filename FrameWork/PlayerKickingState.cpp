@@ -1,5 +1,5 @@
 ﻿#include "PlayerKickingState.h"
-
+#include"Debug.h"
 
 
 PlayerKickingState::PlayerKickingState()
@@ -48,6 +48,10 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+				if (collision->side == CollisionSide::bottom)
+				{
+					DebugOut(L"\nKick Bottom");
+				}
 				player->ChangeState(State::STANDING);
 				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}

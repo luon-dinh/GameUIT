@@ -9,8 +9,6 @@ SceneManager::SceneManager()
 	pittsburgh = new PlayScenePittsburgh();
 	currentScene = nullptr;
 	ReplaceScene(charles);
-	Player * player = Player::getInstance();
-	player->pos.x = 50;
 }
 
 SceneManager::~SceneManager()
@@ -45,19 +43,14 @@ void SceneManager::ReplaceScene(PlayScene* newScene)
 		delete currentScene;
 	currentScene = newScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
-
-	//Reset lại player luôn.
-	Player * player = Player::getInstance();
-	player->pos.x = 0;
-	player->pos.y = SCREEN_HEIGHT;
-	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
+	currentScene->ResetPlayerPosition();
 }
 
 void SceneManager::ChangeScene(PlayScene * newScene)
 {
 	currentScene = newScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
+	currentScene->ResetPlayerPosition();
 
 //Reset lại player luôn.
 	Player * player = Player::getInstance();
