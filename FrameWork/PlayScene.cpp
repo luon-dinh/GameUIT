@@ -157,6 +157,13 @@ void PlayScene::CollisionProcess(double dt)
 			PrintDebug("\nCollision detected !");
 		else
 			PrintDebug("\nNo collision !");
+
+		PrintDebug("\nCollision out side : ");
+		PrintDebugNumber(colOut.side);
+
+		PrintDebug("\nCollision out time : ");
+		PrintDebugNumber(colOut.collisionTime);
+
 		PrintDebug("\n Player Jumping State : ");
 		PrintDebugNumber(player->onAirState);
 		PrintDebug("\nPlayer X = ");

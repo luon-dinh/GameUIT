@@ -47,7 +47,7 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		}
 		else {
 			// chạm nền dưới
-			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+			if (side == CollisionSide::bottom ) {
 				if (collision->side == CollisionSide::bottom)
 				{
 					DebugOut(L"\nKick Bottom");
