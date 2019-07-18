@@ -17,7 +17,6 @@ void PlayerRollingState::InputHandler()
 {
 	Player* player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
-	
 	// chuyển sang trạng thái nhảy
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
   		player->ChangeState(State::JUMPING);
@@ -25,12 +24,22 @@ void PlayerRollingState::InputHandler()
 	}
 
 	// chuyển sang trạng thái đá
-	if (keyboard->isKeyDown(PLAYER_ATTACK)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);
 		return;
 	}
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+		player->SetVx(-PLAYER_NORMAL_SPEED);
+	}
+	else
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+			player->SetVx(PLAYER_NORMAL_SPEED);
+		}
 	
-	PlayerRollingState::curRollTime += 40;
+	PlayerRollingState::curRollTime += 15;
+	if (player->IsReachMaxJump()) {
+		player->SetVy(0);
+	}
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {
@@ -38,14 +47,14 @@ BOOL PlayerRollingState::HasRollFullTime() {
 }
 
 void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto side = collision->side;
+	auto side = collision->side;
 
-	//// collide with ground
-	//if (object->type == Type::GROUND) {
-	//	if (side == CollisionSide::top || side == CollisionSide::bottom) {
-	//		Player::getInstance()->SetVy(0);
-	//	}
-	//}
+	// collide with ground
+	if (object->type == Type::GROUND) {
+		if (side == CollisionSide::top || side == CollisionSide::bottom) {
+			Player::getInstance()->SetVy(0);
+		}
+	}
 }
 
 void PlayerRollingState::Update(float dt)

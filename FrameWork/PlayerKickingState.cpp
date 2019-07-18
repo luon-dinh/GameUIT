@@ -28,19 +28,23 @@ void PlayerKickingState::InputHandler()
 		return;
 	}
 	this->curKickTime += 30;
+
+	if (player->IsReachMaxJump()) {
+		player->SetVy(0);
+	}
 }
 
 
 
 void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto side = collision->side;
+	auto side = collision->side;
+	auto player = Player::getInstance();
 
-	//// collide with ground
-	//if (object->type == Type::GROUND) {
-	//	if (side == CollisionSide::top || side == CollisionSide::bottom) {
-	//		Player::getInstance()->SetVy(0);
-	//	}
-	//}
+	if (object->type == Type::GROUND) {
+		if (side == CollisionSide::bottom) {
+			player->ChangeState(State::STANDING);
+		}
+	}
 }
 
 void PlayerKickingState::Update(float dt)

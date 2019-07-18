@@ -82,6 +82,7 @@ public:
 	void SetAirState(OnAir onAirState);
 	void SetMoveDirection(MoveDirection moveDir);
 	OnAir GetOnAirState();
+	BOOL IsReachMaxJump();
 #pragma endregion
 
 };

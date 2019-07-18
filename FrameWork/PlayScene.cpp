@@ -52,8 +52,8 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 {
 	D3DXVECTOR2 playerPos = player->pos;
 
-	int playerWidth = player->getWidth();
-	int playerHeight = player->getHeight();
+	int playerWidth = 60;
+	int playerHeight = 56;
 
 	RECT cameraBoundBox = Camera::getCameraInstance()->getBoundingBox();
 	RECT cameraBoundBoxAdvanced = Camera::getCameraInstance()->getBoundingBoxAdvanced();
