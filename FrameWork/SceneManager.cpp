@@ -6,6 +6,7 @@ SceneManager::SceneManager()
 {
 	charles = new PlaySceneCharles();
 	charlesBoss = new PlaySceneCharlesBoss();
+	pittsburgh = new PlayScenePittsburgh();
 	currentScene = nullptr;
 	ReplaceScene(charles);
 	Player * player = Player::getInstance();
@@ -30,8 +31,12 @@ void SceneManager::Update(double dt)
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
 	if (!currentScene->isDone())
 		currentScene->Update(dt);
-	else
+	else if (currentScene == charles)
 		ReplaceScene(charlesBoss);
+	else if (currentScene == charlesBoss)
+		ReplaceScene(pittsburgh);
+	else
+		currentScene->Update(dt);
 }
 
 void SceneManager::ReplaceScene(PlayScene* newScene)
@@ -52,6 +57,14 @@ void SceneManager::ReplaceScene(PlayScene* newScene)
 void SceneManager::ChangeScene(PlayScene * newScene)
 {
 	currentScene = newScene;
+	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
+
+//Reset lại player luôn.
+	Player * player = Player::getInstance();
+	player->pos.x = 0;
+	player->pos.y = SCREEN_HEIGHT;
+	player->ChangeState(State::JUMPING);
+	player->SetAirState(Player::OnAir::Falling);
 }
 
 void SceneManager::Draw()

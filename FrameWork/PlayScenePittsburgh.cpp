@@ -21,3 +21,10 @@ PlayScenePittsburgh::~PlayScenePittsburgh()
 	if (worldDark != nullptr)
 		delete worldDark;
 }
+
+void PlayScenePittsburgh::Update(double dt)
+{
+	PlaySceneWithLight::Update(dt);
+	if (player->pos.x >= world->getMapWidth() - 50)
+		Done = true;
+}
