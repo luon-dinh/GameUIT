@@ -242,10 +242,12 @@ void Player::SetAirState(OnAir onAirState) {
 
 int Player::getWidth()
 {
-	return this->curanimation->getWidth();
+	BoundingBox box = this->playerstate->getBoundingBox();
+	return box.right - box.left;
 }
 
 int Player::getHeight()
 {
-	return this->curanimation->getHeight();
+	BoundingBox box = this->playerstate->getBoundingBox();
+	return box.top - box.bottom;
 }
