@@ -11,6 +11,9 @@ void PlayerJumpingState::InputHandler() {
 	// xét thời gian đã press phím jump
 	if (player->GetOnAirState() == Player::OnAir::Jumping && !keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump)) {
 
+		if (player->GetOnAirState() == Player::OnAir::Falling)
+			goto SkipPlayerJump;
+
   		if (timePressedJump <=0)
 			goto SkipPlayerJump;
 		// nhảy cấp độ 1
@@ -39,24 +42,26 @@ SkipPlayerJump:
 	// nhảy và chạy qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
 		player->SetVx(PLAYER_NORMAL_SPEED);
+		goto SetAirState;
 	}
-	else {
 		// nhảy và chạy qua trái
-		if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
-			player->SetVx(-PLAYER_NORMAL_SPEED);
-		}
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+		player->SetVx(-PLAYER_NORMAL_SPEED);
 	}
 
 SetAirState:
+	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
+	if (player->GetOnAirState() == Player::OnAir::Jumping && player->vy <= 0) {
+		player->SetVy(0);
+		return;
+	}
 	if (player->GetOnAirState() == Player::OnAir::Falling && player->pos.y <= 60) {
 		player->ChangeState(State::STANDING);
 		player->pos.y = 60;
+		return;
 	}
-	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
-	if (player->GetOnAirState() == Player::OnAir::Jumping && player->vy <= 0) {
-		player->SetAirState(Player::OnAir::Falling);
-		player->SetVy(0);
-	}
+
+
 }
 
 void PlayerJumpingState::Update(float dt) {

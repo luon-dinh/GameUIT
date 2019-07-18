@@ -17,7 +17,6 @@ void PlayerRollingState::InputHandler()
 {
 	Player* player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
-	
 	// chuyển sang trạng thái nhảy
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
   		player->ChangeState(State::JUMPING);
@@ -29,8 +28,15 @@ void PlayerRollingState::InputHandler()
 		player->ChangeState(State::KICKING);
 		return;
 	}
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+		player->SetVx(-PLAYER_NORMAL_SPEED);
+	}
+	else
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+			player->SetVx(PLAYER_NORMAL_SPEED);
+		}
 	
-	PlayerRollingState::curRollTime += 40;
+	PlayerRollingState::curRollTime += 15;
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {
