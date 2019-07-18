@@ -68,10 +68,6 @@ BoundingBox Player::getBoundingBox()
 
 void Player::Update(float dt)
 {
-	if (this->pos.y <= 30) {
-		this->pos.y = 30;
-	}
-	// Update state
 	this->playerstate->Update(dt);
 	// Update lại vị trí của position sau mỗi frame
 	this->UpdatePosition();
@@ -250,10 +246,12 @@ void Player::SetAirState(OnAir onAirState) {
 
 int Player::getWidth()
 {
-	return this->curanimation->getWidth();
+	BoundingBox box = this->playerstate->getBoundingBox();
+	return box.right - box.left;
 }
 
 int Player::getHeight()
 {
-	return this->curanimation->getHeight();
+	BoundingBox box = this->playerstate->getBoundingBox();
+	return box.top - box.bottom;
 }

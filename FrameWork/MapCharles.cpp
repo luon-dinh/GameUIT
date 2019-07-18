@@ -1,6 +1,6 @@
 ﻿#include "MapCharles.h"
 
-MapCharles::MapCharles(const char * imgPath, const char * txtPath) : TileMap(imgPath, txtPath)
+MapCharles::MapCharles(const char * imgPath, const char * txtPath) : TileMap(imgPath, txtPath, Tag::MAPCHARLES)
 {
 	waterTopAnim = new Animation(Tag::WATERTOP, 0, 2, delayWaterFlow);
 	waterBottomAnim = new Animation(Tag::WATERBOTTOM, 0, 2, delayWaterFlow);

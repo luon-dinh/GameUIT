@@ -2,22 +2,26 @@
 #include <fstream>
 #include <sstream>
 
-GameMap::GameMap(const char * _imgPath,  const char * _txtPath, const char * _mapObjectPath, MapName map)
+GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _mapObjectPath, MapName map)
 {
 	this->imgPath = _imgPath;
 	this->txtPath = _txtPath;
 	this->mapObjectPath = _mapObjectPath;
-	
+
 	if (map == MapName::CHARLES)
 		tMap = new MapCharles(imgPath, txtPath);
+	else if (map == MapName::CHARLESBOSSLIGHT)
+		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSLIGHT);
+	else if (map == MapName::CHARLESBOSSDARK)
+		tMap = new MapCharlesBoss(imgPath, txtPath, Tag::MAPCHARLESBOSSDARK);
 
 	camera = Camera::getCameraInstance();
-	
+
 	mapHeight = tMap->GetMapHeight();
 	mapWidth = tMap->GetMapWidth();
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
-	LoadContent();
+	LoadMapObject();
 }
 
 void GameMap::Update(double dt)
@@ -25,7 +29,7 @@ void GameMap::Update(double dt)
 	tMap->Update(dt);
 }
 
-void GameMap::LoadContent()
+void GameMap::LoadMapObject()
 {
 	//Load tất cả các Map Object (Ground, Non-Ground,...).
 	std::ifstream inFile;
@@ -42,7 +46,7 @@ void GameMap::LoadContent()
 
 	iss >> numOfObject;
 
-	Type entityTag;
+	Type entityTag = Type::NONE;
 
 	int objectID = -1;
 	int objectTopLeftX = -1;
@@ -55,12 +59,19 @@ void GameMap::LoadContent()
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+
+		//Xét từng ID để xem entityTag của nó là gì.
 		if (objectID == 0)
 			entityTag = Type::GROUND;
 		else if (objectID == 1)
 			entityTag = Type::SOLIDBOX;
 		else if (objectID == 2)
 			entityTag = Type::WATERRL;
+		else if (objectID == 3)
+			entityTag == Type::ROPE;
+		else if (objectID == 4)
+			entityTag == Type::ONOFF;
+
 		Object* mapObject = new Object();
 		mapObject->type = entityTag;
 		mapObject->height = objectHeight;

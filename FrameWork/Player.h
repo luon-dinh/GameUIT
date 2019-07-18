@@ -55,7 +55,7 @@ public:
 	void ChangeState(PlayerState* newplayerstate);
 	void ChangeState(State stateName);
 	void Update(float dt);
-	void OnCollision(Object* object, collisionOut* collisionOut);
+	virtual void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
 	PlayerState* GetPreviousState();
 	void SetPreviousState(State stateName);

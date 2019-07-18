@@ -70,23 +70,22 @@ void PlayerJumpingState::Update(float dt) {
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
-	//auto player = Player::getInstance();
-	//auto side = collision->side;
+	auto player = Player::getInstance();
+	auto side = collision->side;
 
-	//if (object->type == Type::GROUND) {
-	//	// chạm vào ground trên đầu
-	//	if (side == CollisionSide::top) {
-	//		//player->SetVy(0);
-	//	}
-	//	else {
-	//		// chạm nền dưới
-	//		if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling)
-	//		{
-	//			player->pos.y += player->vy * collision->collisionTime + object->height / 2;
-	//			player->ChangeState(State::STANDING);
-	//		}
-	//	}
-	//}
+	if (object->type == Type::GROUND) {
+		// chạm vào ground trên đầu
+		if (side == CollisionSide::top) {
+			//player->SetVy(0);
+		}
+		else {
+			// chạm nền dưới
+			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+				player->pos.y += player->vy * collision->collisionTime;
+				player->ChangeState(State::STANDING);
+			}
+		}
+	}
 }
 
 BoundingBox PlayerJumpingState::getBoundingBox()
