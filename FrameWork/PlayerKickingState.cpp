@@ -28,7 +28,8 @@ void PlayerKickingState::InputHandler()
 		return;
 	}
 	this->curKickTime += 30;
-	if (player->vy <= 0 && player->GetOnAirState() == Player::OnAir::Jumping) {
+
+	if (player->IsReachMaxJump()) {
 		player->SetVy(0);
 	}
 }

@@ -150,6 +150,10 @@ void Player::ChangeState(State stateName) {
 	}
 }
 
+BOOL Player::IsReachMaxJump() {
+	return this->vy <= 0 && this->onAirState == OnAir::Jumping;
+}
+
 void Player::InnerChangeState(State stateName) {
 	SetPreviousState(this->state);
 	this->state = stateName;

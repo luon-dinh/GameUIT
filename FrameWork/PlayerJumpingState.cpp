@@ -51,7 +51,7 @@ SkipPlayerJump:
 
 SetAirState:
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
-	if (player->GetOnAirState() == Player::OnAir::Jumping && player->vy <= 0) {
+	if (player->IsReachMaxJump()) {
 		player->SetVy(0);
 		return;
 	}

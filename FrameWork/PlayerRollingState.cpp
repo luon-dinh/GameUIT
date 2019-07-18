@@ -37,6 +37,9 @@ void PlayerRollingState::InputHandler()
 		}
 	
 	PlayerRollingState::curRollTime += 15;
+	if (player->IsReachMaxJump()) {
+		player->SetVy(0);
+	}
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {
