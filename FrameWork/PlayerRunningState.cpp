@@ -43,12 +43,10 @@ void PlayerRunningState::InputHandler()
 
 void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
+	auto player = Player::getInstance();
 
 	// collide with ground
 	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::top || side == CollisionSide::bottom) {
-			Player::getInstance()->SetVy(0);
-		}
 	}
 }
 

@@ -16,6 +16,6 @@ public:
 	BoundingBox getBoundingBox();
 	
 	BOOL HasRollFullTime();
-	const int MAX_ROLLING_TIME = 400; // thời gian rolling time tối đa
+	const int MAX_ROLLING_TIME = 350; // thời gian rolling time tối đa
 	static int curRollTime;
 };

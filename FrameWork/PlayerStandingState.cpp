@@ -43,18 +43,17 @@ void PlayerStandingState::InputHandler()
 		player->ChangeState(State::DUCKING);
 		return;
 	}
+	// giơ khiên lên
+	if (keyboard->isKeyDown(PLAYER_SHIELD_UP)) {
+		player->ChangeState(State::SHIELD_UP);
+		return;
+	}
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
 	auto player = Player::getInstance();
-	
-	// collide with ground
-	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::bottom && player->onAirState != Player::OnAir::None) {
-			player->SetAirState(Player::OnAir::None);
-		}
-	}
+
 }
 
 

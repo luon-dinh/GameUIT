@@ -21,6 +21,8 @@ Player::Player()
 	this->playerstate = playerStates[State::JUMPING];
 	this->curanimation = animations[this->state];
 	this->prevState = NULL;
+
+	this->groundCollision = new GroundCollision();
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -37,7 +39,7 @@ void Player::LoadAllAnimations() {
 	animations[JUMPING] = new Animation(PLAYER, 7, 8);
 	animations[DUCKING]	= new Animation(PLAYER, 6, 7);
 	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 15, 17);
-	animations[SHIELD_UP] = new Animation(PLAYER, 2, 1);
+	animations[SHIELD_UP] = new Animation(PLAYER, 5, 6);
 	animations[ROLLING] = new Animation(PLAYER, 8, 10);
 	animations[KICKING] = new Animation(PLAYER, 10, 11);
 }
@@ -120,7 +122,6 @@ void Player::ChangeState(State stateName) {
 		case State::STANDING: {
 			this->SetAirState(Player::OnAir::None);
 			this->SetVx(0);
-			this->SetVy(0);
 			break;
 		}
 		case State::RUNNING:
@@ -137,7 +138,6 @@ void Player::ChangeState(State stateName) {
 		{
 			// nếu trước đó đang falling tiếp tục là falling
 			if (this->onAirState == OnAir::Falling) {
-				this->vy += 2;
 				return;
 			}
 			this->SetAirState(OnAir::Jumping);
@@ -194,6 +194,7 @@ void Player::AddPosX() {
 }
 
 void Player::AddPosY() {
+
 	this->SetVy(this->vy + this->accelerate.y);
 	this->pos.y += this->vy;
 }
@@ -217,6 +218,17 @@ void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 	this->accelerate.y = accelerate.y;
 }
 
+void Player::SetGroundCollision(GroundCollision* groundCollision) {
+	if (this->groundCollision != groundCollision) {
+		delete this->groundCollision;
+		this->groundCollision = groundCollision;
+	}
+}
+
+GroundCollision* Player::GetGroundCollision() {
+	return this->groundCollision;
+}
+
 Player::OnAir Player::GetOnAirState() {
 	return this->onAirState;
 }
@@ -238,8 +250,8 @@ void Player::SetAirState(OnAir onAirState) {
 		return;
 	}
 	if (this->onAirState == OnAir::Falling) {
-		this->vy = 0;
 		this->accelerate.y = -GROUND_GRAVITY;
+		this->vy = 0;
 	}
 }
 

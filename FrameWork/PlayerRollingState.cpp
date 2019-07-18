@@ -47,12 +47,20 @@ BOOL PlayerRollingState::HasRollFullTime() {
 }
 
 void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	// collide with ground
 	if (object->type == Type::GROUND) {
-		if (side == CollisionSide::top || side == CollisionSide::bottom) {
-			Player::getInstance()->SetVy(0);
+		// chạm vào ground trên đầu
+		if (side == CollisionSide::top) {
+			//player->SetVy(0);
+		}
+		else {
+			// chạm nền dưới
+			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+				player->ChangeState(State::STANDING);
+				player->pos.y = object->pos.y + player->getHeight() / 2;
+			}
 		}
 	}
 }

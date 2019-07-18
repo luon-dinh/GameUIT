@@ -11,6 +11,8 @@
 #include "PlayerRollingState.h"
 #include "Object.h"
 #include "Collision.h"
+#include "GroundCollision.h"
+
 
 class Player :public Object
 {
@@ -68,6 +70,9 @@ public:
 	PlayerState * playerstate;
 	OnAir onAirState;
 	D3DXVECTOR2 accelerate;
+	BOOL collideOnGround;
+
+	GroundCollision* groundCollision;
 
 	Player();
 	~Player();
@@ -83,6 +88,8 @@ public:
 	void SetMoveDirection(MoveDirection moveDir);
 	OnAir GetOnAirState();
 	BOOL IsReachMaxJump();
+	void SetGroundCollision(GroundCollision* groundCollision);
+	GroundCollision* GetGroundCollision();
 #pragma endregion
 
 };

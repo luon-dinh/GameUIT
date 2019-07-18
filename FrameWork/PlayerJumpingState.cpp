@@ -44,9 +44,15 @@ SkipPlayerJump:
 		player->SetVx(PLAYER_NORMAL_SPEED);
 		goto SetAirState;
 	}
+	else {
+		player->SetVx(0);
+	}
 		// nhảy và chạy qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->SetVx(-PLAYER_NORMAL_SPEED);
+	}
+	else {
+		player->SetVx(0);
 	}
 
 SetAirState:
@@ -68,7 +74,8 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::GROUND) {
+	if (object->type == Type::GROUND) { 
+		player->SetGroundCollision(new GroundCollision(object, side));
 		// chạm vào ground trên đầu
 		if (side == CollisionSide::top) {
 			//player->SetVy(0);
@@ -76,8 +83,8 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
-				player->pos.y += player->vy * collision->collisionTime;
-				player->ChangeState(State::STANDING);
+				player->ChangeState(State::STANDING);	
+				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}
 		}
 	}

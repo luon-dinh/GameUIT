@@ -125,9 +125,20 @@ void PlayScene::CollisionProcess(double dt)
 
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
-			player->OnCollision(mapStaticObject[i], &colOut);	
+			player->OnCollision(mapStaticObject[i], &colOut);
+			if (mapStaticObject[i]->type == Type::GROUND)
+				player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
 		}
-
+		else {
+			// trong trường hợp không còn chạm đất
+			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i]) {
+				if (player->GetOnAirState() == Player::OnAir::None) {
+					player->SetAirState(Player::OnAir::Falling);
+					player->ChangeState(State::JUMPING);
+					player->SetGroundCollision(NULL);
+				}
+			}
+		}
 	}
 }
 
