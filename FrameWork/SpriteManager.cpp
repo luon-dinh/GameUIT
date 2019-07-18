@@ -45,6 +45,10 @@ void SpriteManager::LoadResources()
 	numOfFrames = desc.Width / desc.Height;
 	for (int i = 0; i < numOfFrames; ++i)
 		spriteManager->addSprite(new Sprite(Tag::SEWER, 0, i*sewerTextureSize, sewerTextureSize, (i + 1)*sewerTextureSize));
+
+	//Thêm sprite debug vào.
+	//spriteManager->addSprite(new Sprite(Tag::TESTMAPOBJECT, 0, 0, 8, 8));
+
 	spriteManager->addSprite(Tag::PLAYER, 0, 1);//stad
 	spriteManager->addSprite(Tag::PLAYER, 1, 4);//run
 	spriteManager->addSprite(Tag::PLAYER, 2, 1);//shieldup

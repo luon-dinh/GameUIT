@@ -1,4 +1,4 @@
-#include"TextureManager.h"
+﻿#include"TextureManager.h"
 
 TextureManager* TextureManager::instance = NULL;
 
@@ -10,6 +10,10 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::WATERTOP, AnimFilePath::WATER_TOP_ANIM);
 	textures->addTexture(Tag::WATERBOTTOM, AnimFilePath::WATER_BOTTOM_ANIM);
 	textures->addTexture(Tag::SEWER, AnimFilePath::SEWER_ANIM);
+
+	//Thêm textures này vào để debug.
+	textures->addTexture(Tag::TESTMAPOBJECT, (char*)".\\..\\Resources\\Images\\red_8_8.png");
+
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
