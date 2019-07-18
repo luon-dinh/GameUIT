@@ -20,6 +20,7 @@ Object* GroundCollision::GetGround() {
 CollisionSide GroundCollision::GetCollisionSide() {
 	return this != NULL ? this->side : CollisionSide::none;
 }
+	
 
 void GroundCollision::SetCollisionSide(CollisionSide side) {
 	if (this != NULL)
