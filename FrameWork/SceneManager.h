@@ -38,8 +38,8 @@ private:
 	static SceneManager * sceneManagerInstance;
 	PlayScene* charles;
 	PlayScene* charlesBoss;
-	PlayScene* pittsburge;
-	PlayScene* pittsburgeBoss;
+	PlayScene* pittsburgh;
+	PlayScene* pittsburghBoss;
 	PlayScene* currentScene;
 	SceneManager();
 	~SceneManager();
