@@ -55,11 +55,6 @@ SetAirState:
 		player->SetVy(0);
 		return;
 	}
-	if (player->GetOnAirState() == Player::OnAir::Falling && player->pos.y <= 60) {
-		player->ChangeState(State::STANDING);
-		player->pos.y = 60;
-		return;
-	}
 
 
 }
