@@ -68,10 +68,14 @@ BoundingBox Player::getBoundingBox()
 
 void Player::Update(float dt)
 {
+	if (this->pos.y <= 30) {
+		this->pos.y = 30;
+	}
 	// Update state
 	this->playerstate->Update(dt);
 	// Update lại vị trí của position sau mỗi frame
 	this->UpdatePosition();
+
 	// Update animation
 	this->curanimation->Update(dt);
 }
@@ -136,8 +140,10 @@ void Player::ChangeState(State stateName) {
 		case State::JUMPING: 
 		{
 			// nếu trước đó đang falling tiếp tục là falling
-			if (this->onAirState == OnAir::Falling)
-				break;
+			if (this->onAirState == OnAir::Falling) {
+				this->vy += 2;
+				return;
+			}
 			this->SetAirState(OnAir::Jumping);
 			break;
 		}
@@ -188,7 +194,7 @@ void Player::AddPosX() {
 }
 
 void Player::AddPosY() {
-	this->vy += this->accelerate.y;
+	this->SetVy(this->vy + this->accelerate.y);
 	this->pos.y += this->vy;
 }
 

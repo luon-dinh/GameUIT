@@ -25,7 +25,7 @@ void PlayerRollingState::InputHandler()
 	}
 
 	// chuyển sang trạng thái đá
-	if (keyboard->isKeyDown(PLAYER_ATTACK)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);
 		return;
 	}

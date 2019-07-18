@@ -47,14 +47,11 @@ SkipPlayerJump:
 		}
 	}
 
-	 //tạm thời set ground giả lập
-	//if (player->pos.y < 70 && player->GetOnAirState() == Player::OnAir::Falling) {
-	//	player->pos.y = 70;
-	//	player->ChangeState(State::STANDING);
-	//	return;
-	//}
-
-	SetAirState:
+SetAirState:
+	if (player->GetOnAirState() == Player::OnAir::Falling && player->pos.y <= 60) {
+		player->ChangeState(State::STANDING);
+		player->pos.y = 60;
+	}
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->GetOnAirState() == Player::OnAir::Jumping && player->vy <= 0) {
 		player->SetAirState(Player::OnAir::Falling);
@@ -65,28 +62,26 @@ SkipPlayerJump:
 void PlayerJumpingState::Update(float dt) {
 
 	this->InputHandler();
-	if (Player::getInstance()->GetOnAirState() == Player::OnAir::Falling) {
-		//DebugOut(L"Falling\n");
-	}
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
-	auto player = Player::getInstance();
-	auto side = collision->side;
+	//auto player = Player::getInstance();
+	//auto side = collision->side;
 
-	if (object->type == Type::GROUND) {
-		// chạm vào ground trên đầu
-		if (side == CollisionSide::top) {
-			//player->SetVy(0);
-		}
-		else {
-			// chạm nền dưới
-			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
-				player->pos.y -= player->vy * collision->collisionTime+object->height/2;
-				player->ChangeState(State::STANDING);
-			}
-		}
-	}
+	//if (object->type == Type::GROUND) {
+	//	// chạm vào ground trên đầu
+	//	if (side == CollisionSide::top) {
+	//		//player->SetVy(0);
+	//	}
+	//	else {
+	//		// chạm nền dưới
+	//		if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling)
+	//		{
+	//			player->pos.y += player->vy * collision->collisionTime + object->height / 2;
+	//			player->ChangeState(State::STANDING);
+	//		}
+	//	}
+	//}
 }
 
 BoundingBox PlayerJumpingState::getBoundingBox()
