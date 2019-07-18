@@ -6,7 +6,7 @@
 
 class Object {
 public:
-	Object() {};
+	Object() { vx = vy = 0; };
 	virtual ~Object() {};
 
 	D3DXVECTOR2 pos;

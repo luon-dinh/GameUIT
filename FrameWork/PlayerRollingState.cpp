@@ -51,6 +51,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
 
 	if (object->type == Type::GROUND) {
+		player->SetGroundCollision(new GroundCollision(object, side));
 		// chạm vào ground trên đầu
 		if (side == CollisionSide::top) {
 			//player->SetVy(0);

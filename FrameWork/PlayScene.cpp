@@ -132,10 +132,12 @@ void PlayScene::CollisionProcess(double dt)
 		else {
 			// trong trường hợp không còn chạm đất
 			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i]) {
-				if (player->GetOnAirState() == Player::OnAir::None) {
-					player->SetAirState(Player::OnAir::Falling);
-					player->ChangeState(State::JUMPING);
-					player->SetGroundCollision(NULL);
+				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
+					if (player->GetOnAirState() == Player::OnAir::None) {
+						player->SetAirState(Player::OnAir::Falling);
+						player->ChangeState(State::JUMPING);
+						player->SetGroundCollision(NULL);
+					}
 				}
 			}
 		}
