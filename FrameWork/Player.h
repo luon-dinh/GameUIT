@@ -42,6 +42,7 @@ public:
 	int health;
 	int live;
 	int energy;
+	bool hasShield;
 
 	enum MoveDirection {
 		LeftToRight,
