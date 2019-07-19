@@ -195,6 +195,9 @@
     <ClCompile Include="MapPittsburghPortal01.cpp">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
     </ClCompile>
+    <ClCompile Include="DrawDebug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="MapPittsburghPortal01.h">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawDebug.h">
+      <Filter>Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

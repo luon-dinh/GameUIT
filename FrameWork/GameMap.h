@@ -38,12 +38,8 @@ private:
 	const char * mapObjectPath;
 	
 	std::vector<Object*> staticObject;
-	std::vector<D3DXVECTOR3> staticObjectDrawingPosition;
-	const int debugTileSize = 8;
 	Sprite* debugSprite;
 	Camera * camera;
 	TileMap *tMap;
-	void CalculateAllDebugDrawingVectors();
-	void DrawAllDebugVector();
 	void LoadMapObject();
 };

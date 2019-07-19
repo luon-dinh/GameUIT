@@ -19,6 +19,17 @@ void PlayScene::Draw()
 {
 	world->Draw();
 	player->Render();
+	//Vẽ thêm hitbox bao lại player.
+	DrawDebug::DrawBoundingBox(player->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+
+	//Vẽ tất cả các object tĩnh.
+	for (int i = 0; i < mapStaticObject.size(); ++i)
+	{
+		//Chỉ vẽ ground.
+		if (mapStaticObject[i]->type == Type::GROUND)
+			DrawDebug::DrawBoundingBox(mapStaticObject[i]->getStaticObjectBoundingBox(), Tag::TESTMAPOBJECTRED);
+	}
+
 }
 
 void PlayScene::ResetCamera()
@@ -114,8 +125,6 @@ void PlayScene::CollisionProcess(double dt)
 		BoundingBox playerBox = player->getBoundingBox();
 		//Lấy BoxRect của MapObject.
 		BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
-		
-
 
 		bool isCollide = false;
 
