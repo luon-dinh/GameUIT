@@ -8,7 +8,8 @@ class Shield :
 {
 private:
 	static Shield* instance;
-	std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
+	//std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
+	Animation * animation;
 public:
 	int currentSpriteIndex;
 	Player::MoveDirection direction;

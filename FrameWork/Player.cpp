@@ -17,7 +17,6 @@ Player::Player()
 	this->vx = 0;
 	this->vy = 0;
 	this->hasShield = true;
-
 	this->direction = MoveDirection::LeftToRight;
 
 	this->state = State::JUMPING;

@@ -214,7 +214,6 @@ void PlayScene::ProcessUpdates(double dt)
 {
 	KeyboardManager* inputInstance = KeyboardManager::getInstance();
 	player->Update(dt);
-	shield->Update(dt);
 
 	//Kiểm tra nếu player ra khỏi map thì không cho đi tiếp.
 	int mapWidth = world->getMapWidth();
@@ -237,4 +236,5 @@ void PlayScene::ProcessUpdates(double dt)
 	//Player ra ngoài theo hướng bên trên.
 	else if (player->pos.y + playerHeight / 2 >= mapHeight)
 		player->pos.y = mapHeight - playerHeight / 2 - 1;
+	shield->Update(dt);
 }

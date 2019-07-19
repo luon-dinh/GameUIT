@@ -1,5 +1,5 @@
 ﻿#include "Shield.h"
-
+#include"Camera.h"
 Shield * Shield::instance = NULL;
 
 Shield::Shield()
@@ -7,23 +7,25 @@ Shield::Shield()
 	Player* player = Player::getInstance();
 	if (!player)
 		return;
-	sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
+	this->tag = Tag::SHIELD;
+	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
+	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->direction;
-	this->pos.y = player->pos.y;
+	this->pos.y = player->pos.y+10;
 	this->currentSpriteIndex = 0;
 	//set vị trí ban đầu cua shield theo hướng di chuyển của player
 	switch (direction)
 	{
 	case Player::LeftToRight:
 	{
-		this->pos.x = player->playerstate->getBoundingBox().right;
-		this->pos.y = player->pos.y;
+		this->pos.x = player->pos.x - player->getWidth() / 2;
+		this->pos.y = player->pos.y+10;
 		break;
 	}
 	case Player::RightToLeft:
 	{
-		this->pos.x = player->playerstate->getBoundingBox().right;
-		this->pos.y = player->pos.y;
+		this->pos.x = player->pos.x + player->getWidth() / 2;
+		this->pos.y = player->pos.y+10;
 		break;
 	}
 	default:
@@ -73,13 +75,14 @@ void Shield::Update(float dt)
 		return;
 	//kiểm tra nếu player đang giữ shield
 	if (player->hasShield) {
+		this->pos.y = player->pos.y+10;
 		Player::MoveDirection direction = Player::getInstance()->direction;// lấy hướng di chuyển của player player
 		//set vị trí của shied theo hướng di chuyển của player
 		switch (direction)
 		{
 		case Player::LeftToRight:
 		{
-			this->pos.x = player->playerstate->getBoundingBox().right;//shield ở vị trí bên phải của player
+			this->pos.x = player->playerstate->getBoundingBox().left;//shield ở vị trí bên phải của player
 			break;
 		}
 		case Player::RightToLeft:
@@ -111,11 +114,16 @@ void Shield::Render()
 		{
 		case Player::MoveDirection::RightToLeft:
 		{
-			sprites[currentSpriteIndex]->Render(TransformationMode::FlipHorizontal, 0, D3DXVECTOR2(this->pos));//flip shield do sprite ngược chiều hướng di chuyển
+			D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
+			//sprites[currentSpriteIndex]->Render(TransformationMode::FlipHorizontal, 1, D3DXVECTOR2(pos.x,pos.y));//flip shield do sprite ngược chiều hướng di chuyển
+			//sprites[currentSpriteIndex]->Render(D3DXVECTOR2(pos));//vẽ sprite bình thường
+			animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 		}
 		case Player::MoveDirection::LeftToRight:
 		{
-			sprites[currentSpriteIndex]->Render(D3DXVECTOR2(this->pos));//vẽ sprite bình thường
+			D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
+			//sprites[currentSpriteIndex]->Render(D3DXVECTOR2(pos));//vẽ sprite bình thường
+			animation->Render(pos);
 		}
 		default:
 			break;
