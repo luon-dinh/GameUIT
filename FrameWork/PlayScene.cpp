@@ -26,8 +26,8 @@ void PlayScene::Draw()
 {
 	world->Draw();
 	player->Render();
-	//DrawDebugBoxForStaticObjects();
-	//DrawDebugBoxForPlayer();
+	DrawDebugBoxForStaticObjects();
+	DrawDebugBoxForPlayer();
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
