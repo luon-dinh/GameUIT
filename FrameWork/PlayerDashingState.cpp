@@ -1,9 +1,17 @@
 ﻿#include "PlayerDashingState.h"
 
 BoundingBox PlayerDashingState::getBoundingBox() {
-	return BoundingBox();
-
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 8;
+	box.bottom = player->pos.y - 21;
+	box.left = player->pos.x - 19;
+	box.right = player->pos.x + 12;
+	return box;
 }
+
 PlayerDashingState::PlayerDashingState() {
 	this->state = State::DASHING;
 	this->curDashTime = 0;
@@ -17,12 +25,14 @@ void PlayerDashingState::InputHandler() {
 	// chuyển sang trạng thái nhảy
 	if (keyboard->isKeyDown(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
+		this->curDashTime = 0;
 		return;
 	}
 
 	// chuyển sang trạng thái ngồi
 	if (keyboard->isKeyDown(PLAYER_SIT)) {
 		player->ChangeState(State::DUCKING);
+		this->curDashTime = 0;
 		return;
 	}
 	
@@ -33,10 +43,11 @@ void PlayerDashingState::InputHandler() {
 		return;
 	}
 
-	this->curDashTime += 40;
+	this->curDashTime += 20;
 }
 
 void PlayerDashingState::Update(float dt) {
+	InputHandler();
 }
 
 void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {

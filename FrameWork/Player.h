@@ -9,6 +9,8 @@
 #include "PlayerKickingState.h"
 #include "PlayerShieldUpState.h"
 #include "PlayerRollingState.h"
+#include "PlayerDashingState.h"
+#include "PlayerFloatingState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
@@ -25,7 +27,8 @@ private:
 		*runningState,
 		*standingState,
 		*jumpingState,
-		*sittingState;
+		*sittingState,
+		*floatingState;
 
 	void InnerChangeState(State stateName);
 	void LoadAllStates();
@@ -48,6 +51,7 @@ public:
 	enum OnAir {
 		Jumping,
 		Falling,
+		DropToWater,
 		None
 	};
 

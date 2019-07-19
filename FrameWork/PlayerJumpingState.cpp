@@ -9,29 +9,20 @@ void PlayerJumpingState::InputHandler() {
 
 	// xét thời gian đã press phím jump
 	if (player->GetOnAirState() == Player::OnAir::Jumping) {
-		// phím Jump đã được nhấn từ trước
-		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump != -1) {
-			if (timePressedJump <= MIN_TIME_JUMP_2) {
-				player->SetVy(player->vy + ADDED_SPEED);
-				return;
-			}
+		 //phím Jump đã được nhấn từ trước
+		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
 			//chuyển sang trạng thái roll
-			else
-			{
+			if (timePressedJump > MIN_TIME_JUMP_2) {
 				player->ChangeState(State::ROLLING);
 				return;
 			}
-		}
-
-		if (keyboard->isKeyDown(PLAYER_JUMP)) {
 			player->SetVy(player->vy + ADDED_SPEED);
-			return;
 		}
-
-		// nhảy cấp độ 1
-
+		//if (keyboard->isKeyDown(PLAYER_JUMP)) {
+		//	player->SetVy(player->vy + ADDED_SPEED);
+		//	//return;
+		//}
 	}
-
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);
@@ -52,6 +43,7 @@ void PlayerJumpingState::InputHandler() {
 	}
 	else {
 		player->SetVx(0);
+		return;
 	}
 
 SetAirState:
@@ -80,10 +72,6 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom ) {
-				if (collision->side == CollisionSide::bottom)
-				{
-					DebugOut(L"\nJump Bottom");
-				}
 				player->ChangeState(State::STANDING);	
 				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}

@@ -43,6 +43,8 @@ void Player::LoadAllAnimations() {
 	animations[SHIELD_UP] = new Animation(PLAYER, 5, 6);
 	animations[ROLLING] = new Animation(PLAYER, 8, 10);
 	animations[KICKING] = new Animation(PLAYER, 10, 11);
+	animations[DASHING] = new Animation(PLAYER, 17, 19);
+	animations[FLOATING] = new Animation(PLAYER, 38, 40);
 }
 
 void Player::LoadAllStates() {
@@ -54,6 +56,8 @@ void Player::LoadAllStates() {
 	this->playerStates[State::SHIELD_UP] = new PlayerShieldUpState();
 	this->playerStates[State::KICKING] = new PlayerKickingState();
 	this->playerStates[State::ROLLING] = new PlayerRollingState();
+	this->playerStates[State::DASHING] = new PlayerDashingState();
+	this->playerStates[State::FLOATING] = new PlayerFloatingState();
 }
 
 
@@ -89,11 +93,13 @@ void Player::Render()
 		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y),TransformationMode::FlipHorizontal);
 	}
 	else {
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), 2.0f, 3.0f);
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
 	}
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
+	if (this->state == State::FLOATING) {
+	}
 	this->playerstate->OnCollision(object, collisionOut);
 }
 
@@ -122,6 +128,7 @@ void Player::ChangeState(State stateName) {
 
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
+		case State::DUCKING:
 		case State::STANDING: {
 			this->SetAirState(Player::OnAir::None);
 			this->SetVx(0);
@@ -145,6 +152,17 @@ void Player::ChangeState(State stateName) {
 			}
 			this->SetAirState(OnAir::Jumping);
 			break;
+		}
+		case State::DASHING:
+		{
+			if (this->direction == MoveDirection::LeftToRight)
+				SetVx(3);
+			else
+				SetVx(-3);
+			break;
+		}
+		case State::FLOATING: {
+			this->SetAirState(OnAir::DropToWater);
 		}
 	}
 }
@@ -242,19 +260,27 @@ void Player::SetAirState(OnAir onAirState) {
 	auto oldState = this->onAirState;
 	this->onAirState = onAirState;
 
-	if (this->onAirState == OnAir::None) {
-		this->accelerate.y = 0;
-		this->vy = 0;
-		return;
-	}
-	if (this->onAirState == OnAir::Jumping) {
-		this->accelerate.y = -GROUND_GRAVITY;
-		this->vy = PLAYER_JUMP_SPEED;
-		return;
-	}
-	if (this->onAirState == OnAir::Falling) {
-		this->accelerate.y = -GROUND_GRAVITY;
-		this->vy = 0;
+	switch (this->onAirState) {
+		case OnAir::None:
+		{
+			this->accelerate.y = 0;
+			this->vy = 0;
+			return;
+		}
+		case OnAir::Jumping: {
+			this->accelerate.y = -GROUND_GRAVITY;
+			this->vy = PLAYER_JUMP_SPEED;
+			return;
+		}
+		case OnAir::Falling: {
+			this->accelerate.y = -GROUND_GRAVITY;
+			this->vy = 0;
+			return;
+		}
+		case OnAir::DropToWater: {
+			this->SetVy(-1.5);
+			return;
+		}
 	}
 }
 
