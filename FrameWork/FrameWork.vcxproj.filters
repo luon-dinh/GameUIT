@@ -216,6 +216,9 @@
     <ClCompile Include="PlayScenePittsburghPortal02.cpp">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal02</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -346,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="PlayScenePittsburghPortal02.h">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal02</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Objects\Shield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

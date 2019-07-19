@@ -12,6 +12,8 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 	int objTopLeftY = objectBox.top;
 	int objMostRight = objectBox.right;
 	int objMostBottom = objectBox.bottom;
+	float midX = (float)(objTopLeftX + objMostRight) / 2;
+	float midY = (float)(objTopLeftY + objMostBottom) / 2;
 	int curX = objTopLeftX;
 	int curY = objTopLeftY;
 	//Vẽ từ dưới lên, từ trái qua phải.
@@ -27,4 +29,6 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 		curX = objTopLeftX;
 		//curY -= 1;
 	}
+	//D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(midX, midY, 0));
+	//debugSprite->Render(objMostRight - objTopLeftX, objTopLeftY - objMostBottom, D3DXVECTOR2(viewPort.x, viewPort.y));
 }
