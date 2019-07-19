@@ -79,6 +79,9 @@
     <Filter Include="Scene\PlayScene\PlayScenePittsburghPortal02">
       <UniqueIdentifier>{f599b149-fa51-4f59-b749-26c409ae135b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Shield">
+      <UniqueIdentifier>{9003f5ae-1dfd-4656-bc88-933582b0eaa1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -210,6 +213,9 @@
     <ClCompile Include="PlayScenePittsburghPortal01.cpp">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal01</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -337,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="PlayScenePittsburghPortal01.h">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal01</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Objects\Shield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

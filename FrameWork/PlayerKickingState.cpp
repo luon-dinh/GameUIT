@@ -72,7 +72,15 @@ BoundingBox PlayerKickingState::getBoundingBox()
 	box.vy = player->vy;
 	box.top = player->pos.y + 12;
 	box.bottom = player->pos.y - 13;
-	box.left = player->pos.x - 30;
-	box.right = player->pos.x + 10;
+	if (player->direction == Player::MoveDirection::RightToLeft)
+	{
+		box.left = player->pos.x - 30;
+		box.right = player->pos.x + 10;
+	}
+	else
+	{
+		box.left = player->pos.x - 10;
+		box.right = player->pos.x + 30;
+	}
 	return box;
 }
