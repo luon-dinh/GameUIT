@@ -9,7 +9,8 @@ void PlayerJumpingState::InputHandler() {
 
 	// xét thời gian đã press phím jump
 	if (player->GetOnAirState() == Player::OnAir::Jumping) {
-		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
+		// phím Jump đã được nhấn từ trước
+		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump != -1) {
 			if (timePressedJump <= MIN_TIME_JUMP_2) {
 				player->SetVy(player->vy + ADDED_SPEED);
 				return;
@@ -59,8 +60,6 @@ SetAirState:
 		player->SetVy(0);
 		return;
 	}
-
-
 }
 
 void PlayerJumpingState::Update(float dt) {

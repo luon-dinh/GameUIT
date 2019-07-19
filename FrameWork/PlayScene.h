@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "Player.h"
 #include "Global.h"
+#include "DrawDebug.h"
 
 //Các PlayScene khác nhau sẽ có nhiều đoạn code có thể dùng chung được.
 //Ý tưởng ở đây của việc kế thừa là những đoạn code dùng chung sẽ được gom lại ở lớp cha PlayScene này.
@@ -29,6 +30,8 @@ protected:
 	virtual void UpdateCameraWithPlayerPos(double dt);
 	virtual void CollisionProcess(double dt);
 	virtual void EnvironmentUpdate(double dt);
+	virtual void DrawDebugBoxForPlayer();
+	virtual void DrawDebugBoxForStaticObjects();
 	GameMap* world;
 	Player* player;
 	Camera * camera;

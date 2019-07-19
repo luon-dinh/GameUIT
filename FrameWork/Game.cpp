@@ -63,12 +63,12 @@ void Game::Run()
 			ProcessAllInput();
 			Render();
 		}
-		else
-		{
-			Sleep(tickPerFrame - dt);
-		}
+		//else
+		//{
+		//	Sleep(tickPerFrame - dt);
+		//}
 	}
-}
+} 
 
 void Game::ProcessAllInput()
 {

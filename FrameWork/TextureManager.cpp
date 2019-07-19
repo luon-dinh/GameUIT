@@ -12,7 +12,8 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::SEWER, AnimFilePath::SEWER_ANIM);
 	textures->addTexture(Tag::EXITSIGN, AnimFilePath::EXIT_SIGN);
 	//Thêm textures này vào để debug.
-	textures->addTexture(Tag::TESTMAPOBJECT, (char*)".\\..\\Resources\\Images\\red_8_8.png");
+	textures->addTexture(Tag::TESTMAPOBJECTRED, (char*)".\\..\\Resources\\Images\\red_8_8.png");
+	textures->addTexture(Tag::TESTMAPOBJECTBLUE, (char*)".\\..\\Resources\\Images\\blue_8_8.png");
 
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };

@@ -20,7 +20,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 {
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
-	player->pos.x = 1800;
+	player->pos.x = 100;
 	player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);

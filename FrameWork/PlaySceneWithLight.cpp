@@ -16,6 +16,8 @@ void PlaySceneWithLight::Draw()
 	currentWorld->Draw();
 	//Ta render tiếp player.
 	player->Render();
+	DrawDebugBoxForStaticObjects();
+	DrawDebugBoxForPlayer();
 }
 
 void PlaySceneWithLight::Update(double dt)

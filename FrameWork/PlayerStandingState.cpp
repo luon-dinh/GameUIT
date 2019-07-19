@@ -29,6 +29,7 @@ void PlayerStandingState::InputHandler()
 	// di chuyển qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
+		
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		player->ChangeState(State::RUNNING);
 		return;
