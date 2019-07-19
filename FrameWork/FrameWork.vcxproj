@@ -157,6 +157,7 @@
     <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDashingState.cpp" />
     <ClCompile Include="PlayerDuckingPunchingState.cpp" />
     <ClCompile Include="PlayerFloatingState.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="MapPittsburghPortal02.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerDashingState.h" />
     <ClInclude Include="PlayerDuckingPunchingState.h" />
     <ClInclude Include="PlayerFloatingState.h" />
     <ClInclude Include="PlayerJumpingState.h" />

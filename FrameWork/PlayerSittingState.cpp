@@ -23,7 +23,7 @@ void PlayerSittingState::InputHandler() {
 	else {
 		// Đổi sang trạng thái nổi trên nước
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
-			//player->ChangeState(State::FLOATING);
+			player->ChangeState(State::FLOATING);
 			return;
 		} 
 	}

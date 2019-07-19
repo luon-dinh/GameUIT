@@ -19,8 +19,8 @@ void PlayScene::Draw()
 {
 	world->Draw();
 	player->Render();
-	DrawDebugBoxForStaticObjects();
-	DrawDebugBoxForPlayer();
+	//DrawDebugBoxForStaticObjects();
+	//DrawDebugBoxForPlayer();
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
@@ -141,15 +141,14 @@ void PlayScene::CollisionProcess(double dt)
 		//	int a = 1;
 		//}
 		collisionOut colOut;
-		if (mapStaticObject[i]->type == Type::GROUND && mapStaticObject[i]->pos.y == 44 && player->GetOnAirState() == Player::OnAir::Falling && player->pos.y <= 80)
-			colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
-		else
-			colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
+		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
 
 		if (colOut.side == CollisionSide::bottom)
 		{
 			DebugOut(L"\nBottom");
 		}
+
+
 
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
@@ -159,11 +158,10 @@ void PlayScene::CollisionProcess(double dt)
 			{
 				player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
 			}
-				
 		}
 		else {
 			// trong trường hợp không còn chạm đất
-			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state == State::RUNNING) {
+			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING) {
 				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
 					if (player->GetOnAirState() == Player::OnAir::None) {
 						player->SetAirState(Player::OnAir::Falling);
@@ -195,10 +193,6 @@ void PlayScene::CollisionProcess(double dt)
 		//PrintDebug("\nPlayer VY = ");
 		//PrintDebugNumber(playerBox.vy);
 		//PrintDebug("\n");
-		if (player->pos.y < 40)
-		{
- 			PrintDebug("FUCK");
-		}
 	}
 }
 
