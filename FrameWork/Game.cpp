@@ -68,7 +68,7 @@ void Game::Run()
 		//	Sleep(tickPerFrame - dt);
 		//}
 	}
-}
+} 
 
 void Game::ProcessAllInput()
 {

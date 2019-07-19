@@ -13,6 +13,7 @@ protected:
 	void _FlipVertical(D3DXMATRIX* matrix);
 	void _Rotate180Degree(D3DXMATRIX* matrix);
 	void _Scale(float ratio, D3DXMATRIX* matrix);
+	void _Scale(float ratioX, float ratioY, D3DXMATRIX* matrix);
 	void _InnerRender(D3DXMATRIX* matrix, D3DXVECTOR2 position);
 	void _GetCenter2(D3DXVECTOR2* center2);
 
@@ -33,6 +34,7 @@ public:
 	virtual void Render(D3DXVECTOR2 pos);
 	virtual void Render(D3DXVECTOR3 pos);
 	virtual void Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 pos);
+	virtual void Render(float scaleRatioX, float scaleRatioY, D3DXVECTOR2 pos);
 	Tag tag;
 
 	float posX;

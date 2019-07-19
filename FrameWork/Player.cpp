@@ -89,7 +89,7 @@ void Player::Render()
 		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y),TransformationMode::FlipHorizontal);
 	}
 	else {
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), 2.0f, 3.0f);
 	}
 }
 

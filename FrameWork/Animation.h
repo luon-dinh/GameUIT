@@ -23,6 +23,7 @@ public:
 	void Render(D3DXVECTOR3 pos);
 	void Render(float x, float y, int first, int last);
 	void Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio = 1.0f);
+	void Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY);
 	void ReplaceSprite(int index, Sprite* sprite);//thay đổi sprite bất kì trong sprites của naimation
 	int curframeindex;
 	int getWidth();

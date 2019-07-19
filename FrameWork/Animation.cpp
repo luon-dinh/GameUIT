@@ -34,6 +34,16 @@ void Animation::Render(D3DXVECTOR2 pos, TransformationMode transMode, float scal
 	}
 }
 
+void Animation::Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY) {
+	if (sprites.size() == 0)
+		return;
+	if (sprites[curframeindex] != NULL)
+	{
+		sprites[curframeindex]->Render(scaleRatioX, scaleRatioY, pos);
+	}
+}
+
+
 Animation::~Animation()
 {
 	for (auto s : sprites)

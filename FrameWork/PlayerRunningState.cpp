@@ -5,6 +5,8 @@
 PlayerRunningState::PlayerRunningState()
 {
 	state = RUNNING;
+	this->timeFlip = 0;
+	this->befDash = BeforeDash::None;
 }
 
 
@@ -21,6 +23,9 @@ void PlayerRunningState::InputHandler()
 
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
+		if (ChangeToDash(BeforeDash::DashLeft))
+			return;
+		// dash hướng phải hoặc chưa dash
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 			player->ChangeState(State::JUMPING);
@@ -30,6 +35,8 @@ void PlayerRunningState::InputHandler()
 
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
+		if (ChangeToDash(BeforeDash::DashRight))
+			return;
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 			player->ChangeState(State::JUMPING);
@@ -48,6 +55,22 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 	// collide with ground
 	if (object->type == Type::GROUND) {
 	}
+}
+
+BOOL PlayerRunningState::ChangeToDash(BeforeDash currentDash) {
+	if (currentDash == BeforeDash::None && this->befDash != currentDash) {
+		this->befDash = currentDash;
+		return FALSE;
+	}
+	// đã có thể dash
+	if (this->timeFlip > 0 && this->timeFlip <= MAX_FLIP_TIME) {
+		this->befDash = BeforeDash::None;
+		this->timeFlip = 0; 
+		return TRUE;
+	}
+	// nhấn phím quá chậm
+	this->timeFlip = 0;
+	return FALSE;
 }
 
 void PlayerRunningState::Update(float dt)

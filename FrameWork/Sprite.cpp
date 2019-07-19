@@ -20,6 +20,8 @@ void Sprite::Render(D3DXVECTOR3 pos)
 	Render(D3DXVECTOR2(pos.x, pos.y));
 }
 
+
+
 Sprite::Sprite(Tag _tag, int top, int left, int bottom, int right)
 {
 	this->tag = _tag;
@@ -48,6 +50,16 @@ void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 
 	_InnerRender(&matrix, pos);
 }
 
+void Sprite::Render(float scaleRatioX, float scaleRatioY, D3DXVECTOR2 pos) {
+	D3DXMATRIX scaleMatrix;
+	_Scale(scaleRatioX, scaleRatioY, &scaleMatrix);
+	D3DXMATRIX mOld;
+	spriteHandler->GetTransform(&mOld);
+	spriteHandler->SetTransform(&scaleMatrix);
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(pos.x - (rect.right - rect.left) ,pos.y, 0), D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->SetTransform(&mOld);
+}
+
 void Sprite::_FlipHorizontal(D3DXMATRIX* matrix) {
 	D3DXVECTOR2 flip = D3DXVECTOR2(-1, 1);
 	D3DXVECTOR2 center;
@@ -73,15 +85,21 @@ void Sprite::_Scale(float ratio, D3DXMATRIX* matrix) {
 	D3DXVECTOR2 scaleMatrix = D3DXVECTOR2(ratio, ratio);
 	D3DXVECTOR2 center;
 	_GetCenter2(&center);
-	D3DXMatrixTransformation2D(matrix, &center, 0, &scaleMatrix, &center, 3.14f, NULL);
+	D3DXMatrixTransformation2D(matrix, &center, 0, &scaleMatrix, NULL, 0, NULL);
 }
 
+void Sprite::_Scale(float ratioX, float ratioY, D3DXMATRIX* matrix) {
+	D3DXVECTOR2 scaleMatrix = D3DXVECTOR2(ratioX, ratioY);
+	D3DXVECTOR2 center;
+	_GetCenter2(&center);
+	D3DXMatrixTransformation2D(matrix, &center, 0, &scaleMatrix, NULL, 0, NULL);
+}
 
 void Sprite::_InnerRender(D3DXMATRIX* matrix, D3DXVECTOR2 position) {
 	D3DXMATRIX mOld;
 	spriteHandler->GetTransform(&mOld);
 	spriteHandler->SetTransform(matrix);
-	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(-position.x + this->rect.right - this->rect.left, position.y, 0), D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(-position.x + (this->rect.right - this->rect.left), position.y, 0), D3DCOLOR_XRGB(255, 255, 255));
 	spriteHandler->SetTransform(&mOld);
 }
 #pragma endregion
