@@ -50,7 +50,7 @@ void SpriteManager::LoadResources()
 	//Cắt sprite là cắt theo trục y hướng xuống.
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 32));
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 32, 16, 64));
-
+	//Cắt sprite cho từng trạng thái của player
 	spriteManager->addSprite(Tag::PLAYER, 0, 1);//stad
 	spriteManager->addSprite(Tag::PLAYER, 1, 4);//run
 	spriteManager->addSprite(Tag::PLAYER, 2, 1);//shieldup
@@ -69,6 +69,11 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(Tag::PLAYER, 15, 2);//die /onground 
 	spriteManager->addSprite(Tag::PLAYER, 16, 3);//die onair
 	spriteManager->addSprite(Tag::PLAYER, 17, 9); //flow
+	//Cắt sprite cho từng trạng thái của shield
+	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
+	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 27, 16, 42));
+	spriteManager->addSprite(new Sprite(Tag::SHIELD, 3, 49, 12, 65));
+	spriteManager->addSprite(new Sprite(Tag::SHIELD, 5, 69, 11, 92));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

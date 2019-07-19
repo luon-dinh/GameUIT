@@ -14,6 +14,7 @@ void TextureManager::loadResources()
 	//Thêm textures này vào để debug.
 	textures->addTexture(Tag::TESTMAPOBJECTRED, (char*)".\\..\\Resources\\Images\\red_8_8.png");
 	textures->addTexture(Tag::TESTMAPOBJECTBLUE, (char*)".\\..\\Resources\\Images\\blue_8_8.png");
+	textures->addTexture(Tag::SHIELD, (char*)".\\..\\Resources\\Images\\SpriteSheetCaptainShield.png");
 
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
