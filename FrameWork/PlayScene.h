@@ -19,6 +19,7 @@ public:
 	virtual void Draw();
 	bool isDone() { return Done; }
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
+	virtual void ResetPlayerPosition() {}; //Nhớ override hàm setPlayer lại cho từng PlayScene khác nhau.
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:

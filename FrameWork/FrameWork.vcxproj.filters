@@ -67,6 +67,12 @@
     <Filter Include="GameMap\TileMap\MapPittsburgh">
       <UniqueIdentifier>{54cb4e7a-3209-4ea4-ad9c-5d2baeff936b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMap\TileMap\MapPittsburghPortal01">
+      <UniqueIdentifier>{b0118bc5-7ffe-4f4f-92c8-85fb18ccf978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap\TileMap\MapPittsburghPortal02">
+      <UniqueIdentifier>{8cf9b0f5-7130-4ab8-b6c0-89b52662c0ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -186,6 +192,9 @@
     <ClCompile Include="GroundCollision.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="MapPittsburghPortal01.cpp">
+      <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -301,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="GroundCollision.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPittsburghPortal01.h">
+      <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

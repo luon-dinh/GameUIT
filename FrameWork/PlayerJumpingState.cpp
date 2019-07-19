@@ -47,6 +47,7 @@ void PlayerJumpingState::InputHandler() {
 		// nhảy và chạy qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->SetVx(-PLAYER_NORMAL_SPEED);
+		goto SetAirState;
 	}
 	else {
 		player->SetVx(0);
@@ -56,7 +57,6 @@ SetAirState:
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->IsReachMaxJump()) {
 		player->SetVy(0);
-		timePressedJump = 0;
 		return;
 	}
 
@@ -80,7 +80,11 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		}
 		else {
 			// chạm nền dưới
-			if (side == CollisionSide::bottom && player->GetOnAirState() == Player::OnAir::Falling) {
+			if (side == CollisionSide::bottom ) {
+				if (collision->side == CollisionSide::bottom)
+				{
+					DebugOut(L"\nJump Bottom");
+				}
 				player->ChangeState(State::STANDING);	
 				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}

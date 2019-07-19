@@ -46,8 +46,10 @@ void SpriteManager::LoadResources()
 	for (int i = 0; i < numOfFrames; ++i)
 		spriteManager->addSprite(new Sprite(Tag::SEWER, 0, i*sewerTextureSize, sewerTextureSize, (i + 1)*sewerTextureSize));
 
-	//Thêm sprite debug vào.
-	//spriteManager->addSprite(new Sprite(Tag::TESTMAPOBJECT, 0, 0, 8, 8));
+	//Cắt sprite cho bảng exit.
+	//Cắt sprite là cắt theo trục y hướng xuống.
+	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 32, 16, 64));
 
 	spriteManager->addSprite(Tag::PLAYER, 0, 1);//stad
 	spriteManager->addSprite(Tag::PLAYER, 1, 4);//run

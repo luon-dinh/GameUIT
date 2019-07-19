@@ -25,9 +25,25 @@ PlaySceneCharlesBoss::~PlaySceneCharlesBoss()
 		delete worldDark;
 }
 
+void PlaySceneCharlesBoss::ResetPlayerPosition()
+{
+	//Reset lại player luôn.
+	Player * player = Player::getInstance();
+	player->pos.x = 0;
+	player->pos.y = SCREEN_HEIGHT;
+	player->ChangeState(State::JUMPING);
+	player->SetAirState(Player::OnAir::Falling);
+}
+
 void PlaySceneCharlesBoss::Update(double dt)
 {
 	PlaySceneWithLight::Update(dt);
+
+	//Test phím bật/tắt đèn.
+	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_L))
+		TurnOnOffLight();
+
+	//Kiểm tra xem player đã đi đến đích chưa.
 	if (player->pos.x > SCREEN_WIDTH - 50)
 		Done = true;
 }

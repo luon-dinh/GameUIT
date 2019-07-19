@@ -9,8 +9,6 @@ SceneManager::SceneManager()
 	pittsburgh = new PlayScenePittsburgh();
 	currentScene = nullptr;
 	ReplaceScene(charles);
-	Player * player = Player::getInstance();
-	player->pos.x = 50;
 }
 
 SceneManager::~SceneManager()
@@ -45,26 +43,40 @@ void SceneManager::ReplaceScene(PlayScene* newScene)
 		delete currentScene;
 	currentScene = newScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
-
-	//Reset lại player luôn.
-	Player * player = Player::getInstance();
-	player->pos.x = 0;
-	player->pos.y = SCREEN_HEIGHT;
-	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
+	currentScene->ResetPlayerPosition(); //Từng Scene sẽ có cách khởi tạo player ở những vị trí khác nhau. Vì vậy ta phải reset theo từng scene.
 }
 
+//ChangeScene sẽ đổi Scene, nhưng sẽ giữ Scene trước đó (không delete) và trạng thái của player khi đang ở Scene đó.
 void SceneManager::ChangeScene(PlayScene * newScene)
 {
+	//Lưu lại thông tin của player hiện tại để phục vụ cho việc chuyển cảnh về sau trước khi đổi màn.
+	Player * player = Player::getInstance();
+	PlayerInfo playerInfo;
+	playerInfo.playerX = player->pos.x;
+	playerInfo.playerY = player->pos.y;
+
+	playerSavedStatesWithPlayScene[currentScene] = playerInfo;
+
 	currentScene = newScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 
-//Reset lại player luôn.
-	Player * player = Player::getInstance();
-	player->pos.x = 0;
-	player->pos.y = SCREEN_HEIGHT;
-	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
+	//Khôi phục lại vị trí player.
+	//Thử tìm xem có thấy info trước đó không.
+	if (playerSavedStatesWithPlayScene.find(currentScene) != playerSavedStatesWithPlayScene.end())
+	{
+		//Trong trường hợp tìm thấy thì ta trả vị trí của player về lại trước khi chuyển Scene.
+		PlayerInfo prevInfo = playerSavedStatesWithPlayScene[currentScene];
+		player->pos.x = prevInfo.playerX;
+		player->pos.y = prevInfo.playerY;
+		player->ChangeState(State::STANDING);
+		player->SetAirState(Player::OnAir::None);
+	}
+	else
+	{
+		//Trong trường hợp không tìm thấy.
+		//Thì ta reset luôn vị trí player về mặc định của map.
+		currentScene->ResetPlayerPosition();
+	}
 }
 
 void SceneManager::Draw()

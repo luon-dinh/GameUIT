@@ -1,5 +1,6 @@
 ﻿#include"Player.h"
 #include"Camera.h"
+#include"Debug.h"
 
 Player* Player::instance = NULL;
 

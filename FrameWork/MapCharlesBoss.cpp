@@ -1,4 +1,4 @@
-#include "MapCharlesBoss.h"
+﻿#include "MapCharlesBoss.h"
 
 MapCharlesBoss::MapCharlesBoss(const char * imgPath, const char * txtPath, Tag tag) : TileMap(imgPath, txtPath, tag)
 {

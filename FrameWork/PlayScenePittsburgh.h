@@ -7,6 +7,7 @@ public:
 	PlayScenePittsburgh();
 	~PlayScenePittsburgh();
 	void Update(double dt) override; 
+	void ResetPlayerPosition() override;
 private:
 	const char * world02LightTXT = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_light.txt";
 	const char * world02TileLightPNG = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_light.png";
