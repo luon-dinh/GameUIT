@@ -219,6 +219,9 @@
     <ClCompile Include="Shield.cpp">
       <Filter>Objects\Shield</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDashingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDashingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ public:
 	Animation(Tag tag, int idex);
 	Animation(Tag tag, int first, int last, int tipeframe=TIME_PER_FRAME);
 	Sprite* getSprite(int index);
+	void DelayCurrentFrame(flaot dt);
 	void Update(float dt);
 	void Render(D3DXVECTOR2 pos);
 	void Render(float x, float y);

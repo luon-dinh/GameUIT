@@ -113,3 +113,8 @@ void Animation::ReplaceSprite(int index, Sprite* sprite)
 		return;
 	sprites[index] = sprite;
 }
+
+void Animation::DelayCurrentFrame(float delta)
+{
+	ticurframe -= delta;
+}

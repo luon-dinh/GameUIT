@@ -62,6 +62,7 @@ void Shield::InputHandler(float dt)
 
 void Shield::Update(float dt)
 {
+	this->InputHandler(dt);
 	Player* player = Player::getInstance();
 	if (!player)
 		return;
