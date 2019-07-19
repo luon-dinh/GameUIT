@@ -7,12 +7,17 @@ PlayScene::~PlayScene()
 	if (world != nullptr)
 		delete world;
 	//Còn thiếu hàm release player.
+	/*if (player != nullptr)
+		delete player;
+	if (shield != nullptr)
+		delete shield;*/
 }
 
 PlayScene::PlayScene()
 {
 	camera = Camera::getCameraInstance();
 	player = Player::getInstance();
+	shield = Shield::getInstance();
 }
 
 MapName PlayScene::GetAndResetDestinationMap()
@@ -26,8 +31,9 @@ void PlayScene::Draw()
 {
 	world->Draw();
 	player->Render();
-	DrawDebugBoxForStaticObjects();
-	DrawDebugBoxForPlayer();
+	shield->Render();
+	/*DrawDebugBoxForStaticObjects();
+	DrawDebugBoxForPlayer();*/
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
@@ -203,10 +209,12 @@ void PlayScene::CollisionProcess(double dt)
 	}
 }
 
+//Cập nhật shield và player.
 void PlayScene::ProcessUpdates(double dt)
 {
 	KeyboardManager* inputInstance = KeyboardManager::getInstance();
 	player->Update(dt);
+	shield->Update(dt);
 
 	//Kiểm tra nếu player ra khỏi map thì không cho đi tiếp.
 	int mapWidth = world->getMapWidth();

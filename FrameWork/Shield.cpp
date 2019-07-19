@@ -17,11 +17,13 @@ Shield::Shield()
 	case Player::LeftToRight:
 	{
 		this->pos.x = player->playerstate->getBoundingBox().right;
+		this->pos.y = player->pos.y;
 		break;
 	}
 	case Player::RightToLeft:
 	{
 		this->pos.x = player->playerstate->getBoundingBox().right;
+		this->pos.y = player->pos.y;
 		break;
 	}
 	default:
@@ -49,8 +51,6 @@ void Shield::InputHandler(float dt)
 	//nếu shield đang được player giữ
 	if (player->hasShield)
 	{
-		keyBoard->getState(dt);
-
 		if (keyBoard->isKeyDown(PLAYER_SHIELD_UP))
 		{
 			this->pos.y = player->getBoundingBox().top;

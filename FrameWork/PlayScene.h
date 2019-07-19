@@ -4,6 +4,7 @@
 #include "KeyboardManager.h"
 #include "Object.h"
 #include "Player.h"
+#include "Shield.h"
 #include "Global.h"
 #include "DrawDebug.h"
 
@@ -36,5 +37,6 @@ protected:
 	virtual void DrawDebugBoxForStaticObjects();
 	GameMap* world;
 	Player* player;
+	Shield* shield;
 	Camera * camera;
 };
