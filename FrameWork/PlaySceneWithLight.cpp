@@ -16,6 +16,7 @@ void PlaySceneWithLight::Draw()
 	currentWorld->Draw();
 	//Ta render tiếp player.
 	player->Render();
+	shield->Render();
 	/*DrawDebugBoxForStaticObjects();
 	DrawDebugBoxForPlayer();*/
 }
