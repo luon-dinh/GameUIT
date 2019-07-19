@@ -12,7 +12,7 @@ Shield::Shield()
 	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->direction;
 	this->pos.y = player->pos.y+10;
-	this->currentSpriteIndex = 0;
+	animation->curframeindex = 2;
 	//set vị trí ban đầu cua shield theo hướng di chuyển của player
 	switch (direction)
 	{
@@ -53,15 +53,16 @@ void Shield::InputHandler(float dt)
 	//nếu shield đang được player giữ
 	if (player->hasShield)
 	{
+		//cái này nên để Player Shield Up State update, test nên để đây update luôn
 		if (keyBoard->isKeyDown(PLAYER_SHIELD_UP))
 		{
-			this->pos.y = player->getBoundingBox().top;
+			this->pos.y = player->playerstate->getBoundingBox().top;
 			this->pos.x = player->pos.x;
-			this->currentSpriteIndex = 2;
+			animation->curframeindex = 2;
 		}
 		else
 		{
-			this->currentSpriteIndex = 0;
+			animation->curframeindex = 0;
 		}
 		//còn thiếu sự kiện rớt xuống shield xuống
 	}
@@ -69,7 +70,6 @@ void Shield::InputHandler(float dt)
 
 void Shield::Update(float dt)
 {
-	this->InputHandler(dt);
 	Player* player = Player::getInstance();
 	if (!player)
 		return;
@@ -100,6 +100,7 @@ void Shield::Update(float dt)
 		//xử lí update khi khiêng đang tấn công
 		//update vị trí dự theo vị trí player
 	}
+	this->InputHandler(dt);
 }
 
 void Shield::Render()

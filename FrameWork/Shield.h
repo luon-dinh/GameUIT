@@ -11,7 +11,6 @@ private:
 	//std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
 	Animation * animation;
 public:
-	int currentSpriteIndex;
 	Player::MoveDirection direction;
 
 	static Shield* getInstance();
