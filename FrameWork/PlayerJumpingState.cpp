@@ -28,25 +28,20 @@ void PlayerJumpingState::InputHandler() {
 		player->ChangeState(State::KICKING);
 		return;
 	}
-	// nhảy và chạy qua phải
-	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
-		player->SetVx(PLAYER_NORMAL_SPEED);
-		goto SetAirState;
-	}
-	else {
+	if (!keyboard->isKeyDown(PLAYER_MOVE_RIGHT) && !keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->SetVx(0);
 	}
-		// nhảy và chạy qua trái
-	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
-		player->SetVx(-PLAYER_NORMAL_SPEED);
-		goto SetAirState;
-	}
 	else {
-		player->SetVx(0);
-		return;
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+			player->SetVx(PLAYER_NORMAL_SPEED);
+		}
+		else{
+			if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+				player->SetVx(-PLAYER_NORMAL_SPEED);
+			}
+		}
 	}
 
-SetAirState:
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->IsReachMaxJump()) {
 		player->SetVy(0);
