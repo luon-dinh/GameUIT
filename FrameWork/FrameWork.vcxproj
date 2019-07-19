@@ -154,9 +154,9 @@
     <ClCompile Include="MapCharlesBoss.cpp" />
     <ClCompile Include="MapPittsburgh.cpp" />
     <ClCompile Include="MapPittsburghPortal01.cpp" />
+    <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerDashingState.cpp" />
     <ClCompile Include="PlayerDuckingPunchingState.cpp" />
     <ClCompile Include="PlayerFloatingState.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
@@ -171,6 +171,7 @@
     <ClCompile Include="PlaySceneCharles.cpp" />
     <ClCompile Include="PlaySceneCharlesBoss.cpp" />
     <ClCompile Include="PlayScenePittsburgh.cpp" />
+    <ClCompile Include="PlayScenePittsburghPortal01.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -197,9 +198,9 @@
     <ClInclude Include="MapCharlesBoss.h" />
     <ClInclude Include="MapPittsburgh.h" />
     <ClInclude Include="MapPittsburghPortal01.h" />
+    <ClInclude Include="MapPittsburghPortal02.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerDashingState.h" />
     <ClInclude Include="PlayerDuckingPunchingState.h" />
     <ClInclude Include="PlayerFloatingState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="PlaySceneCharles.h" />
     <ClInclude Include="PlaySceneCharlesBoss.h" />
     <ClInclude Include="PlayScenePittsburgh.h" />
+    <ClInclude Include="PlayScenePittsburghPortal01.h" />
     <ClInclude Include="PlaySceneWithLight.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
