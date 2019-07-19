@@ -45,5 +45,8 @@ void PlaySceneCharlesBoss::Update(double dt)
 
 	//Kiểm tra xem player đã đi đến đích chưa.
 	if (player->pos.x > SCREEN_WIDTH - 50)
+	{
 		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+	}
 }

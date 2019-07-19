@@ -7,8 +7,10 @@ SceneManager::SceneManager()
 	charles = new PlaySceneCharles();
 	charlesBoss = new PlaySceneCharlesBoss();
 	pittsburgh = new PlayScenePittsburgh();
+	pittsburghPortal01 = new PlayScenePittsburghPortal01();
+	pittsburghPortal02 = new PlayScenePittsburghPortal02();
 	currentScene = nullptr;
-	ReplaceScene(charles);
+	ReplaceScene(MapName::CHARLES);
 }
 
 SceneManager::~SceneManager()
@@ -22,32 +24,95 @@ SceneManager::~SceneManager()
 		delete pittsburgh;
 	if (pittsburghBoss != nullptr)
 		delete pittsburghBoss;
+	if (pittsburghPortal01 != nullptr)
+		delete pittsburghPortal01;
+	if (pittsburghPortal02 != nullptr)
+		delete pittsburghPortal02;
 }
 
 void SceneManager::Update(double dt)
 {
+	MapName nextMap = currentScene->GetAndResetDestinationMap();
+	bool isCurrentSceneDone = currentScene->isDone();
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
-	if (!currentScene->isDone())
+	if (!isCurrentSceneDone && nextMap == NOMAP) //Nếu vẫn là Scene hiện tại thì thôi.
 		currentScene->Update(dt);
-	else if (currentScene == charles)
-		ReplaceScene(charlesBoss);
-	else if (currentScene == charlesBoss)
-		ReplaceScene(pittsburgh);
+	else if (!isCurrentSceneDone) //Nếu chỉ muốn thay đổi Scene (khi vào portal).
+	{
+		ChangeScene(nextMap);
+	}
+	else if (isCurrentSceneDone) //Khi đã xong luôn rồi.
+	{
+		ReplaceScene(nextMap);
+	}
 	else
 		currentScene->Update(dt);
 }
 
-void SceneManager::ReplaceScene(PlayScene* newScene)
+PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
 {
+	PlayScene* nextScene = nullptr;
+	if (mapName == MapName::CHARLES)
+		nextScene = charles;
+	else if (mapName == MapName::CHARLESBOSSLIGHT)
+	{
+		charlesBoss->setLightStatus(true);
+		nextScene = charlesBoss;
+	}
+	else if (mapName == MapName::CHARLESBOSSDARK)
+	{
+		charlesBoss->setLightStatus(false);
+		nextScene = charlesBoss;
+	}
+	else if (mapName == MapName::PITTSBURGHDARK)
+	{
+		pittsburgh->setLightStatus(false);
+		nextScene = pittsburgh;
+	}
+	else if (mapName == MapName::PITTSBURGHLIGHT)
+	{
+		pittsburgh->setLightStatus(true);
+		nextScene = pittsburgh;
+	}
+	else if (mapName == MapName::PITTSBURGHPORTAL1DARK)
+	{
+		pittsburghPortal01->setLightStatus(false);
+		nextScene = pittsburghPortal01;
+	}
+	else if (mapName == MapName::PITTSBURGHPORTAL1LIGHT)
+	{
+		pittsburghPortal01->setLightStatus(true);
+		nextScene = pittsburghPortal01;
+	}
+	else if (mapName == MapName::PITTSBURGHPORTAL2LIGHT)
+	{
+		pittsburghPortal02->setLightStatus(true);
+		nextScene = pittsburghPortal02;
+	}
+	else if (mapName == MapName::PITTSBURGHPORTAL2DARK)
+	{
+		pittsburghPortal02->setLightStatus(false);
+		nextScene = pittsburghPortal02;
+	}
+
+	return nextScene;
+}
+
+void SceneManager::ReplaceScene(MapName mapName)
+{
+	PlayScene* nextScene = fromMapNameToPlayScene(mapName);
+	if (nextScene == nullptr)
+		return;
+
 	if (currentScene != nullptr)
 		delete currentScene;
-	currentScene = newScene;
+	currentScene = nextScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 	currentScene->ResetPlayerPosition(); //Từng Scene sẽ có cách khởi tạo player ở những vị trí khác nhau. Vì vậy ta phải reset theo từng scene.
 }
 
 //ChangeScene sẽ đổi Scene, nhưng sẽ giữ Scene trước đó (không delete) và trạng thái của player khi đang ở Scene đó.
-void SceneManager::ChangeScene(PlayScene * newScene)
+void SceneManager::ChangeScene(MapName mapName)
 {
 	//Lưu lại thông tin của player hiện tại để phục vụ cho việc chuyển cảnh về sau trước khi đổi màn.
 	Player * player = Player::getInstance();
@@ -57,7 +122,11 @@ void SceneManager::ChangeScene(PlayScene * newScene)
 
 	playerSavedStatesWithPlayScene[currentScene] = playerInfo;
 
-	currentScene = newScene;
+	PlayScene * nextScene = fromMapNameToPlayScene(mapName);;
+	if (nextScene == nullptr)
+		return;
+
+	currentScene = nextScene;
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 
 	//Khôi phục lại vị trí player.
@@ -83,8 +152,6 @@ void SceneManager::Draw()
 {
 	currentScene->Draw();
 }
-
-
 
 Scene* SceneManager::getCurrentScene()
 {

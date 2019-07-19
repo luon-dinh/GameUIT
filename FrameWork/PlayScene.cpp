@@ -15,6 +15,13 @@ PlayScene::PlayScene()
 	player = Player::getInstance();
 }
 
+MapName PlayScene::GetAndResetDestinationMap()
+{
+	MapName mapName = ReplaceToThisMap;
+	ReplaceToThisMap = MapName::NOMAP; 
+	return mapName; 
+}
+
 void PlayScene::Draw()
 {
 	world->Draw();

@@ -172,6 +172,7 @@
     <ClCompile Include="PlaySceneCharlesBoss.cpp" />
     <ClCompile Include="PlayScenePittsburgh.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal01.cpp" />
+    <ClCompile Include="PlayScenePittsburghPortal02.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="PlaySceneCharlesBoss.h" />
     <ClInclude Include="PlayScenePittsburgh.h" />
     <ClInclude Include="PlayScenePittsburghPortal01.h" />
+    <ClInclude Include="PlayScenePittsburghPortal02.h" />
     <ClInclude Include="PlaySceneWithLight.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
