@@ -195,6 +195,9 @@
     <ClCompile Include="MapPittsburghPortal01.cpp">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDashingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="MapPittsburghPortal01.h">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDashingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
