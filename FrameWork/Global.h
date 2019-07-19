@@ -45,6 +45,16 @@ public:
 	static char * WATER_TOP_ANIM;
 	static char * WATER_BOTTOM_ANIM;
 	static char * SEWER_ANIM;
+	static char * EXIT_SIGN;
+};
+
+//Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
+//Lưu ý đừng lưu máu vào đây, đây chỉ là để lưu vị trí và trạng thái của player.
+//Máu của player sẽ được đi xuyên suốt khắp các màn mà không thay đổi.
+struct PlayerInfo
+{
+	float playerX;
+	float playerY;
 };
 
 enum Tag {
@@ -68,7 +78,8 @@ enum Tag {
 	SHIELD,
 	WATERTOP,
 	WATERBOTTOM,
-	SEWER
+	SEWER,
+	EXITSIGN
 };
 enum Type {
 	NONE,

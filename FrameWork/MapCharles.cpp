@@ -2,16 +2,22 @@
 
 MapCharles::MapCharles(const char * imgPath, const char * txtPath) : TileMap(imgPath, txtPath, Tag::MAPCHARLES)
 {
-	waterTopAnim = new Animation(Tag::WATERTOP, 0, 2, delayWaterFlow);
-	waterBottomAnim = new Animation(Tag::WATERBOTTOM, 0, 2, delayWaterFlow);
-	sewerAnim = new Animation(Tag::SEWER, 0, 2, delaySewerFlow);
+	waterTopAnim = new Animation(Tag::WATERTOP, 0, 3, delayWaterFlow);
+	waterBottomAnim = new Animation(Tag::WATERBOTTOM, 0, 3, delayWaterFlow);
+	sewerAnim = new Animation(Tag::SEWER, 0, 3, delaySewerFlow);
+	exitSign = new Animation(Tag::EXITSIGN, 0, 2, delayExitSignFlash);
 }
 
 MapCharles::~MapCharles()
 {
-	delete waterTopAnim;
-	delete waterBottomAnim;
-	delete sewerAnim;
+	if (waterTopAnim != nullptr)
+		delete waterTopAnim;
+	if (waterBottomAnim != nullptr)
+		delete waterBottomAnim;
+	if (sewerAnim != nullptr)
+		delete sewerAnim;
+	if (exitSign != nullptr)
+		delete exitSign;
 }
 
 void MapCharles::Update(double dt)
@@ -19,6 +25,7 @@ void MapCharles::Update(double dt)
 	waterTopAnim->Update(dt);
 	waterBottomAnim->Update(dt);
 	sewerAnim->Update(dt);
+	exitSign->Update(dt);
 }
 
 void MapCharles::Draw(Camera* camera)
@@ -65,6 +72,18 @@ void MapCharles::Draw(Camera* camera)
 			else if (tileID == WATER_BOTTOM_ANIM_ID)
 			{
 				waterBottomAnim->Render(viewPortPos);
+			}
+			else if (tileID == EXIT_SIGN_BEGIN_ID)
+			{
+				//ExitSign bự hơn so với cái tile khác.
+				//Vì vậy ta phải chỉnh lại toạ độ vẽ của ExitSign.
+				worldPos.x = worldPos.x + tileSize / 2;
+				viewPortPos = camera->convertWorldToViewPort(worldPos);
+				exitSign->Render(viewPortPos);
+			}
+			else if (tileID == EXIT_SIGN_END_ID)
+			{
+				//Không làm gì hết do exitSign chiếm tận 32 pixel theo hàng ngang.
 			}
 			else
 				tileSet->DrawTile(tileID, viewPortPos);

@@ -145,7 +145,7 @@ void GameMap::Draw()
 	tMap->Draw(camera);
 	
 	//Vẽ debug map object.
-	DrawAllDebugVector();
+	//DrawAllDebugVector();
 }
 
 void GameMap::SetCamera(Camera* newCamera)

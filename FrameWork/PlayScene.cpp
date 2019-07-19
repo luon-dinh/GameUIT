@@ -153,28 +153,28 @@ void PlayScene::CollisionProcess(double dt)
 				}
 			}
 		}
-		if (isCollide)
-			PrintDebug("\nCollision detected !");
-		else
-			PrintDebug("\nNo collision !");
+		//if (isCollide)
+		//	PrintDebug("\nCollision detected !");
+		//else
+		//	PrintDebug("\nNo collision !");
 
-		PrintDebug("\nCollision out side : ");
-		PrintDebugNumber(colOut.side);
+		//PrintDebug("\nCollision out side : ");
+		//PrintDebugNumber(colOut.side);
 
-		PrintDebug("\nCollision out time : ");
-		PrintDebugNumber(colOut.collisionTime);
+		//PrintDebug("\nCollision out time : ");
+		//PrintDebugNumber(colOut.collisionTime);
 
-		PrintDebug("\n Player Jumping State : ");
-		PrintDebugNumber(player->onAirState);
-		PrintDebug("\nPlayer X = ");
-		PrintDebugNumber(player->pos.x);
-		PrintDebug("\nPlayer Y = ");
-		PrintDebugNumber(player->pos.y);
-		PrintDebug("\nPlayer VX = ");
-		PrintDebugNumber(playerBox.vx);
-		PrintDebug("\nPlayer VY = ");
-		PrintDebugNumber(playerBox.vy);
-		PrintDebug("\n");
+		//PrintDebug("\n Player Jumping State : ");
+		//PrintDebugNumber(player->onAirState);
+		//PrintDebug("\nPlayer X = ");
+		//PrintDebugNumber(player->pos.x);
+		//PrintDebug("\nPlayer Y = ");
+		//PrintDebugNumber(player->pos.y);
+		//PrintDebug("\nPlayer VX = ");
+		//PrintDebugNumber(playerBox.vx);
+		//PrintDebug("\nPlayer VY = ");
+		//PrintDebugNumber(playerBox.vy);
+		//PrintDebug("\n");
 		if (player->pos.y < 40)
 		{
  			PrintDebug("FUCK");
