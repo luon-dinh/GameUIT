@@ -75,30 +75,19 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 }
 
 BOOL PlayerRunningState::ChangeToDash(BeforeDash currentDash) {
-	if (currentDash == BeforeDash::None) {
+	if (currentDash == BeforeDash::None && this->befDash != currentDash) {
 		this->befDash = currentDash;
 		return FALSE;
 	}
-	if (this->befDash == currentDash) {
-		// đã có thể dash
-		if (this->timeFlip > 0 && this->timeFlip <= MAX_FLIP_TIME) {
-			this->befDash = BeforeDash::None;
-			this->timeFlip = 0; 
-			return TRUE;
-		}
-		// nhấn phím quá chậm
-		else {
-			this->timeFlip = 0;
-		}
+	// đã có thể dash
+	if (this->timeFlip > 0 && this->timeFlip <= MAX_FLIP_TIME) {
+		this->befDash = BeforeDash::None;
+		this->timeFlip = 0; 
+		return TRUE;
 	}
-	else {
-		if (this->befDash == BeforeDash::None) {
-			this->befDash == BeforeDash::DashLeft;
-		}
-		else {
-			this->befDash = BeforeDash::None;
-		}
-	}
+	// nhấn phím quá chậm
+	this->timeFlip = 0;
+	return FALSE;
 }
 
 void PlayerRunningState::Update(float dt)

@@ -73,6 +73,12 @@
     <Filter Include="GameMap\TileMap\MapPittsburghPortal02">
       <UniqueIdentifier>{8cf9b0f5-7130-4ab8-b6c0-89b52662c0ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene\PlayScenePittsburghPortal01">
+      <UniqueIdentifier>{9b8aa64b-be01-4cdd-89a1-ae6a1d2e5b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\PlayScenePittsburghPortal02">
+      <UniqueIdentifier>{f599b149-fa51-4f59-b749-26c409ae135b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -195,13 +201,14 @@
     <ClCompile Include="MapPittsburghPortal01.cpp">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="PlayerDashingState.cpp">
-      <Filter>Objects\Player</Filter>
-=======
     <ClCompile Include="DrawDebug.cpp">
       <Filter>Debug</Filter>
->>>>>>> 899fb791bffe24d2a6ec52fb0d947d87aad6c321
+    </ClCompile>
+    <ClCompile Include="MapPittsburghPortal02.cpp">
+      <Filter>GameMap\TileMap\MapPittsburghPortal02</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScenePittsburghPortal01.cpp">
+      <Filter>Scene\PlayScene\PlayScenePittsburghPortal01</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,13 +329,14 @@
     <ClInclude Include="MapPittsburghPortal01.h">
       <Filter>GameMap\TileMap\MapPittsburghPortal01</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="PlayerDashingState.h">
-      <Filter>Objects\Player</Filter>
-=======
     <ClInclude Include="DrawDebug.h">
       <Filter>Debug</Filter>
->>>>>>> 899fb791bffe24d2a6ec52fb0d947d87aad6c321
+    </ClInclude>
+    <ClInclude Include="MapPittsburghPortal02.h">
+      <Filter>GameMap\TileMap\MapPittsburghPortal02</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScenePittsburghPortal01.h">
+      <Filter>Scene\PlayScene\PlayScenePittsburghPortal01</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
