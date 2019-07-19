@@ -14,6 +14,9 @@ private:
 	const int bottomBound = 88;
 	const int leftBound = 70;
 	const int rightBound = 135;
+
+	const int topCriticalLine = 50;
+	const int bottomCriticalLine = 20;
 	
 	//Toạ độ bounding box cho việc dời camera nâng cao.
 	const int topBoundAdvanced = 60;

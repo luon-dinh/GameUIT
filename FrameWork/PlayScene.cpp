@@ -96,9 +96,9 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	int fromPlayerToRight = SCREEN_WIDTH - playerViewPort.x + playerWidth / 2;
 
 	//Bám theo cơ bản (giữ player trong bounding box của camera).
-	if (fromPlayerToTop < topBound)
+	if (fromPlayerToTop < topBound && player->onAirState == Player::OnAir::None)
 		camera->MoveUp(topBound - fromPlayerToTop);
-	else if (fromPlayerToBottom < bottomBound)
+	else if (fromPlayerToBottom < bottomBound && player->onAirState == Player::OnAir::None)
 		camera->MoveDown(bottomBound - fromPlayerToBottom);
 
 	if (fromPlayerToLeft < leftBound)

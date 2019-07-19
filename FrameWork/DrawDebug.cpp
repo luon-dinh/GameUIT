@@ -21,7 +21,7 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 		{
 			D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(curX + tileSize / 2, curY - tileSize / 2, 0));
 			debugSprite->Render(viewPort);
-			curX += tileSize;
+			curX += tileSize; 
 		}
 		curY -= tileSize;
 		curX = objTopLeftX;
