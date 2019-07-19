@@ -3,7 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-const auto cameraSpeed = 1;
+const long cameraSpeed = 1;
 
 class Camera
 {
@@ -15,14 +15,22 @@ private:
 	const int leftBound = 70;
 	const int rightBound = 135;
 
-	const int topCriticalLine = 50;
-	const int bottomCriticalLine = 20;
+	const int topCriticalLine = 20;
+	const int bottomCriticalLine = 40;
 	
 	//Toạ độ bounding box cho việc dời camera nâng cao.
 	const int topBoundAdvanced = 60;
 	const int bottomBoundAdvanced = 60;
 	const int leftBoundAdvanced = 70;
 	const int rightBoundAdvanced = 145;
+
+	//Thời gian delay tối đa của camera khi đụng Critical Line (tính bằng ms).
+	//Tức là trong khoảng thời gian này là camera phải lết được lên đến player.
+	const int timeDelay = 500;
+
+	//DeltaX,Y dùng để set vị trí tương lai của player.
+	int DeltaX = 0;
+	int DeltaY = 0;
 
 	Camera();
 	~Camera();
@@ -50,8 +58,14 @@ public:
 	void MoveUp(long = cameraSpeed);
 	void MoveDown(long = cameraSpeed);
 
+	//Di chuyển camera có delay.
+	void UpdateCameraWithDelay(double dt);
+
 	//Cài đặt vị trí cho Camera.
 	void SetPosition(float x, float y);
+
+	//Cài đặt vị trí tương lai cho Camera (camera sẽ di chuyển trong khoảng thời gian timeDelay đến vị trí tương lai đã set).
+	void SetPositionWithDelay(float x, float y);
 
 	//Cài đặt kích thước của Camera.
 	void SetMapProperties(long height, long width);
@@ -60,6 +74,12 @@ public:
 	D3DXVECTOR3 getPositionVector();
 	//Lấy BOUND (BOUND này dùng để giới hạn lại phạm vi của player trước khi camera di chuyển).
 	RECT getBoundingBox();
+
+	//Lấy ra Critical Line trên.
+	int getTopCriticalLine() { return topCriticalLine; };
+
+	//Lấy ra Critical Line dưới.
+	int getBottomCriticalLine() { return bottomCriticalLine; };
 
 	//Lấy BOUND dùng cho việc dịch camera nâng cao.
 	RECT getBoundingBoxAdvanced();

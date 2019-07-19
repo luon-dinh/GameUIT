@@ -4,6 +4,16 @@
 
 Camera* Camera::cameraInstance = nullptr;
 
+void Camera::UpdateCameraWithDelay(double dt)
+{
+
+}
+
+void Camera::SetPositionWithDelay(float x, float y)
+{
+
+}
+
 Camera::Camera()
 {
 	long _x = 0;
