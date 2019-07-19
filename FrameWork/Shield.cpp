@@ -55,6 +55,11 @@ void Shield::InputHandler(float dt)
 		{
 			this->pos.y = player->getBoundingBox().top;
 			this->pos.x = player->pos.x;
+			this->currentSpriteIndex = 2;
+		}
+		else
+		{
+			this->currentSpriteIndex = 0;
 		}
 		//còn thiếu sự kiện rớt xuống shield xuống
 	}
