@@ -30,6 +30,8 @@ protected:
 	virtual void UpdateCameraWithPlayerPos(double dt);
 	virtual void CollisionProcess(double dt);
 	virtual void EnvironmentUpdate(double dt);
+	virtual void DrawDebugBoxForPlayer();
+	virtual void DrawDebugBoxForStaticObjects();
 	GameMap* world;
 	Player* player;
 	Camera * camera;
