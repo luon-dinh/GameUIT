@@ -5,6 +5,8 @@
 #include "PlaySceneCharles.h"
 #include "PlaySceneCharlesBoss.h"
 #include "PlayScenePittsburgh.h"
+#include "PlayScenePittsburghPortal01.h"
+#include "PlayScenePittsburghPortal02.h"
 
 class SceneManager
 {
@@ -27,19 +29,19 @@ public:
 
 	//Hàm dùng để cập nhật Scene hiện tại.
 	void Update(double dt);
-	
-	//Hàm dùng để load một Scene khác.
-	void ChangeScene(PlayScene *);
-
 
 	//Hàm dùng để vẽ những gì có trong Scene lên màn hình.
 	void Draw();
 
 private:
 	static SceneManager * sceneManagerInstance;
+
 	PlayScene* charles;
-	PlayScene* charlesBoss;
-	PlayScene* pittsburgh;
+	PlaySceneCharlesBoss* charlesBoss;
+	PlayScenePittsburgh* pittsburgh;
+	PlayScenePittsburghPortal01* pittsburghPortal01;
+	PlayScenePittsburghPortal02* pittsburghPortal02;
+
 	PlayScene* pittsburghBoss;
 	PlayScene* currentScene;
 
@@ -50,5 +52,10 @@ private:
 	~SceneManager();
 
 	//Hàm dùng để gọi các thủ tục khi thay scene như cập nhật vị trí camera, player,...
-	void ReplaceScene(PlayScene * newScene);
+	void ReplaceScene(MapName);
+	//Hàm dùng để load một Scene khác.
+	void ChangeScene(MapName);
+
+	//Hàm dùng để xử lý từ tên map thành con trỏ Scene.
+	PlayScene* fromMapNameToPlayScene(MapName);
 };

@@ -37,11 +37,28 @@ void PlayScenePittsburgh::Update(double dt)
 {
 	PlaySceneWithLight::Update(dt);
 
+	KeyboardManager* kbInstance = KeyboardManager::getInstance();
+
 	//Test phím bật/tắt đèn.
-	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_L))
+	if (kbInstance->getKeyPressedOnce(DIK_L))
 		TurnOnOffLight();
+
+	//Test phím chuyển màn.
+	if (kbInstance->getKeyPressedOnce(DIK_O) && isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHPORTAL1LIGHT;
+	else if (kbInstance->getKeyPressedOnce(DIK_O) && !isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHPORTAL1DARK;
+
+	if (kbInstance->getKeyPressedOnce(DIK_K) && isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2LIGHT;
+	else if (kbInstance->getKeyPressedOnce(DIK_K) && !isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
 	//Kiểm tra xem player đã đi đến đích chưa.
 	if (player->pos.x >= world->getMapWidth() - 50)
+	{
 		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
+	}
+		
 }

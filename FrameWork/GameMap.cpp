@@ -18,6 +18,14 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 		tMap = new MapPittsburgh(imgPath, txtPath, Tag::MAPPITTSBURGHLIGHT);
 	else if (map == MapName::PITTSBURGHDARK)
 		tMap = new MapPittsburgh(imgPath, txtPath, Tag::MAPPITTSBURGHDARK);
+	else if (map == MapName::PITTSBURGHPORTAL1DARK)
+		tMap = new MapPittsburghPortal01(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL1DARK);
+	else if (map == MapName::PITTSBURGHPORTAL1LIGHT)
+		tMap = new MapPittsburghPortal01(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL1LIGHT);
+	else if (map == MapName::PITTSBURGHPORTAL2LIGHT)
+		tMap = new MapPittsburghPortal02(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL2LIGHT);
+	else if (map == MapName::PITTSBURGHPORTAL2DARK)
+		tMap = new MapPittsburghPortal02(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL2DARK);
 
 	camera = Camera::getCameraInstance();
 
