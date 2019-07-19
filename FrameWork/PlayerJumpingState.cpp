@@ -1,7 +1,6 @@
 ﻿#include "PlayerJumpingState.h"
 #include"Debug.h"
 void PlayerJumpingState::InputHandler() {
-
 	auto player = Player::getInstance();	
 	auto keyboard = KeyboardManager::getInstance();
 	int timePressedJump = 0;
@@ -9,31 +8,29 @@ void PlayerJumpingState::InputHandler() {
 		return;
 
 	// xét thời gian đã press phím jump
-	if (player->GetOnAirState() == Player::OnAir::Jumping && !keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump)) {
-
-		if (player->GetOnAirState() == Player::OnAir::Falling)
-			goto SkipPlayerJump;
-
-  		if (timePressedJump <=0)
-			goto SkipPlayerJump;
-		// nhảy cấp độ 1
-		if (timePressedJump <= MIN_TIME_JUMP_1) {
-			player->SetVy(player->vy + ADDED_SPEED);
-		}
-		else {
-			// nhảy cấp độ 2
+	if (player->GetOnAirState() == Player::OnAir::Jumping) {
+		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
 			if (timePressedJump <= MIN_TIME_JUMP_2) {
 				player->SetVy(player->vy + ADDED_SPEED);
+				return;
 			}
 			//chuyển sang trạng thái roll
-			else 
+			else
 			{
 				player->ChangeState(State::ROLLING);
+				return;
 			}
 		}
+
+		if (keyboard->isKeyDown(PLAYER_JUMP)) {
+			player->SetVy(player->vy + ADDED_SPEED);
+			return;
+		}
+
+		// nhảy cấp độ 1
+
 	}
 
-SkipPlayerJump:
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);
@@ -60,7 +57,6 @@ SetAirState:
 	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
 	if (player->IsReachMaxJump()) {
 		player->SetVy(0);
-		player->SetAirState(Player::OnAir::Falling);
 		return;
 	}
 
