@@ -69,6 +69,7 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(Tag::PLAYER, 15, 2);//die /onground 
 	spriteManager->addSprite(Tag::PLAYER, 16, 3);//die onair
 	spriteManager->addSprite(Tag::PLAYER, 17, 9); //flow
+	spriteManager->addSprite(Tag::PLAYER, 18, 6); // dive
 	//Cắt sprite cho từng trạng thái của shield
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 27, 16, 42));

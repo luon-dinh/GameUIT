@@ -11,6 +11,7 @@
 #include "PlayerRollingState.h"
 #include "PlayerDashingState.h"
 #include "PlayerFloatingState.h"
+#include "PlayerDivingState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
@@ -78,6 +79,7 @@ public:
 	OnAir preOnAir;
 	D3DXVECTOR2 accelerate;
 	BOOL collideOnGround;
+	BOOL collisionAffect;
 
 	GroundCollision* groundCollision;
 

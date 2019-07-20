@@ -2,6 +2,7 @@
 
 PlayerFloatingState::PlayerFloatingState() {
 	this->state = State::FLOATING;
+	this->countAnimationFrame = 9;
 }
 
 void PlayerFloatingState::InputHandler() {
@@ -15,6 +16,7 @@ void PlayerFloatingState::InputHandler() {
 		// nhấn phím nhảy thì nhảy lên bờ
 		if (keyboard->isKeyDown(PLAYER_JUMP)) {
 			player->ChangeState(State::JUMPING);
+			this->countAnimationFrame = 9;
 		}
 		return;
 	}
@@ -24,20 +26,42 @@ void PlayerFloatingState::InputHandler() {
 			player->Float(Player::MoveDirection::LeftToRight);
 			if (keyboard->isKeyDown(PLAYER_JUMP)) {
 				player->ChangeState(State::JUMPING);
+				this->countAnimationFrame = 9;
 			}
 			return;
 		}
 	}
+	// nhấn phím nhảy thì chuyển sang trạng thái nhảy
 	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
+		this->countAnimationFrame = 9;
+		return;
+	}
+	// nhấn phím ngồi thì chuyển sang trạng thái lặn
+	if (keyboard->isKeyDown(PLAYER_SIT)) {
+		player->ChangeState(State::DIVING);
+		this->countAnimationFrame = 9;
 		return;
 	}
 
+	// trong trường hợp không có phím nào được nhấn thì vận tốc của player bằng vận tốc dòng nước
 	player->vx = -WATER_SPEED;
 }
 
+PlayerFloatingState::~PlayerFloatingState() {
+
+}
+
 void PlayerFloatingState::Update(float dt) {
+	auto player = Player::getInstance();
+	if (this->countAnimationFrame == 0) {
+		player->curanimation = new Animation(Tag::PLAYER, 38, 40);
+	}
+	else {
+		this->countAnimationFrame--;
+	}
 	InputHandler();
+
 }
 
 void PlayerFloatingState::OnCollision(Object* object, collisionOut* collision) {

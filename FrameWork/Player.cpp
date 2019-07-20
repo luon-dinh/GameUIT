@@ -23,6 +23,7 @@ Player::Player()
 	this->playerstate = playerStates[State::JUMPING];
 	this->curanimation = animations[this->state];
 	this->prevState = NULL;
+	this->collisionAffect = TRUE;
 
 	this->groundCollision = new GroundCollision();
 }
@@ -45,7 +46,8 @@ void Player::LoadAllAnimations() {
 	animations[ROLLING] = new Animation(PLAYER, 8, 10);
 	animations[KICKING] = new Animation(PLAYER, 10, 11);
 	animations[DASHING] = new Animation(PLAYER, 17, 19);
-	animations[FLOATING] = new Animation(PLAYER, 38, 40);
+	animations[FLOATING] = new Animation(PLAYER, 32, 40);
+	animations[DIVING] = new Animation(PLAYER, 40, 46);
 }
 
 void Player::LoadAllStates() {
@@ -59,6 +61,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::ROLLING] = new PlayerRollingState();
 	this->playerStates[State::DASHING] = new PlayerDashingState();
 	this->playerStates[State::FLOATING] = new PlayerFloatingState();
+	this->playerStates[State::DIVING] = new PlayerDivingState();
 }
 
 
@@ -174,6 +177,9 @@ void Player::ChangeState(State stateName) {
 				SetVx(-PLAYER_DASH_SPEED);
 			}
 			break;
+		}
+		case State::DIVING: {
+			this->collisionAffect = FALSE;
 		}
 		case State::FLOATING: {
 			this->SetAirState(OnAir::None);

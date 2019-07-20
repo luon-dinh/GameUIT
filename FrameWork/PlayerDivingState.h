@@ -1,20 +1,17 @@
 #pragma once
 #include "PlayerState.h"
 #include "Player.h"
-#include "Global.h"
 
-
-class PlayerFloatingState : public PlayerState {
+class PlayerDivingState : public PlayerState {
 private:
-	bool isDropToWater;
-	int curTimeDrop;
-	const int MAX_TIME_DROP = 300;			//	 miliseconds
 	int countAnimationFrame;
 public:
 	BoundingBox getBoundingBox();
-	PlayerFloatingState();
-	~PlayerFloatingState();
+	PlayerDivingState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
+
+
+	const int MAX_DASHING_TIME = 400;
 };

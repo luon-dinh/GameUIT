@@ -228,6 +228,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>GameMap\Grid</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDivingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>GameMap\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDivingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

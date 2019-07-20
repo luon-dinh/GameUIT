@@ -180,6 +180,8 @@ void PlayScene::CollisionProcess(double dt)
 			PrintDebugNumber(player->vy);
 		}*/
 
+		if (!player->collisionAffect)
+			continue;
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
 			player->OnCollision(mapStaticObject[i], &colOut);
