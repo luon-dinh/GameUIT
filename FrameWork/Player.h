@@ -46,14 +46,15 @@ public:
 
 	enum MoveDirection {
 		LeftToRight,
-		RightToLeft
+		RightToLeft,
 	};
 
 	enum OnAir {
 		Jumping,
 		Falling,
 		DropToWater,
-		None
+		None,
+		JumpFromWater
 	};
 
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
@@ -95,6 +96,10 @@ public:
 	BOOL IsReachMaxJump();
 	void SetGroundCollision(GroundCollision* groundCollision);
 	GroundCollision* GetGroundCollision();
+	void Float(MoveDirection moveDir);
+	void HandleWaterCollision(Object* water, collisionOut* side);
+	BOOL IsOnMainGround();
+	void HandleGroundCollision(Object* ground, collisionOut* colOut);
 #pragma endregion
 
 };

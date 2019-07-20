@@ -63,6 +63,7 @@ void Player::LoadAllStates() {
 
 
 
+
 Player::~Player()
 {
 
@@ -92,6 +93,17 @@ void Player::Render()
 	}
 	else {
 		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+	}
+}
+
+void Player::HandleGroundCollision(Object* ground, collisionOut* colOut) {
+	auto playerBox = this->getBoundingBox();
+	auto groundBox = ground->getStaticObjectBoundingBox();
+	if (true)
+	{
+		this->SetGroundCollision(new GroundCollision(ground, colOut->side));
+		this->ChangeState(State::STANDING);
+		this->pos.y = ground->pos.y + this->getHeight() / 2;
 	}
 }
 
@@ -146,7 +158,11 @@ void Player::ChangeState(State stateName) {
 		case State::JUMPING: 
 		{
 			// nếu trước đó đang falling tiếp tục là falling
-			if (this->onAirState == OnAir::Falling) {
+			if (this->onAirState == OnAir::Falling || this->onAirState == OnAir::DropToWater) {
+				return;
+			}
+			if (this->prevState->state == State::FLOATING) {
+				this->SetAirState(OnAir::JumpFromWater);
 				return;
 			}
 			this->SetAirState(OnAir::Jumping);
@@ -154,20 +170,46 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::DASHING:
 		{
-			if (this->direction == MoveDirection::LeftToRight)
-				SetVx(3);
-			else
-				SetVx(-3);
+			if (this->direction == MoveDirection::LeftToRight) {
+				SetVx(PLAYER_DASH_SPEED);
+			}
+			else {
+				SetVx(-PLAYER_DASH_SPEED);
+			}
 			break;
 		}
 		case State::FLOATING: {
-			this->SetAirState(OnAir::DropToWater);
+			this->SetAirState(OnAir::None);
+			this->vx = -WATER_SPEED;
+			this->hasShield = FALSE;
+			break;
 		}
 	}
 }
 
+BOOL Player::IsOnMainGround() {
+	return this->groundCollision->GetGround()->pos.y == 44;
+}
+
 BOOL Player::IsReachMaxJump() {
 	return this->vy <= 0 && this->onAirState == OnAir::Jumping;
+}
+
+void Player::Float(MoveDirection moveDir) {
+	// nếu không ở trạng thái nổi thì thoát
+	if (this->playerstate->state != State::FLOATING)
+		return;
+
+	this->direction = moveDir;
+
+	if (this->direction == MoveDirection::LeftToRight) {
+		// bơi từ trái qua phải thì trừ đi v của nước
+		this->vx = PLAYER_NORMAL_SPEED - WATER_SPEED;
+	}
+	else {
+		this->vx = -PLAYER_NORMAL_SPEED - WATER_SPEED;
+	}
+
 }
 
 void Player::InnerChangeState(State stateName) {
@@ -195,8 +237,8 @@ void Player::SetVx(float vx) {
 
 void Player::SetVy(float vy) {
 	this->vy = vy;
-	if (this->vy< 0) {
-		// Nếu vận tốc bằng 0 khi đang nhảy thì rơi xuống lại
+	if (this->vy <= 0) {
+		// Nếu vận tốc <= 0 khi đang ở trạng thái nhảy thì rơi xuống lại
 		if (this->onAirState == OnAir::Jumping)
 			SetAirState(OnAir::Falling);
 	}
@@ -271,16 +313,26 @@ void Player::SetAirState(OnAir onAirState) {
 			this->vy = PLAYER_JUMP_SPEED;
 			return;
 		}
-		case OnAir::Falling: {
-			this->accelerate.y = -GROUND_GRAVITY;
-			//this->vy = 0;
+		case OnAir::DropToWater: {
+			this->vy = -2;
 			return;
 		}
-		case OnAir::DropToWater: {
-			this->SetVy(-1.5);
+		case OnAir::Falling: {
+			this->accelerate.y = -GROUND_GRAVITY;
+			return;
+		}
+		case OnAir::JumpFromWater: {
+			this->vy = 5;
+			this->accelerate.y = -0.25;
 			return;
 		}
 	}
+}
+
+void Player::HandleWaterCollision(Object* water, collisionOut* colOut) {
+	this->ChangeState(State::FLOATING);
+	auto objBox = water->getStaticObjectBoundingBox();
+	this->pos.y = (objBox.top - objBox.bottom) / 2;
 }
 
 

@@ -32,8 +32,8 @@ void PlayScene::Draw()
 	world->Draw();
 	player->Render();
 	shield->Render();
-	/*DrawDebugBoxForStaticObjects();
-	DrawDebugBoxForPlayer();*/
+	//DrawDebugBoxForStaticObjects();
+	//DrawDebugBoxForPlayer();
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
@@ -48,8 +48,8 @@ void PlayScene::DrawDebugBoxForStaticObjects()
 	for (int i = 0; i < mapStaticObject.size(); ++i)
 	{
 		//Chỉ vẽ ground.
-		if (mapStaticObject[i]->type == Type::GROUND)
-			DrawDebug::DrawBoundingBox(mapStaticObject[i]->getStaticObjectBoundingBox(), Tag::TESTMAPOBJECTRED);
+		//if (mapStaticObject[i]->type == Type::GROUND)
+			//DrawDebug::DrawBoundingBox(mapStaticObject[i]->getStaticObjectBoundingBox(), Tag::TESTMAPOBJECTRED);
 	}
 }
 
@@ -174,40 +174,46 @@ void PlayScene::CollisionProcess(double dt)
 		//	int a = 1;
 		//}
 		collisionOut colOut;
-		if (mapStaticObject[i]->type == Type::GROUND)
-		{
-			if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling)
-			{
-				player->ChangeState(State::STANDING);
-				player->pos.y = mapStaticObject[i]->pos.y + player->getHeight() / 2;
-				continue;
-			}
-		}
+		
+
 		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
-
-
-		/*if (colOut.side == CollisionSide::bottom)
-		{
-			DebugOut(L"\nBottom\n");
-			PrintDebugNumber(player->vy);
-		}*/
 
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
 			player->OnCollision(mapStaticObject[i], &colOut);
 		}
 		else {
-			// trong trường hợp không còn chạm đất
-			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING) {
-				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
-					if (player->GetOnAirState() == Player::OnAir::None) {
-						player->SetAirState(Player::OnAir::Falling);
-						player->ChangeState(State::JUMPING);
-						player->SetGroundCollision(NULL);
+			// xử lý va chạm với đất
+			if (mapStaticObject[i]->type == Type::GROUND) {
+				if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling)
+				{
+					player->HandleGroundCollision(mapStaticObject[i], &colOut);
+				}
+				else {
+					// trong trường hợp không còn chạm đất
+					auto ground = player->GetGroundCollision()->GetGround();
+					if (ground == NULL)
+						return;
+
+					if (ground == mapStaticObject[i]) {
+						if (player->state != State::JUMPING && player->state != State::FLOATING) {
+							if (!Collision::getInstance()->IsCollide(playerBox, ground->getStaticObjectBoundingBox())) {
+								if (player->GetOnAirState() == Player::OnAir::None) {
+									if (ground->pos.y == 44)
+										player->SetAirState(Player::OnAir::DropToWater);
+									else
+										player->SetAirState(Player::OnAir::Falling);
+									player->ChangeState(State::JUMPING);
+									player->SetGroundCollision(NULL);
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+		
+
 		//if (isCollide)
 		//	PrintDebug("\nCollision detected !");
 		//else

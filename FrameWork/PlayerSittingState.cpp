@@ -21,9 +21,13 @@ void PlayerSittingState::InputHandler() {
 		return;
 	}
 	else {
-		// Đổi sang trạng thái nổi trên nước
+		// Đổi sang trạng thái nhảy xuống nước
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
-			player->ChangeState(State::FLOATING);
+			// nếu ở trên main ground thì rơi xuống nước
+			if (player->IsOnMainGround()) {
+				player->SetAirState(Player::OnAir::DropToWater);
+			}
+			player->ChangeState(State::JUMPING);
 			return;
 		} 
 	}

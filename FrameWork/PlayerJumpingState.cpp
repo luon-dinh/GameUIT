@@ -1,5 +1,7 @@
 ﻿#include "PlayerJumpingState.h"
 #include"Debug.h"
+
+
 void PlayerJumpingState::InputHandler() {
 	auto player = Player::getInstance();	
 	auto keyboard = KeyboardManager::getInstance();
@@ -18,10 +20,6 @@ void PlayerJumpingState::InputHandler() {
 			}
 			player->SetVy(player->vy + ADDED_SPEED);
 		}
-		//if (keyboard->isKeyDown(PLAYER_JUMP)) {
-		//	player->SetVy(player->vy + ADDED_SPEED);
-		//	//return;
-		//}
 	}
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
@@ -52,7 +50,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::GROUND) { 
+	if (object->type == Type::GROUND && player->GetOnAirState() != Player::OnAir::DropToWater) { 
 		
 		// chạm vào ground trên đầu
 		if (side == CollisionSide::top) {
@@ -68,6 +66,11 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 				PrintDebugNumber(player->state);
 			}
 		}
+		return;
+	}
+	// va chạm với nước
+	if (object->type == Type::WATERRL) {
+		player->HandleWaterCollision(object, collision);
 	}
  }
 
