@@ -174,13 +174,18 @@ void PlayScene::CollisionProcess(double dt)
 		//	int a = 1;
 		//}
 		collisionOut colOut;
-		
+	
 
 		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
 
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
 			player->OnCollision(mapStaticObject[i], &colOut);
+			//if (mapStaticObject[i]->type == Type::GROUND)
+			//{
+			//	player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
+			//}
+			//continue;
 		}
 		else {
 			// xử lý va chạm với đất
@@ -210,10 +215,21 @@ void PlayScene::CollisionProcess(double dt)
 						}
 					}
 				}
+				continue;
+			}
+			else
+			{
+				if (mapStaticObject[i]->type == Type::GROUND)
+				{
+					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->vy < 0)
+					{
+						player->ChangeState(State::STANDING);
+						player->pos.y = mapStaticObject[i]->pos.y + player->getHeight() / 2;
+					}
+				}
 			}
 		}
-		
-
+	
 		//if (isCollide)
 		//	PrintDebug("\nCollision detected !");
 		//else
