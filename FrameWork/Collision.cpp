@@ -1,5 +1,5 @@
 ﻿#include "Collision.h"
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 Collision* Collision::instance = NULL;
@@ -100,6 +100,10 @@ collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 	return out;
 }
 
+collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb, float acceleratorA) {
+	recta.vy += acceleratorA;
+	return SweptAABB(recta, rectb);
+}
 
 bool Collision::IsCollide(BoundingBox box1, BoundingBox box2)
 {

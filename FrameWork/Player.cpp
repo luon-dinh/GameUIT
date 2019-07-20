@@ -79,9 +79,6 @@ void Player::Update(float dt)
 	this->playerstate->Update(dt);
 	// Update lại vị trí của position sau mỗi frame
 	this->UpdatePosition();
-	if (this->pos.y <= 30) {
-		int a = 1;
-	}
 	// Update animation
 	this->curanimation->Update(dt);
 }
@@ -99,7 +96,8 @@ void Player::Render()
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
-	if (this->state == State::FLOATING) {
+	if (object->pos.y == 44) {
+		int a = 1;
 	}
 	this->playerstate->OnCollision(object, collisionOut);
 }

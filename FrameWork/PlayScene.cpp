@@ -174,23 +174,26 @@ void PlayScene::CollisionProcess(double dt)
 		//	int a = 1;
 		//}
 		collisionOut colOut;
-		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
+		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox, player->accelerate.y);
 
-		if (colOut.side == CollisionSide::bottom)
-		{
-			DebugOut(L"\nBottom");
-		}
+
 
 
 
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
+			//if (colOut.side == CollisionSide::bottom)
+			//{
+			//	DebugOut(L"\nBottom");
+			//}
 			player->OnCollision(mapStaticObject[i], &colOut);
 			isCollide = true;
-			if (mapStaticObject[i]->type == Type::GROUND)
-			{
-				player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
-			}
+			DebugOut(L"\n%d", isCollide);
+			DebugOut(L"\nPrevious state collision: %d", player->GetPreviousState()->state);
+			//if (mapStaticObject[i]->type == Type::GROUND)
+			//{
+			//	player->SetGroundCollision(new GroundCollision(mapStaticObject[i], colOut.side));
+			//}
 		}
 		else {
 			// trong trường hợp không còn chạm đất
