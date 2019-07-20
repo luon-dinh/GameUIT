@@ -82,6 +82,9 @@
     <Filter Include="Objects\Shield">
       <UniqueIdentifier>{9003f5ae-1dfd-4656-bc88-933582b0eaa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMap\Grid">
+      <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -222,6 +225,9 @@
     <ClCompile Include="PlayerDashingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>GameMap\Grid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -358,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="PlayerDashingState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>GameMap\Grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
