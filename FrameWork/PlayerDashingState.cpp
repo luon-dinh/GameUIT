@@ -7,8 +7,16 @@ BoundingBox PlayerDashingState::getBoundingBox() {
 	box.vy = player->vy;
 	box.top = player->pos.y + 8;
 	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 19;
-	box.right = player->pos.x + 12;
+	if (player->direction == Player::MoveDirection::RightToLeft)
+	{
+		box.left = player->pos.x - 19;
+		box.right = player->pos.x ;
+	}
+	else if (player->direction == Player::MoveDirection::LeftToRight)
+	{
+		box.left = player->pos.x;
+		box.right = player->pos.x + 19;
+	}
 	return box;
 }
 
