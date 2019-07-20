@@ -37,9 +37,9 @@ void PlayerRollingState::InputHandler()
 		}
 	
 	PlayerRollingState::curRollTime += 15;
-	if (player->IsReachMaxJump()) {
+	/*if (player->IsReachMaxJump()) {
 		player->SetVy(0);
-	}
+	}*/
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {
@@ -59,11 +59,9 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom) {
-				if (collision->side == CollisionSide::bottom)
-				{
-					DebugOut(L"\nRoll Bottom");
-				}
-				player->ChangeState(State::STANDING);
+
+				DebugOut(L"\nRoll Bottom");
+ 				player->ChangeState(State::STANDING);
 				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}
 		}
