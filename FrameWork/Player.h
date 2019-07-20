@@ -75,6 +75,7 @@ public:
 	Animation * curanimation;
 	PlayerState * playerstate;
 	OnAir onAirState;
+	OnAir preOnAir;
 	D3DXVECTOR2 accelerate;
 	BOOL collideOnGround;
 

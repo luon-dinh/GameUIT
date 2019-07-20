@@ -99,12 +99,9 @@ void Player::Render()
 void Player::HandleGroundCollision(Object* ground, collisionOut* colOut) {
 	auto playerBox = this->getBoundingBox();
 	auto groundBox = ground->getStaticObjectBoundingBox();
-	if (true)
-	{
-		this->SetGroundCollision(new GroundCollision(ground, colOut->side));
-		this->ChangeState(State::STANDING);
-		this->pos.y = ground->pos.y + this->getHeight() / 2;
-	}
+	this->SetGroundCollision(new GroundCollision(ground, colOut->side));
+	this->ChangeState(State::STANDING);
+	this->pos.y = ground->pos.y + this->getHeight() / 2;
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
@@ -299,6 +296,7 @@ void Player::SetAirState(OnAir onAirState) {
 	if (this->onAirState == onAirState)
 		return;
 	auto oldState = this->onAirState;
+	this->preOnAir = oldState;
 	this->onAirState = onAirState;
 
 	switch (this->onAirState) {

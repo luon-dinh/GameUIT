@@ -28,7 +28,7 @@ void PlayerFloatingState::InputHandler() {
 			return;
 		}
 	}
-	if (keyboard->isKeyDown(PLAYER_JUMP)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
 		return;
 	}
