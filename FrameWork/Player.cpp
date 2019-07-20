@@ -195,7 +195,7 @@ void Player::SetVx(float vx) {
 
 void Player::SetVy(float vy) {
 	this->vy = vy;
-	if (this->vy == 0) {
+	if (this->vy< 0) {
 		// Nếu vận tốc bằng 0 khi đang nhảy thì rơi xuống lại
 		if (this->onAirState == OnAir::Jumping)
 			SetAirState(OnAir::Falling);
@@ -273,7 +273,7 @@ void Player::SetAirState(OnAir onAirState) {
 		}
 		case OnAir::Falling: {
 			this->accelerate.y = -GROUND_GRAVITY;
-			this->vy = 0;
+			//this->vy = 0;
 			return;
 		}
 		case OnAir::DropToWater: {

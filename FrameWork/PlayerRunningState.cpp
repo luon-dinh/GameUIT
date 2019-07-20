@@ -1,5 +1,5 @@
 ﻿#include "PlayerRunningState.h"
-
+#include"Debug.h"
 
 
 PlayerRunningState::PlayerRunningState()
@@ -50,6 +50,13 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 
 	// collide with ground
 	if (object->type == Type::GROUND) {
+		player->SetGroundCollision(new GroundCollision(object, side));
+		if (side == CollisionSide::bottom)
+		{
+			DebugOut(L"\nRunning Bottom");
+			player->ChangeState(State::STANDING);
+			player->pos.y = object->pos.y + player->getHeight() / 2;
+		}
 	}
 }
 

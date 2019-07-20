@@ -24,6 +24,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 	player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);
+	player->SetGroundCollision(new GroundCollision());
 }
 
 void PlaySceneCharles::Update(double dt)

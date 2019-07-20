@@ -41,12 +41,6 @@ void PlayerJumpingState::InputHandler() {
 			}
 		}
 	}
-
-	// nhảy tới khi vận tốc bằng 0 thì AirState là rơi xuống
-	if (player->IsReachMaxJump()) {
-		player->SetVy(0);
-		return;
-	}
 }
 
 void PlayerJumpingState::Update(float dt) {
@@ -70,6 +64,8 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 				player->SetGroundCollision(new GroundCollision(object, side));
 				player->ChangeState(State::STANDING);	
 				player->pos.y = object->pos.y + player->getHeight() / 2;
+				DebugOut(L"\nState Now: ");
+				PrintDebugNumber(player->state);
 			}
 		}
 	}
@@ -81,8 +77,8 @@ BoundingBox PlayerJumpingState::getBoundingBox()
 	BoundingBox box;
 	box.vx = player->vx;
 	box.vy = player->vy;
-	box.top = player->pos.y + 20;
-	box.bottom = player->pos.y - 18;
+	box.top = player->pos.y -7;
+	box.bottom = player->pos.y - 15;
 	box.left = player->pos.x - 11;
 	box.right = player->pos.x + 11;
 	return box;

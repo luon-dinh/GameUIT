@@ -29,9 +29,9 @@ void PlayerKickingState::InputHandler()
 	}
 	this->curKickTime += 30;
 
-	if (player->IsReachMaxJump()) {
+	/*if (player->IsReachMaxJump()) {
 		player->SetVy(0);
-	}
+	}*/
 }
 
 
