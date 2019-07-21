@@ -16,7 +16,7 @@ Player::Player()
 	this->energy = 0;
 	this->vx = 0;
 	this->vy = 0;
-	this->hasShield = true;
+	this->shieldActive = true;
 	this->direction = MoveDirection::LeftToRight;
 
 	this->state = State::JUMPING;
@@ -24,6 +24,7 @@ Player::Player()
 	this->curanimation = animations[this->state];
 	this->prevState = NULL;
 	this->collisionAffect = TRUE;
+	this->hasShield = TRUE;
 
 	this->groundCollision = new GroundCollision();
 }
@@ -139,7 +140,7 @@ void Player::ChangeState(State stateName) {
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 		case State::DUCKING:
-			this->hasShield = true;
+			this->shieldActive = true;
 		case State::STANDING: {
 			if (this->GetPreviousState()->state == State::SHIELD_ATTACK)
 				this->hasShield = FALSE;
@@ -151,7 +152,7 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::RUNNING:
 		{
-			this->hasShield = true;
+			this->shieldActive = true;
 			this->SetAirState(Player::OnAir::None);
 			if (this->direction == MoveDirection::LeftToRight)
 				SetVx(PLAYER_NORMAL_SPEED);
@@ -162,7 +163,7 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::JUMPING: 
 		{
-			this->hasShield = true;
+			this->shieldActive = true;
 			// nếu trước đó đang falling tiếp tục là falling
 			if (this->onAirState == OnAir::Falling || this->onAirState == OnAir::DropToWater) {
 				return;
@@ -176,7 +177,7 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::DASHING:
 		{
-			this->hasShield = false;
+			this->shieldActive = false;
 			if (this->direction == MoveDirection::LeftToRight) {
 				SetVx(PLAYER_DASH_SPEED);
 			}
@@ -186,23 +187,24 @@ void Player::ChangeState(State stateName) {
 			break;
 		}
 		case State::DIVING: 
+			this->shieldActive = false;
 			this->collisionAffect = FALSE;
 			break;
 		case State::FLOATING: {
-			this->hasShield = false;
+			this->shieldActive = false;
 			this->SetAirState(OnAir::None);
 			this->vx = -WATER_SPEED;
-			this->hasShield = FALSE;
+			//this->hasShield = FALSE;
 			break;
 		}
 		case State::ROLLING:
 		{
-			this->hasShield = false;
+			this->shieldActive = false;
 			break;
 		}
 		case State::KICKING: 
 		{
-			this->hasShield = true;
+			this->shieldActive = true;
 			break;
 		}
 		case State::SHIELD_DOWN: {
@@ -408,15 +410,14 @@ int Player::getHeight()
 
 
 void Player::HandleFallingOffGround(){
- 	if (this->state != State::JUMPING && this->state != State::FLOATING) {
-		if (this->GetOnAirState() == Player::OnAir::None) {
-			if (this->GetGroundCollision()->GetGround()->pos.y == 44)
-				this->SetAirState(Player::OnAir::DropToWater);
-			else
-				this->SetAirState(Player::OnAir::Falling);
-			this->ChangeState(State::JUMPING);
-			//player->SetGroundCollision(NULL);
-		}
+ 	
+	if (this->GetOnAirState() == Player::OnAir::None) {
+		if (this->GetGroundCollision()->GetGround()->pos.y == 44)
+			this->SetAirState(Player::OnAir::DropToWater);
+		else
+			this->SetAirState(Player::OnAir::Falling);
+		this->ChangeState(State::JUMPING);
+		//player->SetGroundCollision(NULL);
 	}
 }
 
@@ -426,12 +427,10 @@ BOOL Player::CollideWithSolidBox(Object* solidBox) {
 }
 
 void Player::HandleStandingOnGround(Object* ground) {
-	if (this->GetOnAirState() == OnAir::Falling && this->GetPreOnAirState() == OnAir::Jumping)
-	{
-		this->SetGroundCollision(new GroundCollision(ground, CollisionSide::bottom));
-		this->ChangeState(State::STANDING);
-		this->pos.y = ground->pos.y + this->getHeight() / 2;
-	}
+
+	this->SetGroundCollision(new GroundCollision(ground, CollisionSide::bottom));
+	this->ChangeState(State::STANDING);
+	this->pos.y = ground->pos.y + this->getHeight() / 2;
 }
 
 void Player::HandleCollisionWithSolidBox(Object* solidBox) {
