@@ -45,7 +45,7 @@ void PlayerFloatingState::InputHandler() {
 	}
 
 	// trong trường hợp không có phím nào được nhấn thì vận tốc của player bằng vận tốc dòng nước
-	player->vx = -WATER_SPEED;
+	player->SetVx(-WATER_SPEED, FALSE);
 }
 
 PlayerFloatingState::~PlayerFloatingState() {
@@ -61,7 +61,6 @@ void PlayerFloatingState::Update(float dt) {
 		this->countAnimationFrame--;
 	}
 	InputHandler();
-
 }
 
 void PlayerFloatingState::OnCollision(Object* object, collisionOut* collision) {

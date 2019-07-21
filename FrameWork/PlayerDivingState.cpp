@@ -17,7 +17,7 @@ void PlayerDivingState::InputHandler() {
 	// khi không nhấn thì chuyển sang trạng thái nổi
 	if (!keyboard->isKeyDown(PLAYER_SIT)) {
 		player->ChangeState(State::FLOATING);
-		player->collisionAffect = TRUE;
+		player->SetCollisionAffect(TRUE);
 		this->countAnimationFrame = 6;
 		return;
 	}
