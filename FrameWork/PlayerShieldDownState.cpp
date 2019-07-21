@@ -13,21 +13,26 @@ void PlayerShieldDownState::InputHandler() {
 	auto keyboard = KeyboardManager::getInstance();
 	auto player = Player::getInstance();
 
-	if (!keyboard->isKeyDown(PLAYER_SHIELD_UP)) {
-		player->ChangeState(State::STANDING);
+	if (!keyboard->isKeyDown(PLAYER_SIT)) {
+		if(player->onAirState==Player::OnAir::None)
+			player->ChangeState(State::STANDING);
+		else 
+		{
+			player->ChangeState(State::JUMPING);
+		}
 		return;
 	}
-	if (keyboard->isKeyDown(PLAYER_JUMP)) {
+	/*if (keyboard->isKeyDown(PLAYER_JUMP)) {
 		player->ChangeState(State::JUMPING);
 		return;
-	}
+	}*/
 }
 
-void PlayerShieldDownState::Downdate(float dt) {
+void PlayerShieldDownState::Update(float dt) {
 	InputHandler();
 	Shield *shield = Shield::getInstance();
 	shield->setFrameIndex(2);
-	shield->pos.y = Player::getInstance()->getBoundingBox().top - 2;
+	shield->pos.y = Player::getInstance()->getBoundingBox().bottom ;
 	shield->pos.x = Player::getInstance()->pos.x;
 }
 

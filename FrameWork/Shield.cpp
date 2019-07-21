@@ -91,6 +91,11 @@ void Shield::Update(float dt)
 			this->animation->curframeindex = 2;
 			return;
 		}
+		else if(player->state==State::SHIELD_DOWN)
+		{
+			this->animation->curframeindex = 3;
+			return;
+		}
 		else
 		{
 			this->animation->curframeindex = 0;
