@@ -85,6 +85,12 @@
     <Filter Include="GameMap\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy">
+      <UniqueIdentifier>{dea05333-a33e-4d51-875f-1416567f4247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Enemy\Solder">
+      <UniqueIdentifier>{a0180c3f-2930-483c-b022-da8a480f89a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -243,6 +249,27 @@
     <ClCompile Include="Shield.cpp">
       <Filter>Objects\Shield</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Solder.cpp">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SolderDuckState.cpp">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClCompile>
+    <ClCompile Include="SolderRunState.cpp">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClCompile>
+    <ClCompile Include="SolderStandState.cpp">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClCompile>
+    <ClCompile Include="SolderBeatenState.cpp">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -397,6 +424,27 @@
     </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Solder.h">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SolderDuckState.h">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClInclude>
+    <ClInclude Include="SolderRunState.h">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClInclude>
+    <ClInclude Include="SolderStandState.h">
+      <Filter>Objects\Enemy\Solder</Filter>
+    </ClInclude>
+    <ClInclude Include="SolderBeatenState.h">
+      <Filter>Objects\Enemy\Solder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

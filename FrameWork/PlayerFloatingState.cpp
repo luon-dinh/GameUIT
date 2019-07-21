@@ -38,7 +38,7 @@ void PlayerFloatingState::InputHandler() {
 		return;
 	}
 	// nhấn phím ngồi thì chuyển sang trạng thái lặn
-	if (keyboard->isKeyDown(PLAYER_SIT)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_SIT)) {
 		player->ChangeState(State::DIVING);
 		this->countAnimationFrame = 9;
 		return;

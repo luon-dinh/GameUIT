@@ -14,10 +14,15 @@ private:
 
 	int round;
 	D3DXVECTOR2 accelerator;
+
 	const float SHIELD_INITIAL_SPEED = 3;
 
 
 public:
+	enum ShieldDirection {
+		LeftToRight,
+		RightToLeft
+	};
 
 	enum ShieldState {
 		Defense,
@@ -26,6 +31,7 @@ public:
 	};
 
 	ShieldState state;
+	ShieldDirection direction;
 
 
 	static Shield* getInstance();

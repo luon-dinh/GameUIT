@@ -1,4 +1,5 @@
-﻿#include"Camera.h"
+
+#include"Camera.h"
 #include"Shield.h"
 
 
@@ -15,25 +16,26 @@ Shield::Shield()
 	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
 	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->direction;
-	this->pos.y = player->pos.y+10;
+	this->pos.y = player->pos.y + 10;
+	this->accelerator = D3DXVECTOR2(0.2, 0);
 	animation->curframeindex = 2;
 	//set vị trí ban đầu cua shield theo hướng di chuyển của player
 	switch (direction)
 	{
-	case Player::MoveDirection::LeftToRight:
-	{
-		this->pos.x = player->pos.x - player->getWidth() / 2 - 2;
-		this->pos.y = player->pos.y+10;
-		break;
-	}
-	case Player::MoveDirection::RightToLeft:
-	{
-		this->pos.x = player->pos.x + player->getWidth() / 2 + 2;
-		this->pos.y = player->pos.y+10;
-		break;
-	}
-	default:
-		break;
+		case Player::MoveDirection::LeftToRight:
+		{
+			this->pos.x = player->pos.x - player->getWidth() / 2 - 2;
+			this->pos.y = player->pos.y+10;
+			break;
+		}
+		case Player::MoveDirection::RightToLeft:
+		{
+			this->pos.x = player->pos.x + player->getWidth() / 2 + 2;
+			this->pos.y = player->pos.y+10;
+			break;
+		}
+		default:
+			break;
 	}
 }
 
@@ -47,6 +49,7 @@ Shield* Shield::getInstance()
 Shield::~Shield()
 {
 }
+
 //xư lí sự kiện nhấn phím cho shield
 void Shield::InputHandler(float dt)
 {
@@ -60,13 +63,13 @@ void Shield::InputHandler(float dt)
 		case Player::MoveDirection::LeftToRight:
 		{
 			this->vx = SHIELD_SPEED;
-		//	this->direction = Player::MoveDirection::LeftToRight;
+			this->direction = ShieldDirection::LeftToRight;
 			break;
 		}
 		case Player::MoveDirection::RightToLeft:
 		{
 			this->vx = -SHIELD_SPEED;
-			//this->direction = Player::MoveDirection::RightToLeft;
+			this->direction = ShieldDirection::RightToLeft;
 			break;
 		}
 		default:
@@ -94,7 +97,8 @@ void Shield::Update(float dt)
 			this->animation->curframeindex = 2;
 			return;
 		}
-		else if(player->state==State::SHIELD_DOWN)
+		else 
+			if(player->state==State::SHIELD_DOWN)
 		{
 			this->animation->curframeindex = 3;
 			return;
@@ -213,11 +217,10 @@ void Shield::Update(float dt)
 		//xử lí update khi khiêng đang tấn công
 		//update vị trí dự theo vị trí player
 		if (this->state == ShieldState::Attack) {
-			if (player->state == State::SHIELD_ATTACK)
-				this->MoveAttack();
+			this->MoveAttack();
 		}
 	}
-	this->InputHandler(dt);//hàm này hiện tại vô dụng
+	//this->InputHandler(dt);//hàm này hiện tại vô dụng
 }
 
 void Shield::Render()
@@ -246,7 +249,7 @@ void Shield::Render()
 			case Player::MoveDirection::LeftToRight:
 			{
 				D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
-				if (player->state != State::KICKING) 
+				if (player->state != State::KICKING)
 				{
 					animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 				}
@@ -258,7 +261,7 @@ void Shield::Render()
 			}
 			default:
 			{
-				break; 
+				break;
 			}
 		}
 	}
@@ -285,7 +288,7 @@ void Shield::MoveAttack() {
 	// Khi bắt đầu di chuyển
 	if (this->vx == 0 && this->round == 0) {
 		if (player->direction == Player::MoveDirection::LeftToRight) {
-		//	this->direction = Player::MoveDirection::LeftToRight;
+			this->direction = ShieldDirection::LeftToRight;
 			this->vx = SHIELD_INITIAL_SPEED;
 			this->accelerator.x *= -1;
 		}
@@ -318,12 +321,12 @@ void Shield::MoveAttack() {
 }
 
 void Shield::ReverseMoveDirection() {
-	/*if (this->direction == Player::MoveDirection::LeftToRight) {
-		this->direction = Player::MoveDirection::RightToLeft;
+	if (this->direction == Player::MoveDirection::LeftToRight) {
+		this->direction = ShieldDirection::RightToLeft;
 	}
 	else {
-		this->direction = Player::MoveDirection::LeftToRight;
-	}*/
+		this->direction =ShieldDirection::LeftToRight;
+	}
 
 	float dentaY = this->pos.y - Player::getInstance()->pos.y;
 
@@ -346,22 +349,22 @@ void Shield::ReverseMoveDirection() {
 
 
 BOOL Shield::GetShieldToPlayer() {
-	auto player = Player::getInstance();
+ 	auto player = Player::getInstance();
 	float dentaX = player->pos.x - this->pos.x;
 	float dentaY = player->pos.y - this->pos.y;
 
 	// khiên đã về tới player
-	if (dentaX <= 2 && dentaY <= 2) {
+	if (abs(dentaX) <= 2 && abs(dentaY) <= 2) {
 		return TRUE;
 	}
-
-	return FALSE;
-
-	// hướng vector vận tốc đã thay đổi
-	if (this->vx * dentaX < 0) {
-		this->vx *= -1;
-	}
+	//// hướng vector vận tốc đã thay đổi
+	//if (this->vx * dentaX < 0) {
+	//	this->vx *= -1;
+	//}
 	if (this->vy * dentaY < 0) {
 		this->vy *= -1;
 	}
+	return FALSE;
+
+
 }
