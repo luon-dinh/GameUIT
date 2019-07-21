@@ -68,6 +68,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		}
 		return;
 	}
+
 	// va chạm với nước
 	if (object->type == Type::WATERRL) {
 		player->HandleWaterCollision(object, collision);

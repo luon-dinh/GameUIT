@@ -386,8 +386,6 @@ void Player::HandleFallingOffGround(){
 BOOL Player::CollideWithSolidBox(Object* solidBox) {
 	if (solidBox == NULL)
 		return FALSE;
-
-
 }
 
 void Player::HandleStandingOnGround(Object* ground) {
