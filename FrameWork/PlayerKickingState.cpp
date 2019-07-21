@@ -48,13 +48,10 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom ) {
-				player->SetGroundCollision(new GroundCollision(object, side));
-				//if (collision->side == CollisionSide::bottom)
-				//{
-				//	DebugOut(L"\nKick Bottom");
-				//}
 				player->ChangeState(State::STANDING);
 				player->pos.y = object->pos.y + player->getHeight() / 2;
+				DebugOut(L"\nState Now:\n");
+				PrintDebugNumber(player->state);
 			}
 		}
 	}

@@ -26,6 +26,9 @@
 #define PLAYER_MAX_FALLING_VELOCITY -300
 #define PLAYER_DASH_SPEED			3
 
+//shield define
+#define SHIELD_SPEED 8;
+
 #define GROUND_GRAVITY				0.25
 #define WATER_SPEED					0.75
 

@@ -132,13 +132,16 @@ void Player::ChangeState(State stateName) {
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 		case State::DUCKING:
+			this->hasShield = true;
 		case State::STANDING: {
+			this->hasShield = true;
 			this->SetAirState(Player::OnAir::None);
 			this->SetVx(0);
 			break;
 		}
 		case State::RUNNING:
 		{
+			this->hasShield = true;
 			this->SetAirState(Player::OnAir::None);
 			if (this->direction == MoveDirection::LeftToRight)
 				SetVx(PLAYER_NORMAL_SPEED);
@@ -149,6 +152,7 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::JUMPING: 
 		{
+			this->hasShield = true;
 			// nếu trước đó đang falling tiếp tục là falling
 			if (this->onAirState == OnAir::Falling || this->onAirState == OnAir::DropToWater) {
 				return;
@@ -162,6 +166,7 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::DASHING:
 		{
+			this->hasShield = false;
 			if (this->direction == MoveDirection::LeftToRight) {
 				SetVx(PLAYER_DASH_SPEED);
 			}
@@ -171,12 +176,23 @@ void Player::ChangeState(State stateName) {
 			break;
 		}
 		case State::DIVING: {
-			this->SetCollisionAffect(FALSE);
-		}
+			this->hasShield = false;
+			this->collisionAffect = FALSE;
 		case State::FLOATING: {
+			this->hasShield = false;
 			this->SetAirState(OnAir::None);
 			this->vx = -WATER_SPEED;
 			this->hasShield = FALSE;
+			break;
+		}
+		case State::ROLLING:
+		{
+			this->hasShield = false;
+			break;
+		}
+		case State::KICKING: 
+		{
+			this->hasShield = true;
 			break;
 		}
 	}
