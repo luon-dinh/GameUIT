@@ -12,6 +12,7 @@
 #include "PlayerDashingState.h"
 #include "PlayerFloatingState.h"
 #include "PlayerDivingState.h"
+#include "PlayerShieldDownState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"

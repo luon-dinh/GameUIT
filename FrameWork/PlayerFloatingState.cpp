@@ -54,7 +54,7 @@ PlayerFloatingState::~PlayerFloatingState() {
 
 void PlayerFloatingState::Update(float dt) {
 	auto player = Player::getInstance();
-	if (this->countAnimationFrame == 0) {
+	if (this->countAnimationFrame == 0 || player->GetPreviousState()->state == State::DIVING) {
 		player->curanimation = new Animation(Tag::PLAYER, 38, 40);
 	}
 	else {

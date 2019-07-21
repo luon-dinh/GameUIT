@@ -1,15 +1,15 @@
-﻿#include "PlayerShieldUpState.h"
+#include "PlayerShieldDownState.h"
 #include"Shield.h"
 
-PlayerShieldUpState::PlayerShieldUpState() {
+PlayerShieldDownState::PlayerShieldDownState() {
 	this->state = State::SHIELD_DOWN;
 }
 
-PlayerShieldUpState::~PlayerShieldUpState() {
+PlayerShieldDownState::~PlayerShieldDownState() {
 
 }
 
-void PlayerShieldUpState::InputHandler() {
+void PlayerShieldDownState::InputHandler() {
 	auto keyboard = KeyboardManager::getInstance();
 	auto player = Player::getInstance();
 
@@ -23,20 +23,25 @@ void PlayerShieldUpState::InputHandler() {
 	}
 }
 
-void PlayerShieldUpState::Update(float dt) {
+void PlayerShieldDownState::Downdate(float dt) {
 	InputHandler();
-	Shield *shield=Shield::getInstance();
+	Shield *shield = Shield::getInstance();
 	shield->setFrameIndex(2);
 	shield->pos.y = Player::getInstance()->getBoundingBox().top - 2;
 	shield->pos.x = Player::getInstance()->pos.x;
-
 }
 
-void PlayerShieldUpState::OnCollision(Object* object, collisionOut* collision) {
+void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
 
+	if (object->type == Type::GROUND || object->type) {
+		player->ChangeState(State::STANDING);
+		player->pos.y = object->pos.y + player->getHeight() / 2;
+	}
 }
 
-BoundingBox PlayerShieldUpState::getBoundingBox()
+BoundingBox PlayerShieldDownState::getBoundingBox()
 {
 	Player *player = Player::getInstance();
 	BoundingBox box;

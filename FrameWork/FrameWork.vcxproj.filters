@@ -234,6 +234,9 @@
     <ClCompile Include="SolidBoxCollision.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShieldDownState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="SolidBoxCollision.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShieldDownState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

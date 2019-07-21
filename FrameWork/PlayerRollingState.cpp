@@ -19,7 +19,13 @@ void PlayerRollingState::InputHandler()
 	auto keyboard = KeyboardManager::getInstance();
 	// chuyển sang trạng thái nhảy
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
-  		player->ChangeState(State::JUMPING);
+		// Phím ngồi đang được nhấn thì chuyển sang shield down
+		if (keyboard->isKeyDown(PLAYER_SIT)) {
+			player->ChangeState(State::SHIELD_DOWN);
+		}
+		else {
+			player->ChangeState(State::JUMPING);
+		}
 		PlayerRollingState::curRollTime = 0;
 	}
 
@@ -37,6 +43,7 @@ void PlayerRollingState::InputHandler()
 		}
 	
 	PlayerRollingState::curRollTime += 15;
+	player->vy += 0.1;
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {

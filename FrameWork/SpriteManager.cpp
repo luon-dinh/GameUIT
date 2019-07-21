@@ -62,7 +62,7 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(Tag::PLAYER, 8, 2);//punch_stand
 	spriteManager->addSprite(Tag::PLAYER, 9, 2);//punching_sit
 	spriteManager->addSprite(Tag::PLAYER, 10, 2);//dash
-	spriteManager->addSprite(Tag::PLAYER, 10, 1);//shielddown
+	spriteManager->addSprite(Tag::PLAYER, 11, 1);//shielddown
 	spriteManager->addSprite(Tag::PLAYER, 12, 3);//hangon
 	spriteManager->addSprite(Tag::PLAYER, 13, 1);//jumpdown
 	spriteManager->addSprite(Tag::PLAYER, 14, 2);//jump form rotate

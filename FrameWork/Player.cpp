@@ -48,6 +48,7 @@ void Player::LoadAllAnimations() {
 	animations[DASHING] = new Animation(PLAYER, 17, 19);
 	animations[FLOATING] = new Animation(PLAYER, 32, 40);
 	animations[DIVING] = new Animation(PLAYER, 40, 46);
+	animations[SHIELD_DOWN] = new Animation(PLAYER, 19, 20);
 }
 
 void Player::LoadAllStates() {
@@ -62,6 +63,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::DASHING] = new PlayerDashingState();
 	this->playerStates[State::FLOATING] = new PlayerFloatingState();
 	this->playerStates[State::DIVING] = new PlayerDivingState();
+	this->playerStates[State::SHIELD_DOWN] = new PlayerShieldDownState();
 }
 
 
@@ -175,9 +177,9 @@ void Player::ChangeState(State stateName) {
 			}
 			break;
 		}
-		case State::DIVING: {
-			this->hasShield = false;
+		case State::DIVING: 
 			this->collisionAffect = FALSE;
+			break;
 		case State::FLOATING: {
 			this->hasShield = false;
 			this->SetAirState(OnAir::None);
@@ -193,6 +195,10 @@ void Player::ChangeState(State stateName) {
 		case State::KICKING: 
 		{
 			this->hasShield = true;
+			break;
+		}
+		case State::SHIELD_DOWN: {
+			this->hasShield = TRUE;
 			break;
 		}
 	}
