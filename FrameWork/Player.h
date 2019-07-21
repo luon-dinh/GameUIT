@@ -26,6 +26,7 @@ private:
 	std::unordered_map<State, PlayerState*> playerStates;
 	static Player* instance;
 
+
 	PlayerState
 		*runningState,
 		*standingState,
@@ -47,7 +48,8 @@ public:
 	int health;
 	int live;
 	int energy;
-	bool hasShield;
+	bool shieldActive;
+	BOOL hasShield;
 
 	enum MoveDirection {
 		LeftToRight,

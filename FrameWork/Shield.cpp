@@ -1,5 +1,5 @@
-﻿#include "Shield.h"
-#include"Camera.h"
+﻿#include"Camera.h"
+#include"Shield.h"
 Shield * Shield::instance = NULL;
 
 Shield::Shield()
@@ -49,9 +49,9 @@ void Shield::InputHandler(float dt)
 {
 	KeyboardManager* keyboard = KeyboardManager::getInstance();
 	Player* player = Player::getInstance();
-	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK) && player->hasShield&&player->state != State::KICKING)
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK) && player->shieldActive&&player->state != State::KICKING)
 	{
-		player->hasShield = false;
+		player->shieldActive = false;
 		switch (player->direction)
 		{
 		case Player::MoveDirection::LeftToRight:
@@ -84,7 +84,7 @@ void Shield::Update(float dt)
 		return;
 	Player::MoveDirection direction = Player::getInstance()->direction;// lấy hướng di chuyển của player player
 	//kiểm tra nếu player đang giữ shield
-	if (player->hasShield) {
+	if (player->shieldActive) {
 		//nếu là shield up thì đổi sprite index
 		if (player->state == State::SHIELD_UP)
 		{
@@ -107,12 +107,12 @@ void Shield::Update(float dt)
 			this->pos.y = player->pos.y + 9;
 			switch (direction)
 			{
-			case Player::LeftToRight:
+			case Player::MoveDirection::LeftToRight:
 			{
 				this->pos.x = player->pos.x - 3;//shield ở vị trí bên phải của player
 				break;
 			}
-			case Player::RightToLeft:
+			case Player::MoveDirection::RightToLeft:
 			{
 				this->pos.x = player->pos.x + 3;//shield ở vị trí bên trái của player
 				break;
@@ -144,12 +144,12 @@ void Shield::Update(float dt)
 			this->pos.y = player->pos.y + 7;
 			switch (direction)
 			{
-			case Player::LeftToRight:
+			case Player::MoveDirection::LeftToRight:
 			{
 				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
 				break;
 			}
-			case Player::RightToLeft:
+			case Player::MoveDirection::RightToLeft:
 			{
 				this->pos.x = player->playerstate->getBoundingBox().left + 2;//shield ở vị trí bên trái của player
 				break;
@@ -166,13 +166,13 @@ void Shield::Update(float dt)
 			{
 			case Player::LeftToRight:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.x = player->playerstate->getBoundingBox().right - 1;//shield ở vị trí bên phải của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
-			case Player::RightToLeft:
+			case Player::MoveDirection::RightToLeft:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
+				this->pos.x = player->playerstate->getBoundingBox().left + 3;//shield ở vị trí bên trái của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
@@ -186,13 +186,13 @@ void Shield::Update(float dt)
 		{
 			switch (direction)
 			{
-			case Player::LeftToRight:
+			case Player::MoveDirection::LeftToRight:
 			{
 				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
 				this->pos.y = player->pos.y - 10;
 				break;
 			}
-			case Player::RightToLeft:
+			case Player::MoveDirection::RightToLeft:
 			{
 				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
 				this->pos.y = player->pos.y - 10;
@@ -219,7 +219,7 @@ void Shield::Render()
 	if (!player)
 		return;
 	//shield is on player
-	if (player->hasShield)
+	if (player->shieldActive)
 	{
 		switch (player->direction)
 		{
@@ -265,4 +265,91 @@ void Shield::Render()
 void Shield::OnCollision(Object* object, collisionOut out)
 {
 	//xu li va cham
+}
+
+void Shield::MoveAttack() {
+	auto player = Player::getInstance();
+
+	// Khi bắt đầu di chuyển
+	if (this->vx == 0 && this->round == 0) {
+		if (player->direction == Player::MoveDirection::LeftToRight) {
+			this->direction = Player::MoveDirection::LeftToRight;
+			this->vx = SHIELD_INITIAL_SPEED;
+			this->accelerator.x *= -1;
+		}
+		else {
+			this->direction = Player::MoveDirection::RightToLeft;
+			this->vx = -SHIELD_INITIAL_SPEED;
+		}
+		// khiên khi bay đi chỉ bay ngang
+		this->accelerator.y = 0;
+		return;
+	}
+
+	// khi khiên bay tới giới hạn lần 1
+	if (this->round == 0 && this->vx <= 0) {
+		ReverseShieldDirection();
+		this->round++;
+	}
+	else {
+		// nếu khiên đã bay về tới player
+		if (GetShieldToPlayer() == TRUE) {
+			player->hasShield = TRUE;
+		}
+	}
+
+	// cập nhật vận tốc và vị trí của khiên
+	this->vx += this->accelerator.x;
+	this->vy += this->accelerator.y;
+	this->pos.x += this->vx;
+	this->pos.y += this->vy;
+}
+
+void Shield::ReverseShieldDirection() {
+	if (this->direction == Player::MoveDirection::LeftToRight) {
+		this->direction = Player::MoveDirection::RightToLeft;
+	}
+	else {
+		this->direction = Player::MoveDirection::LeftToRight;
+	}
+
+	float dentaY = this->pos.y - Player::getInstance()->pos.y;
+
+	// khiên đang ở thấp hơn người
+	if (dentaY < 0) {
+		this->vy = SHIELD_INITIAL_SPEED;
+	}
+	else {
+		// Khiên đang ở cao hơn người
+		if (dentaY > 0)
+			this->vy = -SHIELD_INITIAL_SPEED;
+		else {
+			this->vy = 0;
+		}
+	}
+
+	// không xét gia tốc khi quay ngược về
+	this->accelerator = D3DXVECTOR2(0, 0);
+}
+
+
+BOOL Shield::GetShieldToPlayer() {
+	auto player = Player::getInstance();
+	float dentaX = player->pos.x - this->pos.x;
+	float dentaY = player->pos.y - this->pos.y;
+
+	// khiên đã về tới player
+	if (dentaX <= 2 && dentaY <= 2) {
+		return TRUE;
+	}
+
+	return FALSE;
+
+	// hướng vector vận tốc đã thay đổi
+	if (this->vx * dentaX < 0) {
+		this->vx *= -1;
+	}
+	if (this->vy * dentaY < 0) {
+		this->vy *= -1;
+	}
 }
