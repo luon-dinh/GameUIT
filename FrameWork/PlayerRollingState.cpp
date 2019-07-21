@@ -34,13 +34,18 @@ void PlayerRollingState::InputHandler()
 		player->ChangeState(State::KICKING);
 		return;
 	}
-	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+
+	if (!keyboard->isKeyDown(PLAYER_MOVE_LEFT) && !keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
 		player->SetVx(-PLAYER_NORMAL_SPEED);
+		player->SetVx(0);
 	}
-	else
-		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+	else {
+		if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
+			player->SetVx(-PLAYER_NORMAL_SPEED);
+		else {
 			player->SetVx(PLAYER_NORMAL_SPEED);
 		}
+	}
 	
 	PlayerRollingState::curRollTime += 15;
 	player->vy += 0.1;
@@ -55,7 +60,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
 
 	if (object->type == Type::GROUND) {
-		player->SetGroundCollision(new GroundCollision(object, side));
+
 		// chạm vào ground trên đầu
 		if (side == CollisionSide::top) {
 			//player->SetVy(0);
@@ -63,8 +68,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom) {
-
-				DebugOut(L"\nRoll Bottom");
+				player->SetGroundCollision(new GroundCollision(object, side));
  				player->ChangeState(State::STANDING);
 				player->pos.y = object->pos.y + player->getHeight() / 2;
 			}

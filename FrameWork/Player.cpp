@@ -285,7 +285,8 @@ void Player::AddPosX() {
 }
 
 void Player::AddPosY() {
-
+	if (this->vy <= -5)
+		this->accelerate.y = 0;
 	this->SetVy(this->vy + this->accelerate.y);
 	this->pos.y += this->vy;
 }
@@ -365,7 +366,7 @@ void Player::SetAirState(OnAir onAirState) {
 		}
 		case OnAir::JumpFromWater: {
 			this->vy = 5;
-			this->accelerate.y = -0.25;
+			this->accelerate.y = -GROUND_GRAVITY;
 			return;
 		}
 	}
@@ -393,7 +394,7 @@ int Player::getHeight()
 
 
 void Player::HandleFallingOffGround(){
-	if (this->state != State::JUMPING && this->state != State::FLOATING) {
+ 	if (this->state != State::JUMPING && this->state != State::FLOATING) {
 		if (this->GetOnAirState() == Player::OnAir::None) {
 			if (this->GetGroundCollision()->GetGround()->pos.y == 44)
 				this->SetAirState(Player::OnAir::DropToWater);
@@ -411,7 +412,7 @@ BOOL Player::CollideWithSolidBox(Object* solidBox) {
 }
 
 void Player::HandleStandingOnGround(Object* ground) {
-	if (this->GetOnAirState() == Player::OnAir::Falling && this->GetPreOnAirState() == Player::OnAir::Jumping)
+	if (this->GetOnAirState() == OnAir::Falling && this->GetPreOnAirState() == OnAir::Jumping)
 	{
 		this->SetGroundCollision(new GroundCollision(ground, CollisionSide::bottom));
 		this->ChangeState(State::STANDING);

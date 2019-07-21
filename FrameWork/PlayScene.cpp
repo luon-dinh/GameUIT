@@ -203,7 +203,7 @@ void PlayScene::CollisionProcess(double dt)
 					// xét va chạm trong trường hợp SweptAABB không quét được va chạm cho đã va chạm
 					// trước đó
 					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && playerBox.bottom > objectBox.bottom){
-  						player->HandleStandingOnGround(ground);
+   						player->HandleStandingOnGround(ground);
 					}
 				}
 			}
