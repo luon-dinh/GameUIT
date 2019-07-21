@@ -7,7 +7,7 @@ class PlayerShieldDownState : public PlayerState
 public:
 	BoundingBox getBoundingBox();
 	void InputHandler();
-	void Downdate(float dt);
+	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collision);
 	PlayerShieldDownState();
 	~PlayerShieldDownState();
