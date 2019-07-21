@@ -212,6 +212,7 @@ void PlayScene::CollisionProcess(double dt)
 						player->SetGroundCollision(new GroundCollision(mapStaticObject[i], CollisionSide::bottom));
 						player->ChangeState(State::STANDING);
 						player->pos.y = mapStaticObject[i]->pos.y + player->getHeight() / 2;
+						DebugOut(L"\nFixed Collision");
 					}
 				}
 			}

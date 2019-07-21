@@ -8,6 +8,7 @@ Shield::Shield()
 	if (!player)
 		return;
 	this->tag = Tag::SHIELD;
+	this->vx = this->vy = 0;
 	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
 	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->direction;
@@ -18,13 +19,13 @@ Shield::Shield()
 	{
 	case Player::LeftToRight:
 	{
-		this->pos.x = player->pos.x - player->getWidth() / 2;
+		this->pos.x = player->pos.x - player->getWidth() / 2 - 2;
 		this->pos.y = player->pos.y+10;
 		break;
 	}
 	case Player::RightToLeft:
 	{
-		this->pos.x = player->pos.x + player->getWidth() / 2;
+		this->pos.x = player->pos.x + player->getWidth() / 2 + 2;
 		this->pos.y = player->pos.y+10;
 		break;
 	}
@@ -46,26 +47,34 @@ Shield::~Shield()
 //xư lí sự kiện nhấn phím cho shield
 void Shield::InputHandler(float dt)
 {
-	KeyboardManager *keyBoard = KeyboardManager::getInstance();
+	KeyboardManager* keyboard = KeyboardManager::getInstance();
 	Player* player = Player::getInstance();
-	if (!player)
-		return;
-	//nếu shield đang được player giữ
-	if (player->hasShield)
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK) && player->hasShield&&player->state != State::KICKING)
 	{
-		//cái này nên để Player Shield Up State update, test nên để đây update luôn
-		if (keyBoard->isKeyDown(PLAYER_SHIELD_UP))
+		player->hasShield = false;
+		switch (player->direction)
 		{
-			this->pos.y = player->playerstate->getBoundingBox().top;
-			this->pos.x = player->pos.x;
-			animation->curframeindex = 2;
-		}
-		else
+		case Player::MoveDirection::LeftToRight:
 		{
-			animation->curframeindex = 0;
+			this->vx = SHIELD_SPEED;
+			this->direction = Player::MoveDirection::LeftToRight;
+			break;
 		}
-		//còn thiếu sự kiện rớt xuống shield xuống
+		case Player::MoveDirection::RightToLeft:
+		{
+			this->vx = -SHIELD_SPEED;
+			this->direction = Player::MoveDirection::RightToLeft;
+			break;
+		}
+		default:
+			break;
+		}
 	}
+}
+
+void Shield::setFrameIndex(int index)
+{
+	this->animation->curframeindex = index;
 }
 
 void Shield::Update(float dt)
@@ -73,34 +82,130 @@ void Shield::Update(float dt)
 	Player* player = Player::getInstance();
 	if (!player)
 		return;
+	Player::MoveDirection direction = Player::getInstance()->direction;// lấy hướng di chuyển của player player
 	//kiểm tra nếu player đang giữ shield
 	if (player->hasShield) {
-		this->pos.y = player->pos.y+10;
-		Player::MoveDirection direction = Player::getInstance()->direction;// lấy hướng di chuyển của player player
-		//set vị trí của shied theo hướng di chuyển của player
-		switch (direction)
+		//nếu là shield up thì đổi sprite index
+		if (player->state == State::SHIELD_UP)
 		{
-		case Player::LeftToRight:
-		{
-			this->pos.x = player->playerstate->getBoundingBox().left;//shield ở vị trí bên phải của player
-			break;
+			this->animation->curframeindex = 2;
+			return;
 		}
-		case Player::RightToLeft:
+		else
 		{
-			this->pos.x = player->playerstate->getBoundingBox().right;//shield ở vị trí bên trái của player
-			break;
+			this->animation->curframeindex = 0;
 		}
-		default:
-			break;
+		//player đang ở trạng thái jump
+		if (player->state == State::JUMPING)
+		{
+			this->animation->curframeindex = 1;
+			this->pos.y = player->pos.y + 9;
+			switch (direction)
+			{
+			case Player::LeftToRight:
+			{
+				this->pos.x = player->pos.x - 3;//shield ở vị trí bên phải của player
+				break;
+			}
+			case Player::RightToLeft:
+			{
+				this->pos.x = player->pos.x + 3;//shield ở vị trí bên trái của player
+				break;
+			}
+			default:
+				break;
+			}
+			return;
+		}
+		//player đang ở trạng thái kick
+		if (player->state == State::KICKING)
+		{
+			this->animation->curframeindex = 0;
+			if (direction == Player::MoveDirection::LeftToRight)
+			{
+				this->pos.y = player->pos.y;
+				this->pos.x = player->pos.x - 10;
+			}
+			else if (direction == Player::MoveDirection::RightToLeft)
+			{
+				this->pos.y = player->pos.y;
+				this->pos.x = player->pos.x + 10;
+			}
+			return;
+		}
+		//player đang ở trạng thái stand
+		if (player->state == State::STANDING)
+		{
+			this->pos.y = player->pos.y + 7;
+			switch (direction)
+			{
+			case Player::LeftToRight:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				break;
+			}
+			case Player::RightToLeft:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().left + 2;//shield ở vị trí bên trái của player
+				break;
+			}
+			default:
+				break;
+			}
+			return;
+		}
+		//player đang ở trạng thái run
+		if (player->state == State::RUNNING)
+		{
+			switch (direction)
+			{
+			case Player::LeftToRight:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.y = player->pos.y + 10;
+				break;
+			}
+			case Player::RightToLeft:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
+				this->pos.y = player->pos.y + 10;
+				break;
+			}
+			default:
+				break;
+			}
+			return;
+		}
+		//player đang ở trạng thái sit
+		if (player->state == State::DUCKING)
+		{
+			switch (direction)
+			{
+			case Player::LeftToRight:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.y = player->pos.y - 10;
+				break;
+			}
+			case Player::RightToLeft:
+			{
+				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
+				this->pos.y = player->pos.y - 10;
+				break;
+			}
+			default:
+				break;
+			}
+			return;
 		}
 	}
-	//shield đã đc player dùng để tấn công
+	//shield đã được player dùng để tấn công
 	else
 	{
 		//xử lí update khi khiêng đang tấn công
 		//update vị trí dự theo vị trí player
 	}
-	this->InputHandler(dt);
+	this->InputHandler(dt);//hàm này hiện tại vô dụng
 }
 
 void Shield::Render()
@@ -113,21 +218,36 @@ void Shield::Render()
 	{
 		switch (player->direction)
 		{
-		case Player::MoveDirection::RightToLeft:
-		{
-			D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
-			//sprites[currentSpriteIndex]->Render(TransformationMode::FlipHorizontal, 1, D3DXVECTOR2(pos.x,pos.y));//flip shield do sprite ngược chiều hướng di chuyển
-			//sprites[currentSpriteIndex]->Render(D3DXVECTOR2(pos));//vẽ sprite bình thường
-			animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
-		}
-		case Player::MoveDirection::LeftToRight:
-		{
-			D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
-			//sprites[currentSpriteIndex]->Render(D3DXVECTOR2(pos));//vẽ sprite bình thường
-			animation->Render(pos);
-		}
-		default:
-			break;
+			case Player::MoveDirection::RightToLeft:
+			{
+				D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
+				if (player->state != State::KICKING)
+				{
+					animation->Render(pos);
+				}
+				else
+				{
+					animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+				}
+				break;
+			}
+			case Player::MoveDirection::LeftToRight:
+			{
+				D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, this->pos.y, 0));
+				if (player->state != State::KICKING) 
+				{
+					animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+				}
+				else
+				{
+					animation->Render(pos);
+				}
+				break;
+			}
+			default:
+			{
+				break; 
+			}
 		}
 	}
 	//shield đang được dùng để tấn công

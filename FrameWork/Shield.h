@@ -18,6 +18,7 @@ public:
 	void Render();
 	void InputHandler(float dt);
 	void OnCollision(Object* object, collisionOut out);
+	void setFrameIndex(int index);
 	Shield();
 	~Shield();
 };

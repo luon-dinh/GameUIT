@@ -1,4 +1,5 @@
 ﻿#include "PlayerShieldUpState.h"
+#include"Shield.h"
 
 PlayerShieldUpState::PlayerShieldUpState() {
 	this->state = State::SHIELD_UP;
@@ -24,6 +25,11 @@ void PlayerShieldUpState::InputHandler() {
 
 void PlayerShieldUpState::Update(float dt) {
 	InputHandler();
+	Shield *shield=Shield::getInstance();
+	shield->setFrameIndex(2);
+	shield->pos.y = Player::getInstance()->getBoundingBox().top - 2;
+	shield->pos.x = Player::getInstance()->pos.x;
+
 }
 
 void PlayerShieldUpState::OnCollision(Object* object, collisionOut* collision) {
