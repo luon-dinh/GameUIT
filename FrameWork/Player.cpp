@@ -207,11 +207,12 @@ void Player::ChangeState(State stateName) {
 		}
 		case State::SHIELD_DOWN: {
 			this->hasShield = TRUE;
-			shield->ChangeState(Shield::State::ShieldDown);
+			Shield::getInstance()->SetShieldState(Shield::ShieldState::Attack);
 			break;
 		}
 		case State::SHIELD_ATTACK: {
 			SetVx(0);
+			Shield::getInstance()->SetShieldState(Shield::ShieldState::Attack);
 			break;
 		}
 	}

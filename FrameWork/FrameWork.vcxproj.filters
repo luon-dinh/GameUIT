@@ -219,9 +219,6 @@
     <ClCompile Include="PlayScenePittsburghPortal02.cpp">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal02</Filter>
     </ClCompile>
-    <ClCompile Include="Shield.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerDashingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
@@ -243,22 +240,7 @@
     <ClCompile Include="PlayerStandPunchState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ShieldState.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="ShieldUpState.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="ShieldDownState.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="ShieldJumpState.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="ShieldNormalState.cpp">
-      <Filter>Objects\Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="ShieldAttackState.cpp">
+    <ClCompile Include="Shield.cpp">
       <Filter>Objects\Shield</Filter>
     </ClCompile>
   </ItemGroup>
@@ -392,9 +374,6 @@
     <ClInclude Include="PlayScenePittsburghPortal02.h">
       <Filter>Scene\PlayScene\PlayScenePittsburghPortal02</Filter>
     </ClInclude>
-    <ClInclude Include="Shield.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerDashingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
@@ -416,22 +395,7 @@
     <ClInclude Include="PlayerStandPunchState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ShieldState.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
-    <ClInclude Include="ShieldUpState.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
-    <ClInclude Include="ShieldDownState.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
-    <ClInclude Include="ShieldJumpState.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
-    <ClInclude Include="ShieldNormalState.h">
-      <Filter>Objects\Shield</Filter>
-    </ClInclude>
-    <ClInclude Include="ShieldAttackState.h">
+    <ClInclude Include="Shield.h">
       <Filter>Objects\Shield</Filter>
     </ClInclude>
   </ItemGroup>

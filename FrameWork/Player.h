@@ -12,9 +12,9 @@
 #include "PlayerDashingState.h"
 #include "PlayerFloatingState.h"
 #include "PlayerDivingState.h"
+#include "PlayerStandPunchState.h"
 #include "PlayerShieldDownState.h"
 #include "PlayerShieldAttackState.h"
-#include "PlayerStandPunchState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
@@ -29,12 +29,6 @@ private:
 	std::unordered_map<State, PlayerState*> playerStates;
 	static Player* instance;
 
-	PlayerState
-		*runningState,
-		*standingState,
-		*jumpingState,
-		*sittingState,
-		*floatingState;
 
 	void InnerChangeState(State stateName);
 	void LoadAllStates();
@@ -127,8 +121,6 @@ public:
 	void HandleStandingOnGround(Object* ground);	// xử lý khi đứng trên ground
 	void HandleCollisionWithSolidBox(Object* solidBox);
 #pragma endregion
-
-	void ThrowShield();
 
 
 };

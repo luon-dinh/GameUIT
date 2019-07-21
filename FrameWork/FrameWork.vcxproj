@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -183,12 +183,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shield.cpp" />
-    <ClCompile Include="ShieldAttackState.cpp" />
-    <ClCompile Include="ShieldDownState.cpp" />
-    <ClCompile Include="ShieldJumpState.cpp" />
-    <ClCompile Include="ShieldNormalState.cpp" />
-    <ClCompile Include="ShieldState.cpp" />
-    <ClCompile Include="ShieldUpState.cpp" />
     <ClCompile Include="SolidBoxCollision.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -242,12 +236,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shield.h" />
-    <ClInclude Include="ShieldAttackState.h" />
-    <ClInclude Include="ShieldDownState.h" />
-    <ClInclude Include="ShieldJumpState.h" />
-    <ClInclude Include="ShieldNormalState.h" />
-    <ClInclude Include="ShieldState.h" />
-    <ClInclude Include="ShieldUpState.h" />
     <ClInclude Include="SolidBoxCollision.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
