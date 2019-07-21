@@ -13,10 +13,13 @@
 #include "PlayerFloatingState.h"
 #include "PlayerDivingState.h"
 #include "PlayerShieldDownState.h"
+#include "PlayerShieldAttackState.h"
+#include "PlayerStandPunchState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
+#include "Shield.h"
 
 
 class Player :public Object
@@ -124,6 +127,8 @@ public:
 	void HandleStandingOnGround(Object* ground);	// xử lý khi đứng trên ground
 	void HandleCollisionWithSolidBox(Object* solidBox);
 #pragma endregion
+
+	void ThrowShield();
 
 
 };

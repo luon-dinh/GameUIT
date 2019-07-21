@@ -2,6 +2,7 @@
 #include"PlayerState.h"
 #include"Player.h"
 
+
 class PlayerStandingState: public PlayerState {
 private:
 	enum BeforeDash {

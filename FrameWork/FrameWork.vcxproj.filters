@@ -237,6 +237,30 @@
     <ClCompile Include="PlayerShieldDownState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShieldAttackState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStandPunchState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldUpState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldDownState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldJumpState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldNormalState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldAttackState.cpp">
+      <Filter>Objects\Shield</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -385,6 +409,30 @@
     </ClInclude>
     <ClInclude Include="PlayerShieldDownState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShieldAttackState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStandPunchState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldState.h">
+      <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldUpState.h">
+      <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldDownState.h">
+      <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldJumpState.h">
+      <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldNormalState.h">
+      <Filter>Objects\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldAttackState.h">
+      <Filter>Objects\Shield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -30,10 +30,7 @@ void PlayerShieldDownState::InputHandler() {
 
 void PlayerShieldDownState::Update(float dt) {
 	InputHandler();
-	Shield *shield = Shield::getInstance();
-	shield->setFrameIndex(2);
-	shield->pos.y = Player::getInstance()->getBoundingBox().bottom ;
-	shield->pos.x = Player::getInstance()->pos.x;
+
 }
 
 void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision) {
@@ -41,9 +38,10 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 	auto side = collision->side;
 
 	if (object->type == Type::GROUND && side == CollisionSide::bottom) {
+   		player->SetAirState(Player::OnAir::None);
+		player->SetVx(0);
 		player->SetGroundCollision(new GroundCollision(object, side));
-		player->ChangeState(State::STANDING);
-		player->pos.y = object->pos.y + player->getHeight() / 2;
+		player->pos.y = object->pos.y + player->getHeight() / 2 + Shield::getInstance()->getHeight() / 2;
 	}
 }
 
