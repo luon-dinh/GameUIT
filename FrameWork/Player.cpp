@@ -50,6 +50,8 @@ void Player::LoadAllAnimations() {
 	animations[FLOATING] = new Animation(PLAYER, 32, 40);
 	animations[DIVING] = new Animation(PLAYER, 40, 46);
 	animations[SHIELD_DOWN] = new Animation(PLAYER, 19, 20);
+	animations[SHIELD_ATTACK] = new Animation(PLAYER, 11, 13);
+	animations[STAND_PUNCH] = new Animation(PLAYER, 13, 15);
 }
 
 void Player::LoadAllStates() {
@@ -65,6 +67,8 @@ void Player::LoadAllStates() {
 	this->playerStates[State::FLOATING] = new PlayerFloatingState();
 	this->playerStates[State::DIVING] = new PlayerDivingState();
 	this->playerStates[State::SHIELD_DOWN] = new PlayerShieldDownState();
+	this->playerStates[State::SHIELD_ATTACK] = new PlayerShieldAttackState();
+	this->playerStates[State::STAND_PUNCH] = new PlayerStandPunchState();
 }
 
 
@@ -131,13 +135,17 @@ void Player::ChangeState(State stateName) {
 		return;
 
 	InnerChangeState(stateName);
+	auto shield = Shield::getInstance();
 
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 		case State::DUCKING:
 			this->shieldActive = true;
 		case State::STANDING: {
-			this->shieldActive = true;
+			if (this->GetPreviousState()->state == State::SHIELD_ATTACK)
+				this->hasShield = FALSE;
+			else
+				this->hasShield = TRUE;
 			this->SetAirState(Player::OnAir::None);
 			this->SetVx(0);
 			break;
@@ -200,7 +208,11 @@ void Player::ChangeState(State stateName) {
 			break;
 		}
 		case State::SHIELD_DOWN: {
-			this->shieldActive = TRUE;
+			this->hasShield = TRUE;
+			break;
+		}
+		case State::SHIELD_ATTACK: {
+			SetVx(0);
 			break;
 		}
 	}
@@ -247,8 +259,8 @@ void Player::SetVx(float vx) {
 	if (vx == 0)
 		return;
 	if (this->direction == MoveDirection::LeftToRight) {
-		if (vx < 0) {
-			this->direction = MoveDirection::RightToLeft;
+  		if (vx < 0) {
+   			this->direction = MoveDirection::RightToLeft;
 		}
 	}
 	else {

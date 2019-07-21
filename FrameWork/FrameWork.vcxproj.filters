@@ -237,6 +237,12 @@
     <ClCompile Include="PlayerShieldDownState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShieldAttackState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStandPunchState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -384,6 +390,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerShieldDownState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShieldAttackState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStandPunchState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
