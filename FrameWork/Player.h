@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"SoundManager.h"
 #include"KeyboardManager.h"
 #include"PlayerStandingState.h"
@@ -15,6 +15,7 @@
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
+#include "SolidBoxCollision.h"
 
 
 class Player :public Object
@@ -36,6 +37,8 @@ private:
 	void LoadAllAnimations();
 	void AddPosX();
 	void AddPosY();
+
+	BOOL collisionAffect;
 
 	PlayerState* prevState;
 
@@ -79,9 +82,10 @@ public:
 	OnAir preOnAir;
 	D3DXVECTOR2 accelerate;
 	BOOL collideOnGround;
-	BOOL collisionAffect;
+
 
 	GroundCollision* groundCollision;
+	SolidBoxCollision* solidBoxCollision;
 
 	Player();
 	~Player();
@@ -89,21 +93,37 @@ public:
 
 #pragma region MyRegion
 	void SetVx(float vx);
+	void SetVx(float vx, BOOL changePlayerDirection);
 	void SetVy(float vy);
 	void SetVelocity(D3DXVECTOR2 veloc);
 	void SetAccelerate(D3DXVECTOR2 acclerate);
+	void SetCollisionAffect(BOOL value);
+	BOOL GetCollisionAffect();
 	virtual void UpdatePosition();
 	void SetAirState(OnAir onAirState);
 	void SetMoveDirection(MoveDirection moveDir);
 	OnAir GetOnAirState();
+	OnAir GetPreOnAirState();
 	BOOL IsReachMaxJump();
-	void SetGroundCollision(GroundCollision* groundCollision);
-	GroundCollision* GetGroundCollision();
+
 	void Float(MoveDirection moveDir);
 	void HandleWaterCollision(Object* water, collisionOut* side);
 	BOOL IsOnMainGround();
-	void HandleGroundCollision(Object* ground, collisionOut* colOut);
 #pragma endregion
+
+#pragma region Player Collision Handle
+	void SetGroundCollision(GroundCollision* groundCollision);
+	GroundCollision* GetGroundCollision();
+	void SetSolidBoxCollision(SolidBoxCollision* solidBoxCollision);
+	SolidBoxCollision* GetSolidBoxCollision();
+	
+	BOOL CollideWithSolidBox(Object* solidBox);
+
+	void HandleFallingOffGround();					// xử lý khi rơi khỏi ground
+	void HandleStandingOnGround(Object* ground);	// xử lý khi đứng trên ground
+	void HandleCollisionWithSolidBox(Object* solidBox);
+#pragma endregion
+
 
 };
 

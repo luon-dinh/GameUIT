@@ -180,38 +180,30 @@ void PlayScene::CollisionProcess(double dt)
 			PrintDebugNumber(player->vy);
 		}*/
 
-		if (!player->collisionAffect)
+		// nếu player ở tình trạng không xét va chạm
+		if (!player->GetCollisionAffect())
 			continue;
+
 		//Gọi đến hàm xử lý va chạm của player.
 		if (colOut.side != CollisionSide::none) {
 			player->OnCollision(mapStaticObject[i], &colOut);
 		}
 		else {
-			// trong trường hợp không còn chạm đất
-			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING&&player->state != State::FLOATING) {
-				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
-					if (player->GetOnAirState() == Player::OnAir::None) {
-						if (mapStaticObject[i]->pos.y == 44)
-							player->SetAirState(Player::OnAir::DropToWater);
-						else
-						{
-							player->SetAirState(Player::OnAir::Falling);
-						}
-						player->ChangeState(State::JUMPING);
-						//player->SetGroundCollision(NULL);
+			// xét object hiện tại là ground
+			if (mapStaticObject[i]->type == Type::GROUND) {
+				auto ground = mapStaticObject[i];
+				if (player->GetGroundCollision()->GetGround() == ground) {
+					// trong trường hợp không còn chạm đất
+					if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
+						player->HandleFallingOffGround();
 					}
 				}
-				continue;
-			}
-			else
-			{
-				if (mapStaticObject[i]->type == Type::GROUND)
+				else
 				{
-					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->preOnAir == Player::OnAir::Jumping)
-					{
-						player->SetGroundCollision(new GroundCollision(mapStaticObject[i], CollisionSide::bottom));
-						player->ChangeState(State::STANDING);
-						player->pos.y = mapStaticObject[i]->pos.y + player->getHeight() / 2;
+					// xét va chạm trong trường hợp SweptAABB không quét được va chạm cho đã va chạm
+					// trước đó
+					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->getBoundingBox().bottom > objectBox.bottom){
+						player->HandleStandingOnGround(ground);
 						DebugOut(L"\nFixed Collision");
 					}
 				}

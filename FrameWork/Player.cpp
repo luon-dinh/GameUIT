@@ -99,14 +99,6 @@ void Player::Render()
 	}
 }
 
-void Player::HandleGroundCollision(Object* ground, collisionOut* colOut) {
-	auto playerBox = this->getBoundingBox();
-	auto groundBox = ground->getStaticObjectBoundingBox();
-	this->SetGroundCollision(new GroundCollision(ground, colOut->side));
-	this->ChangeState(State::STANDING);
-	this->pos.y = ground->pos.y + this->getHeight() / 2;
-}
-
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->pos.y == 44) {
 		int a = 1;
@@ -186,7 +178,6 @@ void Player::ChangeState(State stateName) {
 		case State::DIVING: {
 			this->hasShield = false;
 			this->collisionAffect = FALSE;
-		}
 		case State::FLOATING: {
 			this->hasShield = false;
 			this->SetAirState(OnAir::None);
@@ -208,6 +199,10 @@ void Player::ChangeState(State stateName) {
 }
 
 BOOL Player::IsOnMainGround() {
+	if (!this->groundCollision || !this->groundCollision->GetGround())
+		return FALSE;
+
+	// tung độ của main ground là 44
 	return this->groundCollision->GetGround()->pos.y == 44;
 }
 
@@ -255,6 +250,14 @@ void Player::SetVx(float vx) {
 	}
 }
 
+void Player::SetVx(float vx, BOOL changePlayerDirection) {
+	if (changePlayerDirection) {
+		SetVx(vx);
+		return;
+	}
+	this->vx = vx;
+}
+
 void Player::SetVy(float vy) {
 	this->vy = vy;
 	if (this->vy <= 0) {
@@ -300,6 +303,14 @@ void Player::SetAccelerate(D3DXVECTOR2 accelerate) {
 	this->accelerate.y = accelerate.y;
 }
 
+BOOL Player::GetCollisionAffect() {
+	return this->collisionAffect;
+}
+
+void Player::SetCollisionAffect(BOOL value) {
+	this->collisionAffect = value;
+}
+
 void Player::SetGroundCollision(GroundCollision* groundCollision) {
 	if (this->groundCollision != groundCollision) {
 		delete this->groundCollision;
@@ -313,6 +324,10 @@ GroundCollision* Player::GetGroundCollision() {
 
 Player::OnAir Player::GetOnAirState() {
 	return this->onAirState;
+}
+
+Player::OnAir Player::GetPreOnAirState() {
+	return this->preOnAir;
 }
 
 void Player::SetAirState(OnAir onAirState) {
@@ -367,4 +382,52 @@ int Player::getHeight()
 {
 	BoundingBox box = this->playerstate->getBoundingBox();
 	return box.top - box.bottom;
+}
+
+
+
+void Player::HandleFallingOffGround(){
+	if (this->state != State::JUMPING && this->state != State::FLOATING) {
+		if (this->GetOnAirState() == Player::OnAir::None) {
+			if (this->GetGroundCollision()->GetGround()->pos.y == 44)
+				this->SetAirState(Player::OnAir::DropToWater);
+			else
+				this->SetAirState(Player::OnAir::Falling);
+			this->ChangeState(State::JUMPING);
+			//player->SetGroundCollision(NULL);
+		}
+	}
+}
+
+BOOL Player::CollideWithSolidBox(Object* solidBox) {
+	if (solidBox == NULL)
+		return FALSE;
+
+
+}
+
+void Player::HandleStandingOnGround(Object* ground) {
+	if (this->GetOnAirState() == Player::OnAir::Falling && this->GetPreOnAirState() == Player::OnAir::Jumping)
+	{
+		this->SetGroundCollision(new GroundCollision(ground, CollisionSide::bottom));
+		this->ChangeState(State::STANDING);
+		this->pos.y = ground->pos.y + this->getHeight() / 2;
+	}
+}
+
+void Player::HandleCollisionWithSolidBox(Object* solidBox) {
+	if (solidBox->type != Type::SOLIDBOX)
+		return;	
+
+}
+
+SolidBoxCollision* Player::GetSolidBoxCollision() {
+	return this->solidBoxCollision;
+}
+
+void Player::SetSolidBoxCollision(SolidBoxCollision* solidBoxCollision) {
+	if (this->solidBoxCollision != NULL)
+		delete this->solidBoxCollision;
+
+	this->solidBoxCollision = solidBoxCollision;
 }
