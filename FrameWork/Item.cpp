@@ -6,8 +6,9 @@ Item::Item(Type type)
 	Animation* animation = new Animation(Tag::ITEM, 0, 8);
 	this->tag = ITEM;
 	this->type = type;
-	this->vy = 0;
-	isActive = true;
+	this->vy = ITEM_SPEED;
+	existTime = ITEM_EXIST_TIME;
+	this->isActive = false;
 	switch (type)
 	{
 	case Type::ITEM1:
@@ -48,6 +49,9 @@ void Item::Update(float dt)
 	if (isActive)
 	{
 		this->pos.y += this->vy;
+		existTime -= dt;
+		if (existTime <= 0)
+			isActive = false;
 	}
 }
 void Item::Render()

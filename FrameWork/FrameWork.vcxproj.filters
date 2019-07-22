@@ -94,6 +94,9 @@
     <Filter Include="Objects\Item">
       <UniqueIdentifier>{1e0eb7c6-8fef-42fb-ab33-6dd9d8fccb12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Container">
+      <UniqueIdentifier>{cc56a773-857b-49d2-b2bb-35706f7ce322}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -276,6 +279,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>Objects\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Container.cpp">
+      <Filter>Objects\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -454,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>Objects\Container</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
