@@ -282,6 +282,9 @@
     <ClCompile Include="Container.cpp">
       <Filter>Objects\Container</Filter>
     </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -463,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="Container.h">
       <Filter>Objects\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

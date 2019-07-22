@@ -5,7 +5,8 @@
 Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 , int item6 , int item7 , int item8 )
 {
 	ItemManager* itemManager = ItemManager::getInstance();
-	this->tag = Tag::CONTAINER;
+	this->tag = Tag::ITEMCONTAINER;
+	this->type = Type::ITEMCONTAINERTYPE;
 	animation = new Animation(this->tag,0,2);
 	for (int i = 0; i < item1; i++)
 	{
@@ -53,24 +54,7 @@ Container::~Container()
 
 void Container::Update(float dt)
 {
-	auto shield = Shield::getInstance();
-	auto player = Player::getInstance();
-	//collide với shield hoặc collide với player mà player đang ở trạng thái punch
-	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), shield->getBoundingBox())||
-		(Collision::getInstance()->IsCollide(this->getBoundingBox(), player->getBoundingBox())&&
-			(player->state==State::STAND_PUNCH||player->state==State::DUCKING_PUNCHING)))
-	{
-		animation->curframeindex = 1;
-		if (numberItems != 0)
-		{
-			items.at(numberItems-1)->isActive = true;
-			numberItems--;
-		}
-	}
-	else
-	{
-		animation->curframeindex = 0;
-	}
+	this->animation->curframeindex = 0;
 }
 
 void Container::Render()
@@ -92,4 +76,19 @@ void Container::addItem(Item *item)
 {
 	items.push_back(item);
 	numberItems++;
+}
+
+void Container::OnCollision(Object* object, collisionOut *colOut)
+{
+	Player* player = Player::getInstance();
+	if(object->tag==Tag::SHIELD||player->state==State::STAND_PUNCH||player->state==DUCKING_PUNCHING)
+	{
+		animation->curframeindex = 1;
+		animation->DelayCurrentFrame(50);
+		if (numberItems != 0)
+		{
+			items.at(numberItems - 1)->isActive = true;
+			numberItems--;
+		}
+	}
 }

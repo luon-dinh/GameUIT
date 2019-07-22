@@ -75,6 +75,8 @@ BoundingBox Item::getBoundingBox()
 
 void Item::OnCollision(Object* object, collisionOut* colOut)
 {
+	if (!isActive)
+		return;
 	switch (object->type)
 	{
 		//va chạm với player
