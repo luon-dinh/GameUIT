@@ -7,7 +7,7 @@ public:
 	BOOL isActive;
 	void Update(float dt);
 	virtual BoundingBox getBoundingBox();
-	Animation* animation = new Animation(Tag::ITEM, 0, 8);
+	
 	Sprite* sprite;
 	void Render();
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?

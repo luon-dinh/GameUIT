@@ -91,6 +91,9 @@
     <Filter Include="Objects\Enemy\Solder">
       <UniqueIdentifier>{a0180c3f-2930-483c-b022-da8a480f89a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Item">
+      <UniqueIdentifier>{1e0eb7c6-8fef-42fb-ab33-6dd9d8fccb12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -270,6 +273,9 @@
     <ClCompile Include="SolderBeatenState.cpp">
       <Filter>Objects\Enemy\Solder</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -445,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="SolderBeatenState.h">
       <Filter>Objects\Enemy\Solder</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

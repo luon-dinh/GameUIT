@@ -1,10 +1,13 @@
 ﻿#include"Item.h"
+#include"Camera.h"
 
 Item::Item(Type type)
 {
+	Animation* animation = new Animation(Tag::ITEM, 0, 8);
 	this->tag = ITEM;
 	this->type = type;
-	this->vy = -2;
+	this->vy = 0;
+	isActive = true;
 	switch (type)
 	{
 	case Type::ITEM1:
@@ -32,6 +35,7 @@ Item::Item(Type type)
 		sprite = animation->getSprite(7);
 		break;
 	}
+	delete animation;
 }
 Item::~Item()
 {
@@ -50,7 +54,8 @@ void Item::Render()
 {
 	if (isActive)
 	{
-		sprite->Render(this->pos);
+		D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+		sprite->Render(position);
 	}
 }
 
@@ -61,6 +66,7 @@ BoundingBox Item::getBoundingBox()
 	box.bottom = this->pos.y - 7;
 	box.left = this->pos.x - 6;
 	box.right = this->pos.x + 6;
+	return box;
 }
 
 void Item::OnCollision(Object* object, collisionOut* colOut)
