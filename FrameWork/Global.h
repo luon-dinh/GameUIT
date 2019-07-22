@@ -100,7 +100,8 @@ enum Type {
 	SOLIDBOX,
 	WATERRL,
 	ROPE,
-	ONOFF
+	ONOFF,
+	HEART,
 	//cac loai dan
 };
 

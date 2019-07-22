@@ -15,7 +15,8 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::TESTMAPOBJECTRED, (char*)".\\..\\Resources\\Images\\red_8_8.png");
 	textures->addTexture(Tag::TESTMAPOBJECTBLUE, (char*)".\\..\\Resources\\Images\\blue_8_8.png");
 	textures->addTexture(Tag::SHIELD, (char*)".\\..\\Resources\\Images\\SpriteSheetCaptainShield.png");
-
+	//texture dung cho ITEM
+	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\EvenPixelWidthItem.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
