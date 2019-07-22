@@ -2,17 +2,6 @@
 
 ItemManager* ItemManager::instance = NULL;
 
-ItemManager::ItemManager()
-{
-	LoadAllItem();
-}
-
-ItemManager::~ItemManager()
-{
-	for (auto it : items)
-		it = nullptr;
-	items.clear();
-}
 
 ItemManager* ItemManager::getInstance()
 {

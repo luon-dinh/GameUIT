@@ -18,7 +18,7 @@ void TextureManager::loadResources()
 	//texture dung cho ITEM
 	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\EvenPixelWidthItem.png");
 	//texture dung cho CONTAINER
-	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
+	textures->addTexture(Tag::ITEMCONTAINER, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)

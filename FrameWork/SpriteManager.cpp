@@ -85,8 +85,8 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::ITEM, 70, 12, 84, 24));
 	spriteManager->addSprite(new Sprite(Tag::ITEM, 84, 0, 98, 12));
 	// cắt sprite cho container
-	spriteManager->addSprite(new Sprite(Tag::CONTAINER, 0, 0, 16, 16));
-	spriteManager->addSprite(new Sprite(Tag::CONTAINER, 0, 16, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 16, 16, 32));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
