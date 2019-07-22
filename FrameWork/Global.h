@@ -101,6 +101,7 @@ enum Type {
 	WATERRL,
 	ROPE,
 	ONOFF,
+	ITEMLOOTER,
 	ITEM1,
 	ITEM2,
 	ITEM3,

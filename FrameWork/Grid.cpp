@@ -1,7 +1,12 @@
 ﻿#include "Grid.h"
+#include <fstream>
+#include <sstream>
 
-Grid::Grid(long mapWidth, long mapHeight)
+Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 {
+	mapWidth = _mapWidth;
+	mapHeight = _mapHeight;
+
 	gridWidth = mapWidth / cellSize + 1;
 	gridHeight = mapHeight / cellSize + 1;
 
@@ -10,6 +15,57 @@ Grid::Grid(long mapWidth, long mapHeight)
 	for (int i = 0; i < gridHeight; ++i)
 	{
 		cells[i] = new std::list<Object*>[gridWidth];
+	}
+
+	//Khởi tạo danh sách một mảng 2 chiều.
+	objectIDPerPosition = new int *[mapHeight];
+	for (int i = 0; i < mapHeight; ++i)
+		objectIDPerPosition[i] = new int[mapWidth];
+	//Xoá sạch mảng (reset lại về 0).
+	for (int i = 0; i < mapHeight; ++i)
+	{
+		for (int j = 0; j < mapWidth; ++j)
+		{
+			objectIDPerPosition[i][j] = 0;
+		}
+	}
+
+	LoadSpawnPosition(spawnPosition);
+}
+
+void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
+{
+	//Load tất cả các Dynamic Object (các object tương tác được).
+	std::ifstream inFile;
+	inFile.open(spawnInfoFilePath);
+	if (!inFile)
+		PrintDebug("Spawn Info File Path not found !");
+	std::string sInputString;
+	std::getline(inFile, sInputString);
+
+	std::istringstream iss(sInputString);
+	int objectX;
+	int objectY;
+	int objectWidth;
+	int objectHeight;
+
+
+}
+
+void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
+{
+	int fromX = cellX * cellSize;
+	int toX = (cellX + 1)* cellSize;
+	int fromY = cellY * cellSize;
+	int toY = (cellY + 1) * cellSize;
+
+	//Quét từ dưới lên, từ trái qua phải.
+	for (int i = fromY; i < toY; ++i)
+	{
+		for (int j = fromX; j < toX; ++j)
+		{
+			
+		}
 	}
 }
 
@@ -34,6 +90,10 @@ Grid::~Grid()
 		delete []cells[i];
 	}
 	delete cells;
+	//Xoá danh sách các object.
+	for (int i = 0; i < mapHeight; ++i)
+		delete[]objectIDPerPosition[i];
+	delete objectIDPerPosition;
 }
 
 void Grid::Add(Object* objectToAdd)
