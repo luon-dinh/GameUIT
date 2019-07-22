@@ -11,6 +11,11 @@ PlayScenePittsburghPortal02::PlayScenePittsburghPortal02()
 
 	mapStaticObject = world->getStaticObject();
 	currentWorld = worldDark;
+	//Xét tạo Grid.
+	grid = new Grid(world->getMapWidth(), world->getMapHeight());
+	//Thêm player và shield vào Grid.
+	grid->Add(player);
+	grid->Add(shield);
 }
 
 PlayScenePittsburghPortal02::~PlayScenePittsburghPortal02()
@@ -41,4 +46,7 @@ void PlayScenePittsburghPortal02::ResetPlayerPosition()
 	player->pos.y = player->height + 10;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);
+
+	//Update lại camera sau khi set.
+	UpdateCameraWithPlayerPos();
 }

@@ -11,6 +11,14 @@ PlayScenePittsburghPortal01::PlayScenePittsburghPortal01()
 
 	mapStaticObject = world->getStaticObject();
 	currentWorld = worldDark;
+	//Xét tạo Grid.
+	grid = new Grid(world->getMapWidth(), world->getMapHeight());
+	//Thêm player và shield vào Grid.
+	grid->Add(player);
+	grid->Add(shield);
+
+	//Update lại camera sau khi set.
+	UpdateCameraWithPlayerPos();
 }
 
 PlayScenePittsburghPortal01::~PlayScenePittsburghPortal01()

@@ -1,6 +1,6 @@
 ﻿#include "Grid.h"
 
-Grid::Grid(int mapWidth, int mapHeight)
+Grid::Grid(long mapWidth, long mapHeight)
 {
 	gridWidth = mapWidth / cellSize + 1;
 	gridHeight = mapHeight / cellSize + 1;
@@ -21,7 +21,12 @@ Grid::~Grid()
 		for (int j = 0; j < gridWidth; ++j)
 		{
 			for (auto i : cells[i][j])
-				delete i;
+			{
+				Player* testCast = dynamic_cast<Player*> (i);
+				if (testCast != nullptr)
+					delete i;
+			}
+				
 			cells[i][j].clear();
 		}
 		delete cells[i];
@@ -109,6 +114,10 @@ void Grid::ActivateCells()
 				object->Respawn();
 		}
 	}
+	topY = nextTopY;
+	bottomY = nextBottomY;
+	leftX = nextLeftX;
+	rightX = nextRightX;
 }
 
 void Grid::CollisionProcess()
@@ -117,7 +126,7 @@ void Grid::CollisionProcess()
 	//Duyệt các cell.
 	for (int i = bottomY; i <= topY; ++i)
 	{
-		for (int j = leftX; i <= rightX; ++j)
+		for (int j = leftX; j <= rightX; ++j)
 		{
 			//Xét va chạm như trên trang web.
 
@@ -138,21 +147,18 @@ void Grid::CollisionProcess()
 				CollisionProcessCellToCell(j, i, j - 1, i - 1);
 		}
 	}
-
-	//Sau đó ta xét việc va chạm với các object tĩnh (Map object).
-
 }
 
 void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY)
 {
-	std::list<Object*> * firstCell = &cells[firstCellY][firstCellX];
-	std::list<Object*> * secondCell = &cells[secondCellY][secondCellX];
+	std::list<Object*> &firstCell = cells[firstCellY][firstCellX];
+	std::list<Object*> &secondCell = cells[secondCellY][secondCellX];
 
 	//Duyệt qua các phần tử của cell đầu tiên.
-	for (std::list<Object*>::iterator firstCellIt = firstCell->begin(); firstCellIt != firstCell->end(); ++firstCellIt)
+	for (std::list<Object*>::iterator firstCellIt = firstCell.begin(); firstCellIt != firstCell.end(); ++firstCellIt)
 	{
 		BoundingBox firstCellObjBoundingBox = (*firstCellIt)->getBoundingBox();
-		for (std::list<Object*>::iterator secondCellIt = secondCell->begin(); secondCellIt != secondCell->end(); ++secondCellIt)
+		for (std::list<Object*>::iterator secondCellIt = secondCell.begin(); secondCellIt != secondCell.end(); ++secondCellIt)
 		{
 			BoundingBox secondCellObjBoundingBox = (*secondCellIt)->getBoundingBox();
 			collisionOut firstObjColOut = Collision::getInstance()->SweptAABB(firstCellObjBoundingBox, secondCellObjBoundingBox);
@@ -196,31 +202,35 @@ void Grid::UpdateActivatedCells(double dt)
 		for (int j = leftX; j <= rightX; ++j)
 		{
 			int cellX = j;
-			//Duyệt hết các phần tử có trong cells này.
-			for (std::list<Object*>::iterator it = cells[i][j].begin(); it != cells[i][j].end(); ++it)
+			std::list<Object*>::iterator it = cells[i][j].begin();
+			while (it != cells[i][j].end())
 			{
+				//Duyệt hết các phần tử có trong cells này.
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
 				(*it)->Update(dt);
-				it = MoveObject(cellX, cellY, it, (*it));
+				it = MoveObjectAndIncrementIterator(cellX, cellY, it, (*it)); //Lúc này là đã di chuyển luôn iterator rồi.
 			}
 		}
 	}
 	
 }
 
-std::list<Object*>::iterator Grid::MoveObject(int cellX, int cellY, std::list<Object*>::iterator it, Object* object)
+std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int cellY, std::list<Object*>::iterator it, Object* object)
 {
 	//Kiểm tra xem object sau khi di chuyển còn thuộc cell hiện tại hay không.
 	int nextCellX = object->pos.x / cellSize;
 	int nextCellY = object->pos.y / cellSize;
 	if (cellX == nextCellX && cellY == nextCellY)
-		return it;
+		return (++it);
 
 	//Thực hiện việc di chuyển qua cell khác.
 
 	//Xoá object ở cell cũ.
-	cells[cellY][cellX].erase(it++);
+	if (it != cells[cellY][cellX].end())
+		cells[cellY][cellX].erase(it++);
+	else
+		cells[cellY][cellX].erase(it--);
 
 	//Thêm object vào cell mới.
 	Add(object);

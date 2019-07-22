@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scene.h"
+#include "Grid.h"
 #include "GameMap.h"
 #include "KeyboardManager.h"
 #include "Object.h"
@@ -30,13 +31,17 @@ protected:
 	bool Done = false; //Biến dùng để xét xem cảnh hiện tại đã hoàn thành chưa (phục vụ cho mục đích xoá khỏi bộ nhớ).
 	MapName ReplaceToThisMap = MapName::NOMAP; //Biến dùng để báo cho Scene Manager chuyển cảnh sang map mới.
 	virtual void ProcessUpdates(double dt);
-	virtual void UpdateCameraWithPlayerPos(double dt);
+	virtual void UpdateCameraWithPlayerPos(double dt = 0);
 	virtual void CollisionProcess(double dt);
 	virtual void EnvironmentUpdate(double dt);
 	virtual void DrawDebugBoxForPlayer();
 	virtual void DrawDebugBoxForStaticObjects();
 	GameMap* world;
+	Grid* grid;
+	Camera * camera;
+	//Để đó nhưng chủ yếu là ta thao tác trong Grid.
+	//Dưới đây là những biến chỉ giữ lại để xét điều kiện thôi.
+	//Update, draw ta gọi Grid để nó quản lý.
 	Player* player;
 	Shield* shield;
-	Camera * camera;
 };

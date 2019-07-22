@@ -26,7 +26,5 @@ public:
 	virtual void Render();
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void Update(float dt);
-	
-	virtual void OnCollision(Object* object, collisionOut* collisionOut) {};
 	virtual void Respawn() {} ;
 };
