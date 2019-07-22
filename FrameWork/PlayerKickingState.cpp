@@ -27,6 +27,20 @@ void PlayerKickingState::InputHandler()
 		this->curKickTime = 0;
 		return;
 	}
+
+	int timePressedJump = 0;
+	// xét thời gian đã press phím jump
+	if (player->GetOnAirState() == Player::OnAir::Jumping) {
+		//phím Jump đã được nhấn từ trước
+		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
+			//chuyển sang trạng thái roll
+			if (timePressedJump > 400) {
+				player->ChangeState(State::ROLLING);
+				return;
+			}
+			player->SetVy(player->vy + 0.15);
+		}
+	}
 	this->curKickTime += 30;
 
 	/*if (player->IsReachMaxJump()) {

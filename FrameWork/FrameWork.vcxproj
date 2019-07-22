@@ -144,6 +144,8 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Global.cpp" />
@@ -166,10 +168,12 @@
     <ClCompile Include="PlayerKickingState.cpp" />
     <ClCompile Include="PlayerRollingState.cpp" />
     <ClCompile Include="PlayerRunningState.cpp" />
+    <ClCompile Include="PlayerShieldAttackState.cpp" />
     <ClCompile Include="PlayerShieldDownState.cpp" />
     <ClCompile Include="PlayerShieldUpState.cpp" />
     <ClCompile Include="PlayerSittingState.cpp" />
     <ClCompile Include="PlayerStandingState.cpp" />
+    <ClCompile Include="PlayerStandPunchState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PlaySceneCharles.cpp" />
@@ -181,6 +185,11 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="Solder.cpp" />
+    <ClCompile Include="SolderBeatenState.cpp" />
+    <ClCompile Include="SolderDuckState.cpp" />
+    <ClCompile Include="SolderRunState.cpp" />
+    <ClCompile Include="SolderStandState.cpp" />
     <ClCompile Include="SolidBoxCollision.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -196,6 +205,8 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Global.h" />
@@ -217,10 +228,12 @@
     <ClInclude Include="PlayerKickingState.h" />
     <ClInclude Include="PlayerRollingState.h" />
     <ClInclude Include="PlayerRunningState.h" />
+    <ClInclude Include="PlayerShieldAttackState.h" />
     <ClInclude Include="PlayerShieldDownState.h" />
     <ClInclude Include="PlayerShieldUpState.h" />
     <ClInclude Include="PlayerSittingState.h" />
     <ClInclude Include="PlayerStandingState.h" />
+    <ClInclude Include="PlayerStandPunchState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PlaySceneCharles.h" />
@@ -232,6 +245,11 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shield.h" />
+    <ClInclude Include="Solder.h" />
+    <ClInclude Include="SolderBeatenState.h" />
+    <ClInclude Include="SolderDuckState.h" />
+    <ClInclude Include="SolderRunState.h" />
+    <ClInclude Include="SolderStandState.h" />
     <ClInclude Include="SolidBoxCollision.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />

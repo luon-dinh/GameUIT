@@ -40,6 +40,12 @@ void PlayerRunningState::InputHandler()
 		return;
 	}
 
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
+		if (player->hasShield) {
+			player->ChangeState(State::SHIELD_ATTACK);
+		}
+	}
+
 	// Không phím nào được nhấn thì chuyển sang trạng thái đứng yên
 	player->ChangeState(State::STANDING);
 }

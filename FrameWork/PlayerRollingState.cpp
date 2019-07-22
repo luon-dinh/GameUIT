@@ -36,7 +36,6 @@ void PlayerRollingState::InputHandler()
 	}
 
 	if (!keyboard->isKeyDown(PLAYER_MOVE_LEFT) && !keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
-		player->SetVx(-PLAYER_NORMAL_SPEED);
 		player->SetVx(0);
 	}
 	else {

@@ -82,6 +82,14 @@ void PlayerStandingState::InputHandler()
 		StopFrameFlip();
 		return;
 	}
+
+	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
+		if (player->hasShield)
+			player->ChangeState(State::SHIELD_ATTACK);
+		else {
+			player->ChangeState(State::STAND_PUNCH);
+		}
+	}
 }
 
 BOOL PlayerStandingState::ChangeToDash(BeforeDash currentDash) {

@@ -190,20 +190,19 @@ void PlayScene::CollisionProcess(double dt)
 		}
 		else {
 			// xét object hiện tại là ground
-			if (mapStaticObject[i]->type == Type::GROUND) {
-				auto ground = mapStaticObject[i];
-				if (player->GetGroundCollision()->GetGround() == ground) {
-					// trong trường hợp không còn chạm đất
-					if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
- 						player->HandleFallingOffGround();
-					}
+			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING&&player->state != State::FLOATING) {
+				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
+					player->HandleFallingOffGround();
 				}
-				else
+				continue;
+			}
+			else
+			{
+				if (mapStaticObject[i]->type == Type::GROUND)
 				{
-					// xét va chạm trong trường hợp SweptAABB không quét được va chạm cho đã va chạm
-					// trước đó
-					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && playerBox.bottom > objectBox.bottom){
-   						player->HandleStandingOnGround(ground);
+					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->preOnAir == Player::OnAir::Jumping)
+					{
+						player->HandleStandingOnGround(mapStaticObject[i]);
 					}
 				}
 			}
