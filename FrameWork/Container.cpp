@@ -40,6 +40,7 @@ Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 ,
 	{
 		addItem(itemManager->getItem(7));
 	}
+	numberItems = item1 + item2 + item3 + item4 + item5 + item6 + item7 + item8;
 }
 
 
@@ -81,7 +82,8 @@ void Container::addItem(Item *item)
 void Container::OnCollision(Object* object, collisionOut *colOut)
 {
 	Player* player = Player::getInstance();
-	if(object->tag==Tag::SHIELD||player->state==State::STAND_PUNCH||player->state==DUCKING_PUNCHING)
+	// nếu container va chạm với shield hoặc bị player đánh
+	if(object->tag==Tag::SHIELD||((player->state==State::STAND_PUNCH||player->state==DUCKING_PUNCHING)&& object->tag==Tag::PLAYER))
 	{
 		animation->curframeindex = 1;
 		animation->DelayCurrentFrame(50);
@@ -91,4 +93,11 @@ void Container::OnCollision(Object* object, collisionOut *colOut)
 			numberItems--;
 		}
 	}
+}
+
+void Container::SetPosition(D3DXVECTOR2 pos)
+{
+	this->pos = pos;
+	for (auto item : items)
+		item->pos = this->pos;
 }
