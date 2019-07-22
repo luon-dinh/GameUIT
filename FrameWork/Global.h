@@ -32,6 +32,10 @@
 #define GROUND_GRAVITY				0.25
 #define WATER_SPEED					0.75
 
+//item define
+#define ITEM_SPEED -1
+#define ITEM_EXIST_TIME 1000
+
 // Moving keyboard input
 #define PLAYER_MOVE_LEFT			DIK_LEFTARROW
 #define PLAYER_MOVE_RIGHT			DIK_RIGHTARROW
@@ -87,7 +91,8 @@ enum Tag {
 	WATERTOP,
 	WATERBOTTOM,
 	SEWER,
-	EXITSIGN
+	EXITSIGN,
+	CONTAINER,
 };
 enum Type {
 	NONE,

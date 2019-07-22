@@ -17,6 +17,8 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::SHIELD, (char*)".\\..\\Resources\\Images\\SpriteSheetCaptainShield.png");
 	//texture dung cho ITEM
 	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\EvenPixelWidthItem.png");
+	//texture dung cho CONTAINER
+	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)

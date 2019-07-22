@@ -5,6 +5,7 @@ private:
 
 public:
 	BOOL isActive;
+	int existTime;
 	void Update(float dt);
 	virtual BoundingBox getBoundingBox();
 	
