@@ -27,4 +27,6 @@ public:
 
 	virtual void Update(float dt);
 	
+	virtual void OnCollision(Object* object, collisionOut* collisionOut) {};
+	virtual void Respawn() {} ;
 };
