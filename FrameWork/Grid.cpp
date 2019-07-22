@@ -22,14 +22,16 @@ Grid::~Grid()
 		{
 			for (auto i : cells[i][j])
 			{
-				Player* testCast = dynamic_cast<Player*> (i);
-				if (testCast != nullptr)
+				Player* testPlayer = dynamic_cast<Player*> (i);
+				Shield* testShield = dynamic_cast<Shield*> (i);
+
+				//Chỉ xoá khi không phải là player và shield.
+				if (testPlayer != nullptr && testShield != nullptr)
 					delete i;
 			}
-				
 			cells[i][j].clear();
 		}
-		delete cells[i];
+		delete []cells[i];
 	}
 	delete cells;
 }
@@ -38,6 +40,8 @@ void Grid::Add(Object* objectToAdd)
 {
 	int cellX = objectToAdd->pos.x / cellSize;
 	int cellY = objectToAdd->pos.y / cellSize;
+
+	//Sắp xếp vị trí để shield luôn luôn hiển thị trước mọi thứ khác.
 	cells[cellY][cellX].push_front(objectToAdd);
 }
 
@@ -247,7 +251,7 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
-				object->Render();
+				object->RenderInGrid();
 			}
 		}
 	}

@@ -10,7 +10,7 @@ class Grid // lam singleton
 {
 	//Danh sách các object được tổ chức dưới dạng 2 chiều (từng cell) và trong các cell chứa các Unit.
 	std::list<Object*> ** cells;
-	const int cellSize = 80;
+	const int cellSize = 72;
 	long gridWidth;
 	long gridHeight;
 

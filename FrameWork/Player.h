@@ -68,6 +68,7 @@ public:
 	void Update(float dt);
 	virtual void OnCollision(Object* object, collisionOut* collisionOut);
 	void Render();
+	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
 	void SetPreviousState(State stateName);
 	BoundingBox getBoundingBox();

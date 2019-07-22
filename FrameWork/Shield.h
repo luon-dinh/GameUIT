@@ -37,6 +37,7 @@ public:
 	static Shield* getInstance();
 	void Update(float dt);
 	void Render();
+	void RenderInGrid() {}; //Cấm không cho Shield render trong grid.
 	void InputHandler(float dt);
 	void OnCollision(Object* object, collisionOut out);
 	void setFrameIndex(int index);
