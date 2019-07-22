@@ -114,6 +114,7 @@ enum Type {
 	ITEM6,
 	ITEM7,
 	ITEM8,
+	ITEMCONTAINERTYPE
 	//cac loai dan
 };
 

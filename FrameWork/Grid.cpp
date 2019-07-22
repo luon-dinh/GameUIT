@@ -43,15 +43,33 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	std::string sInputString;
 
 	std::istringstream iss(sInputString);
-	int objectX;
-	int objectY;
-	int objectWidth;
-	int objectHeight;
+
+	int objectID = -1;
+	int objectTopLeftX = -1;
+	int objectTopLeftY = -1;
+	int objectWidth = -1;
+	int objectHeight = -1;
 
 	int numOfObject;
+
 	std::getline(inFile, sInputString);
 	iss >> numOfObject;
 
+	Tag objectTag;
+	Type objectType;
+
+	for (int i = 0; i < numOfObject; ++i)
+	{
+		std::getline(inFile, sInputString);
+		std::istringstream iss(sInputString);
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+
+		//Xét từng ID để xem nó là loại object động gì.
+		if (objectID == 8)
+		{
+			objectTag = Tag::ITEMCONTAINER;
+		}
+	}
 
 }
 

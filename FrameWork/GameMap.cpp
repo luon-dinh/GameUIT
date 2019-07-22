@@ -70,7 +70,6 @@ void GameMap::LoadMapObject()
 	{
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
-		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 
 		//Xét từng ID để xem entityTag của nó là gì.
 		if (objectID == 0)
