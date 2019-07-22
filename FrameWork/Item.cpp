@@ -1,9 +1,37 @@
 ﻿#include"Item.h"
 
-Item::Item(int frameIndex, D3DXVECTOR2 pos)
+Item::Item(Type type)
 {
-	this->pos = pos;
-	sprite = animation->getSprite(frameIndex);
+	this->tag = ITEM;
+	this->type = type;
+	this->vy = -2;
+	switch (type)
+	{
+	case Type::ITEM1:
+		sprite = animation->getSprite(0);
+		break;
+	case Type::ITEM2:
+		sprite = animation->getSprite(1);
+		break;
+	case Type::ITEM3:
+		sprite = animation->getSprite(2);
+		break;
+	case Type::ITEM4:
+		sprite = animation->getSprite(3);
+		break;
+	case Type::ITEM5:
+		sprite = animation->getSprite(4);
+		break;
+	case Type::ITEM6:
+		sprite = animation->getSprite(5);
+		break;
+	case Type::ITEM7:
+		sprite = animation->getSprite(6);
+		break;
+	case Type::ITEM8:
+		sprite = animation->getSprite(7);
+		break;
+	}
 }
 Item::~Item()
 {
@@ -15,7 +43,7 @@ void Item::Update(float dt)
 {
 	if (isActive)
 	{
-		this->pos.y -= 2;
+		this->pos.y += this->vy;
 	}
 }
 void Item::Render()
@@ -42,12 +70,13 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		//va chạm với player
 		case Type::NONE:
 		{
-			isActive = FALSE;
+			this->isActive = false;
 		}
 		//va chạm với đất
 		case Type::GROUND:
 		{
 			this->pos.y = object->pos.y + this->getHeight() / 2;
+			this->vy = 0;
 			break;
 		}
 	}
