@@ -92,7 +92,7 @@ enum Tag {
 	WATERBOTTOM,
 	SEWER,
 	EXITSIGN,
-	CONTAINER,
+	ITEMCONTAINER,
 };
 enum Type {
 	NONE,
@@ -106,7 +106,6 @@ enum Type {
 	WATERRL,
 	ROPE,
 	ONOFF,
-	ITEMLOOTER,
 	ITEM1,
 	ITEM2,
 	ITEM3,

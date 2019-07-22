@@ -41,13 +41,16 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	if (!inFile)
 		PrintDebug("Spawn Info File Path not found !");
 	std::string sInputString;
-	std::getline(inFile, sInputString);
 
 	std::istringstream iss(sInputString);
 	int objectX;
 	int objectY;
 	int objectWidth;
 	int objectHeight;
+
+	int numOfObject;
+	std::getline(inFile, sInputString);
+	iss >> numOfObject;
 
 
 }
