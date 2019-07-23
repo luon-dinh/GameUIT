@@ -60,6 +60,7 @@ public:
 	BoundingBox getBoundingBox();
 
 	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
+
 	Shield::ShieldDirection GetShieldDirection();
 
 
