@@ -108,6 +108,7 @@ enum Tag {
 	SEWER,
 	EXITSIGN,
 	ITEMCONTAINER,
+	BLUESOLDIER
 };
 enum Type {
 	NONE,
