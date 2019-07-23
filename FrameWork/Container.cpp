@@ -1,5 +1,6 @@
 ﻿#include "Container.h"
 #include"Shield.h"
+#include"Camera.h"
 
 
 Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 , int item6 , int item7 , int item8 )
@@ -60,6 +61,7 @@ void Container::Update(float dt)
 
 void Container::Render()
 {
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 	animation->Render(this->pos);
 }
 
