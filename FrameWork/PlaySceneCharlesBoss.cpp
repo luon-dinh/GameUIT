@@ -35,8 +35,8 @@ void PlaySceneCharlesBoss::ResetPlayerPosition()
 {
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
-	player->pos.x = 0;
-	player->pos.y = SCREEN_HEIGHT;
+	player->pos.x = 10;
+	player->pos.y = SCREEN_HEIGHT - 10;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);
 	player->SetGroundCollision(new GroundCollision());

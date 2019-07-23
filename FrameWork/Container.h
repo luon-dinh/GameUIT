@@ -14,7 +14,7 @@ public:
 	void Update(float dt);
 	void Render();
 	//Container không bị xoá khỏi Grid. Vì vậy nó sẽ không bị deactivated.
-	void DeactivateObject() override {} ; 
+	void DeactivateObjectInGrid() override {} ;
 	void OnCollisionWithDynamicObject(Object* object);
 	void OnCollision(Object * object, collisionOut* colOut) override;
 	void Respawn() {};
