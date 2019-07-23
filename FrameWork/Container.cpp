@@ -61,8 +61,9 @@ void Container::Update(float dt)
 
 void Container::Render()
 {
-	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-	animation->Render(this->pos);
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,this->pos.y,0));
+	//animation->Render(this->pos);
+	animation->getSprite(animation->curframeindex)->Render(pos);
 }
 
 BoundingBox Container::getBoundingBox()
