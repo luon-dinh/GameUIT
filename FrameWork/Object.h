@@ -31,7 +31,7 @@ public:
 	//Do có một số item sẽ không bị xoá khỏi grid khi active zone của grid di chuyển.
 	//Vì vậy cần phải override lại hàm này, xét tương ứng với từng object.
 	//Mặc định là object sẽ bị delete khỏi Grid.
-	virtual void DeactivateObject() { isActivated = false; }
+	virtual void DeactivateObject() { isActivated = true; }
 	bool GetActivatedStatus() { return isActivated; }
 
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
