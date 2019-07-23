@@ -33,11 +33,11 @@ void Object::Update(float dt)
 
 }
 
-void Object::SetActive(bool value) {
+void Object::SetActive(BOOL value) {
 	this->isActive = value;
 }
 
-bool Object::GetActive() {
+BOOL Object::GetActive() {
 	return this->isActive;
 }
 

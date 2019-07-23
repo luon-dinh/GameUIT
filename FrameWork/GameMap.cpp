@@ -79,10 +79,12 @@ void GameMap::LoadMapObject()
 			entityTag = Type::SOLIDBOX;
 		else if (objectID == ObjectID::WATERRL)
 			entityTag = Type::WATERRL;
-		else if (objectID == ObjectID::WATERRL)
-			entityTag == Type::ROPE;
+		else if (objectID == ObjectID::ROPE)
+			entityTag = Type::ROPE;
 		else if (objectID == ObjectID::ONOFF)
-			entityTag == Type::ONOFF;
+			entityTag = Type::ONOFF;
+		else if (objectID == ObjectID::DOOR)
+			entityTag = Type::DOOR;
 
 		Object* mapObject = new Object();
 		mapObject->type = entityTag;
