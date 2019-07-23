@@ -1,7 +1,7 @@
 ﻿#include "Container.h"
 #include"Shield.h"
 #include"Camera.h"
-
+#include "Debug.h"
 
 Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 , int item6 , int item7 , int item8 )
 {
@@ -74,6 +74,7 @@ BoundingBox Container::getBoundingBox()
 	box.bottom = this->pos.y - 8;
 	box.left = this->pos.x - 8;
 	box.right = this->pos.x + 8;
+	box.vx = box.vy = 0;
 	return box;
 }
 
@@ -97,8 +98,26 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 			numberItems--;
 		}
 	}
+	PrintDebug("\nCollide with Container !!");
 }
 
+
+void Container::OnCollision(Object* object, collisionOut* colOut)
+{
+	Player* player = Player::getInstance();
+	// nếu container va chạm với shield hoặc bị player đánh
+	if (object->tag == Tag::SHIELD || ((player->state == State::STAND_PUNCH || player->state == DUCKING_PUNCHING) && object->tag == Tag::PLAYER))
+	{
+		animation->curframeindex = 1;
+		animation->DelayCurrentFrame(50);
+		if (numberItems != 0)
+		{
+			items.at(numberItems - 1)->isActive = true;
+			numberItems--;
+		}
+	}
+	PrintDebug("\nCollide with Container !!");
+}
 void Container::SetPosition(D3DXVECTOR2 pos)
 {
 	this->pos = pos;

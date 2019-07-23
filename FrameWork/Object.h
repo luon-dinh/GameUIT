@@ -17,7 +17,7 @@ public:
 
 	int width, height;
 
-	BoundingBox getBoundingBox();
+	virtual BoundingBox getBoundingBox();
 	int getWidth();
 	int getHeight();
 	

@@ -29,7 +29,6 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 			objectIDPerPosition[i][j] = -1;
 		}
 	}
-
 	LoadSpawnPosition(spawnPosition);
 }
 
@@ -42,8 +41,6 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		PrintDebug("Spawn Info File Path not found !");
 	std::string sInputString;
 
-	std::istringstream iss(sInputString);
-
 	int objectID = -1;
 	int objectTopLeftX = -1;
 	int objectTopLeftY = -1;
@@ -53,12 +50,12 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	int numOfObject;
 
 	std::getline(inFile, sInputString);
+	std::istringstream iss(sInputString);
 	iss >> numOfObject;
 
 	for (int i = 0; i < numOfObject; ++i)
 	{
-		Tag objectTag;
-		Type objectType;
+		Object* object = nullptr;
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
@@ -67,6 +64,16 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		int midY = objectTopLeftY - objectHeight / 2;
 		//Xét từng ID để xem nó là loại object động gì.
 		objectIDPerPosition[midY][midX] = objectID;
+		//Add object vô grid nào.
+		if (objectID == ObjectID::ITEMLOOTER)
+			object = new Container();
+
+		if (object == nullptr)
+			continue;
+
+		object->pos.x = midX;
+		object->pos.y = midY;
+		Add(object);
 	}
 }
 
@@ -113,7 +120,8 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			Object* newObject = nullptr;
 			if (objectIDPerPosition[i][j] == ObjectID::ITEMLOOTER)
 			{
-				newObject = new Container(); //Tạo mới object dựa vào ID.
+				//ItemLooter không được sinh lần 2.
+				//newObject = new Container(); //Tạo mới object dựa vào ID.
 			}
 			if (newObject == nullptr)
 				continue;
@@ -312,7 +320,21 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 		BoundingBox firstCellObjBoundingBox = (*firstCellIt)->getBoundingBox();
 		for (std::list<Object*>::iterator secondCellIt = secondCell.begin(); secondCellIt != secondCell.end(); ++secondCellIt)
 		{
+			//Không xét trường hợp tự va chạm với chính mình.
+			if (*firstCellIt == *secondCellIt)
+				continue;
+
 			BoundingBox secondCellObjBoundingBox = (*secondCellIt)->getBoundingBox();
+
+			//AABB.
+			//bool collided = Collision::getInstance()->IsCollide(firstCellObjBoundingBox, secondCellObjBoundingBox);
+			//if (collided)
+			//{
+			//	(*firstCellIt)->OnCollisionWithDynamicObject(*secondCellIt);
+			//	(*secondCellIt)->OnCollisionWithDynamicObject(*firstCellIt);
+			//}
+
+			//Swept AABB.
 			collisionOut firstObjColOut = Collision::getInstance()->SweptAABB(firstCellObjBoundingBox, secondCellObjBoundingBox);
 
 			collisionOut secondObjColOut;
@@ -339,8 +361,8 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 				secondObjColOut.side = firstObjColOut.side;
 
 			//Xử lý va chạm giữa 2 object với nhau.
-			(*firstCellIt)->OnCollision((*secondCellIt), &firstObjColOut);
-			(*secondCellIt)->OnCollision((*firstCellIt),&secondObjColOut);
+			(*firstCellIt)->OnCollision(*secondCellIt, &firstObjColOut);
+			(*secondCellIt)->OnCollision(*firstCellIt, &secondObjColOut);
 		}
 	}
 }
@@ -399,7 +421,29 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
+				Container* itemLooter = dynamic_cast<Container*> (object);
+				if (itemLooter != nullptr)
+				{
+					int a = 10;
+				}
 				object->RenderInGrid();
+			}
+		}
+	}
+	DrawDebugObject();
+}
+
+void Grid::DrawDebugObject()
+{
+	//Vẽ tất cả các object động.
+	//Duyệt qua tất cả các cell.
+	for (int i = 0; i < gridHeight; ++i)
+	{
+		for (int j = 0; j < gridWidth; ++j)
+		{
+			for (auto object : cells[i][j])
+			{
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 		}
 	}

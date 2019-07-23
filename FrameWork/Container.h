@@ -16,6 +16,7 @@ public:
 	//Container không bị xoá khỏi Grid. Vì vậy nó sẽ không bị deactivated.
 	void DeactivateObject() override {} ; 
 	void OnCollisionWithDynamicObject(Object* object);
+	void OnCollision(Object * object, collisionOut* colOut) override;
 	void Respawn() {};
 	void addItem(Item* item);
 	void SetPosition(D3DXVECTOR2 pos);

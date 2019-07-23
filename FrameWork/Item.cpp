@@ -70,6 +70,7 @@ BoundingBox Item::getBoundingBox()
 	box.bottom = this->pos.y - 7;
 	box.left = this->pos.x - 6;
 	box.right = this->pos.x + 6;
+	box.vx = box.vy = 0;
 	return box;
 }
 
