@@ -19,7 +19,7 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 	isLightOn = true;
 
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), nullptr);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn);
 	//Thêm player và shield vào Grid.
 	grid->Add(player);
 	grid->Add(shield);

@@ -26,7 +26,7 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 	{
 		for (int j = 0; j < mapWidth; ++j)
 		{
-			objectIDPerPosition[i][j] = 0;
+			objectIDPerPosition[i][j] = -1;
 		}
 	}
 
@@ -55,22 +55,42 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	std::getline(inFile, sInputString);
 	iss >> numOfObject;
 
-	Tag objectTag;
-	Type objectType;
-
 	for (int i = 0; i < numOfObject; ++i)
 	{
+		Tag objectTag;
+		Type objectType;
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 
+		int midX = objectTopLeftX + objectWidth / 2;
+		int midY = objectTopLeftY - objectHeight / 2;
 		//Xét từng ID để xem nó là loại object động gì.
-		if (objectID == 8)
-		{
-			objectTag = Tag::ITEMCONTAINER;
-		}
+		objectIDPerPosition[midY][midX] = objectID;
 	}
+}
 
+void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
+{
+	std::list<Object*>& curList = cells[cellY][cellX];
+	//Xoá tất cả các object hiện có trong cell này.
+	//Đầu tiên ta phải vô hiệu hoá object.
+	//Thực chất vô hiệu hoá object là việc xét xem object có được xoá khỏi grid hay không.
+
+	//Nếu sau khi set Deactivated mà object vẫn còn Activated.
+	//Chứng tỏ object còn đang hoạt động nên không delete.
+	for (auto object : curList)
+		object->DeactivateObject();
+	for (auto it = curList.begin(); it != curList.end(); ++it)
+	{
+		//Nếu object hiện tại vẫn đang được kích hoạt thì ta bỏ qua.
+		if ((*it)->GetActivatedStatus())
+			continue;
+		delete (*it);
+		it = curList.erase(it);
+		if (it == curList.end())
+			break;
+	}
 }
 
 void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
@@ -85,7 +105,22 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 	{
 		for (int j = fromX; j < toX; ++j)
 		{
-			
+			//Nếu tại vị trí này không có object nào hết thì ta bỏ qua.
+			if (objectIDPerPosition[i][j] < 0)
+				continue;
+
+			//Spawn (tạo mới) object dựa vào ID đã load sẵn.
+			Object* newObject = nullptr;
+			if (objectIDPerPosition[i][j] == ObjectID::ITEMLOOTER)
+			{
+				newObject = new Container(); //Tạo mới object dựa vào ID.
+			}
+			if (newObject == nullptr)
+				continue;
+			newObject->pos.x = j;
+			newObject->pos.y = i;
+			//Sau đó thêm nó vào GRID luôn.
+			Add(newObject);
 		}
 	}
 }
@@ -158,47 +193,79 @@ void Grid::ActivateCells()
 	for (int i = nextLeftX; i < leftX; ++i)
 	{
 		//Xét từ dưới lên theo khoảng dời.
-		for (int j = nextBottomY; j <= nextTopY; ++j)
+		for (int j = nextBottomY; j < nextTopY; ++j)
 		{
 			//Respawn tất cả các object trong cell này.
-			for (auto object : cells[j][i])
-			{
-				object->Respawn();
-			}
+			SpawnAllObjectsInCell(i, j);
 		}
 	}
 	//Xét respawn bên phải.
-	for (int i = nextRightX; i > rightX; --i)
+	for (int i = rightX; i < nextRightX; ++i)
 	{
 		//Xét từ dưới lên theo khoảng dời.
-		for (int j = nextBottomY; j <= nextTopY; ++j)
+		for (int j = nextBottomY; j < nextTopY; ++j)
 		{
 			//Respawn tất cả các object trong cell này.
-			for (auto object : cells[j][i])
-			{
-				object->Respawn();
-			}
+			SpawnAllObjectsInCell(i, j);
 		}
 	}
 	//Xét respawn bên trên.
-	for (int i = nextTopY; i > topY; --i)
+	for (int i = topY; i < nextTopY; ++i)
 	{
-		for (int j = nextLeftX; j <= nextRightX; ++j)
+		for (int j = nextLeftX; j < nextRightX; ++j)
 		{
-			for (auto object : cells[i][j])
-				object->Respawn();
+			//Respawn tất cả các object trong cell này.
+			SpawnAllObjectsInCell(j, i);
 		}
 	}
 
 	//Xét respawn bên dưới.
 	for (int i = nextBottomY; i < bottomY; ++i)
 	{
-		for (int j = nextLeftX; j <= nextRightX; ++j)
+		for (int j = nextLeftX; j < nextRightX; ++j)
 		{
-			for (auto object : cells[i][j])
-				object->Respawn();
+			//Respawn tất cả các object trong cell này.
+			SpawnAllObjectsInCell(j, i);
 		}
 	}
+
+	//Xét việc kill object bên trái.
+	for (int i = leftX; i < nextLeftX; ++i)
+	{
+		for (int j = bottomY; j < topY; ++j)
+		{
+			KillAndDelAllObjectsInCell(i, j);
+		}
+	}
+
+	//Xét việc kill object bên phải.
+	for (int i = nextRightX; i < rightX; ++i)
+	{
+		for (int j = bottomY; j < topY; ++j)
+		{
+			KillAndDelAllObjectsInCell(i, j);
+		}
+	}
+	
+	//Xét việc kill object bên trên.
+	for (int i = nextTopY; i < topY; ++i)
+	{
+		for (int j = leftX; j < rightX; ++j)
+		{
+			KillAndDelAllObjectsInCell(j, i);
+		}
+	}
+
+	//Xét việc kill object bên dưới.
+	for (int i = bottomY; i < nextBottomY; ++i)
+	{
+		for (int j = leftX; j < rightX; ++j)
+		{
+			KillAndDelAllObjectsInCell(j, i);
+		}
+	}
+
+	//Gán lại các giá trị Active Zone theo giá trị mới.
 	topY = nextTopY;
 	bottomY = nextBottomY;
 	leftX = nextLeftX;

@@ -59,6 +59,21 @@ public:
 	static char * EXIT_SIGN;
 };
 
+//Đây là một class dùng để lưu lại các quy định ID trong file xuất ra bởi Advanced Map Editor.
+class ObjectID
+{
+public:
+	static int GROUND;
+	static int SOLIDBOX;
+	static int WATERRL;
+	static int ROPE;
+	static int ONOFF;
+	static int WAVE;
+	static int DOOR;
+	static int SPIKE;
+	static int ITEMLOOTER;
+};
+
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
 //Lưu ý đừng lưu máu vào đây, đây chỉ là để lưu vị trí và trạng thái của player.
 //Máu của player sẽ được đi xuyên suốt khắp các màn mà không thay đổi.

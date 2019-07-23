@@ -13,6 +13,8 @@ public:
 	BoundingBox getBoundingBox();
 	void Update(float dt);
 	void Render();
+	//Container không bị xoá khỏi Grid. Vì vậy nó sẽ không bị deactivated.
+	void DeactivateObject() override {} ; 
 	void OnCollision(Object* object, collisionOut *out);
 	void Respawn() {};
 	void addItem(Item* item);
