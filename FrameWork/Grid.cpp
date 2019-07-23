@@ -87,11 +87,11 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 	//Nếu sau khi set Deactivated mà object vẫn còn Activated.
 	//Chứng tỏ object còn đang hoạt động nên không delete.
 	for (auto object : curList)
-		object->DeactivateObject();
+		object->DeactivateObjectInGrid();
 	for (auto it = curList.begin(); it != curList.end(); ++it)
 	{
 		//Nếu object hiện tại vẫn đang được kích hoạt thì ta bỏ qua.
-		if ((*it)->GetActivatedStatus())
+		if ((*it)->GetActivatedInGridStatus())
 			continue;
 		delete (*it);
 		it = curList.erase(it);

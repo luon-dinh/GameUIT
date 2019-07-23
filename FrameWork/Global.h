@@ -34,7 +34,7 @@
 
 //item define
 #define ITEM_SPEED -1
-#define ITEM_EXIST_TIME 1000
+#define ITEM_EXIST_TIME 5000
 
 // Moving keyboard input
 #define PLAYER_MOVE_LEFT			DIK_LEFTARROW
