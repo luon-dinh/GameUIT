@@ -34,14 +34,14 @@ void PlayerKickingState::InputHandler()
 		//phím Jump đã được nhấn từ trước
 		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
 			//chuyển sang trạng thái roll
-			if (timePressedJump > 400) {
+			if (timePressedJump / 10 > MAX_KICKING_TIME) {
 				player->ChangeState(State::ROLLING);
 				return;
 			}
 			player->SetVy(player->vy + 0.15);
 		}
 	}
-	this->curKickTime += 30;
+	this->curKickTime++;
 
 	/*if (player->IsReachMaxJump()) {
 		player->SetVy(0);

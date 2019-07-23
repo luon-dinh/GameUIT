@@ -5,6 +5,8 @@
 #include"Animation.h"
 
 class Object {
+protected:
+	BOOL isActive;
 public:
 	Object() { vx = vy = 0; };
 	virtual ~Object() {};
@@ -22,6 +24,9 @@ public:
 	int getHeight();
 	
 	BoundingBox getStaticObjectBoundingBox();
+
+	virtual void SetActive(BOOL value);
+	virtual BOOL GetActive();
 
 	virtual void Render();
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};

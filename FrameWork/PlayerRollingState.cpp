@@ -21,10 +21,11 @@ void PlayerRollingState::InputHandler()
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
 		// Phím ngồi đang được nhấn thì chuyển sang shield down
 		if (keyboard->isKeyDown(PLAYER_SIT)) {
-			player->ChangeState(State::SHIELD_DOWN);
+			if (player->hasShield)
+				player->ChangeState(State::SHIELD_DOWN);
 		}
 		else {
-			player->ChangeState(State::JUMPING);
+ 			player->ChangeState(State::JUMPING);
 		}
 		PlayerRollingState::curRollTime = 0;
 	}
@@ -46,8 +47,8 @@ void PlayerRollingState::InputHandler()
 		}
 	}
 	
-	PlayerRollingState::curRollTime += 15;
-	player->vy += 0.1;
+	PlayerRollingState::curRollTime++;
+	player->SetVy(player->vy + ADDED_SPEED);
 }
 
 BOOL PlayerRollingState::HasRollFullTime() {

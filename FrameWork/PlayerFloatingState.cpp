@@ -9,7 +9,6 @@ void PlayerFloatingState::InputHandler() {
 	auto player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
 
-
 	// bơi qua trái (cùng chiều dòng nước)
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->Float(Player::MoveDirection::RightToLeft);
@@ -54,12 +53,17 @@ PlayerFloatingState::~PlayerFloatingState() {
 
 void PlayerFloatingState::Update(float dt) {
 	auto player = Player::getInstance();
+	auto shield = Shield::getInstance();
 	if (this->countAnimationFrame == 0 || player->GetPreviousState()->state == State::DIVING) {
 		player->curanimation = new Animation(Tag::PLAYER, 38, 40);
 	}
 	else {
 		this->countAnimationFrame--;
 	}
+	if (player->hasShield) {
+		shield->SetShieldState(Shield::ShieldState::NotRender);
+	}
+	
 	InputHandler();
 }
 

@@ -22,14 +22,14 @@
 #define NORMALPALYER_HEIGHT			40
 #define PLAYER_MAX_JUMPING_HEIGHT	500
 #define PLAYER_NORMAL_SPEED			1.5
-#define PLAYER_JUMP_SPEED			4.5
+#define PLAYER_JUMP_SPEED			5.5
 #define PLAYER_MAX_FALLING_VELOCITY -300
 #define PLAYER_DASH_SPEED			3
 
 //shield define
 #define SHIELD_SPEED 8;
 
-#define GROUND_GRAVITY				0.25
+#define GROUND_GRAVITY				0.22
 #define WATER_SPEED					0.75
 
 // Moving keyboard input

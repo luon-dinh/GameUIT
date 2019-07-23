@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Shield.h"
 #include"SoundManager.h"
 #include"KeyboardManager.h"
 #include"PlayerStandingState.h"
@@ -19,7 +20,7 @@
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
-#include "Shield.h"
+
 
 
 class Player :public Object
@@ -35,6 +36,7 @@ private:
 	void LoadAllAnimations();
 	void AddPosX();
 	void AddPosY();
+	void SetShieldReturnPos(float x, float y);
 
 	BOOL collisionAffect;
 
@@ -60,6 +62,14 @@ public:
 		JumpFromWater
 	};
 
+	enum ShieldReturnEdge {
+		Top,
+		Left,
+		Bottom,
+		Right,
+		Default		//	 Sử dụng tọa độ của player
+	};
+
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
 	int getWidth();
 	int getHeight();
@@ -81,10 +91,13 @@ public:
 	OnAir preOnAir;
 	D3DXVECTOR2 accelerate;
 	BOOL collideOnGround;
+	ShieldReturnEdge edge;
 
 
 	GroundCollision* groundCollision;
 	SolidBoxCollision* solidBoxCollision;
+
+	D3DXVECTOR2 shieldReturnPos;
 
 	Player();
 	~Player();
@@ -108,6 +121,9 @@ public:
 	void Float(MoveDirection moveDir);
 	void HandleWaterCollision(Object* water, collisionOut* side);
 	BOOL IsOnMainGround();
+	void SetShieldReturnEdge(ShieldReturnEdge edge);
+	ShieldReturnEdge GetShieldReturnEdge();
+	D3DXVECTOR2 GetShieldReturnPos();
 #pragma endregion
 
 #pragma region Player Collision Handle
@@ -125,4 +141,6 @@ public:
 
 
 };
+
+Player::MoveDirection;
 

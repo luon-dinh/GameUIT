@@ -20,30 +20,43 @@ void PlayerRunningState::InputHandler()
 	if (player == NULL || keyboard == NULL)
 		return;
 	int timePressedMove = 0;
+
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
 	{
-
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 			player->ChangeState(State::JUMPING);
+			return;
+		}
+		if (keyboard->isKeyDown(PLAYER_ATTACK)) {
+			// nếu đang có shield thì chuyển qua trạng thái shield attack
+			if (player->hasShield) {
+				player->ChangeState(State::SHIELD_ATTACK);
+			}
+			else {
+				player->ChangeState(State::STAND_PUNCH);
+			}
 		}
 		return;
 	}
 
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
 	{
-
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		if (keyboard->getKeyPressedOnce(PLAYER_JUMP)) {
 			player->ChangeState(State::JUMPING);
+			return;
+		}
+		if (keyboard->isKeyDown(PLAYER_ATTACK)) {
+			// nếu đang có shield thì chuyển qua trạng thái shield attack
+			if (player->hasShield) {
+				player->ChangeState(State::SHIELD_ATTACK);
+			}
+			else {
+				player->ChangeState(State::STAND_PUNCH);
+			}
 		}
 		return;
-	}
-
-	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
-		if (player->hasShield) {
-			player->ChangeState(State::SHIELD_ATTACK);
-		}
 	}
 
 	// Không phím nào được nhấn thì chuyển sang trạng thái đứng yên
