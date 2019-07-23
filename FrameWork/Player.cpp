@@ -343,9 +343,9 @@ void Player::SetVx(float vx, BOOL changePlayerDirection) {
 
 void Player::SetVy(float vy) {
 	this->vy = vy;
-	if (this->vy <= 0) {
+	if (this->vy < 0) {
 		// Nếu vận tốc <= 0 khi đang ở trạng thái nhảy thì rơi xuống lại
-		if (this->onAirState == OnAir::Jumping)
+		if (this->onAirState == OnAir::Jumping || this->onAirState == OnAir::JumpFromWater)
 			SetAirState(OnAir::Falling);
 	}
 }

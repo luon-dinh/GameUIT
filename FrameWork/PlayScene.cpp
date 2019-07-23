@@ -208,11 +208,19 @@ void PlayScene::CollisionProcess(double dt)
 			}
 			else
 			{
-				if (mapStaticObject[i]->type == Type::GROUND)
-				{
-					if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->preOnAir == Player::OnAir::Jumping)
-					{
-						player->HandleStandingOnGround(mapStaticObject[i]);
+				switch (mapStaticObject[i]->type) {
+					case Type::GROUND : {
+						if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->preOnAir == Player::OnAir::Jumping)
+						{
+							player->HandleStandingOnGround(mapStaticObject[i]);
+						}
+						continue;
+					}
+					case Type::WATERRL: {
+						if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->preOnAir == Player::OnAir::JumpFromWater)
+						{
+							player->HandleWaterCollision(mapStaticObject[i], NULL);
+						}
 					}
 				}
 			}

@@ -82,9 +82,11 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	// va chạm với nước
 	if (object->type == Type::WATERRL) {
 		player->HandleWaterCollision(object, collision);
+		player->SetGroundCollision(NULL);
 		return;
 	}
 
+	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
 		if (player->GetOnAirState() != Player::OnAir::Falling && player->GetOnAirState() != Player::OnAir::DropToWater) {
 			player->SetAirState(Player::OnAir::Falling);
