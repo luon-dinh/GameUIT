@@ -38,7 +38,7 @@ void PlayScene::Draw()
 	grid->RenderActivatedCells();
 
 	//DrawDebugBoxForStaticObjects();
-	DrawDebugBoxForPlayer();
+	//DrawDebugBoxForPlayer();
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
