@@ -27,7 +27,7 @@ public:
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:
-	std::vector<Object*> mapStaticObject;
+	//std::vector<Object*> mapStaticObject;
 	bool Done = false; //Biến dùng để xét xem cảnh hiện tại đã hoàn thành chưa (phục vụ cho mục đích xoá khỏi bộ nhớ).
 	MapName ReplaceToThisMap = MapName::NOMAP; //Biến dùng để báo cho Scene Manager chuyển cảnh sang map mới.
 	virtual void ProcessUpdates(double dt);

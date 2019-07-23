@@ -8,10 +8,10 @@ PlaySceneCharles::PlaySceneCharles()
 	world = new GameMap(world01tile, world01map, world01MapObject, MapName::CHARLES);
 	world->SetCamera(camera);
 	camera->SetMapProperties(world->getMapHeight(), world->getMapWidth());
-	mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
+	//mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
 
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
 	//Thêm player và shield vào Grid.
 	grid->Add(player);
 	grid->Add(shield);

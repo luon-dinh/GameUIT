@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 
-Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
+Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const char * staticMapObject)
 {
 	mapWidth = _mapWidth;
 	mapHeight = _mapHeight;
@@ -30,7 +30,91 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 		}
 	}
 	LoadSpawnPosition(spawnPosition);
+	LoadMapObjects(staticMapObject);
 }
+
+void Grid::LoadMapObjects(const char * mapObjectFilePath)
+{
+	//Load tất cả các Map Object (Ground, Non-Ground,...).
+	std::ifstream inFile;
+	inFile.open(mapObjectFilePath);
+	if (!inFile)
+		PrintDebug("MapObject file not exist ! \n");
+	std::string sInputString;
+
+	std::getline(inFile, sInputString);
+
+	std::istringstream iss(sInputString);
+
+	int numOfObject;
+
+	iss >> numOfObject;
+
+	Type entityTag = Type::NONE;
+
+	int objectID = -1;
+	int objectTopLeftX = -1;
+	int objectTopLeftY = -1;
+	int objectWidth = -1;
+	int objectHeight = -1;
+
+	for (int i = 0; i < numOfObject; ++i)
+	{
+		std::getline(inFile, sInputString);
+		std::istringstream iss(sInputString);
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+
+		//Xét từng ID để xem entityTag của nó là gì.
+		if (objectID == ObjectID::GROUND)
+			entityTag = Type::GROUND;
+		else if (objectID == ObjectID::SOLIDBOX)
+			entityTag = Type::SOLIDBOX;
+		else if (objectID == ObjectID::WATERRL)
+			entityTag = Type::WATERRL;
+		else if (objectID == ObjectID::ROPE)
+			entityTag = Type::ROPE;
+		else if (objectID == ObjectID::ONOFF)
+			entityTag = Type::ONOFF;
+		else if (objectID == ObjectID::DOOR)
+			entityTag = Type::DOOR;
+
+		Object* mapObject = new Object();
+		mapObject->type = entityTag;
+		mapObject->tag = Tag::STATICOBJECT;
+		mapObject->height = objectHeight;
+		mapObject->width = objectWidth;
+		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
+		mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
+		AddStaticMapObjects(mapObject);
+	}
+}
+
+void Grid::AddStaticMapObjects(Object * object)
+{
+	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
+	int cellXFrom = object->pos.x / cellSize;
+	int cellXTo = cellXFrom;
+	int cellYFrom = object->pos.y / cellSize;
+	int cellYTo = cellYFrom;
+	do
+	{
+		++cellXTo;
+	} while (cellXTo*cellSize < object->pos.x);
+
+	do
+	{
+		++cellYTo;
+	} while (cellYTo * cellSize < object->pos.y);
+	//Thêm object trên nhiều cell.
+	for (int i = cellYFrom; i < cellYTo; ++i)
+	{
+		for (int j = cellXFrom; j < cellXTo; ++j)
+		{
+			cells[i][j].push_front(object);
+		}
+	}
+}
+
 
 void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 {
@@ -315,6 +399,7 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	std::list<Object*> &secondCell = cells[secondCellY][secondCellX];
 
 	//Duyệt qua các phần tử của cell đầu tiên.
+	//Xét va chạm object động.
 	for (std::list<Object*>::iterator firstCellIt = firstCell.begin(); firstCellIt != firstCell.end(); ++firstCellIt)
 	{
 		BoundingBox firstCellObjBoundingBox = (*firstCellIt)->getBoundingBox();

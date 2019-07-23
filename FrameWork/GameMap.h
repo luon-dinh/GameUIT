@@ -29,7 +29,7 @@ public:
 	void Draw();
 	void Update(double dt);
 	void SetCamera(Camera*);
-	std::vector<Object*> &getStaticObject();
+	//std::vector<Object*> &getStaticObject();
 	GameMap(const char * imgPath, const char * txtPath,  const char * mapObjectPath, MapName map);
 	~GameMap();
 private:
@@ -39,7 +39,7 @@ private:
 	const char * txtPath;
 	const char * mapObjectPath;
 	
-	std::vector<Object*> staticObject;
+	//std::vector<Object*> staticObject;
 	Sprite* debugSprite;
 	Camera * camera;
 	TileMap *tMap;
