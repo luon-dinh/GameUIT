@@ -16,5 +16,5 @@ public:
 	void OnCollision(Object* object, collisionOut* collision) override;
 	BoundingBox getBoundingBox();
 
-	const int MAX_KICKING_TIME = 400;
+	const int MAX_KICKING_TIME = 15;
 };

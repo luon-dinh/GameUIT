@@ -13,12 +13,23 @@ void PlayerJumpingState::InputHandler() {
 	if (player->GetOnAirState() == Player::OnAir::Jumping) {
 		 //phím Jump đã được nhấn từ trước
 		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
-			//chuyển sang trạng thái roll
-			if (timePressedJump > MIN_TIME_JUMP_2) {
-				player->ChangeState(State::ROLLING);
+			if (timePressedJump / 10 < MIN_TIME_JUMP_1) {
 				return;
 			}
-			player->SetVy(player->vy + ADDED_SPEED);
+			else
+				if (timePressedJump / 10 < MIN_TIME_JUMP_2) {
+         			player->SetVy(player->vy + ADDED_SPEED_1);
+				}
+				else {
+					if (timePressedJump / 10 < MIN_TIME_ROLL) {
+						player->SetVy(player->vy + ADDED_SPEED_2);
+					}
+					else {
+						//chuyển sang trạng thái roll
+						player->ChangeState(State::ROLLING);
+						return;
+					}
+				}
 		}
 	}
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
@@ -42,7 +53,6 @@ void PlayerJumpingState::InputHandler() {
 }
 
 void PlayerJumpingState::Update(float dt) {
-
 	this->InputHandler();
 }
 

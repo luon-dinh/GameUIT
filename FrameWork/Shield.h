@@ -12,11 +12,16 @@ private:
 	//std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
 	Animation * animation;
 
-	int round;
 	D3DXVECTOR2 accelerator;
 
-	const float SHIELD_INITIAL_SPEED = 3;
+	BOOL isActive;
 
+	int numberOfRounds;
+	int framePerRound;
+	int restFrames;
+	BOOL beginRound;
+	
+	const float SHIELD_INITIAL_SPEED = 12;
 
 public:
 	enum ShieldDirection {
@@ -27,11 +32,21 @@ public:
 	enum ShieldState {
 		Defense,
 		Attack,
-		Transparent
+		Transparent,
+		NotRender
 	};
+
+	enum MoveDirection {
+		FarFromPlayer,
+		BackToPlayer,
+		NotMove
+	};
+
+
 
 	ShieldState state;
 	ShieldDirection direction;
+	MoveDirection moveDirection;
 
 
 	static Shield* getInstance();
@@ -41,10 +56,22 @@ public:
 	void InputHandler(float dt);
 	void OnCollision(Object* object, collisionOut out);
 	void setFrameIndex(int index);
-	BOOL GetShieldToPlayer();
-	void ReverseMoveDirection();
-	void MoveAttack();
 	void SetShieldState(ShieldState state);
+	BoundingBox getBoundingBox();
+
+	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
+	Shield::ShieldDirection GetShieldDirection();
+
+
+	void SetNumberOfRounds(int numberOfRounds);
+	void SetFramePerRound(int fpr);
+	void Move();
+	BOOL MoveOutFromPlayer(int fpr);
+	BOOL MoveBackToPlayer(int fpr);
+
+	void UpdatePositionVector();
+	void ResetMoveStatus();
+
 	Shield();
 	~Shield();
 };

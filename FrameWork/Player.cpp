@@ -17,7 +17,6 @@ Player::Player()
 	this->energy = 0;
 	this->vx = 0;
 	this->vy = 0;
-	this->shieldActive = true;
 	this->direction = MoveDirection::LeftToRight;
 
 	this->state = State::JUMPING;
@@ -25,7 +24,6 @@ Player::Player()
 	this->curanimation = animations[this->state];
 	this->prevState = NULL;
 	this->collisionAffect = TRUE;
-	this->hasShield = TRUE;
 
 	this->groundCollision = new GroundCollision();
 }
@@ -108,9 +106,6 @@ void Player::Render()
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
-	if (object->pos.y == 44) {
-		int a = 1;
-	}
 	this->playerstate->OnCollision(object, collisionOut);
 }
 
@@ -138,22 +133,18 @@ void Player::ChangeState(State stateName) {
 	InnerChangeState(stateName);
 	auto shield = Shield::getInstance();
 
+
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
-		case State::DUCKING:
-			this->shieldActive = true;
 		case State::STANDING: {
-			if (this->GetPreviousState()->state == State::SHIELD_ATTACK)
-				this->hasShield = FALSE;
-			else
-				this->hasShield = TRUE;
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::Defense);
+			}
 			this->SetAirState(Player::OnAir::None);
 			this->SetVx(0);
 			break;
 		}
-		case State::RUNNING:
-		{
-			this->shieldActive = true;
+		case State::RUNNING:{
 			this->SetAirState(Player::OnAir::None);
 			if (this->direction == MoveDirection::LeftToRight)
 				SetVx(PLAYER_NORMAL_SPEED);
@@ -162,23 +153,26 @@ void Player::ChangeState(State stateName) {
 			}
 			break;
 		}
-		case State::JUMPING: 
-		{
-			this->shieldActive = true;
+		case State::JUMPING: {
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::Transparent);
+			}
 			// nếu trước đó đang falling tiếp tục là falling
 			if (this->onAirState == OnAir::Falling || this->onAirState == OnAir::DropToWater) {
 				return;
 			}
 			if (this->prevState->state == State::FLOATING) {
+				shield->SetShieldState(Shield::ShieldState::Transparent);
 				this->SetAirState(OnAir::JumpFromWater);
 				return;
 			}
 			this->SetAirState(OnAir::Jumping);
 			break;
 		}
-		case State::DASHING:
-		{
-			this->shieldActive = false;
+		case State::DASHING:{
+			// dash khi có shield thì shield k render, ngược lại nghĩa là shield đang ở trạng thái attack
+			if (this->hasShield)
+				shield->SetShieldState(Shield::ShieldState::NotRender);
 			if (this->direction == MoveDirection::LeftToRight) {
 				SetVx(PLAYER_DASH_SPEED);
 			}
@@ -187,35 +181,42 @@ void Player::ChangeState(State stateName) {
 			}
 			break;
 		}
-		case State::DIVING: 
-			this->shieldActive = false;
-			this->collisionAffect = FALSE;
+		case State::DIVING: {
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::NotRender);
+			}
 			break;
+		}
 		case State::FLOATING: {
-			this->shieldActive = false;
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::NotRender);
+			}
 			this->SetAirState(OnAir::None);
 			this->vx = -WATER_SPEED;
 			//this->hasShield = FALSE;
 			break;
 		}
-		case State::ROLLING:
-		{
-			this->shieldActive = false;
+		case State::ROLLING:{
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::NotRender);
+			}
+			
 			break;
 		}
-		case State::KICKING: 
-		{
-			this->shieldActive = true;
+		case State::KICKING: {
 			break;
 		}
 		case State::SHIELD_DOWN: {
-			this->hasShield = TRUE;
-			Shield::getInstance()->SetShieldState(Shield::ShieldState::Attack);
+			shield->SetShieldState(Shield::ShieldState::Defense);
 			break;
 		}
 		case State::SHIELD_ATTACK: {
 			SetVx(0);
-			Shield::getInstance()->SetShieldState(Shield::ShieldState::Attack);
+			Shield::getInstance()->SetShieldState(Shield::ShieldState::Transparent);
+			break;
+		}
+		case State::STAND_PUNCH: {
+			SetVx(0);
 			break;
 		}
 	}
@@ -231,6 +232,54 @@ BOOL Player::IsOnMainGround() {
 
 BOOL Player::IsReachMaxJump() {
 	return this->vy <= 0 && this->onAirState == OnAir::Jumping;
+}
+
+void Player::SetShieldReturnEdge(Player::ShieldReturnEdge edge) {
+	this->edge = edge;
+
+	switch (edge) {
+		case Player::ShieldReturnEdge::Bottom: {
+			SetShieldReturnPos(this->pos.x, this->pos.y - this->getHeight() / 2);break;
+		}
+		case Player::ShieldReturnEdge::Top: {
+			SetShieldReturnPos(this->pos.x, this->pos.y + this->getHeight() / 2);break;
+		}
+		case Player::ShieldReturnEdge::Left: {
+			SetShieldReturnPos(this->pos.x - this->getWidth() / 2, this->pos.y);break;
+		}
+		case Player::ShieldReturnEdge::Right: {
+			SetShieldReturnPos(this->pos.x + this->getWidth() / 2, this->pos.y);break;
+		}
+		case Player::ShieldReturnEdge::Default: {
+			SetShieldReturnPos(this->pos.x, this->pos.y + 11);break;
+		}
+	}
+}
+
+Player::ShieldReturnEdge Player::GetShieldReturnEdge() {
+	return this->edge;
+}
+
+D3DXVECTOR2 Player::GetShieldReturnPos() {
+	switch (this->state) {
+	case State::DASHING:
+	case State::RUNNING:
+	case State::STANDING:
+	case State::STAND_PUNCH:
+	case State::JUMPING:
+		SetShieldReturnEdge(ShieldReturnEdge::Default);break;
+	case State::ROLLING:
+	case State::SHIELD_DOWN:
+	case State::FLOATING:
+	case State::DIVING:
+		SetShieldReturnEdge(ShieldReturnEdge::Bottom);break;
+	}
+	return this->shieldReturnPos;
+}
+
+void Player::SetShieldReturnPos(float x, float y) {
+	this->shieldReturnPos.x = x;
+	this->shieldReturnPos.y = y;
 }
 
 void Player::Float(MoveDirection moveDir) {
@@ -271,6 +320,7 @@ void Player::SetVx(float vx) {
 			this->direction = MoveDirection::LeftToRight;
 		}
 	}
+	Shield::getInstance()->SetShieldDirection(TRUE);
 }
 
 void Player::SetVx(float vx, BOOL changePlayerDirection) {
@@ -319,6 +369,27 @@ void Player::SetMoveDirection(MoveDirection moveDir) {
 	this->direction = moveDir;
 	if (this->direction != curMoveDir) {
 		this->vx *= -1;
+	}
+	if (!this->hasShield) {
+		return;
+	}
+	auto shield = Shield::getInstance();
+	// trong trường hơp đá thì shield được render ngược
+	if (this->state == State::KICKING) {
+		if (this->direction == MoveDirection::LeftToRight) {
+			shield->direction = Shield::ShieldDirection::RightToLeft;
+		}
+		else {
+			shield->direction = Shield::ShieldDirection::LeftToRight;
+		}
+		return;
+	}
+
+	if (this->direction == MoveDirection::LeftToRight) {
+		shield->direction = Shield::ShieldDirection::LeftToRight;
+	}
+	else {
+		shield->direction = Shield::ShieldDirection::RightToLeft;
 	}
 }
 
@@ -383,7 +454,7 @@ void Player::SetAirState(OnAir onAirState) {
 		}
 		case OnAir::JumpFromWater: {
 			this->vy = 5;
-			this->accelerate.y = -GROUND_GRAVITY;
+			this->accelerate.y = -0.2;
 			return;
 		}
 	}
@@ -413,12 +484,12 @@ int Player::getHeight()
 void Player::HandleFallingOffGround(){
  	
 	if (this->GetOnAirState() == Player::OnAir::None) {
-		if (this->GetGroundCollision()->GetGround()->pos.y == 44)
+		if (this->IsOnMainGround())
 			this->SetAirState(Player::OnAir::DropToWater);
 		else
 			this->SetAirState(Player::OnAir::Falling);
 		this->ChangeState(State::JUMPING);
-		//player->SetGroundCollision(NULL);
+		this->SetGroundCollision(NULL);
 	}
 }
 
@@ -437,7 +508,6 @@ void Player::HandleStandingOnGround(Object* ground) {
 void Player::HandleCollisionWithSolidBox(Object* solidBox) {
 	if (solidBox->type != Type::SOLIDBOX)
 		return;	
-
 }
 
 SolidBoxCollision* Player::GetSolidBoxCollision() {

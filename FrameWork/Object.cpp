@@ -33,6 +33,15 @@ void Object::Update(float dt)
 
 }
 
+void Object::SetActive(BOOL value) {
+	this->isActive = value;
+}
+
+BOOL Object::GetActive() {
+	return this->isActive;
+}
+
+
 int Object::getWidth()
 {
 	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().right - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().left;

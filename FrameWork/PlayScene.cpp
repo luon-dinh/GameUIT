@@ -200,7 +200,7 @@ void PlayScene::CollisionProcess(double dt)
 		}
 		else {
 			// xét object hiện tại là ground
-			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING&&player->state != State::FLOATING) {
+			if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING&&player->state != State::DIVING && player->state != State::FLOATING) {
 				if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
 					player->HandleFallingOffGround();
 				}

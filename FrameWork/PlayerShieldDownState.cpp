@@ -31,6 +31,7 @@ void PlayerShieldDownState::InputHandler() {
 void PlayerShieldDownState::Update(float dt) {
 	InputHandler();
 
+
 }
 
 void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision) {
