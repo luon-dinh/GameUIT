@@ -32,10 +32,10 @@ MapName PlayScene::GetAndResetDestinationMap()
 void PlayScene::Draw()
 {
 	world->Draw();
-	//Vẽ player và shield trước mọi thứ khác.
+	
+	grid->RenderActivatedCells();
 	player->Render();
 	shield->Render();
-	grid->RenderActivatedCells();
 
 	//DrawDebugBoxForStaticObjects();
 	//DrawDebugBoxForPlayer();
