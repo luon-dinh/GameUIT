@@ -35,6 +35,7 @@ public:
 	bool GetActivatedStatus() { return isActivated; }
 
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
+	virtual void OnCollisionWithDynamicObject(Object* object) {};
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
 protected:

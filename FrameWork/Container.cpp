@@ -8,6 +8,7 @@ Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 ,
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
 	this->type = Type::ITEMCONTAINERTYPE;
+	this->vx = this->vy = 0;
 	animation = new Animation(this->tag,0,2);
 	for (int i = 0; i < item1; i++)
 	{
@@ -82,7 +83,7 @@ void Container::addItem(Item *item)
 	numberItems++;
 }
 
-void Container::OnCollision(Object* object, collisionOut *colOut)
+void Container::OnCollisionWithDynamicObject(Object* object)
 {
 	Player* player = Player::getInstance();
 	// nếu container va chạm với shield hoặc bị player đánh
