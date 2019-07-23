@@ -106,7 +106,39 @@ void Player::Render()
 }
 
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
-	this->playerstate->OnCollision(object, collisionOut);
+	
+	if (object->type == Type::SOLIDBOX)
+	{
+		switch (collisionOut->side)
+		{
+		case CollisionSide::top:
+			this->vy = 0;
+			this->ChangeState(State::JUMPING);
+			this->onAirState = Player::OnAir::Falling;
+			this->pos.y = object->getStaticObjectBoundingBox().bottom - this->getHeight() / 2;
+			break;
+		case CollisionSide::left:
+			this->vx = 0;
+			this->pos.x = object->getStaticObjectBoundingBox().right + this->getWidth() / 2 + 4;
+			break;
+		case CollisionSide::bottom:
+			this->vy = 0;
+			this->ChangeState(State::STANDING);
+			this->pos.y = object->getStaticObjectBoundingBox().top + this->getHeight() / 2;
+			break;
+		case CollisionSide::right:
+			this->vx = 0;
+			this->pos.x = object->getStaticObjectBoundingBox().left - this->getWidth() / 2 - 2;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		this->playerstate->OnCollision(object, collisionOut);
+	}
+
 }
 
 Player* Player::getInstance()
