@@ -59,6 +59,7 @@ public:
 	void SetShieldState(ShieldState state);
 	BoundingBox getBoundingBox();
 
+
 	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
 
 	Shield::ShieldDirection GetShieldDirection();
@@ -75,5 +76,7 @@ public:
 
 	Shield();
 	~Shield();
+
+	void DeactivateObjectInGrid() override {};
 };
 

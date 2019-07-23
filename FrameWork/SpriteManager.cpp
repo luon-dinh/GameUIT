@@ -87,6 +87,7 @@ void SpriteManager::LoadResources()
 	// cắt sprite cho container
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 0, 16, 16));
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 16, 16, 32));
+	// cắt sprite cho enemy
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
