@@ -12,7 +12,7 @@ PlayScenePittsburghPortal02::PlayScenePittsburghPortal02()
 	mapStaticObject = world->getStaticObject();
 	currentWorld = worldDark;
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), nullptr);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), pbPortal02Spawn);
 	//Thêm player và shield vào Grid.
 	grid->Add(player);
 	grid->Add(shield);

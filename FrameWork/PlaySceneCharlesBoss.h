@@ -17,4 +17,5 @@ private:
 	const char * world01BossMapDark = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_dark.txt";
 	const char * world01BossTileDark = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_dark.png";
 	const char * world01BossMapObject = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_map_object.txt";
+	const char * world01BossSpawn = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_spawn.txt";
 };

@@ -15,4 +15,5 @@ private:
 	const char * pbPortal01DarkPNG = (char*)".\\..\\Resources\\Images\\Maps\\PittsburghPortal01\\pittsburgh_portal01_dark.png";
 	const char * pbPortal01DarkTXT = (char*)".\\..\\Resources\\Images\\Maps\\PittsburghPortal01\\pittsburgh_portal01_dark.txt";
 	const char * pbPortal01MapObject = (char*)".\\..\\Resources\\Images\\Maps\\PittsburghPortal01\\pittsburgh_portal01_map_object.txt";
+	const char * pbPortal01Spawn = (char*)".\\..\\Resources\\Images\\Maps\\PittsburghPortal01\\pittsburgh_portal_01_spawn.txt";
 };

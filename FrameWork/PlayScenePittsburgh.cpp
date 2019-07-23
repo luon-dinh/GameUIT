@@ -16,7 +16,7 @@ PlayScenePittsburgh::PlayScenePittsburgh()
 	currentWorld = worldDark;
 
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), nullptr);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world02Spawn);
 	//Thêm player và shield vào Grid.
 	grid->Add(player);
 	grid->Add(shield);
