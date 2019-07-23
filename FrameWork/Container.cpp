@@ -58,6 +58,8 @@ Container::~Container()
 void Container::Update(float dt)
 {
 	this->animation->curframeindex = 0;
+	for (auto item : items)
+		item->Update(dt);
 }
 
 void Container::Render()
@@ -65,6 +67,8 @@ void Container::Render()
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,this->pos.y,0));
 	//animation->Render(this->pos);
 	animation->getSprite(animation->curframeindex)->Render(pos);
+	for (auto item : items)
+		item->Render();
 }
 
 BoundingBox Container::getBoundingBox()
@@ -94,7 +98,7 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 		animation->DelayCurrentFrame(50);
 		if (numberItems != 0)
 		{
-			items.at(numberItems - 1)->isActive = true;
+			items[numberItems - 1]->SetActive(true);
 			numberItems--;
 		}
 	}
@@ -105,14 +109,16 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 void Container::OnCollision(Object* object, collisionOut* colOut)
 {
 	Player* player = Player::getInstance();
+	Shield* shield = Shield::getInstance();
 	// nếu container va chạm với shield hoặc bị player đánh
-	if (object->tag == Tag::SHIELD || ((player->state == State::STAND_PUNCH || player->state == DUCKING_PUNCHING) && object->tag == Tag::PLAYER))
+	if ((object->tag == Tag::SHIELD&&shield->state==Shield::ShieldState::Attack) || ((player->state == State::STAND_PUNCH || player->state == DUCKING_PUNCHING) && object->tag == Tag::PLAYER))
 	{
 		animation->curframeindex = 1;
 		animation->DelayCurrentFrame(50);
 		if (numberItems != 0)
 		{
-			items.at(numberItems - 1)->isActive = true;
+			items[numberItems - 1]->SetActive( true);
+			items[numberItems - 1]->pos = this->pos;
 			numberItems--;
 		}
 	}

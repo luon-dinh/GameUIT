@@ -430,7 +430,7 @@ void Grid::RenderActivatedCells()
 			}
 		}
 	}
-	DrawDebugObject();
+	//DrawDebugObject();
 }
 
 void Grid::DrawDebugObject()

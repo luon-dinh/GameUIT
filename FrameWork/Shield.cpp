@@ -37,6 +37,8 @@ BoundingBox Shield::getBoundingBox() {
 		bounding.right = this->pos.x + 12;
 		bounding.bottom = this->pos.y - 5;
 	}
+	bounding.vx = vx;
+	bounding.vy = vy;
 	return bounding;
 }
 
@@ -47,6 +49,7 @@ Shield::Shield()
 		return;
 	this->tag = Tag::SHIELD;
 	this->vx = this->vy = 0;
+	this->accelerator = D3DXVECTOR2(0, 0);
 	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
 	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->direction;
@@ -363,6 +366,7 @@ void Shield::Move() {
 		else {
 			this->vx = -SHIELD_INITIAL_SPEED;
 		}
+		this->pos = player->pos;
 		this->vy = 0;
 		this->accelerator.x = -this->vx / (this->framePerRound / 2);
 		this->accelerator.y = 0;

@@ -204,6 +204,16 @@ void Player::ChangeState(State stateName) {
 			break;
 		}
 		case State::KICKING: {
+			if (this->hasShield) {
+				shield->SetShieldState(Shield::ShieldState::Transparent);
+				if (this->direction == MoveDirection::LeftToRight) {
+					shield->SetShieldDirection(FALSE, Shield::ShieldDirection::RightToLeft);
+				}
+				else {
+					shield->SetShieldDirection(FALSE, Shield::ShieldDirection::LeftToRight);
+				}
+			}
+
 			break;
 		}
 		case State::SHIELD_DOWN: {
@@ -251,7 +261,7 @@ void Player::SetShieldReturnEdge(Player::ShieldReturnEdge edge) {
 			SetShieldReturnPos(this->pos.x + this->getWidth() / 2, this->pos.y);break;
 		}
 		case Player::ShieldReturnEdge::Default: {
-			SetShieldReturnPos(this->pos.x, this->pos.y + 11);break;
+			SetShieldReturnPos(this->pos.x, this->pos.y);break;
 		}
 	}
 }
@@ -374,17 +384,6 @@ void Player::SetMoveDirection(MoveDirection moveDir) {
 		return;
 	}
 	auto shield = Shield::getInstance();
-	// trong trường hơp đá thì shield được render ngược
-	if (this->state == State::KICKING) {
-		if (this->direction == MoveDirection::LeftToRight) {
-			shield->direction = Shield::ShieldDirection::RightToLeft;
-		}
-		else {
-			shield->direction = Shield::ShieldDirection::LeftToRight;
-		}
-		return;
-	}
-
 	if (this->direction == MoveDirection::LeftToRight) {
 		shield->direction = Shield::ShieldDirection::LeftToRight;
 	}
