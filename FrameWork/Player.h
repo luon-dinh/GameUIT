@@ -139,8 +139,6 @@ public:
 	void HandleStandingOnGround(Object* ground);	// xử lý khi đứng trên ground
 	void HandleCollisionWithSolidBox(Object* solidBox);
 #pragma endregion
-
-
 };
 
 Player::MoveDirection;

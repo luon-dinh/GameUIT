@@ -25,8 +25,8 @@ public:
 	
 	BoundingBox getStaticObjectBoundingBox();
 
-	virtual void SetActive(BOOL value);
-	virtual BOOL GetActive();
+	virtual void SetActive(bool value);
+	virtual bool GetActive();
 
 	virtual void Render();
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?
