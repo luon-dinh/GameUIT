@@ -108,6 +108,7 @@ enum Tag {
 	SEWER,
 	EXITSIGN,
 	ITEMCONTAINER,
+	BLUESOLDIER
 };
 enum Type {
 	NONE,
@@ -121,6 +122,7 @@ enum Type {
 	WATERRL,
 	ROPE,
 	ONOFF,
+	DOOR,
 	ITEM1,
 	ITEM2,
 	ITEM3,
