@@ -23,7 +23,7 @@ protected:
 	GameMap* currentWorld;
 	void TurnOnOffLight();
 	virtual void ProcessUpdates(double dt) override;
-	virtual void UpdateCameraWithPlayerPos(double dt) override;
+	virtual void UpdateCameraWithPlayerPos(double dt = 0) override;
 	virtual void CollisionProcess(double dt) override;
 	virtual void EnvironmentUpdate(double dt) override;
 };

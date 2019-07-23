@@ -11,6 +11,8 @@ PlayScene::~PlayScene()
 		delete player;
 	if (shield != nullptr)
 		delete shield;*/
+	if (grid != nullptr)
+		delete grid;
 }
 
 PlayScene::PlayScene()
@@ -30,10 +32,13 @@ MapName PlayScene::GetAndResetDestinationMap()
 void PlayScene::Draw()
 {
 	world->Draw();
+	//Vẽ player và shield trước mọi thứ khác.
 	player->Render();
 	shield->Render();
-	/*DrawDebugBoxForStaticObjects();
-	DrawDebugBoxForPlayer();*/
+	grid->RenderActivatedCells();
+
+	//DrawDebugBoxForStaticObjects();
+	DrawDebugBoxForPlayer();
 }
 
 void PlayScene::DrawDebugBoxForPlayer()
@@ -63,6 +68,10 @@ void PlayScene::Update(double dt)
 {
 	//Update map trước.
 	world->Update(dt);
+
+	//Xử lý với GRID.
+	//Ta cập nhật những phần được quét activated trước để grid nó làm việc.
+	grid->ActivateCells();
 
 	//Kiểm tra va chạm.
 	CollisionProcess(dt);
@@ -159,6 +168,7 @@ void PlayScene::EnvironmentUpdate(double dt)
 
 void PlayScene::CollisionProcess(double dt)
 {
+	//Xử lý va chạm giữa các object động với object tĩnh trước.
 	//Kiểm tra collision với ground.
 	for (int i = 0; i < mapStaticObject.size(); ++i)
 	{
@@ -208,13 +218,18 @@ void PlayScene::CollisionProcess(double dt)
 			}
 		}
 	}
+	//Kiểm tra các object động va chạm với nhau.
+	grid->CollisionProcess();
 }
 
 //Cập nhật shield và player.
 void PlayScene::ProcessUpdates(double dt)
 {
 	KeyboardManager* inputInstance = KeyboardManager::getInstance();
-	player->Update(dt);
+
+	//Update thực hiện trong grid luôn cho tiện.
+	//Update thực hiện trong grid còn nhằm mục đích để di chuyển object qua cell khác.
+	grid->UpdateActivatedCells(dt);
 
 	//Kiểm tra nếu player ra khỏi map thì không cho đi tiếp.
 	int mapWidth = world->getMapWidth();
@@ -237,5 +252,4 @@ void PlayScene::ProcessUpdates(double dt)
 	//Player ra ngoài theo hướng bên trên.
 	else if (player->pos.y + playerHeight / 2 >= mapHeight)
 		player->pos.y = mapHeight - playerHeight / 2 - 1;
-	shield->Update(dt);
 }

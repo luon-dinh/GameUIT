@@ -73,15 +73,15 @@ void GameMap::LoadMapObject()
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 
 		//Xét từng ID để xem entityTag của nó là gì.
-		if (objectID == 0)
+		if (objectID == ObjectID::GROUND)
 			entityTag = Type::GROUND;
-		else if (objectID == 1)
+		else if (objectID == ObjectID::SOLIDBOX)
 			entityTag = Type::SOLIDBOX;
-		else if (objectID == 2)
+		else if (objectID == ObjectID::WATERRL)
 			entityTag = Type::WATERRL;
-		else if (objectID == 3)
+		else if (objectID == ObjectID::WATERRL)
 			entityTag == Type::ROPE;
-		else if (objectID == 4)
+		else if (objectID == ObjectID::ONOFF)
 			entityTag == Type::ONOFF;
 
 		Object* mapObject = new Object();

@@ -46,7 +46,7 @@ void Animation::Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY) {
 
 Animation::~Animation()
 {
-	for (auto s : sprites)
+	for (auto s : sprites) 
 	{
 		s = nullptr;
 	}

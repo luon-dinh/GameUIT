@@ -32,6 +32,10 @@
 #define GROUND_GRAVITY				0.22
 #define WATER_SPEED					0.75
 
+//item define
+#define ITEM_SPEED -1
+#define ITEM_EXIST_TIME 1000
+
 // Moving keyboard input
 #define PLAYER_MOVE_LEFT			DIK_LEFTARROW
 #define PLAYER_MOVE_RIGHT			DIK_RIGHTARROW
@@ -53,6 +57,21 @@ public:
 	static char * WATER_BOTTOM_ANIM;
 	static char * SEWER_ANIM;
 	static char * EXIT_SIGN;
+};
+
+//Đây là một class dùng để lưu lại các quy định ID trong file xuất ra bởi Advanced Map Editor.
+class ObjectID
+{
+public:
+	static int GROUND;
+	static int SOLIDBOX;
+	static int WATERRL;
+	static int ROPE;
+	static int ONOFF;
+	static int WAVE;
+	static int DOOR;
+	static int SPIKE;
+	static int ITEMLOOTER;
 };
 
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
@@ -87,7 +106,8 @@ enum Tag {
 	WATERTOP,
 	WATERBOTTOM,
 	SEWER,
-	EXITSIGN
+	EXITSIGN,
+	ITEMCONTAINER,
 };
 enum Type {
 	NONE,
@@ -100,7 +120,16 @@ enum Type {
 	SOLIDBOX,
 	WATERRL,
 	ROPE,
-	ONOFF
+	ONOFF,
+	ITEM1,
+	ITEM2,
+	ITEM3,
+	ITEM4,
+	ITEM5,
+	ITEM6,
+	ITEM7,
+	ITEM8,
+	ITEMCONTAINERTYPE
 	//cac loai dan
 };
 

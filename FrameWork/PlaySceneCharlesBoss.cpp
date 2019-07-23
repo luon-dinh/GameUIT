@@ -17,6 +17,12 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 
 	currentWorld = world;
 	isLightOn = true;
+
+	//Xét tạo Grid.
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn);
+	//Thêm player và shield vào Grid.
+	grid->Add(player);
+	grid->Add(shield);
 }
 
 PlaySceneCharlesBoss::~PlaySceneCharlesBoss()
@@ -34,6 +40,8 @@ void PlaySceneCharlesBoss::ResetPlayerPosition()
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);
 	player->SetGroundCollision(new GroundCollision());
+	//Update lại camera sau khi set.
+	UpdateCameraWithPlayerPos();
 }
 
 void PlaySceneCharlesBoss::Update(double dt)

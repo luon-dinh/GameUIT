@@ -12,6 +12,7 @@ Player::Player()
 	this->pos.x = 30;
 	this->pos.y = 80;
 	this->tag = Tag::PLAYER;
+	this->type = Type::NONE;
 	this->health = 100;
 	this->energy = 0;
 	this->vx = 0;

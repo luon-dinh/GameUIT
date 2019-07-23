@@ -14,4 +14,5 @@ private:
 	const char * world02DarkTXT = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_dark.txt";
 	const char * world02TileDarkPNG = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_dark.png";
 	const char * world02MapObject = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_map_object.txt";
+	const char * world02Spawn = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_map_spawn.txt";
 };

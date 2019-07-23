@@ -36,6 +36,7 @@ void Game::LoadResources()
 	TextureManager::getInstance()->loadResources();
 	SpriteManager::getInstance()->LoadResources();
 	SoundManager::getinstance()->loadResources();
+	ItemManager::getInstance()->LoadAllItem();
 	SceneManager::getInstance();
 }
 void Game::Run()
