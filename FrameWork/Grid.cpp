@@ -93,18 +93,36 @@ void Grid::AddStaticMapObjects(Object * object)
 {
 	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
 	int cellXFrom = (object->pos.x - object->width/2) / cellSize;
+
+	if (cellXFrom < 0)
+		cellXFrom = 0;
+	else if (cellXFrom * cellSize > mapWidth)
+		cellXFrom = mapWidth / cellSize;
+
 	int cellXTo = cellXFrom;
 	int cellYFrom = (object->pos.y + object->height/2) / cellSize;
+
+	if (cellYFrom < 0)
+		cellYFrom = 0;
+	else if (cellYFrom * cellSize > mapHeight)
+		cellYFrom = mapHeight / cellSize;
+
 	int cellYTo = cellYFrom;
-	while(cellXTo*cellSize < (object->pos.x + object->width / 2))
+	while(cellXTo*cellSize <= (object->pos.x + object->width / 2))
 	{
 		++cellXTo;
 	} 
 
-	while (cellYTo * cellSize < (object->pos.y + object->height / 2))
+	while (cellYTo * cellSize <= (object->pos.y + object->height / 2))
 	{
 		++cellYTo;
 	} 
+
+	//Chặn không cho object add cell ra ngoài.
+	if (cellXTo > gridWidth)
+		cellXTo = gridWidth;
+	if (cellYTo > gridHeight)
+		cellYTo = gridHeight;
 
 	//Thêm object trên nhiều cell.
 	for (int i = cellYFrom; i < cellYTo; ++i)
@@ -251,6 +269,16 @@ void Grid::Add(Object* objectToAdd)
 {
 	int cellX = objectToAdd->pos.x / cellSize;
 	int cellY = objectToAdd->pos.y / cellSize;
+
+	if (cellX < 0)
+		cellX = 0;
+	else if (cellX * cellSize > mapWidth)
+		cellX = mapWidth / cellSize;
+	
+	if (cellY < 0)
+		cellY = 0;
+	else if (cellY * cellSize > mapHeight)
+		cellY = mapHeight / cellSize;
 
 	//Sắp xếp vị trí để shield luôn luôn hiển thị trước mọi thứ khác.
 	cells[cellY][cellX].push_front(objectToAdd);
