@@ -473,23 +473,27 @@ bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object*
 		object->OnCollision(staticObject, &colOut);
 		return true;
 	}
-	else if (Collision::getInstance()->IsCollide(objBoundingBox, staticObjBoundingBox))
-	{
-		if (object->tag == Tag::PLAYER && staticObject->type == Type::GROUND) {
-			if (((Player*)object)->GetOnAirState() == Player::OnAir::Falling) {
-				int a = 1;
+	else {
+		CollisionSide side;
+		if (Collision::getInstance()->IsCollide(objBoundingBox, staticObjBoundingBox, &side))
+		{
+			if (object->tag == Tag::PLAYER && staticObject->type == Type::GROUND) {
+				if (((Player*)object)->GetOnAirState() == Player::OnAir::Falling) {
+					int a = 1;
+				}
 			}
+			staticObject->OnRectCollided(object, side);
+			bool collided = object->OnRectCollided(staticObject, side);
+			return collided;
 		}
-		staticObject->OnRectCollided(object);
-		bool collided = object->OnRectCollided(staticObject);
-		return collided;
+		else
+		{
+			staticObject->OnNotCollision(object);
+			object->OnNotCollision(staticObject);
+		}
+		return false;
 	}
-	else
-	{
-		staticObject->OnNotCollision(object);
-		object->OnNotCollision(staticObject);
-	}
-	return false;
+	
 }
 
 void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY)

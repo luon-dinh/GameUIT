@@ -128,6 +128,12 @@ void PlayerStandingState::StopFrameFlip() {
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+	}
 }
 
 

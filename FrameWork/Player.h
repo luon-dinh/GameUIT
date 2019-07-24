@@ -70,6 +70,13 @@ public:
 		Default		//	 Sử dụng tọa độ của player
 	};
 
+	enum MoveBehavior {
+		Normal,
+		StoppedByVerticalBoxOnLeft,
+		StoppedByVerticalBoxOnRight,
+		GoThrough,
+	};
+
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
 	int getWidth();
 	int getHeight();
@@ -93,6 +100,7 @@ public:
 	D3DXVECTOR2 accelerate;
 	BOOL collideOnGround;
 	ShieldReturnEdge edge;
+	MoveBehavior moveBehave;
 
 
 	GroundCollision* groundCollision;
@@ -132,6 +140,10 @@ public:
 	D3DXVECTOR2 GetShieldReturnPos();
 
 	bool StandOnCurrentGround();
+
+
+	Object* collidedSolidBox;
+
 #pragma endregion
 
 #pragma region Player Collision Handle
@@ -145,10 +157,9 @@ public:
 
 	bool IsStopBySolidBox();
 
-
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void OnNotCollision(Object* object);
-	bool OnRectCollided(Object* object);
+	bool OnRectCollided(Object* object, CollisionSide side);
 	void OnFallingOffGround();						// xử lý khi rơi khỏi ground
 	void OnStandingOnGround(Object* ground);		// xử lý khi đứng trên ground
 	void OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut);
@@ -156,6 +167,13 @@ public:
 	void OnSmashSolidBox(Object* solid, CollisionSide side);
 	void OnHeadOnSolidBox(Object* solid);
 	void OnStateChanged(State oldState, State newState);
+
+
+	bool CanStandOnGround(Object* ground);
+	void SetMoveBehavior(MoveBehavior moveBehave);
+
+	void SetCollisionResult(bool value);
+	bool collisionResult;
 
 #pragma endregion
 };
