@@ -50,34 +50,27 @@ Grid::~Grid()
 	{
 		for (int j = 0; j < gridWidth; ++j)
 		{
-			for (auto i : cells[i][j])
+			for (auto object : cells[i][j])
 			{
-				Player* testPlayer = dynamic_cast<Player*> (i);
-				Shield* testShield = dynamic_cast<Shield*> (i);
+				Player* testPlayer = dynamic_cast<Player*> (object);
+				Shield* testShield = dynamic_cast<Shield*> (object);
 
 				//Chỉ xoá khi không phải là player và shield.
 				if (testPlayer != nullptr && testShield != nullptr)
-					delete i;
+					delete object;
 			}
-			cells[i][j].clear();
-		}
-		delete[]cells[i];
-	}
-	delete cells;
-
-	//Xoá danh sách các static cells.
-	for (int i = 0; i < gridHeight; ++i)
-	{
-		for (int j = 0; j < gridWidth; ++j)
-		{
 			for (auto object : cellsOfStaticObjects[i][j])
 			{
-				delete object;
+				if (object != nullptr)
+					delete object;
 			}
+			cells[i][j].clear();
 			cellsOfStaticObjects[i][j].clear();
 		}
+		delete[]cells[i];
 		delete[]cellsOfStaticObjects[i];
 	}
+	delete cells;
 	delete cellsOfStaticObjects;
 
 	//Xoá danh sách các object.
@@ -290,8 +283,6 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 		}
 	}
 }
-
-
 
 void Grid::Add(Object* objectToAdd)
 {
@@ -508,28 +499,32 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 
 	//Duyệt qua các phần tử của cell đầu tiên.
 	//Xét va chạm với object static.
-	for (auto staticObject : firstStaticCell)
+	std::unordered_set<Object*> isChecked;
+	for (auto object : firstCell)
 	{
-		for (auto object : firstCell)
+		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+			continue;
+		isChecked.insert(object);
+		for (auto staticObject : firstStaticCell)
 		{
 			CollisionProcessOfStaticObject(staticObject, object);
 		}
-		for (auto object : secondCell)
+		for (auto staticObject : secondStaticCell)
 		{
-			//Xử lý va chạm với object tĩnh trước nhé.
 			CollisionProcessOfStaticObject(staticObject, object);
-
 		}
 	}
-	for (auto staticObject : secondStaticCell)
+	for (auto object : secondCell)
 	{
-		for (auto object : firstCell)
+		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+			continue;
+		isChecked.insert(object);
+		for (auto staticObject : firstStaticCell)
 		{
 			CollisionProcessOfStaticObject(staticObject, object);
 		}
-		for (auto object : secondCell)
+		for (auto staticObject : secondStaticCell)
 		{
-			//Xử lý va chạm với object tĩnh trước nhé.
 			CollisionProcessOfStaticObject(staticObject, object);
 		}
 	}
