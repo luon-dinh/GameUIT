@@ -63,7 +63,13 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 		// chạm nền dưới
 		if (side == CollisionSide::bottom) {
 			player->OnStandingOnGround(object);
+			return;
 		}
+	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+		return;
 	}
 }
 

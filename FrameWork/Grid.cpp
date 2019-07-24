@@ -496,7 +496,7 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 				firstObj->OnNotCollision(secondObj);
 				secondObj->OnNotCollision(firstObj);
 			}
-
+ 
 			if (firstObj->tag == Tag::PLAYER || secondObj->tag == Tag::PLAYER)
 			{
 				int a = 1;

@@ -41,6 +41,17 @@ void PlayerKickingState::InputHandler()
 			player->SetVy(player->vy + 0.15);
 		}
 	}
+
+	//  Đổi hướng qua trái
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
+	}
+
+	// Đổi hướng qua phải
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+	}
+
 	this->curKickTime++;
 
 	/*if (player->IsReachMaxJump()) {
