@@ -25,6 +25,7 @@ PlayScene::PlayScene()
 void PlayScene::AddPlayerElementsToGrid()
 {
 	grid->Add(player);
+	shield->Update(0.1);
 	grid->Add(shield);
 }
 
