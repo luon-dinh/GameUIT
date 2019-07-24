@@ -44,6 +44,8 @@ public:
 
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void OnCollisionWithDynamicObject(Object* object) {};
+	virtual void OnNotCollision(Object* object) {};
+	virtual void OnRectCollided(Object* object) {};
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
 protected:

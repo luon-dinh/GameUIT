@@ -68,13 +68,6 @@ void PlayerFloatingState::Update(float dt) {
 }
 
 void PlayerFloatingState::OnCollision(Object* object, collisionOut* collision) {
-	auto player = Player::getInstance();
-	auto side = collision->side;
-	
-	// đang ở trạng thái rơi từ trên mặt đất xuống nước
-	if (object->type == Type::GROUND) {
-
-	}
 }
 
 BoundingBox PlayerFloatingState::getBoundingBox()

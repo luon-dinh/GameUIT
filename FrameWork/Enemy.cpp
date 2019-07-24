@@ -2,7 +2,9 @@
 
 
 Enemy::Enemy(Enemy::EnemyType type) {
+	this->tag = Tag::ENERMY;
 	this->type = type;
+
 }
 
 Enemy::~Enemy() {

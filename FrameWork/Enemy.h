@@ -5,9 +5,11 @@
 class Enemy : public Object {
 protected:
 	enum EnemyType {
-		StandOnly,
-		Movable,
+		BlueSolder,	
+		RobotRocketer,
+		WhiteRobotRocketer
 	};
+
 	enum Direction {
 		LeftToRight,
 		RightToLeft

@@ -174,56 +174,39 @@ void PlayScene::EnvironmentUpdate(double dt)
 
 void PlayScene::CollisionProcess(double dt)
 {
+	Object* collidedObj = NULL;
+	collisionOut minColOut;
+	minColOut.collisionTime = 2;
 	//Xử lý va chạm giữa các object động với object tĩnh trước.
 	//Kiểm tra collision với ground.
-	//for (int i = 0; i < mapStaticObject.size(); ++i)
-	//{
-	//	//Lấy BoxRect của Player.
-	//	BoundingBox playerBox = player->getBoundingBox();
-	//	//Lấy BoxRect của MapObject.
-	//	BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
 
-	//	bool isCollide = false;
+	for (int i = 0; i < mapStaticObject.size(); ++i)
+	{
+		//Lấy BoxRect của Player.
+		BoundingBox playerBox = player->getBoundingBox();
+		//Lấy BoxRect của MapObject.
+		BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
 
-	//	collisionOut colOut;
+		collisionOut colOut;
 
-	//	colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
+		colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
 
-
-	//	/*if (colOut.side == CollisionSide::bottom)
-	//	{
-	//		DebugOut(L"\nBottom\n");
-	//		PrintDebugNumber(player->vy);
-	//	}*/
-
-	//	// nếu player ở tình trạng không xét va chạm
-	//	if (!player->GetCollisionAffect())
-	//		continue;
-
-	//	//Gọi đến hàm xử lý va chạm của player.
-	//	if (colOut.side != CollisionSide::none) {
-	//		player->OnCollision(mapStaticObject[i], &colOut);
-	//	}
-	//	else {
-	//		// xét object hiện tại là ground
-	//		if (player->GetGroundCollision()->GetGround() == mapStaticObject[i] && player->state != State::JUMPING&&player->state != State::DIVING && player->state != State::FLOATING) {
-	//			if (!Collision::getInstance()->IsCollide(playerBox, objectBox)) {
-	//				player->HandleFallingOffGround();
-	//			}
-	//			continue;
-	//		}
-	//		else
-	//		{
-	//			if (mapStaticObject[i]->type == Type::GROUND)
-	//			{
-	//				if (Collision::getInstance()->IsCollide(playerBox, objectBox) && player->GetOnAirState() == Player::OnAir::Falling&&player->getBoundingBox().bottom > objectBox.bottom&&player->preOnAir == Player::OnAir::Jumping)
-	//				{
-	//					player->HandleStandingOnGround(mapStaticObject[i]);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+		if (colOut.side != CollisionSide::none) {
+			// va chạm với vật
+			player->OnCollision(mapStaticObject[i], &colOut);
+			return;
+		}
+		else {
+			// không phát hiện va chạm AABB nhưng có va chạm RECT
+			if (Collision::getInstance()->IsCollide(playerBox, objectBox)) {
+				player->OnRectCollided(mapStaticObject[i]);
+			}
+			else {
+				// Không phát hiện va chạm
+				player->OnNotCollision(mapStaticObject[i]);
+			}
+		}
+	}
 	//Kiểm tra các object động va chạm với nhau.
 	grid->CollisionProcess();
 }

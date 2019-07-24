@@ -12,5 +12,4 @@ public:
 	void Move() override;
 	void Shoot() override;
 	void OnCollision(Object* object, collisionOut* colOut) override;
-
 };

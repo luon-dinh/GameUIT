@@ -60,36 +60,30 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::GROUND && player->GetOnAirState() != Player::OnAir::DropToWater) { 
-		
-		// chạm vào ground trên đầu
-		if (side == CollisionSide::top) {
-			//player->SetVy(0);
-		}
-		else {
-			// chạm nền dưới
-			if (side == CollisionSide::bottom ) {
-				player->SetGroundCollision(new GroundCollision(object, side));
-				player->ChangeState(State::STANDING);	
-				player->pos.y = object->pos.y + player->getHeight() / 2;
-				DebugOut(L"\nState Now: ");
-				PrintDebugNumber(player->state);
-			}
-		}
+	if (collision->collisionTime == 0)
 		return;
+
+	// va chạm với ground
+	if (object->type == Type::GROUND) { 
+		if (side == CollisionSide::bottom ) {
+			player->OnStandingOnGround(object);
+			DebugOut(L"\nState Now: ");
+			PrintDebugNumber(player->state);
+			return;
+		}
 	}
 
 	// va chạm với nước
 	if (object->type == Type::WATERRL) {
-		player->HandleWaterCollision(object, collision);
+		if (player->GetPreviousState()->state == State::FLOATING)
+			return;
+		player->OnCollisionWithWater(object, collision);
 		return;
 	}
 
+	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
-		if (player->GetOnAirState() != Player::OnAir::Falling && player->GetOnAirState() != Player::OnAir::DropToWater) {
-			player->SetAirState(Player::OnAir::Falling);
-			player->SetVx(0);
-		}
+		player->OnCollisionWithSolidBox(object, collision);
 	}
  }
 
