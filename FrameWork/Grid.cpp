@@ -108,12 +108,12 @@ void Grid::AddStaticMapObjects(Object * object)
 		cellYFrom = mapHeight / cellSize;
 
 	int cellYTo = cellYFrom;
-	while(cellXTo*cellSize < (object->pos.x + object->width / 2))
+	while(cellXTo*cellSize <= (object->pos.x + object->width / 2))
 	{
 		++cellXTo;
 	} 
 
-	while (cellYTo * cellSize < (object->pos.y + object->height / 2))
+	while (cellYTo * cellSize <= (object->pos.y + object->height / 2))
 	{
 		++cellYTo;
 	} 
