@@ -156,10 +156,6 @@ public:
 	void OnSmashSolidBox(Object* solid, CollisionSide side);
 	void OnHeadOnSolidBox(Object* solid);
 	void OnStateChanged(State oldState, State newState);
-
-#pragma endregion
-
-	void DeactivateObjectInGrid()override {};
 };
 
 Player::MoveDirection;
