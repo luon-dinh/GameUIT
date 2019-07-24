@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <list>
 #include "Object.h"
+#include "MapStaticObject.h"
 #include "Collision.h"
 #include "Camera.h"
 #include "Player.h"
@@ -11,7 +12,7 @@
 //Phải gọi hàm ActivateCells() trước khi làm bất kỳ thứ gì khác.
 class Grid // lam singleton
 {
-	const int cellSize = 80;
+	const int cellSize = 72;
 
 	//Danh sách các object được tổ chức dưới dạng 2 chiều (từng cell) và trong các cell chứa các Unit.
 	std::list<Object*> ** cells;

@@ -12,9 +12,6 @@ PlaySceneCharles::PlaySceneCharles()
 
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
-	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
 }
 
 PlaySceneCharles::~PlaySceneCharles()
@@ -26,7 +23,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 {
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
-	player->pos.x = 50;
+	player->pos.x = 550;
 	player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);

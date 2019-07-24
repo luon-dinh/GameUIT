@@ -14,8 +14,6 @@ PlayScenePittsburghPortal01::PlayScenePittsburghPortal01()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), pbPortal01Spawn, pbPortal01MapObject);
 	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
 
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();

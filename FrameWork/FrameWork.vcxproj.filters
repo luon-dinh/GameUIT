@@ -97,6 +97,9 @@
     <Filter Include="Objects\Container">
       <UniqueIdentifier>{cc56a773-857b-49d2-b2bb-35706f7ce322}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\MapStaticObject">
+      <UniqueIdentifier>{8a09a424-002d-4c3a-b2ec-f9a10f78a72a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -469,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="ItemManager.h">
       <Filter>Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MapStaticObject.h">
+      <Filter>Objects\MapStaticObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

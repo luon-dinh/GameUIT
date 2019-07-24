@@ -14,8 +14,6 @@ PlayScenePittsburghPortal02::PlayScenePittsburghPortal02()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), pbPortal02Spawn, pbPortal02MapObject);
 	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
 }
 
 PlayScenePittsburghPortal02::~PlayScenePittsburghPortal02()

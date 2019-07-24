@@ -18,8 +18,6 @@ PlayScenePittsburgh::PlayScenePittsburgh()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world02Spawn, world02MapObject);
 	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
 }
 
 PlayScenePittsburgh::~PlayScenePittsburgh()

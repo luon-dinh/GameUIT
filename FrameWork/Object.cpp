@@ -2,11 +2,6 @@
 
 BoundingBox Object::getBoundingBox()
 {
-	//Kiểm tra xem nó có phải là static object hay không.
-	//Nếu là static object thì phải dùng hàm đặc biệt.
-	if (this->tag == Tag::STATICOBJECT)
-		return getStaticObjectBoundingBox();
-
 	BoundingBox box;
 	box.top=this->pos.y+this->getHeight()/2;
 	box.left = this->pos.x-this->getWidth()/2;

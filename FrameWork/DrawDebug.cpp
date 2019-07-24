@@ -29,6 +29,7 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 		curX = objTopLeftX;
 		//curY -= 1;
 	}
+	delete debugSprite;
 	//D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(midX, midY, 0));
 	//debugSprite->Render(objMostRight - objTopLeftX, objTopLeftY - objMostBottom, D3DXVECTOR2(viewPort.x, viewPort.y));
 }

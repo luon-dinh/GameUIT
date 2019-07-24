@@ -22,6 +22,12 @@ PlayScene::PlayScene()
 	shield = Shield::getInstance();
 }
 
+void PlayScene::AddPlayerElementsToGrid()
+{
+	grid->Add(player);
+	grid->Add(shield);
+}
+
 MapName PlayScene::GetAndResetDestinationMap()
 {
 	MapName mapName = ReplaceToThisMap;

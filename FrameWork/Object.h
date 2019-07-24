@@ -39,6 +39,9 @@ public:
 	virtual void DeactivateObjectInGrid() { isActivatedInGrid = false; }
 	bool GetActivatedInGridStatus() { return isActivatedInGrid; }
 
+	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
+	virtual bool IsMovableInGrid() { return true; }
+
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void OnCollisionWithDynamicObject(Object* object) {};
 	virtual void Update(float dt);
