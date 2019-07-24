@@ -17,6 +17,9 @@ class Grid // lam singleton
 	//Danh sách các object được tổ chức dưới dạng 2 chiều (từng cell) và trong các cell chứa các Unit.
 	std::list<Object*> ** cells;
 	
+	//Danh sách các object tĩnh.
+	std::list<MapStaticObject*> ** cellsOfStaticObjects;
+
 	//Danh sách các loại object sẽ được sinh ra tại vị trí từng cell.
 	int ** objectIDPerPosition;
 
@@ -38,7 +41,7 @@ public:
 
 	void Add(Object *); //Thêm object vào grid dựa vào toạ độ của object.
 	//Đây là hàm thêm đặc biệt, nó sẽ trải static object ra trên nhiều cell thay vì chỉ 1 cell như hàm trên.
-	void AddStaticMapObjects(Object *); 
+	void AddStaticMapObjects(MapStaticObject *); 
 
 	void ActivateCells(); //Activate những vùng sẽ được xử lý bởi Grid (vùng được khoanh bởi Camera).
 	//Nhớ kiểm tra va chạm trước khi Update.
@@ -48,7 +51,11 @@ public:
 private:
 	//Hàm dùng để di chuyển một object từ cell này sang cell khác.
 	std::list<Object*>::iterator MoveObjectAndIncrementIterator(int currentCellX, int currentCellY, std::list<Object*>::iterator, Object*);
+
 	void CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY);
+	void CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2);
+	void CollisionProcessOfStaticObject(MapStaticObject* sObj1, Object* obj2);
+
 	void LoadSpawnPosition(const char *);
 	void LoadMapObjects(const char *);
 	void SpawnAllObjectsInCell(int cellX, int cellY);
