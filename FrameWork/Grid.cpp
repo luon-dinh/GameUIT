@@ -1,5 +1,6 @@
 ﻿#include "Grid.h"
 #include <unordered_set>
+#include <set>
 #include <fstream>
 #include <sstream>
 
@@ -59,19 +60,31 @@ Grid::~Grid()
 				if (testPlayer != nullptr && testShield != nullptr)
 					delete object;
 			}
-			for (auto object : cellsOfStaticObjects[i][j])
-			{
-				if (object != nullptr)
-					delete object;
-			}
 			cells[i][j].clear();
-			cellsOfStaticObjects[i][j].clear();
 		}
 		delete[]cells[i];
+	}
+
+	//Xoá các object tĩnh.
+	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá toàn bộ.
+	//Xác định xem object đã được giết trước đó chưa.
+	std::set<MapStaticObject*> mapStaticObjects;
+	for (int i = 0; i < gridHeight; ++i)
+	{
+		for (int j = 0; j < gridWidth; ++j)
+		{
+			for (auto object : cellsOfStaticObjects[i][j])
+			{
+				//Xoá hết khi object phủ trên nhiều cell cùng lúc.
+				mapStaticObjects.insert(object);
+			}
+			cellsOfStaticObjects[i][j].clear();
+		}
 		delete[]cellsOfStaticObjects[i];
 	}
-	delete cells;
 	delete cellsOfStaticObjects;
+	for (auto object : mapStaticObjects)
+		delete object;
 
 	//Xoá danh sách các object.
 	for (int i = 0; i < mapHeight; ++i)
