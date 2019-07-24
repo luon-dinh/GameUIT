@@ -22,6 +22,12 @@ PlayScene::PlayScene()
 	shield = Shield::getInstance();
 }
 
+void PlayScene::AddPlayerElementsToGrid()
+{
+	grid->Add(player);
+	grid->Add(shield);
+}
+
 MapName PlayScene::GetAndResetDestinationMap()
 {
 	MapName mapName = ReplaceToThisMap;
@@ -49,13 +55,13 @@ void PlayScene::DrawDebugBoxForPlayer()
 
 void PlayScene::DrawDebugBoxForStaticObjects()
 {
-	//Vẽ tất cả các object tĩnh.
-	for (int i = 0; i < mapStaticObject.size(); ++i)
-	{
-		//Chỉ vẽ ground.
-		if (mapStaticObject[i]->type == Type::GROUND)
-			DrawDebug::DrawBoundingBox(mapStaticObject[i]->getStaticObjectBoundingBox(), Tag::TESTMAPOBJECTRED);
-	}
+	////Vẽ tất cả các object tĩnh.
+	//for (int i = 0; i < mapStaticObject.size(); ++i)
+	//{
+	//	//Chỉ vẽ ground.
+	//	if (mapStaticObject[i]->type == Type::GROUND)
+	//		DrawDebug::DrawBoundingBox(mapStaticObject[i]->getStaticObjectBoundingBox(), Tag::TESTMAPOBJECTRED);
+	//}
 }
 
 void PlayScene::ResetCamera()
@@ -173,6 +179,7 @@ void PlayScene::CollisionProcess(double dt)
 	minColOut.collisionTime = 2;
 	//Xử lý va chạm giữa các object động với object tĩnh trước.
 	//Kiểm tra collision với ground.
+
 	for (int i = 0; i < mapStaticObject.size(); ++i)
 	{
 		//Lấy BoxRect của Player.
@@ -200,7 +207,6 @@ void PlayScene::CollisionProcess(double dt)
 			}
 		}
 	}
-
 	//Kiểm tra các object động va chạm với nhau.
 	grid->CollisionProcess();
 }

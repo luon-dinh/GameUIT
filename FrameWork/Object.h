@@ -25,8 +25,8 @@ public:
 	
 	BoundingBox getStaticObjectBoundingBox();
 
-	virtual void SetActive(bool value);
-	virtual bool GetActive();
+	virtual void SetActive(BOOL value);
+	virtual BOOL GetActive();
 
 	virtual void Render();
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?
@@ -38,6 +38,9 @@ public:
 	//Mặc định là object sẽ bị delete khỏi Grid.
 	virtual void DeactivateObjectInGrid() { isActivatedInGrid = false; }
 	bool GetActivatedInGridStatus() { return isActivatedInGrid; }
+
+	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
+	virtual bool IsMovableInGrid() { return true; }
 
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void OnCollisionWithDynamicObject(Object* object) {};

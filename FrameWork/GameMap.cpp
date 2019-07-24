@@ -33,7 +33,7 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 	mapWidth = tMap->GetMapWidth();
 
 	//Load tất cả những đối tượng liên quan đến map như Ground, Animation,..
-	LoadMapObject();
+	//LoadMapObject();
 }
 
 void GameMap::Update(double dt)
@@ -43,71 +43,73 @@ void GameMap::Update(double dt)
 
 void GameMap::LoadMapObject()
 {
-	//Load tất cả các Map Object (Ground, Non-Ground,...).
-	std::ifstream inFile;
-	inFile.open(mapObjectPath);
-	if (!inFile)
-		PrintDebug("MapObject file not exist ! \n");
-	std::string sInputString;
+	////Load tất cả các Map Object (Ground, Non-Ground,...).
+	//std::ifstream inFile;
+	//inFile.open(mapObjectPath);
+	//if (!inFile)
+	//	PrintDebug("MapObject file not exist ! \n");
+	//std::string sInputString;
 
-	std::getline(inFile, sInputString);
+	//std::getline(inFile, sInputString);
 
-	std::istringstream iss(sInputString);
+	//std::istringstream iss(sInputString);
 
-	int numOfObject;
+	//int numOfObject;
 
-	iss >> numOfObject;
+	//iss >> numOfObject;
 
-	Type entityTag = Type::NONE;
+	//Type entityTag = Type::NONE;
 
-	int objectID = -1;
-	int objectTopLeftX = -1;
-	int objectTopLeftY = -1;
-	int objectWidth = -1;
-	int objectHeight = -1;
+	//int objectID = -1;
+	//int objectTopLeftX = -1;
+	//int objectTopLeftY = -1;
+	//int objectWidth = -1;
+	//int objectHeight = -1;
 
-	for (int i = 0; i < numOfObject; ++i)
-	{
-		std::getline(inFile, sInputString);
-		std::istringstream iss(sInputString);
-		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+	//for (int i = 0; i < numOfObject; ++i)
+	//{
+	//	std::getline(inFile, sInputString);
+	//	std::istringstream iss(sInputString);
+	//	iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 
-		//Xét từng ID để xem entityTag của nó là gì.
-		if (objectID == ObjectID::GROUND)
-			entityTag = Type::GROUND;
-		else if (objectID == ObjectID::SOLIDBOX)
-			entityTag = Type::SOLIDBOX;
-		else if (objectID == ObjectID::WATERRL)
-			entityTag = Type::WATERRL;
-		else if (objectID == ObjectID::WATERRL)
-			entityTag == Type::ROPE;
-		else if (objectID == ObjectID::ONOFF)
-			entityTag == Type::ONOFF;
+	//	//Xét từng ID để xem entityTag của nó là gì.
+	//	if (objectID == ObjectID::GROUND)
+	//		entityTag = Type::GROUND;
+	//	else if (objectID == ObjectID::SOLIDBOX)
+	//		entityTag = Type::SOLIDBOX;
+	//	else if (objectID == ObjectID::WATERRL)
+	//		entityTag = Type::WATERRL;
+	//	else if (objectID == ObjectID::ROPE)
+	//		entityTag = Type::ROPE;
+	//	else if (objectID == ObjectID::ONOFF)
+	//		entityTag = Type::ONOFF;
+	//	else if (objectID == ObjectID::DOOR)
+	//		entityTag = Type::DOOR;
 
-		Object* mapObject = new Object();
-		mapObject->type = entityTag;
-		mapObject->height = objectHeight;
-		mapObject->width = objectWidth;
-		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
-		mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
-		staticObject.push_back(mapObject);
-	}
+	//	Object* mapObject = new Object();
+	//	mapObject->type = entityTag;
+	//	mapObject->height = objectHeight;
+	//	mapObject->width = objectWidth;
+	//	mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
+	//	mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
+	//	staticObject.push_back(mapObject);
+	//}
 }
 
-std::vector<Object*> &GameMap::getStaticObject()
-{
-	return staticObject;
-}
+//std::vector<Object*> &GameMap::getStaticObject()
+//{
+//	return staticObject;
+//}
 
 GameMap::~GameMap()
 {
 	if (tMap != nullptr)
 		delete tMap;
-	for (int i = 0; i < staticObject.size(); ++i)
-	{
-		delete staticObject[i];
-	}
-	staticObject.clear();
+	//for (int i = 0; i < staticObject.size(); ++i)
+	//{
+	//	delete staticObject[i];
+	//}
+	//staticObject.clear();
 }
 
 void GameMap::Draw()

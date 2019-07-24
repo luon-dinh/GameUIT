@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 
-Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
+Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const char * staticMapObject)
 {
 	mapWidth = _mapWidth;
 	mapHeight = _mapHeight;
@@ -30,7 +30,92 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 		}
 	}
 	LoadSpawnPosition(spawnPosition);
+	LoadMapObjects(staticMapObject);
 }
+
+void Grid::LoadMapObjects(const char * mapObjectFilePath)
+{
+	//Load tất cả các Map Object (Ground, Non-Ground,...).
+	std::ifstream inFile;
+	inFile.open(mapObjectFilePath);
+	if (!inFile)
+		PrintDebug("MapObject file not exist ! \n");
+	std::string sInputString;
+
+	std::getline(inFile, sInputString);
+
+	std::istringstream iss(sInputString);
+
+	int numOfObject;
+
+	iss >> numOfObject;
+
+	Type entityTag = Type::NONE;
+
+	int objectID = -1;
+	int objectTopLeftX = -1;
+	int objectTopLeftY = -1;
+	int objectWidth = -1;
+	int objectHeight = -1;
+
+	for (int i = 0; i < numOfObject; ++i)
+	{
+ 		std::getline(inFile, sInputString);
+		std::istringstream iss(sInputString);
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+
+		//Xét từng ID để xem entityTag của nó là gì.
+		if (objectID == ObjectID::GROUND)
+			entityTag = Type::GROUND;
+		else if (objectID == ObjectID::SOLIDBOX)
+			entityTag = Type::SOLIDBOX;
+		else if (objectID == ObjectID::WATERRL)
+			entityTag = Type::WATERRL;
+		else if (objectID == ObjectID::ROPE)
+			entityTag = Type::ROPE;
+		else if (objectID == ObjectID::ONOFF)
+			entityTag = Type::ONOFF;
+		else if (objectID == ObjectID::DOOR)
+			entityTag = Type::DOOR;
+
+		Object* mapObject = new MapStaticObject();
+		mapObject->type = entityTag;
+		mapObject->tag = Tag::STATICOBJECT;
+		mapObject->height = objectHeight;
+		mapObject->width = objectWidth;
+		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
+		mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
+		AddStaticMapObjects(mapObject);
+	}
+}
+
+void Grid::AddStaticMapObjects(Object * object)
+{
+	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
+	int cellXFrom = (object->pos.x - object->width/2) / cellSize;
+	int cellXTo = cellXFrom;
+	int cellYFrom = (object->pos.y + object->height/2) / cellSize;
+	int cellYTo = cellYFrom;
+	while(cellXTo*cellSize < (object->pos.x + object->width / 2))
+	{
+		++cellXTo;
+	} 
+
+	while (cellYTo * cellSize < (object->pos.y + object->height / 2))
+	{
+		++cellYTo;
+	} 
+
+	//Thêm object trên nhiều cell.
+	for (int i = cellYFrom; i < cellYTo; ++i)
+	{
+		for (int j = cellXFrom; j < cellXTo; ++j)
+		{
+			cells[i][j].push_front(object);
+		}
+	}
+}
+
 
 void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 {
@@ -88,15 +173,17 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 	//Chứng tỏ object còn đang hoạt động nên không delete.
 	for (auto object : curList)
 		object->DeactivateObjectInGrid();
-	for (auto it = curList.begin(); it != curList.end(); ++it)
+	auto it = curList.begin();
+	while(it != curList.end())
 	{
 		//Nếu object hiện tại vẫn đang được kích hoạt thì ta bỏ qua.
 		if ((*it)->GetActivatedInGridStatus())
+		{
+			++it;
 			continue;
+		}
 		delete (*it);
-		it = curList.erase(it);
-		if (it == curList.end())
-			break;
+		curList.erase(it++);
 	}
 }
 
@@ -315,16 +402,17 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	std::list<Object*> &secondCell = cells[secondCellY][secondCellX];
 
 	//Duyệt qua các phần tử của cell đầu tiên.
-	for (std::list<Object*>::iterator firstCellIt = firstCell.begin(); firstCellIt != firstCell.end(); ++firstCellIt)
+	//Xét va chạm object động.
+	for (auto firstObj : firstCell)
 	{
-		BoundingBox firstCellObjBoundingBox = (*firstCellIt)->getBoundingBox();
-		for (std::list<Object*>::iterator secondCellIt = secondCell.begin(); secondCellIt != secondCell.end(); ++secondCellIt)
+		BoundingBox firstCellObjBoundingBox = firstObj->getBoundingBox();
+		for (auto secondObj : secondCell)
 		{
 			//Không xét trường hợp tự va chạm với chính mình.
-			if (*firstCellIt == *secondCellIt)
+			if (firstObj == secondObj)
 				continue;
 
-			BoundingBox secondCellObjBoundingBox = (*secondCellIt)->getBoundingBox();
+			BoundingBox secondCellObjBoundingBox = secondObj->getBoundingBox();
 
 			//AABB.
 			//bool collided = Collision::getInstance()->IsCollide(firstCellObjBoundingBox, secondCellObjBoundingBox);
@@ -344,6 +432,11 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 			if (firstObjColOut.side == CollisionSide::none)
 				continue;
 
+			if (firstObj->tag == Tag::PLAYER || secondObj->tag == Tag::PLAYER)
+			{
+				int a = 1;
+			}
+
 			//Hướng va chạm ngược so với object kia.
 			if (firstObjColOut.side == CollisionSide::left)
 				secondObjColOut.side = CollisionSide::right;
@@ -361,8 +454,8 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 				secondObjColOut.side = firstObjColOut.side;
 
 			//Xử lý va chạm giữa 2 object với nhau.
-			(*firstCellIt)->OnCollision(*secondCellIt, &firstObjColOut);
-			(*secondCellIt)->OnCollision(*firstCellIt, &secondObjColOut);
+			firstObj->OnCollision(secondObj, &firstObjColOut);
+			secondObj->OnCollision(firstObj, &secondObjColOut);
 		}
 	}
 }
@@ -383,6 +476,10 @@ void Grid::UpdateActivatedCells(double dt)
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
 				(*it)->Update(dt);
+				if ((*it)->tag == Tag::PLAYER)
+				{
+					int a = 1;
+				}
 				it = MoveObjectAndIncrementIterator(cellX, cellY, it, (*it)); //Lúc này là đã di chuyển luôn iterator rồi.
 			}
 		}
@@ -392,6 +489,10 @@ void Grid::UpdateActivatedCells(double dt)
 
 std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int cellY, std::list<Object*>::iterator it, Object* object)
 {
+	//Nếu là static object thì không có việc move.
+	if (!object->IsMovableInGrid())
+		return (++it);
+
 	//Kiểm tra xem object sau khi di chuyển còn thuộc cell hiện tại hay không.
 	int nextCellX = object->pos.x / cellSize;
 	int nextCellY = object->pos.y / cellSize;
@@ -421,12 +522,13 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
-				Container* itemLooter = dynamic_cast<Container*> (object);
+				MapStaticObject* itemLooter = dynamic_cast<MapStaticObject*> (object);
 				if (itemLooter != nullptr)
 				{
 					int a = 10;
 				}
 				object->RenderInGrid();
+				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 		}
 	}
@@ -435,17 +537,6 @@ void Grid::RenderActivatedCells()
 
 void Grid::DrawDebugObject()
 {
-	//Vẽ tất cả các object động.
-	//Duyệt qua tất cả các cell.
-	for (int i = 0; i < gridHeight; ++i)
-	{
-		for (int j = 0; j < gridWidth; ++j)
-		{
-			for (auto object : cells[i][j])
-			{
-				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
-			}
-		}
-	}
+
 }
 

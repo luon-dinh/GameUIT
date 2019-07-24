@@ -24,10 +24,11 @@ public:
 	MapName GetAndResetDestinationMap();
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
 	virtual void ResetPlayerPosition() {}; //Nhớ override hàm setPlayer lại cho từng PlayScene khác nhau.
+	void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:
-	std::vector<Object*> mapStaticObject;
+	//std::vector<Object*> mapStaticObject;
 	bool Done = false; //Biến dùng để xét xem cảnh hiện tại đã hoàn thành chưa (phục vụ cho mục đích xoá khỏi bộ nhớ).
 	MapName ReplaceToThisMap = MapName::NOMAP; //Biến dùng để báo cho Scene Manager chuyển cảnh sang map mới.
 	virtual void ProcessUpdates(double dt);

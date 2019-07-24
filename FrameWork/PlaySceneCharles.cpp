@@ -8,13 +8,10 @@ PlaySceneCharles::PlaySceneCharles()
 	world = new GameMap(world01tile, world01map, world01MapObject, MapName::CHARLES);
 	world->SetCamera(camera);
 	camera->SetMapProperties(world->getMapHeight(), world->getMapWidth());
-	mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
+	//mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
 
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation);
-	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
 }
 
 PlaySceneCharles::~PlaySceneCharles()
@@ -26,7 +23,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 {
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
-	player->pos.x = 50;
+	player->pos.x = 550;
 	player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);

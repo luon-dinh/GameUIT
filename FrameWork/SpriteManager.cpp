@@ -87,7 +87,13 @@ void SpriteManager::LoadResources()
 	// cắt sprite cho container
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 0, 16, 16));
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 16, 16, 32));
-	// cắt sprite cho enemy
+	//cắt sprite cho blue soldier
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 0, 43, 24));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 24, 43, 48));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 48, 43, 72));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 43, 0, 86, 24));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 86, 0, 129, 24));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 129, 0, 172, 24));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
