@@ -510,14 +510,14 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 		for (auto staticObject : firstStaticCell)
 		{
 			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
-				continue;
+				break;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
 			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
-				continue;
+				break;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
@@ -529,14 +529,14 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 		for (auto staticObject : firstStaticCell)
 		{
 			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
-				continue;
+				break;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
 			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
-				continue;
+				break;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
@@ -547,7 +547,6 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	{
 		for (auto secondObj : secondCell)
 		{
-
 			//Lấy tất cả static trong cả 2 cell va chạm với cả 2 object đang xét.
 			CollisionProcessOfDynamicObjects(firstObj, secondObj);
 		}
