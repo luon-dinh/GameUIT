@@ -429,33 +429,47 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 			secondObjColOut.collisionTime = firstObjColOut.collisionTime;
 			
 			//Nếu không có va chạm xảy ra.
-			if (firstObjColOut.side == CollisionSide::none)
-				continue;
+			if (firstObjColOut.side != CollisionSide::none)
+			{
+				//Hướng va chạm ngược so với object kia.
+				if (firstObjColOut.side == CollisionSide::left)
+					secondObjColOut.side = CollisionSide::right;
+
+				else if (firstObjColOut.side == CollisionSide::bottom)
+					secondObjColOut.side = CollisionSide::top;
+
+				else if (firstObjColOut.side == CollisionSide::top)
+					secondObjColOut.side = CollisionSide::bottom;
+
+				else if (firstObjColOut.side == CollisionSide::right)
+					secondObjColOut.side = CollisionSide::left;
+
+				else
+					secondObjColOut.side = firstObjColOut.side;
+
+				//Xử lý va chạm giữa 2 object với nhau.
+				firstObj->OnCollision(secondObj, &firstObjColOut);
+				secondObj->OnCollision(firstObj, &secondObjColOut);
+			}
+
+			else if (Collision::getInstance()->IsCollide(firstCellObjBoundingBox, secondCellObjBoundingBox))
+			{
+				firstObj->OnRectCollided(secondObj);
+				secondObj->OnRectCollided(firstObj);
+			}
+
+			else
+			{
+				firstObj->OnNotCollision(secondObj);
+				secondObj->OnNotCollision(firstObj);
+			}
 
 			if (firstObj->tag == Tag::PLAYER || secondObj->tag == Tag::PLAYER)
 			{
 				int a = 1;
 			}
 
-			//Hướng va chạm ngược so với object kia.
-			if (firstObjColOut.side == CollisionSide::left)
-				secondObjColOut.side = CollisionSide::right;
-
-			else if (firstObjColOut.side == CollisionSide::bottom)
-				secondObjColOut.side = CollisionSide::top;
-
-			else if (firstObjColOut.side == CollisionSide::top)
-				secondObjColOut.side = CollisionSide::bottom;
-
-			else if (firstObjColOut.side == CollisionSide::right)
-				secondObjColOut.side = CollisionSide::left;
-
-			else
-				secondObjColOut.side = firstObjColOut.side;
-
-			//Xử lý va chạm giữa 2 object với nhau.
-			firstObj->OnCollision(secondObj, &firstObjColOut);
-			secondObj->OnCollision(firstObj, &secondObjColOut);
+			
 		}
 	}
 }

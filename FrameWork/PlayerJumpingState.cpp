@@ -75,7 +75,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 
 	// va chạm với nước
 	if (object->type == Type::WATERRL) {
-		if (player->GetPreviousState() != NULL && player->GetPreviousState()->state == State::FLOATING)
+		if ( (player->GetPreviousState() != nullptr) && (player->GetPreviousState()->state == State::FLOATING))
 			return;
 		player->OnCollisionWithWater(object, collision);
 		return;
