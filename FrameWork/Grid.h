@@ -54,7 +54,7 @@ private:
 
 	void CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY);
 	void CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2);
-	void CollisionProcessOfStaticObject(MapStaticObject* sObj1, Object* obj2);
+	bool CollisionProcessOfStaticObject(MapStaticObject* sObj1, Object* obj2);
 
 	void LoadSpawnPosition(const char *);
 	void LoadMapObjects(const char *);

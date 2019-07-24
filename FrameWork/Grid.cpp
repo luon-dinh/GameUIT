@@ -461,7 +461,7 @@ void Grid::CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2)
 	}
 }
 
-void Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object* object)
+bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object* object)
 {
 	BoundingBox staticObjBoundingBox = staticObject->getBoundingBox();
 	BoundingBox objBoundingBox = object->getBoundingBox();
@@ -471,6 +471,7 @@ void Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object*
 	{
 		//Xử lý va chạm giữa 2 object với nhau.
 		object->OnCollision(staticObject, &colOut);
+		return true;
 	}
 	else if (Collision::getInstance()->IsCollide(objBoundingBox, staticObjBoundingBox))
 	{
@@ -481,12 +482,14 @@ void Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object*
 		}
 		staticObject->OnRectCollided(object);
 		object->OnRectCollided(staticObject);
+		return true;
 	}
 	else
 	{
 		staticObject->OnNotCollision(object);
 		object->OnNotCollision(staticObject);
 	}
+	return false;
 }
 
 void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY)
@@ -504,28 +507,30 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	{
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
-		isChecked.insert(object);
 		for (auto staticObject : firstStaticCell)
 		{
-			CollisionProcessOfStaticObject(staticObject, object);
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
-			CollisionProcessOfStaticObject(staticObject, object);
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
 		}
 	}
 	for (auto object : secondCell)
 	{
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
-		isChecked.insert(object);
 		for (auto staticObject : firstStaticCell)
 		{
-			CollisionProcessOfStaticObject(staticObject, object);
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
-			CollisionProcessOfStaticObject(staticObject, object);
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
 		}
 	}
 
