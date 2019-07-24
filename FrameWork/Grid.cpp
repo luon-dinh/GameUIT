@@ -509,11 +509,15 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 			continue;
 		for (auto staticObject : firstStaticCell)
 		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				continue;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				continue;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
@@ -524,11 +528,15 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 			continue;
 		for (auto staticObject : firstStaticCell)
 		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				continue;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
 		for (auto staticObject : secondStaticCell)
 		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				continue;
 			if (CollisionProcessOfStaticObject(staticObject, object))
 				isChecked.insert(object);
 		}
