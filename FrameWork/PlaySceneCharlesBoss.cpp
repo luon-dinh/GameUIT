@@ -13,16 +13,14 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 	world->SetCamera(camera);
 	worldDark->SetCamera(camera);
 
-	mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
+	//mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
 
 	currentWorld = world;
 	isLightOn = true;
 
 	//Xét tạo Grid.
-	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn);
+	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn, world01BossMapObject);
 	//Thêm player và shield vào Grid.
-	grid->Add(player);
-	grid->Add(shield);
 }
 
 PlaySceneCharlesBoss::~PlaySceneCharlesBoss()

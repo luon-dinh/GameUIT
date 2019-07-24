@@ -41,6 +41,17 @@ void PlayerKickingState::InputHandler()
 			player->SetVy(player->vy + 0.15);
 		}
 	}
+
+	//  Đổi hướng qua trái
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
+	}
+
+	// Đổi hướng qua phải
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+	}
+
 	this->curKickTime++;
 
 	/*if (player->IsReachMaxJump()) {
@@ -62,17 +73,14 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		else {
 			// chạm nền dưới
 			if (side == CollisionSide::bottom ) {
-				player->SetGroundCollision(new GroundCollision(object, side));
-				player->ChangeState(State::STANDING);
-				player->pos.y = object->pos.y + player->getHeight() / 2;
+				player->OnStandingOnGround(object);
 				DebugOut(L"\nState Now:\n");
 				PrintDebugNumber(player->state);
 			}
 		}
 	}
 	if (object->type == Type::WATERRL) {
-		player->ChangeState(State::STANDING);
-		player->pos.y = 66;
+		player->OnCollisionWithWater(object, collision);
 	}
 }
 

@@ -69,20 +69,17 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 
 	// collide with ground
 	if (object->type == Type::GROUND) { 
-		player->SetGroundCollision(new GroundCollision(object, side));
 		if (side == CollisionSide::bottom)
 		{
+			player->OnStandingOnGround(object);
 			DebugOut(L"\nRunning Bottom");
-			player->ChangeState(State::STANDING);
-			player->pos.y = object->pos.y + player->getHeight() / 2;
 		}
 		return;
 	}
 
-	// va chạm với solid box
+	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
-		player->SetVx(0);
-		return;
+		player->OnCollisionWithSolidBox(object, collision);
 	}
 }
 
