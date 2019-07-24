@@ -10,7 +10,7 @@ class Camera
 private:
 	//Toạ độ bounding box cho việc dời camera thường.
 	//Toạ độ này là từ màn hình vào 4 cạnh của camera.
-	const int topBound = 90;
+	const int topBound = 40;
 	const int bottomBound = 88;
 	const int leftBound = 70;
 	const int rightBound = 135;
