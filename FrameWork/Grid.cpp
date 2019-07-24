@@ -454,6 +454,11 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 
 			else if (Collision::getInstance()->IsCollide(firstCellObjBoundingBox, secondCellObjBoundingBox))
 			{
+				if (firstObj->tag == Tag::PLAYER && secondObj->type == Type::GROUND) {
+					if (((Player*)firstObj)->GetOnAirState() == Player::OnAir::Falling) {
+						int a = 1;
+					}
+				}
 				firstObj->OnRectCollided(secondObj);
 				secondObj->OnRectCollided(firstObj);
 			}
