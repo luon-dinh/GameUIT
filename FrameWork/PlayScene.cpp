@@ -175,39 +175,6 @@ void PlayScene::EnvironmentUpdate(double dt)
 
 void PlayScene::CollisionProcess(double dt)
 {
-	//Object* collidedObj = NULL;
-	//collisionOut minColOut;
-	//minColOut.collisionTime = 2;
-	//Xử lý va chạm giữa các object động với object tĩnh trước.
-	//Kiểm tra collision với ground.
-
-	//for (int i = 0; i < mapStaticObject.size(); ++i)
-	//{
-	//	//Lấy BoxRect của Player.
-	//	BoundingBox playerBox = player->getBoundingBox();
-	//	//Lấy BoxRect của MapObject.
-	//	BoundingBox objectBox = mapStaticObject[i]->getStaticObjectBoundingBox();
-
-	//	collisionOut colOut;
-
-	//	colOut = Collision::getInstance()->SweptAABB(playerBox, objectBox);
-
-	//	if (colOut.side != CollisionSide::none) {
-	//		// va chạm với vật
-	//		player->OnCollision(mapStaticObject[i], &colOut);
-	//		return;
-	//	}
-	//	else {
-	//		// không phát hiện va chạm AABB nhưng có va chạm RECT
-	//		if (Collision::getInstance()->IsCollide(playerBox, objectBox)) {
-	//			player->OnRectCollided(mapStaticObject[i]);
-	//		}
-	//		else {
-	//			// Không phát hiện va chạm
-	//			player->OnNotCollision(mapStaticObject[i]);
-	//		}
-	//	}
-	//}
 	//Kiểm tra các object động va chạm với nhau.
 	grid->CollisionProcess();
 }
