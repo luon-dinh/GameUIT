@@ -148,7 +148,7 @@ public:
 
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void OnNotCollision(Object* object);
-	void OnRectCollided(Object* object);
+	bool OnRectCollided(Object* object);
 	void OnFallingOffGround();						// xử lý khi rơi khỏi ground
 	void OnStandingOnGround(Object* ground);		// xử lý khi đứng trên ground
 	void OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut);

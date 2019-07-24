@@ -481,8 +481,8 @@ bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object*
 			}
 		}
 		staticObject->OnRectCollided(object);
-		object->OnRectCollided(staticObject);
-		return true;
+		bool collided = object->OnRectCollided(staticObject);
+		return collided;
 	}
 	else
 	{

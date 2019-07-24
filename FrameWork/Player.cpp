@@ -513,43 +513,49 @@ void Player::OnNotCollision(Object* object) {
 	}
 	}
 }
-void Player::OnRectCollided(Object* object) {
+bool Player::OnRectCollided(Object* object) {
 	switch (object->type) {
 		case Type::GROUND:{
 			// Nếu đang rơi xuống nước thì không xét va chạm với ground
 			if (this->GetOnAirState() == OnAir::DropToWater)
-				return;
+				return true;
 			if (this->GetOnAirState() == OnAir::Falling) {
 				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
 				if (this->GetPreOnAirState() == OnAir::None)
-					return;
+					return true;
  				this->TryStandOnGround(object);
-				return;
+				return true;
 			}
-			return;
+			return false;
 		}
 		case Type::WATERRL: {
 			if (this->GetOnAirState() == OnAir::JumpFromWater) {
-				return;
+				return false;
 			}
 			if (this->GetOnAirState() == OnAir::Falling) {
 				collisionOut colOut;
 				colOut.side = CollisionSide::bottom;
 				this->OnCollisionWithWater(object, &colOut);
 			}
-			return;
+			return true;
 		}	
 		case Type::SOLIDBOX: {
 			collisionOut colOut;
+			bool isCollided = false;
 			if (this->smashLeft) {
 				colOut.side = CollisionSide::left;
 				this->OnCollisionWithSolidBox(object, &colOut);
+				isCollided = true;
 			}
 			if (this->smashRight) {
 				colOut.side = CollisionSide::right;
 				this->OnCollisionWithSolidBox(object, &colOut);
+				isCollided = true;
 			}
-			return;
+			bool tryStand = this->TryStandOnGround(object);
+			if (isCollided)
+				return true;
+	 		return tryStand;
 		}
 	}
 }
@@ -590,7 +596,7 @@ bool Player::StandOnCurrentGround() {
 	return FALSE;
 }
 bool Player::TryStandOnGround(Object* ground) {
-	if (ground->type != Type::GROUND)
+	if (ground->type != Type::GROUND && ground->type != Type::SOLIDBOX)
 		return FALSE;
 
 	//if (this->GetGroundCollision()->GetGround() != NULL) {
@@ -658,7 +664,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 			break;
 		}
 		case CollisionSide::right: {
-  			this->pos.x = bound.left - this->getWidth() / 2;
+     			this->pos.x = bound.left - this->getWidth() / 2;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}
