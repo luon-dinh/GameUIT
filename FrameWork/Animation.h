@@ -5,13 +5,13 @@
 typedef Sprite::TransformationMode TransformationMode;
 
 class Animation {
-private:
+	
+public:
 	int toframe;
 	int  tiperframe;
 	int ticurframe;
 	std::vector<Sprite*>sprites;
 	Tag tag;
-public:
 	~Animation();
 	Animation() {};
 	Animation(Tag tag, int idex);
