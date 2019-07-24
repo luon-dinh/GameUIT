@@ -31,8 +31,8 @@ void PlayScenePittsburgh::ResetPlayerPosition()
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
 	player->pos.x = 0;
-	//player->pos.y = world->getMapHeight() - 50;
-	player->pos.y = SCREEN_HEIGHT;
+	player->pos.y = world->getMapHeight() - 50;
+	//player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetAirState(Player::OnAir::Falling);
 	player->SetGroundCollision(new GroundCollision());
