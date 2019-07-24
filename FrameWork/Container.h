@@ -6,6 +6,7 @@ class Container :
 	public Object
 {
 public:
+	int ticuframe ;
 	Animation *animation;
 	std::vector<Item*>items;
 	int numberItems;

@@ -88,9 +88,6 @@
     <Filter Include="Objects\Enemy">
       <UniqueIdentifier>{dea05333-a33e-4d51-875f-1416567f4247}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Enemy\Solder">
-      <UniqueIdentifier>{a0180c3f-2930-483c-b022-da8a480f89a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Item">
       <UniqueIdentifier>{1e0eb7c6-8fef-42fb-ab33-6dd9d8fccb12}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,9 @@
     </Filter>
     <Filter Include="Objects\MapStaticObject">
       <UniqueIdentifier>{8a09a424-002d-4c3a-b2ec-f9a10f78a72a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Bullet">
+      <UniqueIdentifier>{0733bdf0-08e1-468f-9bdd-d99434520860}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,24 +261,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Solder.cpp">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyState.cpp">
-      <Filter>Objects\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="SolderDuckState.cpp">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClCompile>
-    <ClCompile Include="SolderRunState.cpp">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClCompile>
-    <ClCompile Include="SolderStandState.cpp">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClCompile>
-    <ClCompile Include="SolderBeatenState.cpp">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Objects\Item</Filter>
     </ClCompile>
@@ -287,6 +269,18 @@
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Solder.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="RedRockerter.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteRockerter.cpp">
+      <Filter>Objects\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,24 +440,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Objects\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Solder.h">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyState.h">
-      <Filter>Objects\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SolderDuckState.h">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClInclude>
-    <ClInclude Include="SolderRunState.h">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClInclude>
-    <ClInclude Include="SolderStandState.h">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClInclude>
-    <ClInclude Include="SolderBeatenState.h">
-      <Filter>Objects\Enemy\Solder</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Objects\Item</Filter>
     </ClInclude>
@@ -472,6 +448,33 @@
     </ClInclude>
     <ClInclude Include="ItemManager.h">
       <Filter>Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Solder.h">
+      <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSolder.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletRedRockerter.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="RedRockerter.h">
+      <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletWhiteRockerter.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletGreenCannon.h">
+      <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteRockerter.h">
+      <Filter>Objects\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="MapStaticObject.h">
       <Filter>Objects\MapStaticObject</Filter>

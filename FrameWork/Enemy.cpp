@@ -1,29 +1,39 @@
 #include "Enemy.h"
-
-
-Enemy::Enemy(Enemy::EnemyType type) {
-	this->tag = Tag::ENERMY;
-	this->type = type;
-
+#include"Camera.h"
+Enemy::Enemy()
+{
 }
 
 Enemy::~Enemy() {
 
 }
 
-Enemy::EnemyType Enemy::GetType() {
-	return this->type;
+
+void Enemy::Update(float dt)
+{
+	this->curentAnimation->Update(dt);
 }
 
-void Enemy::SetType(EnemyType type) {
-	this->type = type;
+void Enemy::Render()
+{
+	if (!isDead)
+	{
+		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+		switch (this->direction)
+		{
+		case Player::MoveDirection::LeftToRight:
+			this->curentAnimation->Render(D3DXVECTOR2(this->pos), TransformationMode::FlipHorizontal);
+			break;
+		case Player::MoveDirection::RightToLeft:
+			this->curentAnimation->Render(this->pos);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
-Enemy::Direction Enemy::GetDirection() {
-	return this->direction;
+void Enemy::Respawn()
+{
+	isDead = false;
 }
-
-void Enemy::SetDirection(Enemy::Direction direction) {
-	this->direction = direction;
-}
-

@@ -176,6 +176,8 @@ public:
 	bool collisionResult;
 
 #pragma endregion
+
+	void DeactivateObjectInGrid()override {};
 };
 
 Player::MoveDirection;
