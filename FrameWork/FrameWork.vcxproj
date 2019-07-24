@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Container.cpp" />
@@ -146,7 +147,6 @@
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Global.cpp" />
@@ -185,14 +185,11 @@
     <ClCompile Include="PlayScenePittsburghPortal01.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal02.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
+    <ClCompile Include="RedRockerter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Solder.cpp" />
-    <ClCompile Include="SolderBeatenState.cpp" />
-    <ClCompile Include="SolderDuckState.cpp" />
-    <ClCompile Include="SolderRunState.cpp" />
-    <ClCompile Include="SolderStandState.cpp" />
     <ClCompile Include="SolidBoxCollision.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -200,9 +197,16 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="WhiteRockerter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletGreenCannon.h" />
+    <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="BulletRedRockerter.h" />
+    <ClInclude Include="BulletSolder.h" />
+    <ClInclude Include="BulletWhiteRockerter.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Container.h" />
@@ -210,7 +214,6 @@
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Global.h" />
@@ -249,14 +252,11 @@
     <ClInclude Include="PlayScenePittsburghPortal01.h" />
     <ClInclude Include="PlayScenePittsburghPortal02.h" />
     <ClInclude Include="PlaySceneWithLight.h" />
+    <ClInclude Include="RedRockerter.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Solder.h" />
-    <ClInclude Include="SolderBeatenState.h" />
-    <ClInclude Include="SolderDuckState.h" />
-    <ClInclude Include="SolderRunState.h" />
-    <ClInclude Include="SolderStandState.h" />
     <ClInclude Include="SolidBoxCollision.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
@@ -264,6 +264,7 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
+    <ClInclude Include="WhiteRockerter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

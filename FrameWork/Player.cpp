@@ -114,8 +114,6 @@ void Player::Render()
 	}
 }
 
-
-
 Player* Player::getInstance()
 {
 	if (!instance)

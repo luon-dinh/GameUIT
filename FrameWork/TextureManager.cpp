@@ -21,7 +21,16 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::ITEMCONTAINER, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
 	//texture dùng cho blue soldier
 	textures->addTexture(Tag::BLUESOLDIER, (char*)".\\..\\Resources\\Images\\Enermy\\BlueSoldier.png");
+	textures->addTexture(Tag::BLUESOLDERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\SoldierBullet.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
+	//add texture dùng cho bullet explode
+	textures->addTexture(Tag::BULLETEXPLODE, (char*)".\\..\\Resources\\Images\\Enermy\\BulletExplode.png");
+	//texture dùng cho redrockerter
+	textures->addTexture(Tag::REDROCKERTERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\RedRockerterBullet.png");
+	textures->addTexture(Tag::REDROCKERTER, (char*)".\\..\\Resources\\Images\\Enermy\\RedRockerter.png");
+	//texture dùng cho white rockerter
+	textures->addTexture(Tag::WHITEROCKERTER, (char*)".\\..\\Resources\\Images\\Enermy\\WhiteRockerter.png");
+	textures->addTexture(Tag::WHITEROCKERTERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BulletWhiteRockerter.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

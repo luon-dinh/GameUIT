@@ -57,7 +57,14 @@ Container::~Container()
 
 void Container::Update(float dt)
 {
-	this->animation->curframeindex = 0;
+	
+	ticuframe -= dt;
+	if (ticuframe <= 0)
+	{
+		animation->curframeindex = 0;
+		ticuframe = 0;
+	}
+
 	for (auto item : items)
 		item->Update(dt);
 }
@@ -95,7 +102,7 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 	if(object->tag==Tag::SHIELD||((player->state==State::STAND_PUNCH||player->state==DUCKING_PUNCHING)&& object->tag==Tag::PLAYER))
 	{
 		animation->curframeindex = 1;
-		animation->DelayCurrentFrame(50);
+		ticuframe = 150;
 		if (numberItems != 0)
 		{
 			items[numberItems - 1]->SetActive(true);
@@ -114,7 +121,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 	if ((object->tag == Tag::SHIELD&&shield->state==Shield::ShieldState::Attack) || ((player->state == State::STAND_PUNCH || player->state == DUCKING_PUNCHING) && object->tag == Tag::PLAYER))
 	{
 		animation->curframeindex = 1;
-		animation->DelayCurrentFrame(50);
+		ticuframe = 500;
 		if (numberItems != 0)
 		{
 			items[numberItems - 1]->SetActive( true);

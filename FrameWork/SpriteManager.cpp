@@ -94,6 +94,34 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 43, 0, 86, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 86, 0, 129, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 129, 0, 172, 24));
+	//cắt sprite cho bullet explode
+	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 0, 28, 30));
+	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 30, 28, 60));
+	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 60, 28, 90));
+	//cắt sprite cho blue solder bullet
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDERBULLET, 0, 0, 6, 6));
+	//cắt sprite cho redrockerter bullet
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTERBULLET, 0, 0, 15, 15));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTERBULLET, 0, 15, 15, 30));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTERBULLET, 15, 0, 30, 15));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTERBULLET, 15, 15, 30, 30));
+	//cắt sprite cho red rockerter
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 0, 46, 24));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 24, 46, 48));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 48, 46, 72));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 46, 0, 92, 24));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 92, 0, 138, 24));
+	//cắt sprite cho white rockerter bullet
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 0, 0, 15, 15));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 0, 15, 15, 30));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 15, 0, 30, 15));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 15, 15, 30, 30));
+	//cắt sprite cho white rockerter
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 0, 0, 46, 24));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 0, 24, 46, 48));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 0, 48, 46, 72));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 46, 0, 92, 24));
+	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 92, 0, 138, 24));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
