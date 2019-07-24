@@ -1,4 +1,5 @@
 ﻿#include "Grid.h"
+#include <unordered_set>
 #include <fstream>
 #include <sstream>
 
@@ -429,13 +430,24 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	std::list<Object*> &firstCell = cells[firstCellY][firstCellX];
 	std::list<Object*> &secondCell = cells[secondCellY][secondCellX];
 
+	//Tạo một map để tránh việc xét va chạm 2 lần của cùng 1 object.
+	std::unordered_set<Object*> isChecked;
+
 	//Duyệt qua các phần tử của cell đầu tiên.
 	//Xét va chạm object động.
 	for (auto firstObj : firstCell)
 	{
+		//Kiểm tra xem nếu đã xét va chạm trước đó rồi thì không xét nữa.
+		if (isChecked.find(firstObj) != isChecked.end())
+			continue;
+		isChecked.insert(firstObj);
 		BoundingBox firstCellObjBoundingBox = firstObj->getBoundingBox();
 		for (auto secondObj : secondCell)
 		{
+			//Kiểm tra xem nếu đã xét va chạm trước đó rồi thì không xét nữa.
+			if (isChecked.find(secondObj) != isChecked.end())
+				continue;
+			isChecked.insert(secondObj);
 			//Không xét trường hợp tự va chạm với chính mình.
 			if (firstObj == secondObj)
 				continue;
