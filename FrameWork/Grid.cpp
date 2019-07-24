@@ -118,6 +118,12 @@ void Grid::AddStaticMapObjects(Object * object)
 		++cellYTo;
 	} 
 
+	//Chặn không cho object add cell ra ngoài.
+	if (cellXTo > gridWidth)
+		cellXTo = gridWidth;
+	if (cellYTo > gridHeight)
+		cellYTo = gridHeight;
+
 	//Thêm object trên nhiều cell.
 	for (int i = cellYFrom; i < cellYTo; ++i)
 	{
