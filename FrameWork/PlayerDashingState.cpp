@@ -61,5 +61,9 @@ void PlayerDashingState::Update(float dt) {
 }
 
 void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
-
+	auto player = Player::getInstance();
+	
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+	}
 }

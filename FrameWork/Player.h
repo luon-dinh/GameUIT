@@ -101,6 +101,10 @@ public:
 	D3DXVECTOR2 shieldReturnPos;
 	bool isStateChanged;
 
+	bool smashRight;
+	bool smashLeft;
+	bool isStopBySolidBox;
+
 	Player();
 	~Player();
 	
@@ -138,6 +142,8 @@ public:
 
 
 	void DeactivateObjectInGrid()override {};
+
+	bool IsStopBySolidBox();
 
 
 	void OnCollision(Object* object, collisionOut* collisionOut);

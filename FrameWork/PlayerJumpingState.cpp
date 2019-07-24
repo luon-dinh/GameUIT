@@ -57,11 +57,9 @@ void PlayerJumpingState::Update(float dt) {
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
-	auto player = Player::getInstance();
+   	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (collision->collisionTime == 0)
-		return;
 
 	// va chạm với ground
 	if (object->type == Type::GROUND) { 
@@ -83,6 +81,8 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 
 	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
+		/*if (collision->collisionTime == 0)
+			return;*/
 		player->OnCollisionWithSolidBox(object, collision);
 	}
  }
