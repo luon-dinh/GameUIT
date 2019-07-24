@@ -76,7 +76,7 @@ public:
 	void ChangeState(PlayerState* newplayerstate);
 	void ChangeState(State stateName);
 	void Update(float dt);
-	virtual void OnCollision(Object* object, collisionOut* collisionOut);
+
 	void Render();
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
@@ -99,6 +99,7 @@ public:
 	SolidBoxCollision* solidBoxCollision;
 
 	D3DXVECTOR2 shieldReturnPos;
+	bool isStateChanged;
 
 	Player();
 	~Player();
@@ -120,27 +121,37 @@ public:
 	BOOL IsReachMaxJump();
 
 	void Float(MoveDirection moveDir);
-	void HandleWaterCollision(Object* water, collisionOut* side);
+
 	BOOL IsOnMainGround();
 	void SetShieldReturnEdge(ShieldReturnEdge edge);
 	ShieldReturnEdge GetShieldReturnEdge();
 	D3DXVECTOR2 GetShieldReturnPos();
+
+	bool StandOnCurrentGround();
 #pragma endregion
 
 #pragma region Player Collision Handle
 	void SetGroundCollision(GroundCollision* groundCollision);
 	GroundCollision* GetGroundCollision();
-	void SetSolidBoxCollision(SolidBoxCollision* solidBoxCollision);
-	SolidBoxCollision* GetSolidBoxCollision();
-	
-	BOOL CollideWithSolidBox(Object* solidBox);
 
-	void HandleFallingOffGround();					// xử lý khi rơi khỏi ground
-	void HandleStandingOnGround(Object* ground);	// xử lý khi đứng trên ground
-	void HandleCollisionWithSolidBox(Object* solidBox);
-#pragma endregion
+	bool TryStandOnGround(Object* ground);
+
 
 	void DeactivateObjectInGrid()override {};
+
+
+	void OnCollision(Object* object, collisionOut* collisionOut);
+	void OnNotCollision(Object* object);
+	void OnRectCollided(Object* object);
+	void OnFallingOffGround();						// xử lý khi rơi khỏi ground
+	void OnStandingOnGround(Object* ground);		// xử lý khi đứng trên ground
+	void OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut);
+	void OnCollisionWithWater(Object* water, collisionOut* side);
+	void OnSmashSolidBox(Object* solid, CollisionSide side);
+	void OnHeadOnSolidBox(Object* solid);
+	void OnStateChanged(State oldState, State newState);
+
+#pragma endregion
 };
 
 Player::MoveDirection;

@@ -128,9 +128,6 @@ void PlayerStandingState::StopFrameFlip() {
 }
 
 void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
-	auto side = collision->side;
-	auto player = Player::getInstance();
-
 }
 
 
