@@ -655,27 +655,11 @@ void Player::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 		}
 	}
 }
-bool Player::CanStandOnGround(Object* ground) {
-	auto groundBox = ground->getStaticObjectBoundingBox();
-	auto playerBox = this->getBoundingBox();
-
-	if (Collision::getInstance()->IsCollide(playerBox, groundBox)) {
-		/*if (playerBox.right - groundBox.left <= 5) {
-			this->pos.x -= 6;
-			return FALSE;
-		}
-		if (groundBox.right - playerBox.left <= 5) {
-			this->pos.x += 6;
-			return FALSE;
-	 	}*/
-		return TRUE;
-	}
-	return FALSE;
-}
 
 bool Player::IsStopBySolidBox() {
 	return (this->smashLeft && this->vx <= 0) || (this->smashRight &&  this->vx >= 0);
 }
+
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	this->SetVx(0);
 	this->collidedSolidBox = object;
@@ -699,10 +683,6 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 }
 void Player::OnHeadOnSolidBox(Object* solid) {
 	this->SetVy(0);
-}
-
-void Player::OnStateChanged(State oldState, State newState) {
-	this->isStateChanged = oldState != newState;
 }
 #pragma endregion
 

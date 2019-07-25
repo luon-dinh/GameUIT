@@ -156,7 +156,6 @@ public:
 	void DeactivateObjectInGrid()override {};
 
 	bool IsStopBySolidBox();
-
 	void OnCollision(Object* object, collisionOut* collisionOut);
 	void OnNotCollision(Object* object);
 	bool OnRectCollided(Object* object, CollisionSide side);
@@ -166,14 +165,6 @@ public:
 	void OnCollisionWithWater(Object* water, collisionOut* side);
 	void OnSmashSolidBox(Object* solid, CollisionSide side);
 	void OnHeadOnSolidBox(Object* solid);
-	void OnStateChanged(State oldState, State newState);
-
-
-	bool CanStandOnGround(Object* ground);
-	void SetMoveBehavior(MoveBehavior moveBehave);
-
-	void SetCollisionResult(bool value);
-	bool collisionResult;
 
 #pragma endregion
 
