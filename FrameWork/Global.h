@@ -33,7 +33,7 @@
 #define WATER_SPEED					0.75
 
 //item define
-#define ITEM_SPEED -1
+#define ITEM_SPEED 1
 #define ITEM_EXIST_TIME 3000
 //enemy define
 #define ENEMY_BULLET_EXIST_TIME 3000

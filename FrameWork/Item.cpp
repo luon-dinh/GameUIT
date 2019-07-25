@@ -5,9 +5,10 @@ Item::Item(Type type)
 {
 	this->tag = ITEM;
 	this->type = type;
-	this->vy = ITEM_SPEED;
 	this->vx = 0;
-	existTime = ITEM_EXIST_TIME;
+	this->vy = -ITEM_SPEED;
+	this->existTime = ITEM_EXIST_TIME;
+	this->countFrame = 0;
 	switch (type)
 	{
 	case Type::UP:
@@ -45,21 +46,34 @@ Item::~Item()
 
 void Item::Update(float dt)
 {
+	countFrame++;
+
+	if (countFrame<15)
+		this->vy = ITEM_SPEED;
+	else
+	{
+		if(this->vy!=0)
+			this->vy = -ITEM_SPEED;
+	}
+
 	this->pos.y += this->vy;
-	existTime -= dt;
+	animation->Update(dt);
+	if(this->vy==0)
+		existTime -= dt;
 	if (existTime <= 0)
 	{
 		DeactivateObjectInGrid();
 	}
-	animation->Update(dt);
 }
 void Item::Render()
 {
-	if (existTime > 0.75*ITEM_EXIST_TIME)
-	{
-
-	}
 	D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	if (existTime < 0.25*ITEM_EXIST_TIME)
+	{
+		if((int)existTime%2==0)
+			animation->Render(position);
+		return;
+	}
 	animation->Render(position);
 }
 
@@ -87,7 +101,8 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		break;
 		//xuwr lis va chamj voiws player
 	case Type::NONE:
-		DeactivateObjectInGrid();
+		if(object->tag==Tag::PLAYER)
+			DeactivateObjectInGrid();
 		break;
 	default:
 		break;
