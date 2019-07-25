@@ -27,7 +27,11 @@ void PlayerSittingState::InputHandler() {
 			if (player->IsOnMainGround()) {
 				player->SetAirState(Player::OnAir::DropToWater);
 			}
+			else {
+				player->SetAirState(Player::OnAir::Falling);
+			}
 			player->ChangeState(State::JUMPING);
+			
 			return;
 		} 
 	}

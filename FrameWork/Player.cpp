@@ -88,13 +88,9 @@ void Player::Update(float dt)
 {
 	// Update state
 	this->playerstate->Update(dt);
-	// Nếu state không đổi thì update vị trí
-	if (!this->isStateChanged) {
-		this->UpdatePosition();
-	}
-	else {
-		this->isStateChanged = false;
-	}
+
+	UpdatePosition();
+
 	// Update animation
 	this->curanimation->Update(dt);
 }
@@ -134,8 +130,6 @@ void Player::ChangeState(PlayerState* newplayerstate)
 void Player::ChangeState(State stateName) {
 	if (this->state == stateName)
 		return;
-
-	OnStateChanged(this->state, stateName);
 
 	InnerChangeState(stateName);
 	auto shield = Shield::getInstance();
@@ -364,8 +358,6 @@ void Player::SetVelocity(D3DXVECTOR2 veloc) {
 }
 
 void Player::AddPosX() {
-	if (this->IsStopBySolidBox())
-		return;
 	this->vx += this->accelerate.x;
 	this->pos.x += this->vx;
 }
@@ -379,7 +371,9 @@ void Player::AddPosY() {
 
 void Player::UpdatePosition() {
 	this->accelerate.x = 0;
-	AddPosX();
+	if (!this->IsStopBySolidBox()) {
+		AddPosX();
+	}
 	AddPosY();
 }
 
@@ -494,34 +488,42 @@ void Player::OnNotCollision(Object* object) {
 	if (!this->IsStopBySolidBox()) {
 		this->smashLeft = this->smashRight = false;
 	}
-	switch (object->type) {
-	case Type::GROUND: {
-		// nếu đang ở trạng thái rơi xuống nước thì bỏ qua va chạm với ground
-		if (this->GetOnAirState() == OnAir::DropToWater) {
-			return;
-		}
-		// Trong trường hợp đã rơi khỏi ground hiện tại
-		if (this->GetOnAirState() == OnAir::None) {
-			if (this->StandOnCurrentGround() == FALSE && this->GetGroundCollision()->GetGround() != NULL) {
-				this->OnFallingOffGround();
+	switch (object->type) { 
+		case Type::GROUND: {
+			// nếu đang ở trạng thái rơi xuống nước thì bỏ qua va chạm với ground
+			if (this->GetOnAirState() == OnAir::DropToWater) {
 				return;
 			}
+			// Trong trường hợp đã rơi khỏi ground hiện tại
+			if (this->GetOnAirState() == OnAir::None) {
+				if (this->StandOnCurrentGround() == FALSE && this->GetGroundCollision()->GetGround() != NULL) {
+					this->OnFallingOffGround();
+					return;
+				}
+			}
+			break;
 		}
-		break;
-	}
+		case Type::SOLIDBOX: {
+			if (object == this->GetGroundCollision()->GetGround()) {
+				if (!this->StandOnCurrentGround()) {
+					this->OnFallingOffGround();
+					return;
+				}
+			}
+		}
 	}
 }
-bool Player::OnRectCollided(Object* object) {
+bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	switch (object->type) {
 		case Type::GROUND:{
 			// Nếu đang rơi xuống nước thì không xét va chạm với ground
 			if (this->GetOnAirState() == OnAir::DropToWater)
-				return true;
+				return false;
 			if (this->GetOnAirState() == OnAir::Falling) {
 				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
 				if (this->GetPreOnAirState() == OnAir::None)
-					return true;
- 				this->TryStandOnGround(object);
+					return false;
+  				this->TryStandOnGround(object);
 				return true;
 			}
 			return false;
@@ -530,30 +532,46 @@ bool Player::OnRectCollided(Object* object) {
 			if (this->GetOnAirState() == OnAir::JumpFromWater) {
 				return false;
 			}
-			if (this->GetOnAirState() == OnAir::Falling) {
+			/*if (this->GetOnAirState() == OnAir::Falling) {
 				collisionOut colOut;
 				colOut.side = CollisionSide::bottom;
 				this->OnCollisionWithWater(object, &colOut);
-			}
-			return true;
+			}*/
+			return false;
 		}	
 		case Type::SOLIDBOX: {
+			
 			collisionOut colOut;
 			bool isCollided = false;
-			if (this->smashLeft) {
-				colOut.side = CollisionSide::left;
-				this->OnCollisionWithSolidBox(object, &colOut);
-				isCollided = true;
-			}
-			if (this->smashRight) {
-				colOut.side = CollisionSide::right;
-				this->OnCollisionWithSolidBox(object, &colOut);
-				isCollided = true;
+			if (this->IsStopBySolidBox())
+				return true;
+			else {
+				if (this->smashLeft && this->vx < 0) {
+					colOut.side = CollisionSide::left;
+					this->OnCollisionWithSolidBox(object, &colOut);
+					isCollided = true;
+				}
+				if (this->smashRight && this->vx > 0) {
+					colOut.side = CollisionSide::right;
+					this->OnCollisionWithSolidBox(object, &colOut);
+					isCollided = true;
+				}
+				//// kiểm tra solid hiện tại
+				//if (object == this->collidedSolidBox) {
+				//	CollisionSide side;
+				//	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), object->getStaticObjectBoundingBox(), &side)) {
+				//	
+				//		OnSmashSolidBox(object, side);
+				//		return true;
+				//	}
+				//}
 			}
 			bool tryStand = this->TryStandOnGround(object);
 			if (isCollided)
 				return true;
-	 		return tryStand;
+			if (tryStand == true)
+				return true;
+	 		return false;
 		}
 	}
 }
@@ -561,9 +579,10 @@ bool Player::OnRectCollided(Object* object) {
 void Player::OnCollisionWithWater(Object* water, collisionOut* colOut) {
 	this->ChangeState(State::FLOATING);
 	auto objBox = water->getStaticObjectBoundingBox();
-	this->pos.y = (objBox.top - objBox.bottom) / 2;
+	this->pos.y = objBox.top - 4 + this->getHeight() / 2;
 	this->SetGroundCollision(NULL);
 }
+
 void Player::OnFallingOffGround() {
 	if (this->GetOnAirState() == Player::OnAir::None) {
 		if (this->IsOnMainGround())
@@ -607,8 +626,8 @@ bool Player::TryStandOnGround(Object* ground) {
 	auto playerBox = this->getBoundingBox();
 	auto onAir = this->GetOnAirState();
 	if (onAir == OnAir::Jumping || onAir == OnAir::Falling || onAir == OnAir::JumpFromWater) {
-		float dentaY = groundBox.top - playerBox.bottom;
-		if (dentaY > 0 && dentaY <= 5) {
+	 	float dentaY = groundBox.top - playerBox.bottom;
+		if (dentaY > 0 && dentaY <= 10) {
 			this->OnStandingOnGround(ground);
 			return TRUE;
 		}
@@ -616,6 +635,7 @@ bool Player::TryStandOnGround(Object* ground) {
 	return FALSE;
 }
 void Player::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
+	this->collidedSolidBox = solidBox;
   	auto bound = solidBox->getStaticObjectBoundingBox();
 	switch (colOut->side) {
 		case CollisionSide::left:	OnSmashSolidBox(solidBox, CollisionSide::left); break;
@@ -624,7 +644,6 @@ void Player::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 			this->SetVy(0);
 			this->pos.y = bound.bottom - this->getHeight() / 2 - 2;
 			this->smashLeft = this->smashRight = false;
-			this->isStopBySolidBox = false;
 			break;
 		}
 		case CollisionSide::bottom: {
@@ -632,7 +651,6 @@ void Player::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 				OnStandingOnGround(solidBox);
 			}
 			this->smashLeft = this->smashRight = false;
-			this->isStopBySolidBox = false;
 			break;
 		}
 	}
@@ -643,18 +661,13 @@ bool Player::IsStopBySolidBox() {
 }
 
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
+	this->SetVx(0);
+	this->collidedSolidBox = object;
 	if (this->GetOnAirState() == OnAir::Jumping){
 		this->SetAirState(OnAir::Falling);
 	}
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
-		case CollisionSide::top: {
-			OnHeadOnSolidBox(object);
-			return;
-		}
-		case CollisionSide::bottom: {
-			return;
-		}
 		case CollisionSide::left: {
 			this->pos.x = bound.right + this->getWidth() / 2;
 			this->smashLeft = true;
@@ -662,7 +675,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 			break;
 		}
 		case CollisionSide::right: {
-     			this->pos.x = bound.left - this->getWidth() / 2;
+     		this->pos.x = bound.left - this->getWidth() / 2;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}
@@ -670,9 +683,6 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 }
 void Player::OnHeadOnSolidBox(Object* solid) {
 	this->SetVy(0);
-}
-void Player::OnStateChanged(State oldState, State newState) {
-	this->isStateChanged = oldState != newState;
 }
 #pragma endregion
 

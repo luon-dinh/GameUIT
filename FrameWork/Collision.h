@@ -63,5 +63,6 @@ public:
 	collisionOut SweptAABB(BoundingBox recta, BoundingBox rectb, float acceleratorA);
 	collisionOut GetOppositeSide(collisionOut&);
 	bool IsCollide(BoundingBox box1, BoundingBox box2);
+	bool IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* prioritySide);
 };
 

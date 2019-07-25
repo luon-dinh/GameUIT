@@ -5,7 +5,6 @@
 PlayerRunningState::PlayerRunningState()
 {
 	state = RUNNING;
-
 }
 
 
@@ -90,7 +89,6 @@ void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
 }
-
 
 BoundingBox PlayerRunningState::getBoundingBox()
 {
