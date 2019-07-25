@@ -2,47 +2,41 @@
 #include"Shield.h"
 #include"Camera.h"
 #include "Debug.h"
+#include<cstdlib>
 
-Container::Container(int item1 , int item2 , int item3 , int item4 , int item5 , int item6 , int item7 , int item8 )
+Container::Container(ItemType type )
 {
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
 	this->type = Type::ITEMCONTAINERTYPE;
 	this->vx = this->vy = 0;
+	numberItems = 0;
 	animation = new Animation(this->tag,0,2);
-	for (int i = 0; i < item1; i++)
+	int numberStars = rand() % 7 ;
+	for (int i = 0; i < numberStars; i++)
 	{
-		addItem(itemManager->getItem(0));
+		addItem(new Item(Type::ITEM3));
 	}
-	for (int i = 0; i < item2; i++)
+	switch (type)
 	{
-		addItem(itemManager->getItem(1));
+	case HEART:
+		addItem(new Item(Type::ITEM8));
+		break;
+	case EXIT:
+		addItem(new Item(Type::ITEM6));
+		break;
+	case MIROR:
+		addItem(new Item(Type::ITEM4));
+		break;
+	case HP:
+		addItem(new Item(Type::ITEM2));
+		break;
+	case UP:
+		addItem(new Item(Type::ITEM1));
+		break;
+	default:
+		break;
 	}
-	for (int i = 0; i < item3; i++)
-	{
-		addItem(itemManager->getItem(2));
-	}
-	for (int i = 0; i < item4; i++)
-	{
-		addItem(itemManager->getItem(3));
-	}
-	for (int i = 0; i < item5; i++)
-	{
-		addItem(itemManager->getItem(4));
-	}
-	for (int i = 0; i < item6; i++)
-	{
-		addItem(itemManager->getItem(5));
-	}
-	for (int i = 0; i < item7; i++)
-	{
-		addItem(itemManager->getItem(6));
-	}
-	for (int i = 0; i < item8; i++)
-	{
-		addItem(itemManager->getItem(7));
-	}
-	numberItems = item1 + item2 + item3 + item4 + item5 + item6 + item7 + item8;
 }
 
 
@@ -106,7 +100,9 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 		if (numberItems != 0)
 		{
 			items[numberItems - 1]->SetActive(true);
-			numberItems--;
+			items[numberItems - 1]->pos = this->pos;
+			if(items[numberItems-1]->type!=Type::ITEM6)
+				numberItems--;
 		}
 	}
 	PrintDebug("\nCollide with Container !!");
@@ -126,7 +122,8 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 		{
 			items[numberItems - 1]->SetActive( true);
 			items[numberItems - 1]->pos = this->pos;
-			numberItems--;
+			if (items[numberItems - 1]->type != Type::ITEM6)
+				numberItems--;
 		}
 	}
 	PrintDebug("\nCollide with Container !!");

@@ -50,7 +50,7 @@ public:
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void OnCollisionWithDynamicObject(Object* object) {};
 	virtual void OnNotCollision(Object* object) {};
-	virtual bool OnRectCollided(Object* object) { return false; };
+	virtual bool OnRectCollided(Object* object, CollisionSide side) { return false; };
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
 };
