@@ -6,6 +6,7 @@ private:
 public:
 	int countFrame;
 	int existTime;
+	ItemType itemtype;
 	void Update(float dt);
 	BoundingBox getBoundingBox()override;
 
@@ -15,7 +16,7 @@ public:
 	//Mặc định là sẽ được Render. Những object cần render theo kiểu đặc biệt thì ta override lại và để trống.
 	virtual void RenderInGrid() { Render(); };
 	void OnCollision(Object* object, collisionOut* colOut)override;
-	Item(Type type);
+	Item(ItemType type);
 	Item() {};
 	~Item();
 };

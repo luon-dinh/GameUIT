@@ -1,42 +1,40 @@
 ﻿#include"Item.h"
 #include"Camera.h"
-
-Item::Item(Type type)
+Item::Item(ItemType itemtype)
 {
 	this->tag = ITEM;
-	this->type = type;
+	this-> itemtype= itemtype;
 	this->vx = 0;
 	this->vy = -ITEM_SPEED;
 	this->existTime = ITEM_EXIST_TIME;
 	this->countFrame = 0;
-	switch (type)
+	switch (itemtype)
 	{
-	case Type::UP:
+	case ItemType::UP:
 		animation = new Animation(Tag::ITEM, 0);
 		break;
 	
-	case Type::STAR:
+	case ItemType::STAR:
 		animation = new Animation(Tag::ITEM, 1);
 		break;
-	case Type::EXIT:
+	case ItemType::EXIT:
 		animation = new Animation(Tag::ITEM, 2, 4);
 		break;
-	case Type::HEART:
+	case ItemType::HEART:
 		animation = new Animation(Tag::ITEM, 4);
 		break;
-	case Type::HALFHEART:
+	case ItemType::HALFHEART:
 		animation = new Animation(Tag::ITEM, 5);
 		break;
-	case Type::HP:
+	case ItemType::HP:
 		animation = new Animation(Tag::ITEM, 6);
 		break;
-	case Type::GEM:
+	case ItemType::GEM:
 		animation = new Animation(Tag::ITEM, 7,9);
 		break;
-	case Type::SMALLGEM:
+	case ItemType::SMALLGEM:
 		animation = new Animation(Tag::ITEM, 9,11);
 		break;
-	
 	}
 }
 Item::~Item()

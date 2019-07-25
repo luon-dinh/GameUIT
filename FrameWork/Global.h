@@ -6,8 +6,8 @@
 #include <WinUser.h>
 #include <unordered_map>
 
-#define WINDOW_CLASS_NAME "Frame Work"		
-#define GAME_TITLE "Frame Work"		
+#define WINDOW_CLASS_NAME "Captain America"		
+#define GAME_TITLE "Captain America"		
 #define SCREEN_WIDTH 256						
 #define SCREEN_HEIGHT 224			
 #define MAX_FRAME_RATE 90					
@@ -94,6 +94,16 @@ struct PlayerInfo
 	float playerY;
 };
 
+enum ItemType {
+	HALFHEART,
+	HEART,
+	EXIT,
+	GEM,
+	SMALLGEM,
+	STAR,
+	HP,
+	UP,
+};
 
 enum Tag {
 
@@ -144,14 +154,6 @@ enum Type {
 	ROPE,
 	ONOFF,
 	DOOR,
-	HALFHEART,
-	HEART,
-	EXIT,
-	GEM,
-	SMALLGEM,
-	STAR,
-	HP,
-	UP,
 	ITEMCONTAINERTYPE
 	//cac loai dan
 };
