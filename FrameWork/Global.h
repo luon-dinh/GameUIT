@@ -130,6 +130,7 @@ enum Tag {
 	REDROCKERTER,
 	WHITEROCKERTER,
 };
+
 enum Type {
 	NONE,
 	CLOUD,

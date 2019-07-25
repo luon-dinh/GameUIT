@@ -208,6 +208,8 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	int objectTopLeftY = -1;
 	int objectWidth = -1;
 	int objectHeight = -1;
+	int objectDirection = -1;
+	int objectSpecialID = -1;
 
 	int numOfObject;
 
@@ -220,7 +222,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		Object* object = nullptr;
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
-		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight >>objectDirection >> objectSpecialID;
 
 		int midX = objectTopLeftX + objectWidth / 2;
 		int midY = objectTopLeftY - objectHeight / 2;
