@@ -168,7 +168,7 @@ public:
 
 #pragma endregion
 
-	void DeactivateObjectInGrid()override {};
+
 };
 
 Player::MoveDirection;
