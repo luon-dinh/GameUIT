@@ -86,11 +86,10 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 			this->isActive = false;
 		}
 		//va chạm với đất
-		case Type::GROUND:
+		case Tag::STATICOBJECT:
 		{
-			this->pos.y = object->pos.y + this->getHeight() / 2;
-			this->vy = 0;
-			break;
+			this->vy = this->vx = 0;
+			this->pos.y = object->pos.y+this->getHeight()/2;
 		}
 	}
 }

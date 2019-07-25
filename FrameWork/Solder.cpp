@@ -10,7 +10,12 @@ Solder::Solder(bool movable)
 	this->vy = 0;
 	this->vx = ENEMY_SPEED;
 	bullet = BulletManager::getInstance()->CreateBullet(Tag::BLUESOLDERBULLET);
-	ChangeState(State::STANDING);
+	if(!movable)
+		ChangeState(State::STANDING);
+	else
+	{
+		ChangeState(State::RUNNING);
+	}
 }
 
 Solder::~Solder() {
@@ -42,13 +47,16 @@ void Solder::Update(float dt)
 
 	if (!isDead)
 	{
-		auto player = Player::getInstance();
-		float deltax = this->pos.x - player->pos.x;
-		if (deltax > 0)
-			this->direction = Player::MoveDirection::RightToLeft;
-		else
+		if (stateName != State::RUNNING)
 		{
-			this->direction = Player::MoveDirection::LeftToRight;
+			auto player = Player::getInstance();
+			float deltax = this->pos.x - player->pos.x;
+			if (deltax > 0)
+				this->direction = Player::MoveDirection::RightToLeft;
+			else
+			{
+				this->direction = Player::MoveDirection::LeftToRight;
+			}
 		}
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
@@ -69,7 +77,9 @@ void Solder::Update(float dt)
 				ChangeState(State::STANDING);
 			}
 			else
+			{
 				timeCurrentState += dt;
+			}
 			break;
 		case State::STANDING:
 			if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
@@ -78,23 +88,12 @@ void Solder::Update(float dt)
 					Shoot();
 				timeCurrentState += dt;
 			}
-			else if(movable)
-			{
-				ChangeState(State::RUNNING);
-			}
 			else
 			{
 				ChangeState(State::DUCKING);
 			}
-				
 			break;
 		case State::RUNNING:
-			if (timeCurrentState >= BLUE_SOLDER_RUNNING_TIME)
-			{
-				ChangeState(State::DUCKING);
-			}
-			else
-				timeCurrentState += dt;
 			break;
 		default:
 			timeCurrentState += dt;
@@ -147,9 +146,9 @@ void Solder::ChangeState(State stateName)
 	case State::RUNNING:
 		this->curentAnimation = animations[State::RUNNING];
 		if (this->direction == Player::MoveDirection::LeftToRight)
-			this->vx = ENEMY_SPEED;
+			this->vx = ENEMY_SPEED* PLAYER_NORMAL_SPEED;
 		else
-			this->vx = -ENEMY_SPEED;
+			this->vx = -ENEMY_SPEED*PLAYER_NORMAL_SPEED;
 		isDead = false;
 		break;
 	case State::DUCKING:

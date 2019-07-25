@@ -94,6 +94,15 @@ struct PlayerInfo
 	float playerY;
 };
 
+enum ItemType {
+	HEART,
+	EXIT,
+	MIROR,
+	STAR,
+	HP,
+	UP
+};
+
 enum Tag {
 
 	PLAYER,
