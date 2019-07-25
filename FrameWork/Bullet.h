@@ -12,7 +12,7 @@ public:
 
 	Bullet()
 	{
-		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3);
+		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3, TIME_PER_FRAME/3);
 	}
 	~Bullet()
 	{
