@@ -7,6 +7,11 @@
 class Object {
 protected:
 	BOOL isActive;
+	//Mỗi khi Active Zone của Grid thay đổi thì sẽ gọi đến hàm DeactivateObject.
+	//Hàm đó mặc định sẽ set biến isActivated = false, báo hiệu cho Grid biết là phải xoá nó.
+	//Tuy nhiên ở các class như ItemLooter, sẽ override lại hàm này và không cho set biến isActivated.
+	//Vì trạng thái của ItemLooter sẽ được lưu giữ lại chứ không mất đi như enemy. 
+	bool isActivatedInGrid = true;
 public:
 	Object() { vx = vy = 0; };
 	virtual ~Object() {};
@@ -48,10 +53,4 @@ public:
 	virtual bool OnRectCollided(Object* object) { return false; };
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
-protected:
-	//Mỗi khi Active Zone của Grid thay đổi thì sẽ gọi đến hàm DeactivateObject.
-	//Hàm đó mặc định sẽ set biến isActivated = false, báo hiệu cho Grid biết là phải xoá nó.
-	//Tuy nhiên ở các class như ItemLooter, sẽ override lại hàm này và không cho set biến isActivated.
-	//Vì trạng thái của ItemLooter sẽ được lưu giữ lại chứ không mất đi như enemy. 
-	bool isActivatedInGrid = true; 
 };

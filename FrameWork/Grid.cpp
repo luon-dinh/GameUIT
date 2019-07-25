@@ -31,7 +31,7 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const ch
 	for (int i = 0; i < mapHeight; ++i)
 		objectIDPerPosition[i] = new int[mapWidth];
 
-	//Xoá sạch mảng (reset lại về 0).
+	//Xoá sạch mảng (reset lại về -1).
 	for (int i = 0; i < mapHeight; ++i)
 	{
 		for (int j = 0; j < mapWidth; ++j)
@@ -64,10 +64,10 @@ Grid::~Grid()
 		}
 		delete[]cells[i];
 	}
-
+	delete cells;
 	//Xoá các object tĩnh.
-	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá toàn bộ.
-	//Xác định xem object đã được giết trước đó chưa.
+	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá không lặp.
+	//Dùng set để lưu lại các object một cách không trùng lặp.
 	std::set<MapStaticObject*> mapStaticObjects;
 	for (int i = 0; i < gridHeight; ++i)
 	{
@@ -518,6 +518,9 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	std::unordered_set<Object*> isChecked;
 	for (auto object : firstCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!object->GetActivatedInGridStatus())
+			continue;
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
 		for (auto staticObject : firstStaticCell)
@@ -537,6 +540,9 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	}
 	for (auto object : secondCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!object->GetActivatedInGridStatus())
+			continue;
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
 		for (auto staticObject : firstStaticCell)
@@ -558,9 +564,15 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	//Xét va chạm object động.
 	for (auto firstObj : firstCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!firstObj->GetActivatedInGridStatus())
+			continue;
 		for (auto secondObj : secondCell)
 		{
-			//Lấy tất cả static trong cả 2 cell va chạm với cả 2 object đang xét.
+			//Nếu object không được activated thì ta không xét va chạm luôn.
+			if (!secondObj->GetActivatedInGridStatus())
+				continue;
+			//Xét việc va chạm 2 dynamic object với nhau.
 			CollisionProcessOfDynamicObjects(firstObj, secondObj);
 		}
 	}
@@ -581,6 +593,13 @@ void Grid::UpdateActivatedCells(double dt)
 				//Duyệt hết các phần tử có trong cells này.
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
+
+				//Nếu object đang không được activated thì mình bỏ qua không update.
+				if (!(*it)->GetActivatedInGridStatus())
+				{
+					++it;
+					continue;
+				}
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{
@@ -628,6 +647,9 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
+				//Nếu object không được activated thì ta không thực hiện render.
+				if (!object->GetActivatedInGridStatus())
+					continue;
 				MapStaticObject* itemLooter = dynamic_cast<MapStaticObject*> (object);
 				if (itemLooter != nullptr)
 				{
@@ -636,11 +658,11 @@ void Grid::RenderActivatedCells()
 				object->RenderInGrid();
 				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
-			//Vẽ các object tĩnh.
-			for (auto object : cellsOfStaticObjects[i][j])
-			{
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
-			}
+			//Vẽ debug các object tĩnh.
+			//for (auto object : cellsOfStaticObjects[i][j])
+			//{
+			//	//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+			//}
 		}
 	}
 	//DrawDebugObject();
