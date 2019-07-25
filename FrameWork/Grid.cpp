@@ -608,9 +608,11 @@ void Grid::UpdateActivatedCells(double dt)
 				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
 				if (additionalItems != nullptr)
 				{
-					for (auto object : (*additionalItems))
+					auto addItemIt = additionalItems->begin();
+					while (addItemIt != additionalItems->end())
 					{
-						Add(object);
+						Add((*addItemIt));
+						additionalItems->erase(addItemIt++);
 					}
 				}
 
@@ -645,9 +647,13 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		cells[cellY][cellX].erase(it++);
 	else
 		cells[cellY][cellX].erase(it--);
+	//Kiểm tra nếu object còn nằm trong active zone thì mới thêm lại vào Grid.
+	if (nextCellY >= bottomY && nextCellY <= topY && nextCellX >= leftX && nextCellX <= rightX)
+	{
+		//Thêm object vào cell mới.
+		Add(object);
+	}
 
-	//Thêm object vào cell mới.
-	Add(object);
 	return it;
 }
 
