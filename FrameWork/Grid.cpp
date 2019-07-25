@@ -228,7 +228,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		objectIDPerPosition[midY][midX] = objectID;
 		//Add object vô grid nào.
 		if (objectID == ObjectID::ITEMLOOTER)
-			object = new Container();
+			object = new Container(Type::EXIT);
 
 		if (object == nullptr)
 			continue;
@@ -604,6 +604,16 @@ void Grid::UpdateActivatedCells(double dt)
 					++it;
 					continue;
 				}
+				//Thêm item vào Grid.
+				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
+				if (additionalItems != nullptr)
+				{
+					for (auto object : (*additionalItems))
+					{
+						Add(object);
+					}
+				}
+
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{

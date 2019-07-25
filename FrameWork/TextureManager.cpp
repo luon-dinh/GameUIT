@@ -16,7 +16,7 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::TESTMAPOBJECTBLUE, (char*)".\\..\\Resources\\Images\\blue_8_8.png");
 	textures->addTexture(Tag::SHIELD, (char*)".\\..\\Resources\\Images\\SpriteSheetCaptainShield.png");
 	//texture dung cho ITEM
-	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\EvenPixelWidthItem.png");
+	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\Items.png");
 	//texture dung cho CONTAINER
 	textures->addTexture(Tag::ITEMCONTAINER, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
 	//texture dùng cho blue soldier

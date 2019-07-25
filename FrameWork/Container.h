@@ -6,11 +6,12 @@ class Container :
 	public Object
 {
 public:
-	int ticuframe ;
+	int ticuframe;
 	Animation *animation;
 	std::vector<Item*>items;
 	int numberItems;
-
+	std::list<Object*> additionalItems;
+	std::list<Object*>* getAdditionalObjects() { return &additionalItems; };
 	BoundingBox getBoundingBox();
 	void Update(float dt);
 	void Render();
@@ -23,7 +24,7 @@ public:
 	void SetPosition(D3DXVECTOR2 pos);
 	//tạo mới một container cần phải tạo tất cả các item trước// dùng hàm loadallitem của itemmanager
 	//truyền vào số lượng các items tương ứng của từng loại
-	Container(ItemType type);
+	Container(Type type);
 	~Container();
 };
 

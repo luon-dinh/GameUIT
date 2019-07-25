@@ -17,14 +17,14 @@ void ItemManager::addItem(Item* item)
 
 void ItemManager::LoadAllItem()
 {
-	addItem(new Item(Type::ITEM1));
-	addItem(new Item(Type::ITEM2));
-	addItem(new Item(Type::ITEM3));
-	addItem(new Item(Type::ITEM4));
-	addItem(new Item(Type::ITEM5));
-	addItem(new Item(Type::ITEM6));
-	addItem(new Item(Type::ITEM7));
-	addItem(new Item(Type::ITEM8));
+	addItem(new Item(Type::UP));
+	addItem(new Item(Type::HP));
+	addItem(new Item(Type::STAR));
+	addItem(new Item(Type::GEM));
+	addItem(new Item(Type::SMALLGEM));
+	addItem(new Item(Type::EXIT));
+	addItem(new Item(Type::HEART));
+	addItem(new Item(Type::HALFHEART));
 }
 
 Item* ItemManager::getItem(int index)

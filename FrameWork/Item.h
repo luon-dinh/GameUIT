@@ -7,8 +7,8 @@ public:
 	int existTime;
 	void Update(float dt);
 	virtual BoundingBox getBoundingBox();
-	
-	Sprite* sprite;
+
+	Animation* animation;
 	void Render();
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?
 	//Mặc định là sẽ được Render. Những object cần render theo kiểu đặc biệt thì ta override lại và để trống.

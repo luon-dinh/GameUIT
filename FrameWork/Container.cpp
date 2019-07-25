@@ -4,7 +4,7 @@
 #include "Debug.h"
 #include<cstdlib>
 
-Container::Container(ItemType type )
+Container::Container(Type type )
 {
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
@@ -15,24 +15,30 @@ Container::Container(ItemType type )
 	int numberStars = rand() % 7 ;
 	for (int i = 0; i < numberStars; i++)
 	{
-		addItem(new Item(Type::ITEM3));
+		addItem(new Item(Type::STAR));
 	}
 	switch (type)
 	{
 	case HEART:
-		addItem(new Item(Type::ITEM8));
+		addItem(new Item(Type::HEART));
+		break;
+	case HALFHEART:
+		addItem(new Item(Type::HALFHEART));
 		break;
 	case EXIT:
-		addItem(new Item(Type::ITEM6));
+		addItem(new Item(Type::EXIT));
 		break;
-	case MIROR:
-		addItem(new Item(Type::ITEM4));
+	case GEM:
+		addItem(new Item(Type::GEM));
+		break;
+	case SMALLGEM:
+		addItem(new Item(Type::SMALLGEM));
 		break;
 	case HP:
-		addItem(new Item(Type::ITEM2));
+		addItem(new Item(Type::HP));
 		break;
 	case UP:
-		addItem(new Item(Type::ITEM1));
+		addItem(new Item(Type::UP));
 		break;
 	default:
 		break;
@@ -77,8 +83,8 @@ BoundingBox Container::getBoundingBox()
 	BoundingBox box;
 	box.top = this->pos.y + 8;
 	box.bottom = this->pos.y - 8;
-	box.left = this->pos.x - 8;
-	box.right = this->pos.x + 8;
+	box.left = this->pos.x - 6;
+	box.right = this->pos.x + 6;
 	box.vx = box.vy = 0;
 	return box;
 }
@@ -101,7 +107,9 @@ void Container::OnCollisionWithDynamicObject(Object* object)
 		{
 			items[numberItems - 1]->SetActive(true);
 			items[numberItems - 1]->pos = this->pos;
-			if(items[numberItems-1]->type!=Type::ITEM6)
+			items[numberItems - 1]->existTime = ITEM_EXIST_TIME;
+			additionalItems.push_back(items[numberItems - 1]);
+			if (items[numberItems - 1]->type != Type::EXIT)
 				numberItems--;
 		}
 	}
@@ -122,8 +130,12 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 		{
 			items[numberItems - 1]->SetActive( true);
 			items[numberItems - 1]->pos = this->pos;
-			if (items[numberItems - 1]->type != Type::ITEM6)
+			items[numberItems - 1]->existTime = ITEM_EXIST_TIME;
+			additionalItems.push_back(items[numberItems - 1]);
+			if (items[numberItems - 1]->type != Type::EXIT)
+			{
 				numberItems--;
+			}
 		}
 	}
 	PrintDebug("\nCollide with Container !!");

@@ -94,14 +94,6 @@ struct PlayerInfo
 	float playerY;
 };
 
-enum ItemType {
-	HEART,
-	EXIT,
-	MIROR,
-	STAR,
-	HP,
-	UP
-};
 
 enum Tag {
 
@@ -151,14 +143,14 @@ enum Type {
 	ROPE,
 	ONOFF,
 	DOOR,
-	ITEM1,
-	ITEM2,
-	ITEM3,
-	ITEM4,
-	ITEM5,
-	ITEM6,
-	ITEM7,
-	ITEM8,
+	HALFHEART,
+	HEART,
+	EXIT,
+	GEM,
+	SMALLGEM,
+	STAR,
+	HP,
+	UP,
 	ITEMCONTAINERTYPE
 	//cac loai dan
 };

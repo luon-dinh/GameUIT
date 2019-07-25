@@ -3,7 +3,6 @@
 
 Item::Item(Type type)
 {
-	Animation* animation = new Animation(Tag::ITEM, 0, 8);
 	this->tag = ITEM;
 	this->type = type;
 	this->vy = ITEM_SPEED;
@@ -11,37 +10,38 @@ Item::Item(Type type)
 	this->isActive = false;
 	switch (type)
 	{
-	case Type::ITEM1:
-		sprite = animation->getSprite(0);
+	case Type::UP:
+		animation = new Animation(Tag::ITEM, 0);
 		break;
-	case Type::ITEM2:
-		sprite = animation->getSprite(1);
+	
+	case Type::STAR:
+		animation = new Animation(Tag::ITEM, 1);
 		break;
-	case Type::ITEM3:
-		sprite = animation->getSprite(2);
+	case Type::EXIT:
+		animation = new Animation(Tag::ITEM, 2, 4);
 		break;
-	case Type::ITEM4:
-		sprite = animation->getSprite(3);
+	case Type::HEART:
+		animation = new Animation(Tag::ITEM, 4);
 		break;
-	case Type::ITEM5:
-		sprite = animation->getSprite(4);
+	case Type::HALFHEART:
+		animation = new Animation(Tag::ITEM, 5);
 		break;
-	case Type::ITEM6:
-		sprite = animation->getSprite(5);
+	case Type::HP:
+		animation = new Animation(Tag::ITEM, 6);
 		break;
-	case Type::ITEM7:
-		sprite = animation->getSprite(6);
+	case Type::GEM:
+		animation = new Animation(Tag::ITEM, 7,9);
 		break;
-	case Type::ITEM8:
-		sprite = animation->getSprite(7);
+	case Type::SMALLGEM:
+		animation = new Animation(Tag::ITEM, 9,11);
 		break;
+	
 	}
-	delete animation;
 }
 Item::~Item()
 {
-	if (sprite)
-		delete sprite;
+	if (animation)
+		delete animation;
 }
 
 void Item::Update(float dt)
@@ -51,7 +51,11 @@ void Item::Update(float dt)
 		this->pos.y += this->vy;
 		existTime -= dt;
 		if (existTime <= 0)
+		{
 			isActive = false;
+			DeactivateObjectInGrid();
+		}
+		animation->Update(dt);
 	}
 }
 void Item::Render()
@@ -59,7 +63,7 @@ void Item::Render()
 	if (isActive)
 	{
 		D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-		sprite->Render(position);
+		animation->Render(position);
 	}
 }
 
@@ -84,6 +88,27 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		case Type::NONE:
 		{
 			this->isActive = false;
+			
+			switch (this->type)
+			{
+			case Type::HEART:
+				break;
+			case Type::HALFHEART:
+				break;
+			case Type::HP:
+				break;
+			case Type::UP:
+				break;
+			case Type::GEM:
+				break;
+			case Type::SMALLGEM:
+				break;
+			case Type::EXIT:
+				break;
+			default:
+				break;
+			}
+			DeactivateObjectInGrid();
 		}
 		//va chạm với đất
 		case Tag::STATICOBJECT:

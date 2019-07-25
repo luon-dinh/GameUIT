@@ -76,14 +76,17 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 3, 49, 12, 65));
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 5, 69, 11, 92));
 	//cắt sprite cho Item
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 0, 0, 14, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 14, 0, 28, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 28, 0, 42, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 42, 0, 56, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 56, 0, 70, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 70, 0, 84, 12));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 70, 12, 84, 24));
-	spriteManager->addSprite(new Sprite(Tag::ITEM, 84, 0, 98, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 0, 0, 16, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 16, 0, 32, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 32, 0, 48, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 32, 12, 48, 24));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 48, 0, 64, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 64, 0, 80, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 80, 0, 96, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 96, 0, 112, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 96, 12, 112, 24));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 112, 0, 128, 12));
+	spriteManager->addSprite(new Sprite(Tag::ITEM, 112, 12, 128, 24));
 	// cắt sprite cho container
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 0, 16, 16));
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 16, 16, 32));
