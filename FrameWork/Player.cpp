@@ -229,6 +229,10 @@ void Player::ChangeState(State stateName) {
 			SetVx(0);
 			break;
 		}
+		case State::DUCKING: {
+			SetVx(0);
+			break;
+		}
 	}
 }
 
@@ -485,7 +489,8 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	this->playerstate->OnCollision(object, collisionOut);
 }
 void Player::OnNotCollision(Object* object) {
-	if (!this->IsStopBySolidBox()) {
+	if (object == this->collidedSolidBox) {
+		this->collidedSolidBox = NULL;
 		this->smashLeft = this->smashRight = false;
 	}
 	switch (object->type) { 
@@ -532,46 +537,84 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			if (this->GetOnAirState() == OnAir::JumpFromWater) {
 				return false;
 			}
-			/*if (this->GetOnAirState() == OnAir::Falling) {
+			if (this->GetOnAirState() == OnAir::Falling) {
 				collisionOut colOut;
 				colOut.side = CollisionSide::bottom;
 				this->OnCollisionWithWater(object, &colOut);
-			}*/
+			}
 			return false;
 		}	
 		case Type::SOLIDBOX: {
-			
-			collisionOut colOut;
-			bool isCollided = false;
-			if (this->IsStopBySolidBox())
-				return true;
-			else {
-				if (this->smashLeft && this->vx < 0) {
-					colOut.side = CollisionSide::left;
-					this->OnCollisionWithSolidBox(object, &colOut);
-					isCollided = true;
+			//if (side == CollisionSide::right) {
+			//	this->pos.x -= 3;
+			//	return false;
+			//}
+			//else {
+			//	if (side == CollisionSide::left) {
+			//		this->pos.x += 3;
+			//		return false;
+			//	}
+			//}
+			if (this->collidedSolidBox == object) {
+				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
+					this->smashLeft = false;
 				}
-				if (this->smashRight && this->vx > 0) {
-					colOut.side = CollisionSide::right;
-					this->OnCollisionWithSolidBox(object, &colOut);
-					isCollided = true;
+				else {
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x += 5;
+					}
+					return true;
 				}
-				//// kiểm tra solid hiện tại
-				//if (object == this->collidedSolidBox) {
-				//	CollisionSide side;
-				//	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), object->getStaticObjectBoundingBox(), &side)) {
-				//	
-				//		OnSmashSolidBox(object, side);
-				//		return true;
-				//	}
-				//}
+				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
+					this->smashRight = false;
+
+				}
+				else {
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x -= 12;
+					}
+					return true;
+				}
 			}
+			else {
+				collisionOut colOut;
+				colOut.side = side;
+				if (side == CollisionSide::left || side == CollisionSide::right)
+					OnCollisionWithSolidBox(object, &colOut);
+				return false;
+			}
+			return false;
+			//collisionOut colOut;
+			//bool isCollided = false;
+			//if (this->IsStopBySolidBox())
+			//	return true;
+			//else {
+			//	if (smashLeft && this->vx < 0) {
+			//		colOut.side = CollisionSide::left;
+			//		this->OnCollisionWithSolidBox(object, &colOut);
+			//		isCollided = true;
+			//	}
+			//	if (smashRight && this->vx > 0) {
+			//		colOut.side = CollisionSide::right;
+			//		this->OnCollisionWithSolidBox(object, &colOut);
+			//		isCollided = true;
+			//	}
+			//	//// kiểm tra solid hiện tại
+			//	//if (object == this->collidedSolidBox) {
+			//	//	CollisionSide side;
+			//	//	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), object->getStaticObjectBoundingBox(), &side)) {
+			//	//	
+			//	//		OnSmashSolidBox(object, side);
+			//	//		return true;
+			//	//	}
+			//	//}
+			//}
 			bool tryStand = this->TryStandOnGround(object);
-			if (isCollided)
-				return true;
-			if (tryStand == true)
-				return true;
-	 		return false;
+			//if (isCollided)
+			//	return true;
+			//if (tryStand == true)
+			//	return true;
+			return tryStand;
 		}
 	}
 }
@@ -596,7 +639,7 @@ void Player::OnFallingOffGround() {
 void Player::OnStandingOnGround(Object* ground) {
 	this->SetGroundCollision(new GroundCollision(ground, CollisionSide::bottom));
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->getBoundingBox().top - 4 + this->getHeight() / 2;
+	this->pos.y = ground->getBoundingBox().top -4 + this->getHeight() / 2;
 }
 bool Player::StandOnCurrentGround() {
 	auto ground = this->GetGroundCollision()->GetGround();
@@ -642,15 +685,15 @@ void Player::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 		case CollisionSide::right:	OnSmashSolidBox(solidBox, CollisionSide::right);break;
 		case CollisionSide::top: {
 			this->SetVy(0);
-			this->pos.y = bound.bottom - this->getHeight() / 2 - 2;
-			this->smashLeft = this->smashRight = false;
+			this->pos.y = bound.bottom - this->getHeight() / 2 + 4;
+			//this->smashLeft = this->smashRight = false;
 			break;
 		}
 		case CollisionSide::bottom: {
 			if (this->GetOnAirState() == OnAir::Falling) {
 				OnStandingOnGround(solidBox);
 			}
-			this->smashLeft = this->smashRight = false;
+			//this->smashLeft = this->smashRight = false;
 			break;
 		}
 	}
@@ -669,13 +712,13 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2;
+			this->pos.x = bound.right + this->getWidth() / 2 - 4;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-     		this->pos.x = bound.left - this->getWidth() / 2;
+     		this->pos.x = bound.left - this->getWidth() / 2 + 4;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}
@@ -683,6 +726,31 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 }
 void Player::OnHeadOnSolidBox(Object* solid) {
 	this->SetVy(0);
+}
+
+bool Player::AcceptNoCollision(Object* object, CollisionSide side){
+	auto objBox = object->getStaticObjectBoundingBox();
+	auto playerBox = this->getBoundingBox();
+
+	if (side == CollisionSide::top || side == CollisionSide::bottom)
+		return false;
+	if (side == CollisionSide::right) {
+		float dentaX = playerBox.right - objBox.left;
+		float dentaY = playerBox.bottom - objBox.top;
+
+		if (abs(dentaX) * abs(dentaY) <= 16) {
+			return true;
+		}
+		return false;
+	}
+	float dentaX = playerBox.left - objBox.right;
+	float dentaY = playerBox.bottom - objBox.top;
+
+	if (abs(dentaX) * abs(dentaY) <= 16) {
+		return true;
+	}
+	return false;
+
 }
 #pragma endregion
 

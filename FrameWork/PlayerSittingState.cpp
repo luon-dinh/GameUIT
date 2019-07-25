@@ -37,14 +37,14 @@ void PlayerSittingState::InputHandler() {
 	}
 
 	// khi nhấn phím qua trái, ưu tiên qua đi qua trái
-	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_MOVE_LEFT)) {
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
 		player->ChangeState(State::RUNNING);
 		return;
 	}
 
 	// khi nhấn phím qua phải, ưu tiên đi qua phải
-	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
+	if (keyboard->getKeyPressedOnce(PLAYER_MOVE_RIGHT)) {
 		player->ChangeState(State::RUNNING);
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		return;

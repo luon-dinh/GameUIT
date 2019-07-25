@@ -63,7 +63,7 @@ void PlayerRunningState::InputHandler()
 }
 
 void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
-	auto side = collision->side;
+ 	auto side = collision->side;
 	auto player = Player::getInstance();
 
 	// collide with ground
