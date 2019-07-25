@@ -44,6 +44,10 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 		player->SetGroundCollision(new GroundCollision(object, side));
 		player->pos.y = object->pos.y + player->getHeight() / 2 + Shield::getInstance()->getHeight() / 2;
 	}
+
+	if (object->type == Type::WATERRL) {
+		player->OnCollisionWithWater(object, collision);
+	}
 }
 
 BoundingBox PlayerShieldDownState::getBoundingBox()

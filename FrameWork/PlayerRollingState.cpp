@@ -69,6 +69,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
+		PlayerRollingState::curRollTime = 0;
 		return;
 	}
 }
