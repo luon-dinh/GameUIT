@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Container.h"
+#include "Solder.h"
 #include "Debug.h"
 #include "DrawDebug.h"
 

@@ -231,6 +231,8 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		//Add object vô grid nào.
 		if (objectID == ObjectID::ITEMLOOTER)
 			object = new Container((ItemType)objectSpecialID);
+		else if (objectID == ObjectID::BLUESOLDIER)
+			object = new Solder(false);
 
 		if (object == nullptr)
 			continue;

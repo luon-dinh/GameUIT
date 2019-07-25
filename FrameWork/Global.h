@@ -83,6 +83,7 @@ public:
 	static int DOOR;
 	static int SPIKE;
 	static int ITEMLOOTER;
+	static int BLUESOLDIER;
 };
 
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.

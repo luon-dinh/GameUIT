@@ -19,3 +19,4 @@ int ObjectID::WAVE = 5;
 int ObjectID::DOOR = 6;
 int ObjectID::SPIKE = 7;
 int ObjectID::ITEMLOOTER = 8;
+int ObjectID::BLUESOLDIER = 9;
