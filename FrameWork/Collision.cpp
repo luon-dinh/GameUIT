@@ -156,11 +156,39 @@ bool Collision::IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* pri
 		return false;
 	}
 	if (box1.left <= box2.left) {
-		*prioritySide = CollisionSide::right;
+		float dentaXOut = box1.left - box2.left;
+		float dentaXIn = box1.right - box2.left;
+		float dentaYIn = box1.bottom - box2.top;
+		float dentaYOut = box1.top - box2.top;
+		if (abs(dentaXIn / dentaXOut ) <= 0.25) {
+			*prioritySide = CollisionSide::right;
+		}
+		else {
+			if (box1.top > box2.top) {
+				
+				*prioritySide = CollisionSide::bottom;
+			}
+			else {
+				*prioritySide = CollisionSide::top;
+			}
+		}
 		return true;
 	}
 	if (box1.right >= box2.right) {
-		*prioritySide = CollisionSide::left;
+		float dentaXOut = box1.right - box2.right;
+		float dentaXIn = box1.left - box2.right;
+		float dentaY = box1.top - box2.top;
+		if (abs(dentaXIn / dentaXOut) <= 0.75) {
+			*prioritySide = CollisionSide::left;
+		}
+		else {
+			if (box1.top > box2.top) {
+				*prioritySide = CollisionSide::bottom;
+			}
+			else {
+				*prioritySide = CollisionSide::top;
+			}
+		}
 		return true;
 	}
 	if (box1.top > box2.top) {
@@ -169,6 +197,7 @@ bool Collision::IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* pri
 	}
 	if (box1.bottom < box2.bottom) {
 		*prioritySide = CollisionSide::top;
-		return true;
 	}
+
+	return true;
 }

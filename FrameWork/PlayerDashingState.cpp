@@ -53,7 +53,7 @@ void PlayerDashingState::InputHandler() {
 		return;
 	}
 
-	this->curDashTime += 20;
+	this->curDashTime += 13;
 }
 
 void PlayerDashingState::Update(float dt) {
@@ -65,5 +65,7 @@ void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
 	
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
+		player->ChangeState(State::STANDING);
+		this->curDashTime = 0;
 	}
 }

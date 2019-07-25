@@ -165,6 +165,7 @@ public:
 	void OnCollisionWithWater(Object* water, collisionOut* side);
 	void OnSmashSolidBox(Object* solid, CollisionSide side);
 	void OnHeadOnSolidBox(Object* solid);
+	bool AcceptNoCollision(Object* object, CollisionSide side);
 
 #pragma endregion
 
