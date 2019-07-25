@@ -5,49 +5,16 @@ WhiteRockerter::WhiteRockerter()
 	LoadAllAnimation();
 	timeCurrentState = 0;
 	this->vx = ENEMY_SPEED;
-	bullet = BulletManager::getInstance()->CreateBullet(Tag::WHITEROCKERTERBULLET);
-	bullet2 = BulletManager::getInstance()->CreateBullet(Tag::WHITEROCKERTERBULLET);
 	ChangeState(State::RUNNING);
 	canRun = true;
 }
 
 WhiteRockerter::~WhiteRockerter()
 {
-	if (bullet)
-		delete bullet;
-	if (bullet2)
-		delete bullet2;
+
 }
 
-void WhiteRockerter::Shoot(int a) {
-	if (a == 1)
-	{
-		bullet->existTime = 0;
-		bullet->animation->curframeindex = 0;
-		bullet->SetActive(true);
-		bullet->direction = this->direction;
-		bullet->pos.y = this->getBoundingBox().top - 10;
-		if (this->direction == Player::MoveDirection::LeftToRight)
-			bullet->pos.x = this->pos.x + 5;
-		else
-		{
-			bullet->pos.x = this->pos.x - 5;
-		}
-	}
-	else
-	{
-		bullet2->existTime = 0;
-		bullet2->animation->curframeindex = 0;
-		bullet2->SetActive(true);
-		bullet2->direction = this->direction;
-		bullet2->pos.y = this->getBoundingBox().top - 6;
-		if (this->direction == Player::MoveDirection::LeftToRight)
-			bullet2->pos.x = this->pos.x + 5;
-		else
-		{
-			bullet2->pos.x = this->pos.x - 5;
-		}
-	}
+void WhiteRockerter::Shoot() {
 }
 
 void WhiteRockerter::OnCollision(Object* object, collisionOut* colOut) {
@@ -56,14 +23,6 @@ void WhiteRockerter::OnCollision(Object* object, collisionOut* colOut) {
 
 void WhiteRockerter::Update(float dt)
 {
-	if (bullet->GetActive())
-	{
-		bullet->Update(dt);
-	}
-	if (bullet2->GetActive())
-	{
-		bullet2->Update(dt);
-	}
 	if (isDead)
 		return;
 	auto player = Player::getInstance();
@@ -91,8 +50,19 @@ void WhiteRockerter::Update(float dt)
 		{
 			if (timeCurrentState < RED_ROCKERTER_STATE_TIME / 2 && timeCurrentState + dt >= RED_ROCKERTER_STATE_TIME / 2)
 			{
-				//bullet = BulletManager::getInstance()->CreateBullet(Tag::WhiteROCKERTERBULLET);
-				Shoot(1);
+				auto bullet = BulletManager::getInstance()->CreateBullet(Tag::WHITEROCKERTERBULLET);
+				bullet->existTime = 0;
+				bullet->animation->curframeindex = 0;
+				bullet->SetActive(true);
+				bullet->direction = this->direction;
+				bullet->pos.y = this->getBoundingBox().top - 10;
+				if (this->direction == Player::MoveDirection::LeftToRight)
+					bullet->pos.x = this->pos.x + 5;
+				else
+				{
+					bullet->pos.x = this->pos.x - 5;
+				}
+				additionalObjects->push_back(bullet);
 			}
 			timeCurrentState += dt;
 		}
@@ -114,8 +84,19 @@ void WhiteRockerter::Update(float dt)
 		{
 			if (timeCurrentState < RED_ROCKERTER_STATE_TIME / 2 && timeCurrentState + dt >= RED_ROCKERTER_STATE_TIME / 2)
 			{
-				//bullet = BulletManager::getInstance()->CreateBullet(Tag::WhiteROCKERTERBULLET);
-				Shoot(2);
+				auto bullet2 = BulletManager::getInstance()->CreateBullet(Tag::WHITEROCKERTERBULLET);
+				bullet2->existTime = 0;
+				bullet2->animation->curframeindex = 0;
+				bullet2->SetActive(true);
+				bullet2->direction = this->direction;
+				bullet2->pos.y = this->getBoundingBox().top - 6;
+				if (this->direction == Player::MoveDirection::LeftToRight)
+					bullet2->pos.x = this->pos.x + 5;
+				else
+				{
+					bullet2->pos.x = this->pos.x - 5;
+				}
+				additionalObjects->push_back(bullet2);
 			}
 			timeCurrentState += dt;
 		}
@@ -141,10 +122,6 @@ void WhiteRockerter::Update(float dt)
 
 void WhiteRockerter::Render()
 {
-	if (bullet->GetActive())
-		bullet->Render();
-	if (bullet2->GetActive())
-		bullet2->Render();
 	if (isDead)
 		return;
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));

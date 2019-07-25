@@ -9,7 +9,6 @@ Solder::Solder(bool movable)
 	timeCurrentState = 0;
 	this->vy = 0;
 	this->vx = ENEMY_SPEED;
-	bullet = BulletManager::getInstance()->CreateBullet(Tag::BLUESOLDERBULLET);
 	if(!movable)
 		ChangeState(State::STANDING);
 	else
@@ -19,17 +18,12 @@ Solder::Solder(bool movable)
 }
 
 Solder::~Solder() {
-	if (bullet)
-		delete bullet;
+
 }
 
 
 void Solder::Shoot() {
-	bullet->existTime = 0;
-	bullet->SetActive(true);
-	bullet->direction = this->direction;
-	bullet->pos.y = this->getBoundingBox().top - 4;
-	bullet->pos.x = this->pos.x;
+	
 }
 
 void Solder::OnCollision(Object* object, collisionOut* colOut) {
@@ -38,12 +32,6 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 
 void Solder::Update(float dt)
 {
-	
-
-	if (bullet->GetActive()==true)
-	{
-		bullet->Update(dt);
-	}
 
 	if (!isDead)
 	{
@@ -84,8 +72,15 @@ void Solder::Update(float dt)
 		case State::STANDING:
 			if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
 			{
-				if(timeCurrentState+dt>=BLUE_SOLDER_STANDING_TIME/2&&timeCurrentState<BLUE_SOLDER_STANDING_TIME/2)
-					Shoot();
+				if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
+				{
+					auto bullet = new BulletSolder();
+					bullet->existTime = 0;
+					bullet->direction = this->direction;
+					bullet->pos.y = this->getBoundingBox().top - 4;
+					bullet->pos.x = this->pos.x;
+					this->additionalObjects->push_back(bullet);
+				}
 				timeCurrentState += dt;
 			}
 			else
@@ -105,8 +100,6 @@ void Solder::Update(float dt)
 
 void Solder::Render()
 {
-	if (bullet->GetActive())
-		bullet->Render();
 	if (!isDead)
 	{
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));

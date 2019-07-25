@@ -7,14 +7,18 @@ public:
 	WhiteRockerter();
 	~WhiteRockerter();
 	State stateName;
-	Bullet* bullet, *bullet2;//cần 2 viên đạn cho bắn đứng và bắn ngồi
 	bool canRun;
 	float timeCurrentState;
 	std::unordered_map<State, Animation*> animations;
+	std::list<Object*>* additionalObjects;
+	std::list<Object*>* getAdditionalObjects()override
+	{
+		return additionalObjects;
+	}
 
 	void LoadAllAnimation();
 	void ChangeState(State state)override;
-	void Shoot(int a);
+	void Shoot();
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	void Update(float dt) override;
 	void Respawn()override {};

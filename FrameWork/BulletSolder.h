@@ -13,8 +13,6 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (!this->GetActive())//nếu không active không update
-			return;
 
 		if (this->direction == Player::MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
@@ -26,7 +24,6 @@ public:
 		this->pos.y += this->vy;
 		if (existTime >= ENEMY_BULLET_EXIST_TIME)
 		{
-			this->SetActive(false);
 			existTime = 0;
 		}
 		else

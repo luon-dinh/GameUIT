@@ -24,8 +24,6 @@ public:
 	};
 	virtual void Render()
 	{
-		if (!this->GetActive())
-			return;
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 		switch (this->direction) {
 		case Player::MoveDirection::LeftToRight:

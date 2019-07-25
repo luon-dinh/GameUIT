@@ -46,7 +46,7 @@ void Item::Update(float dt)
 {
 	countFrame++;
 
-	if (countFrame<15)
+	if (countFrame<20)
 		this->vy = ITEM_SPEED;
 	else
 	{

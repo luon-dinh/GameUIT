@@ -15,8 +15,6 @@ public:
 
 	void Update(float dt) override
 	{
-		if (!this->GetActive())
-			return;
 		if (animation->curframeindex != animation->toframe - 1)
 		{
 			if (this->direction == Player::MoveDirection::RightToLeft)
@@ -41,8 +39,6 @@ public:
 		}
 		if (existTime >= ENEMY_BULLET_EXIST_TIME)
 		{
-			this->SetActive(false);
-			//delete this;
 			existTime = 0;
 		}
 		else
