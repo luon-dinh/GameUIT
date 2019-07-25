@@ -6,8 +6,8 @@ Item::Item(Type type)
 	this->tag = ITEM;
 	this->type = type;
 	this->vy = ITEM_SPEED;
+	this->vx = 0;
 	existTime = ITEM_EXIST_TIME;
-	this->isActive = false;
 	switch (type)
 	{
 	case Type::UP:
@@ -40,81 +40,54 @@ Item::Item(Type type)
 }
 Item::~Item()
 {
-	if (animation)
-		delete animation;
+
 }
 
 void Item::Update(float dt)
 {
-	if (isActive)
+	this->pos.y += this->vy;
+	existTime -= dt;
+	if (existTime <= 0)
 	{
-		this->pos.y += this->vy;
-		existTime -= dt;
-		if (existTime <= 0)
-		{
-			isActive = false;
-			DeactivateObjectInGrid();
-		}
-		animation->Update(dt);
+		this->SetActive(false);
+		DeactivateObjectInGrid();
 	}
+	animation->Update(dt);
 }
 void Item::Render()
 {
-	if (isActive)
-	{
-		D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-		animation->Render(position);
-	}
+
+	D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	animation->Render(position);
+
 }
 
 BoundingBox Item::getBoundingBox()
 {
 	BoundingBox box;
-	box.top = this->pos.y + 7;
-	box.bottom = this->pos.y - 7;
+	box.top = this->pos.y + 8;
+	box.bottom = this->pos.y - 8;
 	box.left = this->pos.x - 6;
 	box.right = this->pos.x + 6;
-	box.vx = box.vy = 0;
+	box.vx = this->vx;
+	box.vy = this->vy;
 	return box;
 }
 
 void Item::OnCollision(Object* object, collisionOut* colOut)
 {
-	if (!isActive)
-		return;
 	switch (object->type)
 	{
-		//va chạm với player
-		case Type::NONE:
-		{
-			this->isActive = false;
-			
-			switch (this->type)
-			{
-			case Type::HEART:
-				break;
-			case Type::HALFHEART:
-				break;
-			case Type::HP:
-				break;
-			case Type::UP:
-				break;
-			case Type::GEM:
-				break;
-			case Type::SMALLGEM:
-				break;
-			case Type::EXIT:
-				break;
-			default:
-				break;
-			}
-			DeactivateObjectInGrid();
-		}
-		//va chạm với đất
-		case Tag::STATICOBJECT:
-		{
-			this->vy = this->vx = 0;
-			this->pos.y = object->pos.y+this->getHeight()/2;
-		}
+	case Type::GROUND:
+	case Type::SOLIDBOX:
+	case Type::WATERRL:
+		this->vx = this->vy = 0;
+		this->pos.y = object->pos.y + this->getHeight() / 2;
+		break;
+		//xuwr lis va chamj voiws player
+	case Type::NONE:
+		break;
+	default:
+		break;
 	}
 }

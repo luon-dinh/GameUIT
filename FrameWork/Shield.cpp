@@ -15,21 +15,18 @@ BoundingBox Shield::getBoundingBox() {
 		bounding.left = this->pos.x - 4;
 		bounding.right = this->pos.x + 4;
 		bounding.bottom = this->pos.y - 7;
-		return bounding;
 	}
 	if (index == 1) {
 		bounding.top = this->pos.y + 7;
 		bounding.left = this->pos.x - 8;
 		bounding.right = this->pos.x + 8;
 		bounding.bottom = this->pos.y - 7;
-		return bounding;
 	}
 	if (index == 2) {
 		bounding.top = this->pos.y + 3;
 		bounding.left = this->pos.x - 8;
 		bounding.right = this->pos.x + 8;
 		bounding.bottom = this->pos.y - 4;
-		return bounding;
 	}
 	if (index == 3) {
 		bounding.top = this->pos.y + 5;
@@ -37,8 +34,8 @@ BoundingBox Shield::getBoundingBox() {
 		bounding.right = this->pos.x + 12;
 		bounding.bottom = this->pos.y - 5;
 	}
-	bounding.vx = vx;
-	bounding.vy = vy;
+	bounding.vx = this->vx;
+	bounding.vy = this->vy;
 	return bounding;
 }
 

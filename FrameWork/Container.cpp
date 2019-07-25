@@ -48,11 +48,7 @@ Container::Container(Type type )
 
 Container::~Container()
 {
-	if (animation)
-		delete animation;
-	for (auto it : items)
-		it = nullptr;
-	items.clear();
+	
 }
 
 void Container::Update(float dt)
@@ -95,26 +91,6 @@ void Container::addItem(Item *item)
 	numberItems++;
 }
 
-void Container::OnCollisionWithDynamicObject(Object* object)
-{
-	Player* player = Player::getInstance();
-	// nếu container va chạm với shield hoặc bị player đánh
-	if(object->tag==Tag::SHIELD||((player->state==State::STAND_PUNCH||player->state==DUCKING_PUNCHING)&& object->tag==Tag::PLAYER))
-	{
-		animation->curframeindex = 1;
-		ticuframe = 150;
-		if (numberItems != 0)
-		{
-			items[numberItems - 1]->SetActive(true);
-			items[numberItems - 1]->pos = this->pos;
-			items[numberItems - 1]->existTime = ITEM_EXIST_TIME;
-			additionalItems.push_back(items[numberItems - 1]);
-			if (items[numberItems - 1]->type != Type::EXIT)
-				numberItems--;
-		}
-	}
-	PrintDebug("\nCollide with Container !!");
-}
 
 
 void Container::OnCollision(Object* object, collisionOut* colOut)
@@ -128,9 +104,9 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 		ticuframe = 500;
 		if (numberItems != 0)
 		{
-			items[numberItems - 1]->SetActive( true);
 			items[numberItems - 1]->pos = this->pos;
 			items[numberItems - 1]->existTime = ITEM_EXIST_TIME;
+			items[numberItems - 1]->vy = ITEM_SPEED;
 			additionalItems.push_back(items[numberItems - 1]);
 			if (items[numberItems - 1]->type != Type::EXIT)
 			{

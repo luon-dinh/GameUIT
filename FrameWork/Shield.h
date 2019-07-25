@@ -57,7 +57,7 @@ public:
 	void OnCollision(Object* object, collisionOut out);
 	void setFrameIndex(int index);
 	void SetShieldState(ShieldState state);
-	BoundingBox getBoundingBox();
+	BoundingBox getBoundingBox() override;
 
 
 	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
