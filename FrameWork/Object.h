@@ -38,6 +38,10 @@ public:
 	//Mặc định là sẽ được Render. Những object cần render theo kiểu đặc biệt thì ta override lại và để trống.
 	virtual void RenderInGrid() { Render(); }; 
 
+	//Weight nhỏ render trước, weight lớn render sau.
+	//Render sau sẽ che render trước.
+	virtual int RenderWeight() { return RenderWeightOfObjects::OBJECT_RENDER_WEIGHT; }
+
 	//Do có một số item sẽ không bị xoá khỏi grid khi active zone của grid di chuyển.
 	//Vì vậy cần phải override lại hàm này, xét tương ứng với từng object.
 	//Mặc định là object sẽ bị delete khỏi Grid.

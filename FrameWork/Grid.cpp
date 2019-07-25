@@ -1,6 +1,7 @@
 ﻿#include "Grid.h"
 #include <unordered_set>
 #include <set>
+#include <map>
 #include <fstream>
 #include <sstream>
 
@@ -673,6 +674,9 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 
 void Grid::RenderActivatedCells()
 {
+	auto cmp = [](Object* a, Object* b) { return (a->RenderWeight() < b->RenderWeight()); };
+	std::multiset<Object*, decltype(cmp)> orderOfRenders(cmp);
+
 	//Vẽ tất cả các cells được activated.
 	for (int i = bottomY; i <= topY; ++i)
 	{
@@ -689,7 +693,8 @@ void Grid::RenderActivatedCells()
 				{
 					int a = 10;
 				}
-				object->RenderInGrid();
+				//Thêm object vào set chuẩn bị vẽ.
+				orderOfRenders.insert(object);
 				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 			//Vẽ debug các object tĩnh.
@@ -698,6 +703,11 @@ void Grid::RenderActivatedCells()
 			//	//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
 			//}
 		}
+	}
+	//Vẽ theo thứ tự.
+	for (auto object : orderOfRenders)
+	{
+		object->Render();
 	}
 	//DrawDebugObject();
 }

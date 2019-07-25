@@ -86,6 +86,15 @@ public:
 	static int BLUESOLDIER;
 };
 
+//Đây là class chứa trọng số vẽ.
+class RenderWeightOfObjects
+{
+public:
+	static int OBJECT_RENDER_WEIGHT;
+	static int ITEM_RENDER_WEIGHT;
+	static int BULLET_RENDER_WEIGHT;
+};
+
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
 //Lưu ý đừng lưu máu vào đây, đây chỉ là để lưu vị trí và trạng thái của player.
 //Máu của player sẽ được đi xuyên suốt khắp các màn mà không thay đổi.

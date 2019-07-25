@@ -15,6 +15,7 @@ public:
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?
 	//Mặc định là sẽ được Render. Những object cần render theo kiểu đặc biệt thì ta override lại và để trống.
 	virtual void RenderInGrid() { Render(); };
+	int RenderWeight() { return RenderWeightOfObjects::ITEM_RENDER_WEIGHT; }
 	void OnCollision(Object* object, collisionOut* colOut)override;
 	Item(ItemType type);
 	Item() {};

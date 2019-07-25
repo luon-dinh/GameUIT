@@ -36,6 +36,10 @@ public:
 			break;
 		}
 	};
+	int RenderWeight() override
+	{
+		return RenderWeightOfObjects::BULLET_RENDER_WEIGHT;
+	}
 	virtual void OnCollision(Object* object, collisionOut* colOut)
 	{
 
