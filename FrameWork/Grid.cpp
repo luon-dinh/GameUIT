@@ -228,7 +228,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		objectIDPerPosition[midY][midX] = objectID;
 		//Add object vô grid nào.
 		if (objectID == ObjectID::ITEMLOOTER)
-			object = new Container(Type::EXIT);
+			object = new Container(Type::GEM);
 
 		if (object == nullptr)
 			continue;

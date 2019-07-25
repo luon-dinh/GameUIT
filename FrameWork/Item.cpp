@@ -49,17 +49,18 @@ void Item::Update(float dt)
 	existTime -= dt;
 	if (existTime <= 0)
 	{
-		this->SetActive(false);
 		DeactivateObjectInGrid();
 	}
 	animation->Update(dt);
 }
 void Item::Render()
 {
+	if (existTime > 0.75*ITEM_EXIST_TIME)
+	{
 
+	}
 	D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 	animation->Render(position);
-
 }
 
 BoundingBox Item::getBoundingBox()
@@ -86,6 +87,7 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		break;
 		//xuwr lis va chamj voiws player
 	case Type::NONE:
+		DeactivateObjectInGrid();
 		break;
 	default:
 		break;
