@@ -4,7 +4,7 @@
 #include "Debug.h"
 #include<cstdlib>
 
-Container::Container(Type type )
+Container::Container(ItemType type )
 {
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
@@ -71,7 +71,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 		}
 		if (numberItems != 0)
 		{
-			Item* newItem = new Item(Type::STAR);
+			Item* newItem = new Item(ItemType::STAR);
 			newItem->pos = this->pos;
 			additionalItems.push_back(newItem);
 			numberItems--;

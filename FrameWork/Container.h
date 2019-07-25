@@ -23,7 +23,7 @@ public:
 	void SetPosition(D3DXVECTOR2 pos);
 	//tạo mới một container cần phải tạo tất cả các item trước// dùng hàm loadallitem của itemmanager
 	//truyền vào số lượng các items tương ứng của từng loại
-	Container(Type type);
+	Container(ItemType type);
 	~Container();
 };
 
