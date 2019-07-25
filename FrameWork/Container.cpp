@@ -12,37 +12,8 @@ Container::Container(Type type )
 	this->vx = this->vy = 0;
 	numberItems = 0;
 	animation = new Animation(this->tag,0,2);
-	int numberStars = rand() % 7 ;
-	for (int i = 0; i < numberStars; i++)
-	{
-		addItem(new Item(Type::STAR));
-	}
-	switch (type)
-	{
-	case HEART:
-		addItem(new Item(Type::HEART));
-		break;
-	case HALFHEART:
-		addItem(new Item(Type::HALFHEART));
-		break;
-	case EXIT:
-		addItem(new Item(Type::EXIT));
-		break;
-	case GEM:
-		addItem(new Item(Type::GEM));
-		break;
-	case SMALLGEM:
-		addItem(new Item(Type::SMALLGEM));
-		break;
-	case HP:
-		addItem(new Item(Type::HP));
-		break;
-	case UP:
-		addItem(new Item(Type::UP));
-		break;
-	default:
-		break;
-	}
+	numberItems = 15;
+	item = new Item(type);
 }
 
 
@@ -60,9 +31,6 @@ void Container::Update(float dt)
 		animation->curframeindex = 0;
 		ticuframe = 0;
 	}
-
-	for (auto item : items)
-		item->Update(dt);
 }
 
 void Container::Render()
@@ -70,8 +38,6 @@ void Container::Render()
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,this->pos.y,0));
 	//animation->Render(this->pos);
 	animation->getSprite(animation->curframeindex)->Render(pos);
-	for (auto item : items)
-		item->Render();
 }
 
 BoundingBox Container::getBoundingBox()
@@ -85,12 +51,6 @@ BoundingBox Container::getBoundingBox()
 	return box;
 }
 
-void Container::addItem(Item *item)
-{
-	items.push_back(item);
-	numberItems++;
-}
-
 
 
 void Container::OnCollision(Object* object, collisionOut* colOut)
@@ -102,23 +62,24 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 	{
 		animation->curframeindex = 1;
 		ticuframe = 500;
+		if (item != nullptr)
+		{
+			item->pos = this->pos;
+			additionalItems.push_back(item);
+			item = nullptr;
+			return;
+		}
 		if (numberItems != 0)
 		{
-			items[numberItems - 1]->pos = this->pos;
-			items[numberItems - 1]->existTime = ITEM_EXIST_TIME;
-			items[numberItems - 1]->vy = ITEM_SPEED;
-			additionalItems.push_back(items[numberItems - 1]);
-			if (items[numberItems - 1]->type != Type::EXIT)
-			{
-				numberItems--;
-			}
+			Item* newItem = new Item(Type::STAR);
+			newItem->pos = this->pos;
+			additionalItems.push_back(newItem);
+			numberItems--;
 		}
 	}
 	PrintDebug("\nCollide with Container !!");
 }
 void Container::SetPosition(D3DXVECTOR2 pos)
 {
-	this->pos = pos;
-	for (auto item : items)
-		item->pos = this->pos;
+	
 }

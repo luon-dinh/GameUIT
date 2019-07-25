@@ -8,7 +8,7 @@ class Container :
 public:
 	int ticuframe;
 	Animation *animation;
-	std::vector<Item*>items;
+	Item* item;
 	int numberItems;
 	std::list<Object*> additionalItems;
 	std::list<Object*>* getAdditionalObjects() { return &additionalItems; };

@@ -4,6 +4,7 @@ class Item:public Object {
 private:
 
 public:
+	int countFrame;
 	int existTime;
 	void Update(float dt);
 	BoundingBox getBoundingBox()override;
