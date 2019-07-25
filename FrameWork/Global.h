@@ -95,14 +95,14 @@ struct PlayerInfo
 };
 
 enum ItemType {
-	HALFHEART,
-	HEART,
-	EXIT,
-	GEM,
-	SMALLGEM,
+	HALFHEART = 0,
+	HEART = 1,
+	SMALLGEM = 2,
+	GEM = 3,
+	HP = 4,
+	UP = 5,
+	EXIT = 6,
 	STAR,
-	HP,
-	UP,
 };
 
 enum Tag {
