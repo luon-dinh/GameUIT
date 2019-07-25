@@ -293,7 +293,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
 			{
-				newObject = new Solder(true);
+				newObject = new Solder(false);
 			}
 			if (newObject == nullptr)
 				continue;
