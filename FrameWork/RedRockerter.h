@@ -10,10 +10,10 @@ public:
 	bool canRun;
 	float timeCurrentState;
 	std::unordered_map<State, Animation*> animations;
-	std::list<Object*>* additionalObjects;
+	std::list<Object*> additionalObjects;
 	std::list<Object*>* getAdditionalObjects()override
 	{
-		return additionalObjects;
+		return &additionalObjects;
 	}
 
 	void LoadAllAnimation();
@@ -21,7 +21,6 @@ public:
 	void Shoot() ;
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	void Update(float dt) override;
-	void Respawn()override {};
 	void Render();
 	BoundingBox getBoundingBox();// boundingbox của ngồi khác nên cần override lại
 };

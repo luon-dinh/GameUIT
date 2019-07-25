@@ -79,7 +79,7 @@ void Solder::Update(float dt)
 					bullet->direction = this->direction;
 					bullet->pos.y = this->getBoundingBox().top - 4;
 					bullet->pos.x = this->pos.x;
-					this->additionalObjects->push_back(bullet);
+					additionalObjects.push_back(bullet);
 				}
 				timeCurrentState += dt;
 			}

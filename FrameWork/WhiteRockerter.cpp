@@ -62,7 +62,7 @@ void WhiteRockerter::Update(float dt)
 				{
 					bullet->pos.x = this->pos.x - 5;
 				}
-				additionalObjects->push_back(bullet);
+				additionalObjects.push_back(bullet);
 			}
 			timeCurrentState += dt;
 		}
@@ -96,7 +96,7 @@ void WhiteRockerter::Update(float dt)
 				{
 					bullet2->pos.x = this->pos.x - 5;
 				}
-				additionalObjects->push_back(bullet2);
+				additionalObjects.push_back(bullet2);
 			}
 			timeCurrentState += dt;
 		}
