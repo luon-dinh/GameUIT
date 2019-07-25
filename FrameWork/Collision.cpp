@@ -149,3 +149,26 @@ bool Collision::IsCollide(BoundingBox box1, BoundingBox box2)
 {
 	return !(box1.left > box2.right || box1.right < box2.left || box1.top < box2.bottom || box1.bottom > box2.top);
 }
+
+bool Collision::IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* prioritySide) {
+	if (!IsCollide(box1, box2)) {
+		*prioritySide = CollisionSide::none;
+		return false;
+	}
+	if (box1.left <= box2.left) {
+		*prioritySide = CollisionSide::right;
+		return true;
+	}
+	if (box1.right >= box2.right) {
+		*prioritySide = CollisionSide::left;
+		return true;
+	}
+	if (box1.top > box2.top) {
+		*prioritySide = CollisionSide::bottom;
+		return true;
+	}
+	if (box1.bottom < box2.bottom) {
+		*prioritySide = CollisionSide::top;
+		return true;
+	}
+}

@@ -11,6 +11,7 @@ void PlayerJumpingState::InputHandler() {
 
 	// xét thời gian đã press phím jump
 	if (player->GetOnAirState() == Player::OnAir::Jumping) {
+		this->curDelayTime = 0;
 		 //phím Jump đã được nhấn từ trước
 		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
 			if (timePressedJump / 10 < MIN_TIME_JUMP_1) {
@@ -31,6 +32,9 @@ void PlayerJumpingState::InputHandler() {
 					}
 				}
 		}
+	}
+	else {
+
 	}
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
@@ -54,23 +58,24 @@ void PlayerJumpingState::InputHandler() {
 
 void PlayerJumpingState::Update(float dt) {
 	this->InputHandler();
+	
 }
 
 void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
    	auto player = Player::getInstance();
 	auto side = collision->side;
 
-
 	// va chạm với ground
 	if (object->type == Type::GROUND) { 
 		if (side == CollisionSide::bottom ) {
 			player->OnStandingOnGround(object);
+			this->SetCollisionInfo(object, collision->side);
 			DebugOut(L"\nState Now: ");
 			PrintDebugNumber(player->state);
 			return;
 		}
 	}
-
+	 
 	// va chạm với nước
 	if (object->type == Type::WATERRL) {
 		if ( (player->GetPreviousState() != nullptr) && (player->GetPreviousState()->state == State::FLOATING))

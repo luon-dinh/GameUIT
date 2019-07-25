@@ -12,7 +12,6 @@ public:
 	void InputHandler();
 	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collision);
-
 	PlayerRunningState();
 	~PlayerRunningState();
 };
