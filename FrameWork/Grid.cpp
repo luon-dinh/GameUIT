@@ -291,6 +291,10 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 				//ItemLooter không được sinh lần 2.
 				//newObject = new Container(); //Tạo mới object dựa vào ID.
 			}
+			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
+			{
+				newObject = new Solder(true);
+			}
 			if (newObject == nullptr)
 				continue;
 			newObject->pos.x = j;
