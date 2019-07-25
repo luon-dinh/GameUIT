@@ -61,6 +61,7 @@ public:
 	static Collision * getInstance();
 	collisionOut SweptAABB(BoundingBox recta, BoundingBox rectb);
 	collisionOut SweptAABB(BoundingBox recta, BoundingBox rectb, float acceleratorA);
+	collisionOut GetOppositeSide(collisionOut&);
 	bool IsCollide(BoundingBox box1, BoundingBox box2);
 };
 

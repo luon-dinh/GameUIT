@@ -1,8 +1,10 @@
 ﻿#include "Grid.h"
+#include <unordered_set>
+#include <set>
 #include <fstream>
 #include <sstream>
 
-Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
+Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const char * staticMapObject)
 {
 	mapWidth = _mapWidth;
 	mapHeight = _mapHeight;
@@ -17,10 +19,18 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 		cells[i] = new std::list<Object*>[gridWidth];
 	}
 
+	//Khởi tạo danh sách các cells chứa static objects.
+	cellsOfStaticObjects = new std::list<MapStaticObject*>* [gridHeight];
+	for (int i = 0; i < gridHeight; ++i)
+	{
+		cellsOfStaticObjects[i] = new std::list<MapStaticObject*>[gridWidth];
+	}
+
 	//Khởi tạo danh sách một mảng 2 chiều.
 	objectIDPerPosition = new int *[mapHeight];
 	for (int i = 0; i < mapHeight; ++i)
 		objectIDPerPosition[i] = new int[mapWidth];
+
 	//Xoá sạch mảng (reset lại về 0).
 	for (int i = 0; i < mapHeight; ++i)
 	{
@@ -29,8 +39,160 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition)
 			objectIDPerPosition[i][j] = -1;
 		}
 	}
+
 	LoadSpawnPosition(spawnPosition);
+	LoadMapObjects(staticMapObject);
 }
+
+Grid::~Grid()
+{
+	//Xoá danh sách các cells.
+	for (int i = 0; i < gridHeight; ++i)
+	{
+		for (int j = 0; j < gridWidth; ++j)
+		{
+			for (auto object : cells[i][j])
+			{
+				Player* testPlayer = dynamic_cast<Player*> (object);
+				Shield* testShield = dynamic_cast<Shield*> (object);
+
+				//Chỉ xoá khi không phải là player và shield.
+				if (testPlayer != nullptr && testShield != nullptr)
+					delete object;
+			}
+			cells[i][j].clear();
+		}
+		delete[]cells[i];
+	}
+
+	//Xoá các object tĩnh.
+	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá toàn bộ.
+	//Xác định xem object đã được giết trước đó chưa.
+	std::set<MapStaticObject*> mapStaticObjects;
+	for (int i = 0; i < gridHeight; ++i)
+	{
+		for (int j = 0; j < gridWidth; ++j)
+		{
+			for (auto object : cellsOfStaticObjects[i][j])
+			{
+				//Xoá hết khi object phủ trên nhiều cell cùng lúc.
+				mapStaticObjects.insert(object);
+			}
+			cellsOfStaticObjects[i][j].clear();
+		}
+		delete[]cellsOfStaticObjects[i];
+	}
+	delete cellsOfStaticObjects;
+	for (auto object : mapStaticObjects)
+		delete object;
+
+	//Xoá danh sách các object.
+	for (int i = 0; i < mapHeight; ++i)
+		delete[]objectIDPerPosition[i];
+	delete objectIDPerPosition;
+}
+
+void Grid::LoadMapObjects(const char * mapObjectFilePath)
+{
+	//Load tất cả các Map Object (Ground, Non-Ground,...).
+	std::ifstream inFile;
+	inFile.open(mapObjectFilePath);
+	if (!inFile)
+		PrintDebug("MapObject file not exist ! \n");
+	std::string sInputString;
+
+	std::getline(inFile, sInputString);
+
+	std::istringstream iss(sInputString);
+
+	int numOfObject;
+
+	iss >> numOfObject;
+
+	Type entityTag = Type::NONE;
+
+	int objectID = -1;
+	int objectTopLeftX = -1;
+	int objectTopLeftY = -1;
+	int objectWidth = -1;
+	int objectHeight = -1;
+
+	for (int i = 0; i < numOfObject; ++i)
+	{
+ 		std::getline(inFile, sInputString);
+		std::istringstream iss(sInputString);
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+
+		//Xét từng ID để xem entityTag của nó là gì.
+		if (objectID == ObjectID::GROUND)
+			entityTag = Type::GROUND;
+		else if (objectID == ObjectID::SOLIDBOX)
+			entityTag = Type::SOLIDBOX;
+		else if (objectID == ObjectID::WATERRL)
+			entityTag = Type::WATERRL;
+		else if (objectID == ObjectID::ROPE)
+			entityTag = Type::ROPE;
+		else if (objectID == ObjectID::ONOFF)
+			entityTag = Type::ONOFF;
+		else if (objectID == ObjectID::DOOR)
+			entityTag = Type::DOOR;
+
+		MapStaticObject* mapObject = new MapStaticObject();
+		mapObject->type = entityTag;
+		mapObject->tag = Tag::STATICOBJECT;
+		mapObject->height = objectHeight;
+		mapObject->width = objectWidth;
+		mapObject->pos.x = objectTopLeftX + (float)objectWidth / 2;
+		mapObject->pos.y = objectTopLeftY - (float)objectHeight / 2;
+		AddStaticMapObjects(mapObject);
+	}
+}
+
+void Grid::AddStaticMapObjects(MapStaticObject * object)
+{
+	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
+	int cellXFrom = (object->pos.x - object->width/2) / cellSize;
+
+	if (cellXFrom < 0)
+		cellXFrom = 0;
+	else if (cellXFrom * cellSize > mapWidth)
+		cellXFrom = mapWidth / cellSize;
+
+	int cellXTo = cellXFrom;
+	int cellYFrom = (object->pos.y + object->height/2) / cellSize;
+
+	if (cellYFrom < 0)
+		cellYFrom = 0;
+	else if (cellYFrom * cellSize > mapHeight)
+		cellYFrom = mapHeight / cellSize;
+
+	int cellYTo = cellYFrom;
+	while(cellXTo*cellSize <= (object->pos.x + object->width / 2))
+	{
+		++cellXTo;
+	} 
+
+	while (cellYTo * cellSize <= (object->pos.y + object->height / 2))
+	{
+		++cellYTo;
+	} 
+
+	//Chặn không cho object add cell ra ngoài.
+	if (cellXTo > gridWidth)
+		cellXTo = gridWidth;
+	if (cellYTo > gridHeight)
+		cellYTo = gridHeight;
+
+	//Thêm object trên nhiều cell.
+	for (int i = cellYFrom; i < cellYTo; ++i)
+	{
+		for (int j = cellXFrom; j < cellXTo; ++j)
+		{
+			cellsOfStaticObjects[i][j].push_front(object);
+		}
+	}
+}
+
 
 void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 {
@@ -88,15 +250,17 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 	//Chứng tỏ object còn đang hoạt động nên không delete.
 	for (auto object : curList)
 		object->DeactivateObjectInGrid();
-	for (auto it = curList.begin(); it != curList.end(); ++it)
+	auto it = curList.begin();
+	while(it != curList.end())
 	{
 		//Nếu object hiện tại vẫn đang được kích hoạt thì ta bỏ qua.
 		if ((*it)->GetActivatedInGridStatus())
+		{
+			++it;
 			continue;
+		}
 		delete (*it);
-		it = curList.erase(it);
-		if (it == curList.end())
-			break;
+		curList.erase(it++);
 	}
 }
 
@@ -133,37 +297,20 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 	}
 }
 
-Grid::~Grid()
-{
-	//Xoá danh sách các cells.
-	for (int i = 0; i < gridHeight; ++i)
-	{
-		for (int j = 0; j < gridWidth; ++j)
-		{
-			for (auto i : cells[i][j])
-			{
-				Player* testPlayer = dynamic_cast<Player*> (i);
-				Shield* testShield = dynamic_cast<Shield*> (i);
-
-				//Chỉ xoá khi không phải là player và shield.
-				if (testPlayer != nullptr && testShield != nullptr)
-					delete i;
-			}
-			cells[i][j].clear();
-		}
-		delete []cells[i];
-	}
-	delete cells;
-	//Xoá danh sách các object.
-	for (int i = 0; i < mapHeight; ++i)
-		delete[]objectIDPerPosition[i];
-	delete objectIDPerPosition;
-}
-
 void Grid::Add(Object* objectToAdd)
 {
 	int cellX = objectToAdd->pos.x / cellSize;
 	int cellY = objectToAdd->pos.y / cellSize;
+
+	if (cellX < 0)
+		cellX = 0;
+	else if (cellX * cellSize > mapWidth)
+		cellX = mapWidth / cellSize;
+	
+	if (cellY < 0)
+		cellY = 0;
+	else if (cellY * cellSize > mapHeight)
+		cellY = mapHeight / cellSize;
 
 	//Sắp xếp vị trí để shield luôn luôn hiển thị trước mọi thứ khác.
 	cells[cellY][cellX].push_front(objectToAdd);
@@ -309,60 +456,112 @@ void Grid::CollisionProcess()
 	}
 }
 
+void Grid::CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2)
+{
+	if (obj1 == obj2)
+		return;
+	BoundingBox obj1BoundingBox = obj1->getBoundingBox();
+	BoundingBox obj2BoundingBox = obj2->getBoundingBox();
+
+	collisionOut obj1CollisionSide = Collision::getInstance()->SweptAABB(obj1BoundingBox, obj2BoundingBox);
+	collisionOut obj2CollisionSide = Collision::getInstance()->GetOppositeSide(obj1CollisionSide);
+	//Nếu có va chạm Swept xảy ra.
+	if (obj1CollisionSide.side != CollisionSide::none)
+	{
+		//Xử lý va chạm giữa 2 object với nhau.
+		obj1->OnCollision(obj2, &obj1CollisionSide);
+		obj2->OnCollision(obj1, &obj2CollisionSide);
+	}
+}
+
+bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object* object)
+{
+	BoundingBox staticObjBoundingBox = staticObject->getBoundingBox();
+	BoundingBox objBoundingBox = object->getBoundingBox();
+	collisionOut colOut = Collision::getInstance()->SweptAABB(objBoundingBox, staticObjBoundingBox);
+	//Nếu có va chạm Swept xảy ra.
+	if (colOut.side != CollisionSide::none)
+	{
+		//Xử lý va chạm giữa 2 object với nhau.
+		object->OnCollision(staticObject, &colOut);
+		return true;
+	}
+	else if (Collision::getInstance()->IsCollide(objBoundingBox, staticObjBoundingBox))
+	{
+		if (object->tag == Tag::PLAYER && staticObject->type == Type::GROUND) {
+			if (((Player*)object)->GetOnAirState() == Player::OnAir::Falling) {
+				int a = 1;
+			}
+		}
+		staticObject->OnRectCollided(object);
+		bool collided = object->OnRectCollided(staticObject);
+		return collided;
+	}
+	else
+	{
+		staticObject->OnNotCollision(object);
+		object->OnNotCollision(staticObject);
+	}
+	return false;
+}
+
 void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY)
 {
 	std::list<Object*> &firstCell = cells[firstCellY][firstCellX];
 	std::list<Object*> &secondCell = cells[secondCellY][secondCellX];
 
+	std::list<MapStaticObject*> &firstStaticCell = cellsOfStaticObjects[firstCellY][firstCellX];
+	std::list<MapStaticObject*> &secondStaticCell = cellsOfStaticObjects[secondCellY][secondCellX];
+
 	//Duyệt qua các phần tử của cell đầu tiên.
-	for (std::list<Object*>::iterator firstCellIt = firstCell.begin(); firstCellIt != firstCell.end(); ++firstCellIt)
+	//Xét va chạm với object static.
+	std::unordered_set<Object*> isChecked;
+	for (auto object : firstCell)
 	{
-		BoundingBox firstCellObjBoundingBox = (*firstCellIt)->getBoundingBox();
-		for (std::list<Object*>::iterator secondCellIt = secondCell.begin(); secondCellIt != secondCell.end(); ++secondCellIt)
+		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+			continue;
+		for (auto staticObject : firstStaticCell)
 		{
-			//Không xét trường hợp tự va chạm với chính mình.
-			if (*firstCellIt == *secondCellIt)
-				continue;
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				break;
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
+		}
+		for (auto staticObject : secondStaticCell)
+		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				break;
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
+		}
+	}
+	for (auto object : secondCell)
+	{
+		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+			continue;
+		for (auto staticObject : firstStaticCell)
+		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				break;
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
+		}
+		for (auto staticObject : secondStaticCell)
+		{
+			if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
+				break;
+			if (CollisionProcessOfStaticObject(staticObject, object))
+				isChecked.insert(object);
+		}
+	}
 
-			BoundingBox secondCellObjBoundingBox = (*secondCellIt)->getBoundingBox();
-
-			//AABB.
-			//bool collided = Collision::getInstance()->IsCollide(firstCellObjBoundingBox, secondCellObjBoundingBox);
-			//if (collided)
-			//{
-			//	(*firstCellIt)->OnCollisionWithDynamicObject(*secondCellIt);
-			//	(*secondCellIt)->OnCollisionWithDynamicObject(*firstCellIt);
-			//}
-
-			//Swept AABB.
-			collisionOut firstObjColOut = Collision::getInstance()->SweptAABB(firstCellObjBoundingBox, secondCellObjBoundingBox);
-
-			collisionOut secondObjColOut;
-			secondObjColOut.collisionTime = firstObjColOut.collisionTime;
-			
-			//Nếu không có va chạm xảy ra.
-			if (firstObjColOut.side == CollisionSide::none)
-				continue;
-
-			//Hướng va chạm ngược so với object kia.
-			if (firstObjColOut.side == CollisionSide::left)
-				secondObjColOut.side = CollisionSide::right;
-
-			else if (firstObjColOut.side == CollisionSide::bottom)
-				secondObjColOut.side = CollisionSide::top;
-
-			else if (firstObjColOut.side == CollisionSide::top)
-				secondObjColOut.side = CollisionSide::bottom;
-
-			else if (firstObjColOut.side == CollisionSide::right)
-				secondObjColOut.side = CollisionSide::left;
-
-			else
-				secondObjColOut.side = firstObjColOut.side;
-
-			//Xử lý va chạm giữa 2 object với nhau.
-			(*firstCellIt)->OnCollision(*secondCellIt, &firstObjColOut);
-			(*secondCellIt)->OnCollision(*firstCellIt, &secondObjColOut);
+	//Xét va chạm object động.
+	for (auto firstObj : firstCell)
+	{
+		for (auto secondObj : secondCell)
+		{
+			//Lấy tất cả static trong cả 2 cell va chạm với cả 2 object đang xét.
+			CollisionProcessOfDynamicObjects(firstObj, secondObj);
 		}
 	}
 }
@@ -383,6 +582,10 @@ void Grid::UpdateActivatedCells(double dt)
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
 				(*it)->Update(dt);
+				if ((*it)->tag == Tag::PLAYER)
+				{
+					int a = 1;
+				}
 				it = MoveObjectAndIncrementIterator(cellX, cellY, it, (*it)); //Lúc này là đã di chuyển luôn iterator rồi.
 			}
 		}
@@ -392,6 +595,10 @@ void Grid::UpdateActivatedCells(double dt)
 
 std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int cellY, std::list<Object*>::iterator it, Object* object)
 {
+	//Nếu là static object thì không có việc move.
+	if (!object->IsMovableInGrid())
+		return (++it);
+
 	//Kiểm tra xem object sau khi di chuyển còn thuộc cell hiện tại hay không.
 	int nextCellX = object->pos.x / cellSize;
 	int nextCellY = object->pos.y / cellSize;
@@ -421,12 +628,18 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
-				Container* itemLooter = dynamic_cast<Container*> (object);
+				MapStaticObject* itemLooter = dynamic_cast<MapStaticObject*> (object);
 				if (itemLooter != nullptr)
 				{
 					int a = 10;
 				}
 				object->RenderInGrid();
+				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+			}
+			//Vẽ các object tĩnh.
+			for (auto object : cellsOfStaticObjects[i][j])
+			{
+				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
 			}
 		}
 	}
@@ -435,17 +648,6 @@ void Grid::RenderActivatedCells()
 
 void Grid::DrawDebugObject()
 {
-	//Vẽ tất cả các object động.
-	//Duyệt qua tất cả các cell.
-	for (int i = 0; i < gridHeight; ++i)
-	{
-		for (int j = 0; j < gridWidth; ++j)
-		{
-			for (auto object : cells[i][j])
-			{
-				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
-			}
-		}
-	}
+
 }
 

@@ -107,8 +107,10 @@ void SceneManager::ReplaceScene(MapName mapName)
 	if (currentScene != nullptr)
 		delete currentScene;
 	currentScene = nextScene;
-	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 	currentScene->ResetPlayerPosition(); //Từng Scene sẽ có cách khởi tạo player ở những vị trí khác nhau. Vì vậy ta phải reset theo từng scene.
+	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
+	//Khi replace scene thì ta cũng add luôn các phần tử liên quan đến player vào grid.
+	currentScene->AddPlayerElementsToGrid();
 }
 
 //ChangeScene sẽ đổi Scene, nhưng sẽ giữ Scene trước đó (không delete) và trạng thái của player khi đang ở Scene đó.
@@ -145,6 +147,8 @@ void SceneManager::ChangeScene(MapName mapName)
 		//Trong trường hợp không tìm thấy.
 		//Thì ta reset luôn vị trí player về mặc định của map.
 		currentScene->ResetPlayerPosition();
+		//Khi replace scene thì ta cũng add luôn các phần tử liên quan đến player vào grid.
+		currentScene->AddPlayerElementsToGrid();
 	}
 }
 

@@ -12,6 +12,28 @@ Collision* Collision::getInstance()
 	return instance;
 }
 
+collisionOut Collision::GetOppositeSide(collisionOut & input)
+{
+	collisionOut output = input;
+	//Hướng va chạm ngược so với object kia.
+	if (input.side == CollisionSide::left)
+		output.side = CollisionSide::right;
+
+	else if (input.side == CollisionSide::bottom)
+		output.side = CollisionSide::top;
+
+	else if (input.side == CollisionSide::top)
+		output.side = CollisionSide::bottom;
+
+	else if (input.side == CollisionSide::right)
+		output.side = CollisionSide::left;
+
+	else
+		input.side = output.side;
+	output.collisionTime = input.collisionTime;
+	return output;
+}
+
 collisionOut Collision::SweptAABB(BoundingBox recta, BoundingBox rectb)
 {
 	collisionOut out;

@@ -18,7 +18,7 @@ public:
 	void ChangeState(State state)override; 
 	void Shoot() override;
 	void OnCollision(Object* object, collisionOut* colOut) override;
-	void Update(float dt) override;
+  void Update(float dt) override;
 	void Respawn()override {};
 	void Render();
 };

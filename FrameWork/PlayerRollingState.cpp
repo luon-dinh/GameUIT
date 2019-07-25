@@ -60,19 +60,16 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
 
 	if (object->type == Type::GROUND) {
+		// chạm nền dưới
+		if (side == CollisionSide::bottom) {
+			player->OnStandingOnGround(object);
+			return;
+		}
+	}
 
-		// chạm vào ground trên đầu
-		if (side == CollisionSide::top) {
-			//player->SetVy(0);
-		}
-		else {
-			// chạm nền dưới
-			if (side == CollisionSide::bottom) {
-				player->SetGroundCollision(new GroundCollision(object, side));
- 				player->ChangeState(State::STANDING);
-				player->pos.y = object->pos.y + player->getHeight() / 2;
-			}
-		}
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+		return;
 	}
 }
 

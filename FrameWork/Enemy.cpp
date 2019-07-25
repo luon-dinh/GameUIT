@@ -2,7 +2,6 @@
 #include"Camera.h"
 Enemy::Enemy()
 {
-
 }
 
 Enemy::~Enemy() {

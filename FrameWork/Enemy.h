@@ -5,7 +5,6 @@
 
 class Enemy : public Object {
 protected:
-	
 public:
 	Enemy();
 	~Enemy();
