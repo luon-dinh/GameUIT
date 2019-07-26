@@ -61,7 +61,7 @@ public:
 	int getWidth();
 	int getHeight();
 	void ChangeState(PlayerState* newplayerstate);
-	void ChangeState(State stateName);
+	void ChangeState(State stateName) override;
 	void Update(float dt);
 
 	void Render();
@@ -70,26 +70,13 @@ public:
 	void SetPreviousState(State stateName);
 	BoundingBox getBoundingBox();
 	State state;
-	MoveDirection direction;
 	Type type;
 	static Player* getInstance();
 	Animation * curanimation;
 	PlayerState * playerstate;
-	OnAir onAirState;
-	OnAir preOnAir;
-	D3DXVECTOR2 accelerate;
-	BOOL collideOnGround;
 	ShieldReturnEdge edge;
 
-	GroundCollision* groundCollision;
-	SolidBoxCollision* solidBoxCollision;
-
 	D3DXVECTOR2 shieldReturnPos;
-	bool isStateChanged;
-
-	bool smashRight;
-	bool smashLeft;
-	bool isStopBySolidBox;
 
 	Player();
 	~Player();
@@ -103,8 +90,6 @@ public:
 	virtual void UpdatePosition()				 override;
 	void SetOnAirState(OnAir onAirState)         override;
 	void SetMoveDirection(MoveDirection moveDir) override;
-	OnAir GetOnAirState();
-	OnAir GetPreOnAirState();
 	BOOL IsReachMaxJump();
 
 	void Float(MoveDirection moveDir);

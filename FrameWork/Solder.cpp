@@ -150,7 +150,7 @@ void Solder::Update(float dt)
 		case State::RUNNING:
 			if (canJump)
 			{
-				if (shield->state == Shield::ShieldState::Attack&&shield->direction != this->direction)
+				if (shield->state == Shield::ShieldState::Attack&&shield->GetMoveDirection() != this->direction)
 					this->vy = 2;
 			}
 			if (timeCurrentState > BLUE_SOLDER_RUNNING_TIME)

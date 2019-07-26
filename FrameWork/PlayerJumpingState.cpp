@@ -69,7 +69,6 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::GROUND) { 
 		if (side == CollisionSide::bottom ) {
 			player->OnStandingOnGround(object);
-			this->SetCollisionInfo(object, collision->side);
 			DebugOut(L"\nState Now: ");
 			PrintDebugNumber(player->state);
 			return;

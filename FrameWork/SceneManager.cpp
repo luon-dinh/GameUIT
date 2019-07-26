@@ -140,7 +140,7 @@ void SceneManager::ChangeScene(MapName mapName)
 		player->pos.x = prevInfo.playerX;
 		player->pos.y = prevInfo.playerY;
 		player->ChangeState(State::STANDING);
-		player->SetAirState(Player::OnAir::None);
+		player->SetOnAirState(Player::OnAir::None);
 	}
 	else
 	{

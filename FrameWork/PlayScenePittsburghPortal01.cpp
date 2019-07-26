@@ -32,7 +32,7 @@ void PlayScenePittsburghPortal01::ResetPlayerPosition()
 	player->pos.x = 64; //Ngay cánh cửa.
 	player->pos.y = player->height + 10;
 	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
+	player->SetOnAirState(Player::OnAir::Falling);
 }
 
 void PlayScenePittsburghPortal01::Update(double dt)

@@ -14,7 +14,7 @@ void PlayerShieldDownState::InputHandler() {
 	auto player = Player::getInstance();
 
 	if (!keyboard->isKeyDown(PLAYER_SIT)) {
-		if(player->onAirState==Player::OnAir::None)
+		if(player->GetOnAirState() == Player::OnAir::None)
 			player->ChangeState(State::STANDING);
 		else 
 		{

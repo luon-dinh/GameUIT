@@ -105,12 +105,12 @@ public:
 	virtual bool IsStopRight();
 
 	// Override hàm này để có thể thay đổi state
-	virtual void ChangeState(State stateName)							= 0;
+	virtual void ChangeState(State stateName) {};
 
 	// Handler chung của các trường hợp collision
-	virtual void OnCollision(Object* object, collisionOut* colOut)		= 0;
-	virtual void OnNotCollision(Object* object)							= 0;
-	virtual bool OnRectCollided(Object* object, CollisionSide side)		= 0;
+	virtual void OnCollision(Object* object, collisionOut* colOut) {};
+	virtual void OnNotCollision(Object* object) {};
+	virtual bool OnRectCollided(Object* object, CollisionSide side) { return false; };
 
 protected:
 	BOOL isActive;

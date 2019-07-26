@@ -49,7 +49,7 @@ Shield::Shield()
 	this->accelerator = D3DXVECTOR2(0, 0);
 	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
 	animation = new Animation(this->tag, 0, 4);
-	Player::MoveDirection direction = Player::getInstance()->direction;
+	Player::MoveDirection direction = Player::getInstance()->GetMoveDirection();
 	this->accelerator = D3DXVECTOR2(0.2, 0);
 	this->SetShieldState(Shield::ShieldState::Transparent);
 	this->beginRound = TRUE;
@@ -78,7 +78,7 @@ void Shield::InputHandler(float dt)
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK) && player->hasShield && player->state != State::KICKING)
 	{
 		player->hasShield = false;
-		switch (player->direction)
+		switch (player->GetMoveDirection())
 		{
 		case Player::MoveDirection::LeftToRight:
 		{
@@ -108,7 +108,7 @@ void Shield::Update(float dt)
 	Player* player = Player::getInstance();
 	if (!player)
 		return;
-	Player::MoveDirection direction = Player::getInstance()->direction;// lấy hướng di chuyển của player player
+	Player::MoveDirection direction = Player::getInstance()->GetMoveDirection();// lấy hướng di chuyển của player player
 	//kiểm tra nếu player đang giữ shield
 	if (player->hasShield) {
 		//nếu là shield up thì đổi sprite index
