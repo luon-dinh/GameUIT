@@ -80,25 +80,34 @@ void Camera::SetPosition(float x, float y)
 
 void Camera::MoveLeft(long s)
 {
-	if (topLeftX - s >= 0)
+	//Chỉnh lại camera sao cho nó move một khoảng hợp lý.
+	if (topLeftX - s < 0)
+		topLeftX = 0;
+	else
 		topLeftX -= s;
 }
 
 void Camera::MoveRight(long s)
 {
-	if (topLeftX + SCREEN_WIDTH + s < mapWidth)
+	if (topLeftX + SCREEN_WIDTH + s >= mapWidth)
+		topLeftX = mapWidth - SCREEN_WIDTH;
+	else
 		topLeftX += s;
 }
 
 void Camera::MoveUp(long s)
 {
-	if (topLeftY + s < mapHeight)
+	if (topLeftY + s >= mapHeight)
+		topLeftY = mapHeight;
+	else
 		topLeftY += s;
 }
 
 void Camera::MoveDown(long s)
 {
-	if (topLeftY - SCREEN_HEIGHT - s >= 0)
+	if (topLeftY - SCREEN_HEIGHT - s < 0)
+		topLeftY = 0;
+	else
 		topLeftY -= s;
 }
 
