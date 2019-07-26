@@ -19,6 +19,7 @@ public:
 	void DeactivateObjectInGrid() override {} ;
 	void OnCollision(Object * object, collisionOut* colOut) override;
 	bool OnRectCollided(Object* object, CollisionSide side)override;
+	void OnNotCollision(Object* object)override;
 	void Respawn() {};
 	void addItem(Item* item);
 	void SetPosition(D3DXVECTOR2 pos);

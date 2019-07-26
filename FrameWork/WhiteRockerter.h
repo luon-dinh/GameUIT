@@ -19,6 +19,8 @@ public:
 	void LoadAllAnimation();
 	void ChangeState(State state)override;
 	void OnCollision(Object* object, collisionOut* colOut) override;
+	bool OnRectCollided(Object* object, CollisionSide side)override { return false; };
+	void OnNotCollision(Object* object)override {};
 	void Update(float dt) override;
 	void Render();
 	BoundingBox getBoundingBox();// boundingbox của ngồi khác nên cần override lại

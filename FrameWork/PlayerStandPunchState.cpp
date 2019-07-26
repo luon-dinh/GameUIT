@@ -41,7 +41,7 @@ BoundingBox PlayerStandPunchState::getBoundingBox()
 	if (player->direction == Player::MoveDirection::RightToLeft)
 	{
 		box.left = player->pos.x - 18;
-		box.right = player->pos.x + 11;
+		box.right = player->pos.x + 11;	
 	}
 	else
 	{
