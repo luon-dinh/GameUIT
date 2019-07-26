@@ -106,7 +106,7 @@ void Camera::MoveUp(long s)
 void Camera::MoveDown(long s)
 {
 	if (topLeftY - SCREEN_HEIGHT - s < 0)
-		topLeftY = 0;
+		topLeftY = SCREEN_HEIGHT;
 	else
 		topLeftY -= s;
 }
