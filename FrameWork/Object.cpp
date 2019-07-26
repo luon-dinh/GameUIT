@@ -172,7 +172,7 @@ void Object::OnFallingOffGround() {
 void Object::OnStandingOnGround(Object* ground) {
 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->getStaticObjectBoundingBox().top + this->getHeight() / 2 + 4;
+	this->pos.y = ground->getStaticObjectBoundingBox().top + this->getHeight() / 2 - 8;
 }
 
 void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
@@ -202,18 +202,18 @@ void Object::OnCollisionWithWater(Object* water, collisionOut* colOut) {
 }
 void Object::OnSmashSolidBox(Object* object, CollisionSide side) {
 	this->SetVx(0);
-	this->collidedSolidBox = object;
+	//this->collidedSolidBox = object;
 
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2 - 4;
+			this->pos.x = bound.right + this->getWidth() / 2;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-			this->pos.x = bound.left - this->getWidth() / 2 + 4;
+			this->pos.x = bound.left - this->getWidth() / 2 + 8;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

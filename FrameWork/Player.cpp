@@ -491,20 +491,20 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 					this->smashLeft = false;
 				}
 				else {
-					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 2;
-					}
-					return false;
+					//if (this->GetOnAirState() == OnAir::None) {
+					//	this->pos.x += 2;
+					//}
+					//return false;
 				}
 				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
 
 				}
 				else {
-					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x -= 2;
-					}
-					return false;
+					//if (this->GetOnAirState() == OnAir::None) {
+					//	this->pos.x -= 2;
+					//}
+					//return false;
 				}
 			}
 			else {
