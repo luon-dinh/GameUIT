@@ -24,10 +24,6 @@ private:
 	const float SHIELD_INITIAL_SPEED = 12;
 
 public:
-	enum ShieldDirection {
-		LeftToRight,
-		RightToLeft
-	};
 
 	enum ShieldState {
 		Defense,
@@ -36,7 +32,7 @@ public:
 		NotRender
 	};
 
-	enum MoveDirection {
+	enum MoveBehavior {
 		FarFromPlayer,
 		BackToPlayer,
 		NotMove
@@ -45,8 +41,7 @@ public:
 
 
 	ShieldState state;
-	ShieldDirection direction;
-	MoveDirection moveDirection;
+	MoveBehavior moveBehave;
 
 
 	static Shield* getInstance();
@@ -54,16 +49,10 @@ public:
 	void Render();
 	void RenderInGrid() {}; //Cấm không cho Shield render trong grid.
 	void InputHandler(float dt);
-	void OnCollision(Object* object, collisionOut out);
+
 	void setFrameIndex(int index);
 	void SetShieldState(ShieldState state);
 	BoundingBox getBoundingBox() override;
-
-
-	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
-
-	Shield::ShieldDirection GetShieldDirection();
-
 
 	void SetNumberOfRounds(int numberOfRounds);
 	void SetFramePerRound(int fpr);
@@ -78,5 +67,12 @@ public:
 	~Shield();
 
 	void DeactivateObjectInGrid() override {};
+
+
+	void ChangeState(State stateName) override {};
+	void OnCollision(Object* object, collisionOut* out) override;
+	void OnNotCollision(Object* object) override {};
+	bool OnRectCollided(Object* object, CollisionSide side) override {};
+
 };
 

@@ -33,7 +33,7 @@ void PlayerStandingState::InputHandler()
 	int timePressedMove = 0;
 
 	// di chuyển qua trái
-	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT) && !player->IsStopLeft())
 	{
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
 		bool keyPressed = keyboard->getKeyPressedOnce(PLAYER_MOVE_LEFT, timePressedMove);
@@ -49,7 +49,7 @@ void PlayerStandingState::InputHandler()
 		return;
 	}
 	// di chuyển qua phải
-	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT) && !player->IsStopRight())
 	{
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
 		bool keyPressed = keyboard->getKeyPressedOnce(PLAYER_MOVE_RIGHT, timePressedMove);

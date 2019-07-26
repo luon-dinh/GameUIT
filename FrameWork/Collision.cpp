@@ -160,7 +160,7 @@ bool Collision::IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* pri
 		float dentaXIn = box1.right - box2.left;
 		float dentaYIn = box1.bottom - box2.top;
 		float dentaYOut = box1.top - box2.top;
-		if (abs(dentaXIn / dentaXOut ) <= 0.25) {
+		if (abs(dentaXIn / dentaXOut ) <= 0.75) {
 			*prioritySide = CollisionSide::right;
 		}
 		else {

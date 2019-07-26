@@ -98,7 +98,7 @@ BoundingBox PlayerRunningState::getBoundingBox()
 	box.vy = player->vy;
 	box.top = player->pos.y + 21;
 	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 13;
-	box.right = player->pos.x + 12;
+	box.left = player->pos.x - 11;
+	box.right = player->pos.x + 11;
 	return box;
 }
