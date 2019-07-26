@@ -18,6 +18,7 @@ public:
 	int RenderWeight() { return RenderWeightOfObjects::ITEM_RENDER_WEIGHT; }
 	void OnCollision(Object* object, collisionOut* colOut)override;
 	bool OnRectCollided(Object* object, CollisionSide side)override;
+	void OnNotCollision(Object* object)override {};
 	Item(ItemType type);
 	Item() {};
 	~Item();

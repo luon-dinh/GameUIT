@@ -46,8 +46,8 @@ BoundingBox Container::getBoundingBox()
 	BoundingBox box;
 	box.top = this->pos.y + 8;
 	box.bottom = this->pos.y - 8;
-	box.left = this->pos.x - 6;
-	box.right = this->pos.x + 6;
+	box.left = this->pos.x - 8;
+	box.right = this->pos.x + 8;
 	box.vx = box.vy = 0;
 	return box;
 }
@@ -81,6 +81,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 				numberItems--;
 			}
 		}
+		break;
 	}
 	case Tag::PLAYER:
 	{
@@ -103,6 +104,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 				numberItems--;
 			}
 		}
+		break;
 	}
 	default:
 		break;
@@ -135,6 +137,36 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 		}
 	}
 	return true;
+}
+
+
+void Container::OnNotCollision(Object* object)
+{
+	if (!Collision::getInstance()->IsCollide(this->getBoundingBox(), object->getBoundingBox()))
+		return;
+	auto player = Player::getInstance();
+	if (object->tag == Tag::PLAYER)
+	{
+		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
+		{
+			animation->curframeindex = 1;
+			ticuframe = 500;
+			if (item != nullptr)
+			{
+				item->pos = this->pos;
+				additionalItems.push_back(item);
+				item = nullptr;
+				return ;
+			}
+			if (numberItems != 0)
+			{
+				Item* newItem = new Item(ItemType::STAR);
+				newItem->pos = this->pos;
+				additionalItems.push_back(newItem);
+				numberItems--;
+			}
+		}
+	}
 }
 
 void Container::SetPosition(D3DXVECTOR2 pos)
