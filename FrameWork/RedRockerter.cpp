@@ -14,9 +14,6 @@ RedRockerter::~RedRockerter()
 	
 }
 
-void RedRockerter::Shoot() {
-	
-}
 
 void RedRockerter::OnCollision(Object* object, collisionOut* colOut) {
 

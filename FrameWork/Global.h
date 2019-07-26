@@ -43,7 +43,7 @@
 //blue solder enemy define
 #define BLUE_SOLDER_STANDING_TIME 500
 #define BLUE_SOLDER_DUCKING_TIME 2000
-#define BLUE_SOLDER_RUNNING_TIME 3000
+#define BLUE_SOLDER_RUNNING_TIME 1500
 //Red rockerter define
 #define RED_ROCKERTER_STATE_TIME 2000
 
@@ -102,6 +102,12 @@ struct PlayerInfo
 {
 	float playerX;
 	float playerY;
+};
+//dung cho enemy
+enum RunType {
+	NOTRUN,
+	CANRUN,
+	SPECIAL,
 };
 
 enum ItemType {

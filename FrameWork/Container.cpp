@@ -1,5 +1,6 @@
 ﻿#include "Container.h"
 #include"Shield.h"
+#include"Player.h"
 #include"Camera.h"
 #include "Debug.h"
 #include<cstdlib>
@@ -57,28 +58,85 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 {
 	Player* player = Player::getInstance();
 	Shield* shield = Shield::getInstance();
-	// nếu container va chạm với shield hoặc bị player đánh
-	if ((object->tag == Tag::SHIELD&&shield->state==Shield::ShieldState::Attack) || ((player->state == State::STAND_PUNCH || player->state == DUCKING_PUNCHING) && object->tag == Tag::PLAYER))
+	switch (object->tag)
 	{
-		animation->curframeindex = 1;
-		ticuframe = 500;
-		if (item != nullptr)
+	case Tag::SHIELD:
+	{
+		if (shield->state == Shield::ShieldState::Attack)
 		{
-			item->pos = this->pos;
-			additionalItems.push_back(item);
-			item = nullptr;
-			return;
-		}
-		if (numberItems != 0)
-		{
-			Item* newItem = new Item(ItemType::STAR);
-			newItem->pos = this->pos;
-			additionalItems.push_back(newItem);
-			numberItems--;
+			animation->curframeindex = 1;
+			ticuframe = 500;
+			if (item != nullptr)
+			{
+				item->pos = this->pos;
+				additionalItems.push_back(item);
+				item = nullptr;
+				return;
+			}
+			if (numberItems != 0)
+			{
+				Item* newItem = new Item(ItemType::STAR);
+				newItem->pos = this->pos;
+				additionalItems.push_back(newItem);
+				numberItems--;
+			}
 		}
 	}
-	PrintDebug("\nCollide with Container !!");
+	case Tag::PLAYER:
+	{
+		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
+		{
+			animation->curframeindex = 1;
+			ticuframe = 500;
+			if (item != nullptr)
+			{
+				item->pos = this->pos;
+				additionalItems.push_back(item);
+				item = nullptr;
+				return;
+			}
+			if (numberItems != 0)
+			{
+				Item* newItem = new Item(ItemType::STAR);
+				newItem->pos = this->pos;
+				additionalItems.push_back(newItem);
+				numberItems--;
+			}
+		}
+	}
+	default:
+		break;
+	}
 }
+
+bool Container::OnRectCollided(Object* object, CollisionSide side)
+{
+	auto player = Player::getInstance();
+	if (object->tag == Tag::PLAYER)
+	{
+		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING||player->state==State::KICKING)
+		{
+			animation->curframeindex = 1;
+			ticuframe = 500;
+			if (item != nullptr)
+			{
+				item->pos = this->pos;
+				additionalItems.push_back(item);
+				item = nullptr;
+				return true;
+			}
+			if (numberItems != 0)
+			{
+				Item* newItem = new Item(ItemType::STAR);
+				newItem->pos = this->pos;
+				additionalItems.push_back(newItem);
+				numberItems--;
+			}
+		}
+	}
+	return true;
+}
+
 void Container::SetPosition(D3DXVECTOR2 pos)
 {
 	

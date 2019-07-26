@@ -18,7 +18,6 @@ public:
 
 	void LoadAllAnimation();
 	void ChangeState(State state)override;
-	void Shoot();
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	void Update(float dt) override;
 	void Render();
