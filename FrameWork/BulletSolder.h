@@ -32,7 +32,6 @@ public:
 		{
 			existTime += dt;
 		}
-
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override
