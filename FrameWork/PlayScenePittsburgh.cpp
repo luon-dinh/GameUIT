@@ -14,7 +14,6 @@ PlayScenePittsburgh::PlayScenePittsburgh()
 
 	//mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
 	currentWorld = worldDark;
-
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world02Spawn, world02MapObject);
 	//Thêm player và shield vào Grid.

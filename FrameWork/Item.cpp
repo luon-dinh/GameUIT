@@ -106,3 +106,13 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		break;
 	}
 }
+
+bool Item::OnRectCollided(Object* object, CollisionSide side)
+{
+	if (object->tag == Tag::PLAYER)
+	{
+	// xử lí va chạm với player	
+		DeactivateObjectInGrid();
+	}
+	return true;
+}

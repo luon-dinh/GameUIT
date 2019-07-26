@@ -12,7 +12,6 @@ public:
 	bool isDead;
 	Player::MoveDirection direction;
 	Animation* curentAnimation;
-	virtual void Shoot() {};
 	virtual void OnCollision(Object* object, collisionOut* colOut) {};
 	virtual void Update(float dt);
 	virtual void ChangeState(State stateName) {};

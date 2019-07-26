@@ -233,7 +233,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		if (objectID == ObjectID::ITEMLOOTER)
 			object = new Container((ItemType)objectSpecialID);
 		else if (objectID == ObjectID::BLUESOLDIER)
-			object = new Solder(false);
+			object = new Solder(RunType::SPECIAL);
 
 		if (object == nullptr)
 			continue;
@@ -294,7 +294,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
 			{
-				newObject = new Solder(false);
+				newObject = new Solder(RunType::SPECIAL);
 			}
 			if (newObject == nullptr)
 				continue;

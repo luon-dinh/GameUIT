@@ -42,5 +42,4 @@ void PlaySceneCharles::Update(double dt)
 		Done = true;
 		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
 	}
-		
 }

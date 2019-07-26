@@ -14,8 +14,6 @@ WhiteRockerter::~WhiteRockerter()
 
 }
 
-void WhiteRockerter::Shoot() {
-}
 
 void WhiteRockerter::OnCollision(Object* object, collisionOut* colOut) {
 

@@ -6,10 +6,11 @@
 class Solder : public Enemy {
 private:
 public:
-	Solder(bool movable);
+	Solder(RunType runType);
 	~Solder();
+	bool canJump;
 	State stateName;
-	bool movable;
+	RunType runType;
 	float timeCurrentState;
 	std::unordered_map<State, Animation*> animations;
 	std::list<Object*> additionalObjects;
@@ -19,8 +20,10 @@ public:
 	}
 	void LoadAllAnimation();
 	void ChangeState(State state)override; 
-	void Shoot() override;
 	void OnCollision(Object* object, collisionOut* colOut) override;
+	bool OnRectCollided(Object* object, CollisionSide side)override;
+	void OnNotCollision(Object* oject)override;
 	void Update(float dt) override;
 	void Render();
+	BoundingBox getBoundingBox()override;
 };

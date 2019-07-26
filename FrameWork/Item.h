@@ -17,6 +17,7 @@ public:
 	virtual void RenderInGrid() { Render(); };
 	int RenderWeight() { return RenderWeightOfObjects::ITEM_RENDER_WEIGHT; }
 	void OnCollision(Object* object, collisionOut* colOut)override;
+	bool OnRectCollided(Object* object, CollisionSide side)override;
 	Item(ItemType type);
 	Item() {};
 	~Item();

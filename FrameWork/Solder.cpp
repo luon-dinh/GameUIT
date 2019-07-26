@@ -1,19 +1,19 @@
-﻿#include "Solder.h"
+﻿#include"Solder.h"
 #include"Camera.h"
 
-Solder::Solder(bool movable)
+Solder::Solder(RunType runType)
 {
-	this->movable = movable;
 	this->tag = Tag::BLUESOLDIER;
 	LoadAllAnimation();
 	timeCurrentState = 0;
 	this->vy = 0;
-	this->vx = ENEMY_SPEED;
-	if(!movable)
-		ChangeState(State::STANDING);
+	this->runType = runType;
+	this->direction = Player::MoveDirection::RightToLeft;
+	if (runType == RunType::SPECIAL)
+		ChangeState(State::RUNNING);
 	else
 	{
-		ChangeState(State::RUNNING);
+		ChangeState(State::STANDING);
 	}
 }
 
@@ -21,13 +21,67 @@ Solder::~Solder() {
 
 }
 
-
-void Solder::Shoot() {
-	
+BoundingBox Solder::getBoundingBox()
+{
+	BoundingBox box;
+	box.vx = this->vx;
+	box.vy = this->vy;
+	box.left = this->pos.x - 12;
+	box.right = this->pos.x + 12;
+	switch (this->stateName)
+	{
+	case State::RUNNING:
+	case State::STANDING:
+		box.top = this->pos.y + 22;
+		box.bottom = this->pos.y - 21;
+		return box;
+	case State::DUCKING:
+		box.top = this->pos.y + 6;
+		box.bottom = this->pos.y - 21;
+		return box;
+	default:
+		box.top = this->pos.y + 11;
+		box.bottom = this->pos.y - 21;
+		return box;
+	}
 }
 
+
 void Solder::OnCollision(Object* object, collisionOut* colOut) {
-	
+	switch (object->type)
+	{
+	case Type::GROUND:
+	case Type::SOLIDBOX:
+		this->vy = 0;
+		this->pos.y = object->getStaticObjectBoundingBox().top + this->getHeight() / 2;
+		break;
+	case Type::WATERRL:
+		DeactivateObjectInGrid();
+		break;
+	default:
+		break;
+	}
+}
+
+bool Solder::OnRectCollided(Object* object, CollisionSide side)
+{
+	switch (object->type)
+	{
+	case Type::GROUND:
+	case Type::SOLIDBOX:
+		this->vy = 0;
+		break;
+	case Type::WATERRL:
+		DeactivateObjectInGrid();
+	default:
+		break;
+	}
+	return true;
+}
+
+void Solder::OnNotCollision(Object* object)
+{
+	this->vy -= GROUND_GRAVITY;
 }
 
 void Solder::Update(float dt)
@@ -35,7 +89,7 @@ void Solder::Update(float dt)
 
 	if (!isDead)
 	{
-		if (stateName != State::RUNNING)
+		if (runType == RunType::NOTRUN)
 		{
 			auto player = Player::getInstance();
 			float deltax = this->pos.x - player->pos.x;
@@ -85,10 +139,29 @@ void Solder::Update(float dt)
 			}
 			else
 			{
-				ChangeState(State::DUCKING);
+				if(runType==RunType::NOTRUN)
+					ChangeState(State::DUCKING);
+				else
+				{
+					ChangeState(State::RUNNING);
+				}
 			}
 			break;
 		case State::RUNNING:
+			if (canJump)
+			{
+				if (shield->state == Shield::ShieldState::Attack&&shield->direction != this->direction)
+					this->vy = 2;
+			}
+			if (timeCurrentState > BLUE_SOLDER_RUNNING_TIME)
+			{
+				if (runType == RunType::CANRUN)
+					ChangeState(State::STANDING);
+			}
+			else
+			{
+				timeCurrentState += dt;
+			}	
 			break;
 		default:
 			timeCurrentState += dt;
@@ -133,7 +206,7 @@ void Solder::ChangeState(State stateName)
 	{
 	case State::STANDING:
 		this->curentAnimation = animations[State::STANDING];
-		this->vx = this->vy = 0;
+		this->vx = 0;
 		isDead = false;
 		break;
 	case State::RUNNING:
@@ -146,7 +219,7 @@ void Solder::ChangeState(State stateName)
 		break;
 	case State::DUCKING:
 		this->curentAnimation = animations[State::DUCKING];
-		this->vx = this->vy = 0;
+		this->vx = 0;
 		isDead = false;
 		break;
 	case State::BEATEN:
