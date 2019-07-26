@@ -194,7 +194,8 @@ enum State {
 	DIVING,
 	SHIELD_ATTACK,
 	STAND_PUNCH,
-	BEATEN
+	BEATEN,
+	CLIMBING
 };
 
 enum MapName

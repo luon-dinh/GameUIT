@@ -51,6 +51,7 @@ void Player::LoadAllAnimations() {
 	animations[SHIELD_DOWN] = new Animation(PLAYER, 19, 20);
 	animations[SHIELD_ATTACK] = new Animation(PLAYER, 11, 13);
 	animations[STAND_PUNCH] = new Animation(PLAYER, 13, 15);
+	//animations[CLIMBING] = new Animation(PLAYER, )
 }
 
 void Player::LoadAllStates() {
@@ -341,7 +342,9 @@ void Player::AddPosY() {
 
 void Player::UpdatePosition() {
 	this->accelerator.x = 0;
-	AddPosX();
+	if (!this->IsStopBySolidBox()) {
+		AddPosX();
+	}
 	AddPosY();
 }
 
@@ -423,14 +426,13 @@ void Player::OnNotCollision(Object* object) {
 			if (this->GetOnAirState() == OnAir::DropToWater) {
 				return;
 			}
-			/* Trong trường hợp đã rơi khỏi ground hiện tại
+			//Trong trường hợp đã rơi khỏi ground hiện tại
 			if (this->GetOnAirState() == OnAir::None) {
 				if (this->StandOnCurrentGround() == FALSE && this->GetStandingGround() != NULL) {
 					this->OnFallingOffGround();
 					return; 
 				}
 			}
-			break;*/
 			break;
 		}
 		case Type::SOLIDBOX: {
@@ -490,7 +492,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				else {
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 8;
+						this->pos.x += 2;
 					}
 					return false;
 				}
@@ -500,7 +502,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				else {
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x -= 8;
+						this->pos.x -= 2;
 					}
 					return false;
 				}

@@ -172,8 +172,9 @@ void Object::OnFallingOffGround() {
 void Object::OnStandingOnGround(Object* ground) {
 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->pos.y + this->getHeight() / 2;
+	this->pos.y = ground->getStaticObjectBoundingBox().top + this->getHeight() / 2 + 4;
 }
+
 void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 	this->collidedSolidBox = solidBox;
 	auto bound = solidBox->getStaticObjectBoundingBox();
