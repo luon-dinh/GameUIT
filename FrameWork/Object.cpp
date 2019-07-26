@@ -62,9 +62,6 @@ Object::MoveDirection Object::GetMoveDirection() {
 void Object::SetMoveDirection(MoveDirection moveDir) {
 	auto curMoveDir = this->direction;
 	this->direction = moveDir;
-	if (this->direction != curMoveDir) {
-		this->vx *= -1;
-	}
 }
 
 void Object::SetVx(float vx) {

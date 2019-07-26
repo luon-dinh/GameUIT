@@ -67,6 +67,7 @@ public:
 	~Shield();
 
 	void DeactivateObjectInGrid() override {};
+	void SetMoveDirection(MoveDirection moveDir) override;
 
 
 	void ChangeState(State stateName) override {};

@@ -256,7 +256,8 @@ void Shield::Update(float dt)
 			return;
 		}
 		
-		this->pos = player->pos;
+		if (this->state == ShieldState::NotRender)
+			this->pos = player->pos;
 		
 	}
 	//shield đã được player dùng để tấn công
@@ -413,6 +414,10 @@ BOOL Shield::MoveOutFromPlayer(int totalFrames) {
 	}
 
 	return FALSE;
+}
+
+void Shield::SetMoveDirection(MoveDirection moveDir) {
+	this->direction = moveDir;
 }
 
 BOOL Shield::MoveBackToPlayer(int totalFrames) {
