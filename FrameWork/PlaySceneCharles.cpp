@@ -26,8 +26,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 	player->pos.x = 1500;
 	player->pos.y = SCREEN_HEIGHT + 20;
 	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
-	player->SetGroundCollision(new GroundCollision());
+	player->SetOnAirState(Player::OnAir::Falling);
 
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();
