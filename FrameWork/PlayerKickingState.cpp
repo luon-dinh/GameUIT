@@ -82,6 +82,10 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::WATERRL) {
 		player->OnCollisionWithWater(object, collision);
 	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+	}
 }
 
 void PlayerKickingState::Update(float dt)

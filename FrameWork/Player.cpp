@@ -561,7 +561,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				else {
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 5;
+						this->pos.x += 3;
 					}
 					return true;
 				}
@@ -571,7 +571,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				else {
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x -= 12;
+						this->pos.x -= 8;
 					}
 					return true;
 				}
@@ -579,8 +579,15 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			else {
 				collisionOut colOut;
 				colOut.side = side;
-				if (side == CollisionSide::left || side == CollisionSide::right)
+				if (side == CollisionSide::left || side == CollisionSide::right) {
 					OnCollisionWithSolidBox(object, &colOut);
+					if (side == CollisionSide::left) {
+						this->pos.x += 3;
+					}
+					else {
+						this->pos.x -= 8;
+					}
+				}
 				return false;
 			}
 			return false;
@@ -704,7 +711,8 @@ bool Player::IsStopBySolidBox() {
 }
 
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
-	this->SetVx(0);
+	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
+		this->SetVx(0);
 	this->collidedSolidBox = object;
 	if (this->GetOnAirState() == OnAir::Jumping){
 		this->SetAirState(OnAir::Falling);
@@ -712,13 +720,13 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2 - 4;
+			this->pos.x = bound.right + this->getWidth() / 2 + 2;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-     		this->pos.x = bound.left - this->getWidth() / 2 + 4;
+     		this->pos.x = bound.left - this->getWidth() / 2 - 2;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}
