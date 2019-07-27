@@ -254,10 +254,9 @@ void Shield::Update(float dt)
 				}
 			return;
 		}
-		
-		if (this->state == ShieldState::NotRender)
+		if (this->state == ShieldState::NotRender) {
 			this->pos = player->pos;
-		
+		}
 	}
 	//shield đã được player dùng để tấn công
 	else

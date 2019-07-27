@@ -88,6 +88,10 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		player->OnCollisionWithSolidBox(object, collision);
 		return;
 	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+	}
 }
 
 void PlayerKickingState::Update(float dt)
