@@ -1,8 +1,10 @@
 ﻿#include "WhiteFlyingRobot.h"
+#include "SceneManager.h"
 
 WhiteFlyingRobot::WhiteFlyingRobot(int posX, int posY)
 {
 	this->tag = Tag::WHITEFLYINGROBOT;
+	this->direction = MoveDirection::LeftToRight;
 	LoadAllAnimation();
 	player = Player::getInstance();
 	LoadAllAnimation();
@@ -27,7 +29,16 @@ void WhiteFlyingRobot::Update(float dt)
 		return;
 	delayTime = 0;
 	//Mỗi lần xoay 1 góc 1 độ.
-	currentDegree += angularVelocity;
+	currentDegree = fmod(currentDegree + angularVelocity, 360);
+
+	auto inRange = [](double value, double realValue) {return (value - 1 <= realValue) && (realValue <= value + 1); };
+
+	//Quái chỉ bắn khi ở góc 0 độ và góc 90 độ.
+	if (inRange(0,currentDegree) || inRange(90,currentDegree))
+	{
+		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletWhiteFlyingRocketer(this->direction, this->pos.x, this->pos.y));
+	}
+
 	//Cập nhật lại tốc độ bay hiện tại dựa vào góc.
 	auto convertToRad = [](double degree) {return degree * PI / 180; };
 	this->vx = cos(convertToRad(currentDegree)) * VXMax;
@@ -46,7 +57,21 @@ void WhiteFlyingRobot::Update(float dt)
 
 void WhiteFlyingRobot::Render()
 {
-	Enemy::Render();
+	if (!isDead)
+	{
+		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+		switch (this->direction)
+		{
+		case Player::MoveDirection::LeftToRight:
+			this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+			break;
+		case Player::MoveDirection::RightToLeft:
+			this->currentAnimation->Render(pos);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void WhiteFlyingRobot::LoadAllAnimation()

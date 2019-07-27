@@ -9,7 +9,7 @@ private:
 	const double angularVelocity = 2;
 	
 	//Delay giữa 2 lần thay đổi tốc độ góc.
-	const int delayFlyingTime = 200;
+	const int delayFlyingTime = 20;
 
 	//Delay phóng lửa để bay.
 	const int delayFlyingSprite = 120;
@@ -19,7 +19,7 @@ private:
 	//Tốc độ tối đa theo 2 trục X,Y.
 	//Dựa vào tốc độ tối đa mà ta cũng có thể xác định quỹ đạo bay.
 	double VXMax = 3;
-	double VYMax = 0.5;
+	double VYMax = 1;
 
 	//Do quỹ đạo bay là 1 ellipse, vì vậy ta sẽ quét góc theo tâm.
 	//Góc hiện tại.
