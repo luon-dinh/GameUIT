@@ -128,8 +128,10 @@ void Object::SetOnAirState(Object::OnAir onAirState) {
 }
 
 bool Object::IsOnGround() {
-	return this->currentGround->type == Type::GROUND || this->currentGround->type == Type::SOLIDBOX;
+	return this->currentGround->type == Type::GROUND;
 }
+
+
 
 Object* Object::GetStandingGround() {
 	return this->currentGround;

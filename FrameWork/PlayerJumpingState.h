@@ -6,11 +6,11 @@
 
 class PlayerJumpingState : public PlayerState{
 private:
-	const int MIN_TIME_JUMP_1 = 10;
-	const int MIN_TIME_JUMP_2 = 28;
-	const int MIN_TIME_ROLL = 35;
-	const float ADDED_SPEED_1 = 0.1;
-	const float ADDED_SPEED_2 = 0.13;
+	const int MIN_TIME_JUMP_1 = 27;
+	const int MIN_TIME_JUMP_2 = 45;
+	const int MIN_TIME_ROLL = 55;
+	const float ADDED_SPEED_1 = 0.09;
+	const float ADDED_SPEED_2 = 0.14;
 
 	const int DELAY_CHANGE_DIRECTION_TIME = 8;
 	int curDelayTime;

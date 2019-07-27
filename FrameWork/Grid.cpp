@@ -21,7 +21,7 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const ch
 	}
 
 	//Khởi tạo danh sách các cells chứa static objects.
-	cellsOfStaticObjects = new std::list<MapStaticObject*>* [gridHeight];
+	cellsOfStaticObjects = new std::list<MapStaticObject*>*[gridHeight];
 	for (int i = 0; i < gridHeight; ++i)
 	{
 		cellsOfStaticObjects[i] = new std::list<MapStaticObject*>[gridWidth];
@@ -120,7 +120,7 @@ void Grid::LoadMapObjects(const char * mapObjectFilePath)
 
 	for (int i = 0; i < numOfObject; ++i)
 	{
- 		std::getline(inFile, sInputString);
+		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
 		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
 
@@ -152,7 +152,7 @@ void Grid::LoadMapObjects(const char * mapObjectFilePath)
 void Grid::AddStaticMapObjects(MapStaticObject * object)
 {
 	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
-	int cellXFrom = (object->pos.x - object->width/2) / cellSize;
+	int cellXFrom = (object->pos.x - object->width / 2) / cellSize;
 
 	if (cellXFrom < 0)
 		cellXFrom = 0;
@@ -160,7 +160,7 @@ void Grid::AddStaticMapObjects(MapStaticObject * object)
 		cellXFrom = mapWidth / cellSize;
 
 	int cellXTo = cellXFrom;
-	int cellYFrom = (object->pos.y + object->height/2) / cellSize;
+	int cellYFrom = (object->pos.y + object->height / 2) / cellSize;
 
 	if (cellYFrom < 0)
 		cellYFrom = 0;
@@ -168,15 +168,15 @@ void Grid::AddStaticMapObjects(MapStaticObject * object)
 		cellYFrom = mapHeight / cellSize;
 
 	int cellYTo = cellYFrom;
-	while(cellXTo*cellSize <= (object->pos.x + object->width / 2))
+	while (cellXTo*cellSize <= (object->pos.x + object->width / 2))
 	{
 		++cellXTo;
-	} 
+	}
 
 	while (cellYTo * cellSize <= (object->pos.y + object->height / 2))
 	{
 		++cellYTo;
-	} 
+	}
 
 	//Chặn không cho object add cell ra ngoài.
 	if (cellXTo > gridWidth)
@@ -223,7 +223,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		Object* object = nullptr;
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
-		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight >>objectDirection >> objectSpecialID;
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight >> objectDirection >> objectSpecialID;
 
 		int midX = objectTopLeftX + objectWidth / 2;
 		int midY = objectTopLeftY - objectHeight / 2;
@@ -256,7 +256,7 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 	for (auto object : curList)
 		object->DeactivateObjectInGrid();
 	auto it = curList.begin();
-	while(it != curList.end())
+	while (it != curList.end())
 	{
 		//Nếu object hiện tại vẫn đang được kích hoạt thì ta bỏ qua.
 		if ((*it)->GetActivatedInGridStatus())
@@ -315,7 +315,7 @@ void Grid::Add(Object* objectToAdd)
 		cellX = 0;
 	else if (cellX * cellSize > mapWidth)
 		cellX = mapWidth / cellSize;
-	
+
 	if (cellY < 0)
 		cellY = 0;
 	else if (cellY * cellSize > mapHeight)
@@ -410,7 +410,7 @@ void Grid::ActivateCells()
 			KillAndDelAllObjectsInCell(i, j);
 		}
 	}
-	
+
 	//Xét việc kill object bên trên.
 	for (int i = nextTopY; i < topY; ++i)
 	{
@@ -515,7 +515,7 @@ bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object*
 		}
 		return false;
 	}
-	
+
 }
 
 void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY)
@@ -613,18 +613,6 @@ void Grid::UpdateActivatedCells(double dt)
 					++it;
 					continue;
 				}
-				//Thêm item vào Grid.
-				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
-				if (additionalItems != nullptr)
-				{
-					auto addItemIt = additionalItems->begin();
-					while (addItemIt != additionalItems->end())
-					{
-						Add((*addItemIt));
-						additionalItems->erase(addItemIt++);
-					}
-				}
-
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{
@@ -634,7 +622,7 @@ void Grid::UpdateActivatedCells(double dt)
 			}
 		}
 	}
-	
+
 }
 
 std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int cellY, std::list<Object*>::iterator it, Object* object)
@@ -662,11 +650,15 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		//Thêm object vào cell mới.
 		Add(object);
 	}
+
 	//Nếu object không nằm trong Active Zone thì ta delete nếu không còn được active.
 	else
 	{
 		object->DeactivateObjectInGrid();
-		if (!object->GetActivatedInGridStatus())
+		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
+		if (object->GetActivatedInGridStatus())
+			Add(object);
+		else
 			delete object;
 	}
 	return it;
@@ -709,21 +701,10 @@ void Grid::RenderActivatedCells()
 	{
 		object->Render();
 	}
-
-	/*for (int i = 0; i < gridHeight; ++i)
-	{
-		for (int j = 0; j < gridWidth; ++j)
-		{
-			for (auto object : cellsOfStaticObjects[i][j])
-				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
-		}
-	}*/
-
-	DrawDebugObject();
+	//DrawDebugObject();
 }
 
 void Grid::DrawDebugObject()
 {
 
 }
-

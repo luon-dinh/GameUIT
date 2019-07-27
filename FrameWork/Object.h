@@ -12,7 +12,8 @@ public:
 		Falling,
 		DropToWater,
 		None,
-		JumpFromWater
+		JumpFromWater,
+		HangOnTheRope
 	};
 
 	enum MoveDirection {
@@ -96,6 +97,7 @@ public:
 	virtual void SetOnAirState(OnAir airState);
 
 	virtual bool IsOnGround();
+
 	virtual Object* GetStandingGround();
 	virtual void SetStandingGround(Object* ground);
 

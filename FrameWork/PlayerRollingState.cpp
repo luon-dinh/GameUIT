@@ -63,6 +63,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 		// chạm nền dưới
 		if (side == CollisionSide::bottom) {
 			player->OnStandingOnGround(object);
+			PlayerRollingState::curRollTime = 0;
 			return;
 		}
 	}

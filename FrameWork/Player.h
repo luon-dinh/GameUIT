@@ -16,6 +16,7 @@
 #include "PlayerStandPunchState.h"
 #include "PlayerShieldDownState.h"
 #include "PlayerShieldAttackState.h"
+#include "PlayerClimbingState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
@@ -103,6 +104,8 @@ public:
 	D3DXVECTOR2 GetShieldReturnPos();
 
 	bool StandOnCurrentGround();
+	bool IsFootStepOn();
+
 
 
 #pragma endregion
@@ -118,6 +121,7 @@ public:
 	bool OnRectCollided(Object* object, CollisionSide side)				 override;
 	void OnFallingOffGround()											 override;
 	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
+	void OnClimbingTheRope(Object* rope);
 
 #pragma endregion
 
