@@ -570,8 +570,8 @@ void Player::OnFallingOffGround() {
 			this->SetOnAirState(Player::OnAir::DropToWater);
 		else
 			this->SetOnAirState(Player::OnAir::Falling);
+		this->vy =this->vy -0.3;
 		this->ChangeState(State::JUMPING);
-		this->vy = -0.3; 
 		this->SetStandingGround(NULL);
 	}
 }
