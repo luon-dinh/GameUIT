@@ -54,9 +54,6 @@ void PlayerKickingState::InputHandler()
 
 	this->curKickTime++;
 
-	/*if (player->IsReachMaxJump()) {
-		player->SetVy(0);
-	}*/
 }
 
 
@@ -87,6 +84,10 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
 		return;
+	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
 	}
 }
 

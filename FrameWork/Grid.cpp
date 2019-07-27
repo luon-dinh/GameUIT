@@ -662,11 +662,15 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		//Thêm object vào cell mới.
 		Add(object);
 	}
+	
 	//Nếu object không nằm trong Active Zone thì ta delete nếu không còn được active.
 	else
 	{
 		object->DeactivateObjectInGrid();
-		if (!object->GetActivatedInGridStatus())
+		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
+		if (object->GetActivatedInGridStatus())
+			Add(object);
+		else
 			delete object;
 	}
 	return it;
