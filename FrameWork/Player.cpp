@@ -315,6 +315,8 @@ void Player::InnerChangeState(State stateName) {
 
 void Player::SetVx(float vx) {
 	Object::SetVx(vx);
+	if (!this->hasShield)
+		return;
 	Shield::getInstance()->SetMoveDirection(this->direction);
 }
 
@@ -491,20 +493,20 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 					this->smashLeft = false;
 				}
 				else {
-					//if (this->GetOnAirState() == OnAir::None) {
-					//	this->pos.x += 2;
-					//}
-					//return false;
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x += 5;
+					}
+					return false;
 				}
 				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
 
 				}
 				else {
-					//if (this->GetOnAirState() == OnAir::None) {
-					//	this->pos.x -= 2;
-					//}
-					//return false;
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x -= 5;
+					}
+					return false;
 				}
 			}
 			else {

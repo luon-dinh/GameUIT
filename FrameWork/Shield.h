@@ -12,8 +12,6 @@ private:
 	//std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
 	Animation * animation;
 
-	D3DXVECTOR2 accelerator;
-
 	BOOL isActive;
 
 	int numberOfRounds;

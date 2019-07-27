@@ -50,8 +50,7 @@ Shield::Shield()
 	//sprites = SpriteManager::getInstance()->getSprites(this->tag, 0, 4);
 	animation = new Animation(this->tag, 0, 4);
 	Player::MoveDirection direction = Player::getInstance()->GetMoveDirection();
-	this->accelerator = D3DXVECTOR2(0.2, 0);
-	this->SetShieldState(Shield::ShieldState::Transparent);
+	this->SetShieldState(Shield::ShieldState::Defense);
 	this->beginRound = TRUE;
 
 
