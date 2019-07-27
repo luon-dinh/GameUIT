@@ -523,6 +523,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				return false;
 			}
+			return false;
 			//collisionOut colOut;
 			//bool isCollided = false;
 			//if (this->IsStopBySolidBox())
@@ -608,7 +609,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 		this->SetVx(0);
 	this->collidedSolidBox = object;
 	if (this->GetOnAirState() == OnAir::Jumping){
-		this->SetAirState(OnAir::Falling);
+		this->SetOnAirState(OnAir::Falling);
 	}
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
@@ -638,7 +639,7 @@ bool Player::AcceptNoCollision(Object* object, CollisionSide side){
 	if (side == CollisionSide::right) {
 		float dentaX = playerBox.right - objBox.left;
 		float dentaY = playerBox.bottom - objBox.top;
-
+	}
 	if (this->GetOnAirState() == OnAir::Jumping) {
 		if (this->GetPreviousState()->state == State::FLOATING) {
 			this->SetOnAirState(OnAir::DropToWater);

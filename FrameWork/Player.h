@@ -92,6 +92,9 @@ public:
 	void SetMoveDirection(MoveDirection moveDir) override;
 	BOOL IsReachMaxJump();
 
+	void OnHeadOnSolidBox(Object* solid);
+	bool AcceptNoCollision(Object* object, CollisionSide side);
+
 	void Float(MoveDirection moveDir);
 
 	void SetShieldReturnEdge(ShieldReturnEdge edge);

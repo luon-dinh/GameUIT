@@ -194,7 +194,7 @@ void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 void Object::OnCollisionWithWater(Object* water, collisionOut* colOut) {
 	this->ChangeState(State::FLOATING);
 	auto objBox = water->getStaticObjectBoundingBox();
-	this->pos.y = objBox.top - 4 + this->getHeight() / 2;
+	this->pos.y = water->pos.y / 2 + this->getHeight() / 2;
 	this->SetStandingGround(NULL);
 }
 void Object::OnSmashSolidBox(Object* object, CollisionSide side) {
