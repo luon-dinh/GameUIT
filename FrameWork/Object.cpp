@@ -60,8 +60,11 @@ Object::MoveDirection Object::GetMoveDirection() {
 }
 
 void Object::SetMoveDirection(MoveDirection moveDir) {
-	auto curMoveDir = this->direction;
+	if (this->direction == moveDir)
+		return;
 	this->direction = moveDir;
+
+	this->vx *= -1;
 }
 
 void Object::SetVx(float vx) {
@@ -198,7 +201,8 @@ void Object::OnCollisionWithWater(Object* water, collisionOut* colOut) {
 	this->SetStandingGround(NULL);
 }
 void Object::OnSmashSolidBox(Object* object, CollisionSide side) {
-	this->SetVx(0);
+	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
+		this->SetVx(0);
 	//this->collidedSolidBox = object;
 
 	auto bound = object->getStaticObjectBoundingBox();

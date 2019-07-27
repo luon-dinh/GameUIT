@@ -72,6 +72,6 @@ public:
 	void OnCollision(Object* object, collisionOut* out) override;
 	void OnNotCollision(Object* object) override {};
 	bool OnRectCollided(Object* object, CollisionSide side) override { return false; };
-
+	void ShieldBackToPlayer();
 };
 

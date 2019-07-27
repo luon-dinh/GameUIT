@@ -353,9 +353,6 @@ void Player::UpdatePosition() {
 void Player::SetMoveDirection(MoveDirection moveDir) {
 	Object::SetMoveDirection(moveDir);
 
-	if (!this->hasShield) {
-		return;
-	}
 	auto shield = Shield::getInstance();
 	shield->SetMoveDirection(this->direction);
 }

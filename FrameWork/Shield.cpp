@@ -267,6 +267,10 @@ void Shield::Update(float dt)
 			this->animation->curframeindex = 2;
 			this->Move();
 		}
+		else {
+			if (this->state == ShieldState::NotRender)
+				this->pos = player->pos;
+		}
 	}
 }
 
@@ -294,28 +298,51 @@ void Shield::Render()
 
 void Shield::OnCollision(Object* object, collisionOut* out)
 {
-	//xu li va cham
-	if (object->tag == Tag::PLAYER) {
-		auto player = Player::getInstance();
-		switch (player->state) {
-			case State::KICKING:
-			case State::JUMPING: 
-				this->SetShieldState(Shield::ShieldState::Transparent);
-				break;
-			case State::DUCKING:
-			case State::DUCKING_PUNCHING:
-			case State::STANDING:
-			case State::STAND_PUNCH:
-			case State::RUNNING:
-				this->SetShieldState(ShieldState::Defense);
-				break;
-			case State::DIVING:
-			case State::FLOATING:
-			case State::ROLLING:
-			case State::DASHING:
-				this->SetShieldState(ShieldState::NotRender);
-				break;
-		}
+	////xu li va cham
+	//if (object->tag == Tag::PLAYER) {
+	//	auto player = Player::getInstance();
+	//	switch (player->state) {
+	//		case State::KICKING:
+	//		case State::JUMPING: 
+	//			this->SetShieldState(Shield::ShieldState::Transparent);
+	//			break;
+	//		case State::DUCKING:
+	//		case State::DUCKING_PUNCHING:
+	//		case State::STANDING:
+	//		case State::STAND_PUNCH:
+	//		case State::RUNNING:
+	//			this->SetShieldState(ShieldState::Defense);
+	//			break;
+	//		case State::DIVING:
+	//		case State::FLOATING:
+	//		case State::ROLLING:
+	//		case State::DASHING:
+	//			this->SetShieldState(ShieldState::NotRender);
+	//			break;
+	//	}
+	//}
+}
+
+void Shield::ShieldBackToPlayer() {
+	auto player = Player::getInstance();
+	switch (player->state) {
+	case State::KICKING:
+	case State::JUMPING:
+		this->SetShieldState(Shield::ShieldState::Transparent);
+		break;
+	case State::DUCKING:
+	case State::DUCKING_PUNCHING:
+	case State::STANDING:
+	case State::STAND_PUNCH:
+	case State::RUNNING:
+		this->SetShieldState(ShieldState::Defense);
+		break;
+	case State::DIVING:
+	case State::FLOATING:
+	case State::ROLLING:
+	case State::DASHING:
+		this->SetShieldState(ShieldState::NotRender);
+		break;
 	}
 }
 
@@ -388,8 +415,9 @@ void Shield::Move() {
 		else {
 			if (this->moveBehave == MoveBehavior::BackToPlayer) {
 				if (!MoveBackToPlayer(this->restFrames)) {
-   					OnCollision(player, NULL);
+   					ShieldBackToPlayer();
 					ResetMoveStatus();
+					return;
 				}
 			}
 		}
@@ -398,7 +426,7 @@ void Shield::Move() {
 }
 
 void Shield::ResetMoveStatus() {
-	this->beginRound = TRUE;
+ 	this->beginRound = TRUE;
 	this->vx = this->vy = 0;
 	this->accelerator = D3DXVECTOR2(0, 0);
 	this->moveBehave = MoveBehavior::NotMove;
