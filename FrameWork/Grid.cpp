@@ -613,18 +613,6 @@ void Grid::UpdateActivatedCells(double dt)
 					++it;
 					continue;
 				}
-				//Thêm item vào Grid.
-				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
-				if (additionalItems != nullptr)
-				{
-					auto addItemIt = additionalItems->begin();
-					while (addItemIt != additionalItems->end())
-					{
-						Add((*addItemIt));
-						additionalItems->erase(addItemIt++);
-					}
-				}
-
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{

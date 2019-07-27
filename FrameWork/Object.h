@@ -67,8 +67,6 @@ public:
 
 	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
 	virtual bool IsMovableInGrid() { return true; }
-
-	virtual std::list<Object*>* getAdditionalObjects() { return nullptr; };
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
 

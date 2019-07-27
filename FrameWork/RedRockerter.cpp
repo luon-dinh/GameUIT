@@ -1,4 +1,5 @@
 ﻿#include"RedRockerter.h"
+#include "SceneManager.h"
 
 RedRockerter::RedRockerter()
 {
@@ -60,7 +61,7 @@ void RedRockerter::Update(float dt)
 				{
 					bullet->pos.x = this->pos.x - 5;
 				}
-				additionalObjects.push_back(bullet);
+				SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 			}
 			timeCurrentState += dt;
 		}
@@ -94,7 +95,7 @@ void RedRockerter::Update(float dt)
 				{
 					bullet2->pos.x = this->pos.x - 5;
 				}
-				additionalObjects.push_back(bullet2);
+				SceneManager::getInstance()->AddObjectToCurrentScene(bullet2);
 			}
 			timeCurrentState += dt;
 		}

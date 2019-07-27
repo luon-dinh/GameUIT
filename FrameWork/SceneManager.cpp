@@ -30,6 +30,11 @@ SceneManager::~SceneManager()
 		delete pittsburghPortal02;
 }
 
+void SceneManager::AddObjectToCurrentScene(Object *object)
+{
+	currentScene->AddObjectToPlayScene(object);
+}
+
 void SceneManager::Update(double dt)
 {
 	MapName nextMap = currentScene->GetAndResetDestinationMap();

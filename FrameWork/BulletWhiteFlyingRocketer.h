@@ -15,7 +15,11 @@ private:
 	const double BulletSpeed = 2;
 	//Để đạn bay mượt hơn, khi tính ra được VX hoặc VY quá nhỏ, ta cho = 0.
 	//Góc quay tối đa trong 1 frame.
-	const double maxRotateDegree = 990;
+	const double maxRotateDegree = 45;
+
+	//Thời gian để sau khi nổ thì đạn biến mất.
+	const int delayDisappear = 300;
+
 	Animation * animBullet0;
 	Animation * animBullet45;
 	Animation * animBullet90;
@@ -29,12 +33,18 @@ private:
 	float curDelayTime = 0;
 	int redirectTime = 0;
 
+	//Kiểm tra nổ tung.
+	bool isExploded = false;
+
 	//Mọi góc chúng ta xét đều bắt đầu từ trục y hướng lên.
 	double currentDegree = -1;
 
 	bool RedirectTowardPlayer();
 
 	Animation* getAnimOnDeg();
+
+	//Cờ để kiểm tra việc nổ tung.
+
 public:
 	BulletWhiteFlyingRocketer(MoveDirection robotDirection, int posX, int posY);
 	~BulletWhiteFlyingRocketer();

@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Camera.h"
 #include "Debug.h"
+#include "SceneManager.h"
 #include<cstdlib>
 
 Container::Container(ItemType type )
@@ -69,7 +70,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				additionalItems.push_back(item);
+				SceneManager::getInstance()->AddObjectToCurrentScene(item);
 				item = nullptr;
 				return;
 			}
@@ -77,7 +78,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				additionalItems.push_back(newItem);
+				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
 				numberItems--;
 			}
 		}
@@ -92,7 +93,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				additionalItems.push_back(item);
+				SceneManager::getInstance()->AddObjectToCurrentScene(item);
 				item = nullptr;
 				return;
 			}
@@ -100,7 +101,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				additionalItems.push_back(newItem);
+				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
 				numberItems--;
 			}
 		}
@@ -123,7 +124,7 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				additionalItems.push_back(item);
+				SceneManager::getInstance()->AddObjectToCurrentScene(item);
 				item = nullptr;
 				return true;
 			}
@@ -131,7 +132,7 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				additionalItems.push_back(newItem);
+				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
 				numberItems--;
 			}
 		}
@@ -154,7 +155,7 @@ void Container::OnNotCollision(Object* object)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				additionalItems.push_back(item);
+				SceneManager::getInstance()->AddObjectToCurrentScene(item);
 				item = nullptr;
 				return ;
 			}
@@ -162,7 +163,7 @@ void Container::OnNotCollision(Object* object)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				additionalItems.push_back(newItem);
+				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
 				numberItems--;
 			}
 		}

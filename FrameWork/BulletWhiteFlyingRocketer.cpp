@@ -46,9 +46,11 @@ void BulletWhiteFlyingRocketer::OnCollision(Object* object, collisionOut* colOut
 	switch (object->tag)
 	{
 	case Tag::PLAYER:
+	case Tag::STATICOBJECT:
 		this->animation = animationExplode;
-		this->pos.x -= this->vx;
 		this->vx = this->vy = 0;
+		isExploded = true;
+		curDelayTime = 0;
 		break;
 	case Tag::SHIELD:
 		break;
@@ -86,6 +88,15 @@ void BulletWhiteFlyingRocketer::Update(float dt)
 {
 	curDelayTime += dt;
 	this->animation->Update(dt);
+
+	//Nếu đã nổ tung rồi và đã hết thời gian chờ thì ta deactivate nó luôn.
+	if (isExploded)
+	{
+		if (curDelayTime > delayDisappear)
+			DeactivateObjectInGrid();
+		return;
+	}
+
 	//Nếu vẫn còn số lần chuyển hướng và đã delay đủ thì mới chuyển hướng.
 	if (redirectTime < maxRedirect && curDelayTime >= minTimeRedirect)
 	{
