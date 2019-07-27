@@ -58,12 +58,12 @@ public:
 	};
 
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
-	int getWidth();
-	int getHeight();
+	float getWidth();
+	float getHeight();
 	void ChangeState(PlayerState* newplayerstate);
 	void ChangeState(State stateName) override;
 	void Update(float dt);
-
+	float getPosToBotom();
 	void Render();
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();

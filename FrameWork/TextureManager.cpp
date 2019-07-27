@@ -31,9 +31,6 @@ void TextureManager::loadResources()
 	//texture dùng cho white rockerter
 	textures->addTexture(Tag::WHITEROCKERTER, (char*)".\\..\\Resources\\Images\\Enermy\\WhiteRockerter.png");
 	textures->addTexture(Tag::WHITEROCKERTERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BulletWhiteRockerter.png");
-
-	//texture dùng cho white flying rocketer.
-	textures->addTexture(Tag::WHITEFLYINGROBOTBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BulletWhiteFlyRobot.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

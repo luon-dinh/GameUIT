@@ -29,11 +29,6 @@ void PlayScene::AddPlayerElementsToGrid()
 	grid->Add(shield);
 }
 
-void PlayScene::AddObjectToPlayScene(Object* object)
-{
-	grid->Add(object);
-}
-
 MapName PlayScene::GetAndResetDestinationMap()
 {
 	MapName mapName = ReplaceToThisMap;

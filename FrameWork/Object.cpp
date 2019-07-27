@@ -42,12 +42,12 @@ BOOL Object::GetActive() {
 }
 
 
-int Object::getWidth()
+float Object::getWidth()
 {
 	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().right - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().left;
 }
 
-int Object::getHeight()
+float Object::getHeight()
 {
 	auto rect = SpriteManager::getInstance()->getSprite(this->tag)->getRECT();
 	auto height =  rect.top - rect.bottom;
@@ -172,7 +172,7 @@ void Object::OnFallingOffGround() {
 void Object::OnStandingOnGround(Object* ground) {
 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->getStaticObjectBoundingBox().top + this->getHeight() / 2 - 8;
+	this->pos.y = ground->getBoundingBox().top + this->getHeight() / 2 -2;
 }
 
 void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {

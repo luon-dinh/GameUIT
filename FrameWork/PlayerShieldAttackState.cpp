@@ -1,16 +1,5 @@
 ﻿#include "PlayerShieldAttackState.h"
 
-BoundingBox PlayerShieldAttackState::getBoundingBox() {
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 15;
-	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 11;
-	box.right = player->pos.x + 21;
-	return box;
-}
 
 PlayerShieldAttackState::PlayerShieldAttackState() {
 	this->state = State::SHIELD_ATTACK;
@@ -34,13 +23,40 @@ void PlayerShieldAttackState::Update(float dt) {
 	auto shield = Shield::getInstance();
 
 	// lúc gồng
-	if (countFrame <= MAX_FRAME_PREPARE_ATTACK / 2) {
-		player->curanimation = new Animation(PLAYER, 11, 12);
-
+	if (countFrame < MAX_FRAME_PREPARE_ATTACK -1) {
+		player->curanimation->curframeindex = 0;
+		auto direction = player->GetMoveDirection();
+		BoundingBox box = player->getBoundingBox();
+		shield->pos.y = box.top - 4;
+		switch (direction)
+		{
+		case Object::LeftToRight:
+			shield->pos.x = box.left + 2;
+			break;
+		case Object::RightToLeft:
+			shield->pos.x = box.right - 2;
+			break;
+		default:
+			break;
+		}
 	}
 	else {
 		// lúc quăng shield
-		player->curanimation = new Animation(PLAYER, 12, 13);
+		player->curanimation->curframeindex = 1;
+		auto direction = player->GetMoveDirection();
+		BoundingBox box = player->getBoundingBox();
+		shield->pos.y = player->pos.y;
+		switch (direction)
+		{
+		case Object::LeftToRight:
+			shield->pos.x = box.left;
+			break;
+		case Object::RightToLeft:
+			shield->pos.x = box.right;
+			break;
+		default:
+			break;
+		}
 		shield->SetShieldState(Shield::ShieldState::Attack);
 	}
 

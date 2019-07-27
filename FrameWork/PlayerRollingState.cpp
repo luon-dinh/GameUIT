@@ -68,7 +68,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	}
 
 	if (object->type == Type::SOLIDBOX) {
-		player->OnCollisionWithSolidBox(object, collision);
+       	player->OnCollisionWithSolidBox(object, collision);
 		PlayerRollingState::curRollTime = 0;
 		return;
 	}
@@ -79,15 +79,3 @@ void PlayerRollingState::Update(float dt)
 	this->InputHandler();
 }
 
-BoundingBox PlayerRollingState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 7;
-	box.bottom = player->pos.y - 10;
-	box.left = player->pos.x - 10;
-	box.right = player->pos.x + 10;
-	return box;
-}

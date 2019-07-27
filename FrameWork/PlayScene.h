@@ -6,7 +6,6 @@
 #include "Object.h"
 #include "Player.h"
 #include "Shield.h"
-#include "BulletWhiteFlyingRocketer.h"
 #include "Global.h"
 #include "DrawDebug.h"
 
@@ -26,7 +25,6 @@ public:
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
 	virtual void ResetPlayerPosition() {}; //Nhớ override hàm setPlayer lại cho từng PlayScene khác nhau.
 	void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
-	void AddObjectToPlayScene(Object*); //Thêm một object vào PlayScene.
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:

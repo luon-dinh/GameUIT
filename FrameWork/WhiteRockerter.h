@@ -10,6 +10,11 @@ public:
 	bool canRun;
 	float timeCurrentState;
 	std::unordered_map<State, Animation*> animations;
+	std::list<Object*> additionalObjects;
+	std::list<Object*>* getAdditionalObjects()override
+	{
+		return &additionalObjects;
+	}
 
 	void LoadAllAnimation();
 	void ChangeState(State state)override;

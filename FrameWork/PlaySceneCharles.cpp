@@ -12,7 +12,6 @@ PlaySceneCharles::PlaySceneCharles()
 
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
-	grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
 }
 
 PlaySceneCharles::~PlaySceneCharles()
@@ -37,9 +36,9 @@ void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
-	if (player->pos.x >= world->getMapWidth() - 100)
+	/*if (player->pos.x >= world->getMapWidth() - 100)
 	{
 		Done = true;
 		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
-	}
+	}*/
 }

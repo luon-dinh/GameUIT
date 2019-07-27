@@ -13,7 +13,6 @@ public:
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
-	BoundingBox getBoundingBox();
 	
 	BOOL HasRollFullTime();
 	const int MAX_ROLLING_TIME = 15; // thời gian rolling time tối đa

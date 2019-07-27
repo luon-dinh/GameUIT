@@ -39,19 +39,19 @@ void Player::SetPreviousState(State stateName) {
 void Player::LoadAllAnimations() {
 	animations[STANDING] = new Animation(PLAYER, 0, 1);
 	animations[RUNNING] = new Animation(PLAYER, 1, 5);
-	animations[JUMPING] = new Animation(PLAYER, 7, 8);
-	animations[DUCKING]	= new Animation(PLAYER, 6, 7);
-	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 15, 17);
 	animations[SHIELD_UP] = new Animation(PLAYER, 5, 6);
-	animations[ROLLING] = new Animation(PLAYER, 8, 10);
-	animations[KICKING] = new Animation(PLAYER, 10, 11);
-	animations[DASHING] = new Animation(PLAYER, 17, 19);
-	animations[FLOATING] = new Animation(PLAYER, 32, 40);
-	animations[DIVING] = new Animation(PLAYER, 40, 46);
-	animations[SHIELD_DOWN] = new Animation(PLAYER, 19, 20);
-	animations[SHIELD_ATTACK] = new Animation(PLAYER, 11, 13);
-	animations[STAND_PUNCH] = new Animation(PLAYER, 13, 15);
-	//animations[CLIMBING] = new Animation(PLAYER, )
+	animations[DUCKING] = new Animation(PLAYER, 6, 7);
+	animations[JUMPING] = new Animation(PLAYER, 7, 8);
+	animations[ROLLING] = new Animation(PLAYER, 8, 12);
+	animations[KICKING] = new Animation(PLAYER, 12, 13);
+	animations[SHIELD_ATTACK] = new Animation(PLAYER, 13, 15);
+	animations[STAND_PUNCH] = new Animation(PLAYER, 15, 17);
+	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 17, 19);
+	animations[DASHING] = new Animation(PLAYER, 19, 22);
+	animations[SHIELD_DOWN] = new Animation(PLAYER, 22, 23);
+	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
+	animations[FLOATING] = new Animation(PLAYER, 28, 37);
+	animations[DIVING] = new Animation(PLAYER, 37, 39);
 }
 
 void Player::LoadAllStates() {
@@ -79,10 +79,27 @@ Player::~Player()
 
 }
 
+float Player::getPosToBotom()
+{
+	auto sprite = this->curanimation->getSprite(curanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	return (rect.top + rect.bottom) / 2 - rect.bottom;
+}
 
 BoundingBox Player::getBoundingBox()
 {
-	return this->playerstate->getBoundingBox();
+	auto sprite = this->curanimation->getSprite(curanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
+	BoundingBox box;
+	box.vx = this->vx;
+	box.vy = this->vy;
+	box.top = this->pos.y + height / 2;
+	box.left = this->pos.x - width / 2;
+	box.bottom = this->pos.y - height / 2;
+	box.right = this->pos.x + width / 2;
+	return box;
 }
 
 void Player::Update(float dt)
@@ -131,11 +148,11 @@ void Player::ChangeState(PlayerState* newplayerstate)
 void Player::ChangeState(State stateName) {
 	if (this->state == stateName)
 		return;
-
+	float PosToBottom1 = this->getPosToBotom();
 	InnerChangeState(stateName);
 	auto shield = Shield::getInstance();
-
-
+	float PosToBottom2 = this->getPosToBotom();
+	this->pos.y = this->pos.y + (PosToBottom2 - PosToBottom1);
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 		case State::STANDING: {
@@ -216,7 +233,6 @@ void Player::ChangeState(State stateName) {
 					shield->SetMoveDirection(MoveDirection::LeftToRight);
 				}
 			}
-
 			break;
 		}
 		case State::SHIELD_DOWN: {
@@ -400,16 +416,18 @@ void Player::SetOnAirState(OnAir onAirState) {
 
 
 
-int Player::getWidth()
+float Player::getWidth()
 {
-	BoundingBox box = this->playerstate->getBoundingBox();
-	return box.right - box.left;
+	auto sprite = this->curanimation->getSprite(curanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	return rect.right - rect.left;
 }
 
-int Player::getHeight()
+float Player::getHeight()
 {
-	BoundingBox box = this->playerstate->getBoundingBox();
-	return box.top - box.bottom;
+	auto sprite = this->curanimation->getSprite(curanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	return rect.top - rect.bottom;
 }
 
 
@@ -553,6 +571,7 @@ void Player::OnFallingOffGround() {
 		else
 			this->SetOnAirState(Player::OnAir::Falling);
 		this->ChangeState(State::JUMPING);
+		this->vy = -0.3; 
 		this->SetStandingGround(NULL);
 	}
 }
@@ -602,13 +621,13 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2 + 2;
+			this->pos.x = bound.right + this->getWidth() / 2 - 4;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-     		this->pos.x = bound.left - this->getWidth() / 2 - 2;
+     		this->pos.x = bound.left - this->getWidth() / 2 + 4;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

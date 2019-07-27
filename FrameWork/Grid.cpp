@@ -613,6 +613,18 @@ void Grid::UpdateActivatedCells(double dt)
 					++it;
 					continue;
 				}
+				//Thêm item vào Grid.
+				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
+				if (additionalItems != nullptr)
+				{
+					auto addItemIt = additionalItems->begin();
+					while (addItemIt != additionalItems->end())
+					{
+						Add((*addItemIt));
+						additionalItems->erase(addItemIt++);
+					}
+				}
+
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{
@@ -650,15 +662,11 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		//Thêm object vào cell mới.
 		Add(object);
 	}
-	
 	//Nếu object không nằm trong Active Zone thì ta delete nếu không còn được active.
 	else
 	{
 		object->DeactivateObjectInGrid();
-		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
-		if (object->GetActivatedInGridStatus())
-			Add(object);
-		else
+		if (!object->GetActivatedInGridStatus())
 			delete object;
 	}
 	return it;
@@ -701,7 +709,17 @@ void Grid::RenderActivatedCells()
 	{
 		object->Render();
 	}
-	//DrawDebugObject();
+
+	/*for (int i = 0; i < gridHeight; ++i)
+	{
+		for (int j = 0; j < gridWidth; ++j)
+		{
+			for (auto object : cellsOfStaticObjects[i][j])
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+		}
+	}*/
+
+	DrawDebugObject();
 }
 
 void Grid::DrawDebugObject()

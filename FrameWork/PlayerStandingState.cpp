@@ -136,16 +136,3 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	}
 }
 
-
-BoundingBox PlayerStandingState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 24;
-	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 11;
-	box.right = player->pos.x + 11;
-	return box;
-}

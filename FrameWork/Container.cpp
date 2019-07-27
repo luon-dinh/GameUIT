@@ -3,7 +3,6 @@
 #include"Player.h"
 #include"Camera.h"
 #include "Debug.h"
-#include "SceneManager.h"
 #include<cstdlib>
 
 Container::Container(ItemType type )
@@ -26,7 +25,29 @@ Container::~Container()
 
 void Container::Update(float dt)
 {
-	
+	auto player = Player::getInstance();
+	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), player->getBoundingBox()))
+	{
+		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
+		{
+			animation->curframeindex = 1;
+			ticuframe = 500;
+			if (item != nullptr)
+			{
+				item->pos = this->pos;
+				additionalItems.push_back(item);
+				item = nullptr;
+				return;
+			}
+			if (numberItems != 0)
+			{
+				Item* newItem = new Item(ItemType::STAR);
+				newItem->pos = this->pos;
+				additionalItems.push_back(newItem);
+				numberItems--;
+			}
+		}
+	}
 	ticuframe -= dt;
 	if (ticuframe <= 0)
 	{
@@ -70,7 +91,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(item);
+				additionalItems.push_back(item);
 				item = nullptr;
 				return;
 			}
@@ -78,30 +99,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
-				numberItems--;
-			}
-		}
-		break;
-	}
-	case Tag::PLAYER:
-	{
-		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
-		{
-			animation->curframeindex = 1;
-			ticuframe = 500;
-			if (item != nullptr)
-			{
-				item->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(item);
-				item = nullptr;
-				return;
-			}
-			if (numberItems != 0)
-			{
-				Item* newItem = new Item(ItemType::STAR);
-				newItem->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
+				additionalItems.push_back(newItem);
 				numberItems--;
 			}
 		}
@@ -114,60 +112,13 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 
 bool Container::OnRectCollided(Object* object, CollisionSide side)
 {
-	auto player = Player::getInstance();
-	if (object->tag == Tag::PLAYER)
-	{
-		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING||player->state==State::KICKING)
-		{
-			animation->curframeindex = 1;
-			ticuframe = 500;
-			if (item != nullptr)
-			{
-				item->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(item);
-				item = nullptr;
-				return true;
-			}
-			if (numberItems != 0)
-			{
-				Item* newItem = new Item(ItemType::STAR);
-				newItem->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
-				numberItems--;
-			}
-		}
-	}
 	return true;
 }
 
 
 void Container::OnNotCollision(Object* object)
 {
-	if (!Collision::getInstance()->IsCollide(this->getBoundingBox(), object->getBoundingBox()))
-		return;
-	auto player = Player::getInstance();
-	if (object->tag == Tag::PLAYER)
-	{
-		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
-		{
-			animation->curframeindex = 1;
-			ticuframe = 500;
-			if (item != nullptr)
-			{
-				item->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(item);
-				item = nullptr;
-				return ;
-			}
-			if (numberItems != 0)
-			{
-				Item* newItem = new Item(ItemType::STAR);
-				newItem->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
-				numberItems--;
-			}
-		}
-	}
+	
 }
 
 void Container::SetPosition(D3DXVECTOR2 pos)
