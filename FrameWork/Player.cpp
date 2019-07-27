@@ -163,6 +163,8 @@ void Player::ChangeState(State stateName) {
 			if (this->onAirState == OnAir::Falling || this->onAirState == OnAir::DropToWater) {
 				return;
 			}
+			if (this->onAirState == OnAir::Jumping)
+				return;
 			if (this->prevState->state == State::FLOATING) {
 				shield->SetShieldState(Shield::ShieldState::Transparent);
 				this->SetOnAirState(OnAir::JumpFromWater);
@@ -436,7 +438,6 @@ void Player::OnNotCollision(Object* object) {
 		}
 		case Type::SOLIDBOX: {
 			if (object == this->collidedSolidBox) {
-				this->collidedSolidBox = NULL;
 				this->smashLeft = this->smashRight = false;
 			}
 			if (object == this->GetStandingGround()) {
@@ -475,16 +476,6 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}	
 		case Type::SOLIDBOX: {
-			//if (side == CollisionSide::right) {
-			//	this->pos.x -= 3;
-			//	return false;
-			//}
-			//else {
-			//	if (side == CollisionSide::left) {
-			//		this->pos.x += 3;
-			//		return false;
-			//	}
-			//}
 			if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;

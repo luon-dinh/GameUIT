@@ -695,7 +695,7 @@ void Grid::RenderActivatedCells()
 				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 			////Vẽ debug các object tĩnh.
 			//for (auto object : cellsOfStaticObjects[i][j])
