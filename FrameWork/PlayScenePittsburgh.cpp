@@ -14,7 +14,6 @@ PlayScenePittsburgh::PlayScenePittsburgh()
 
 	//mapStaticObject = world->getStaticObject(); //Lấy entity của tất cả các object có trong map.
 	currentWorld = worldDark;
-
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world02Spawn, world02MapObject);
 	//Thêm player và shield vào Grid.
@@ -34,8 +33,7 @@ void PlayScenePittsburgh::ResetPlayerPosition()
 	player->pos.y = world->getMapHeight() - 50;
 	//player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
-	player->SetGroundCollision(new GroundCollision());
+	player->SetOnAirState(Player::OnAir::Falling);
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();
 }

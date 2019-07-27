@@ -1,4 +1,4 @@
-#include "Global.h"
+﻿#include "Global.h"
 
 HINSTANCE hInstance = NULL;
 HWND hwnd = NULL;
@@ -10,6 +10,7 @@ char * AnimFilePath::WATER_BOTTOM_ANIM = (char*)".\\..\\Resources\\Images\\Maps\
 char * AnimFilePath::SEWER_ANIM = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Animation\\sewer.png";
 char * AnimFilePath::EXIT_SIGN = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\Animation\\exit.png";
 
+//Định nghĩa ID của các object.
 int ObjectID::GROUND = 0;
 int ObjectID::SOLIDBOX = 1;
 int ObjectID::WATERRL = 2;
@@ -19,3 +20,9 @@ int ObjectID::WAVE = 5;
 int ObjectID::DOOR = 6;
 int ObjectID::SPIKE = 7;
 int ObjectID::ITEMLOOTER = 8;
+int ObjectID::BLUESOLDIER = 9;
+
+//Định nghĩa trọng số render của các loại object khác nhau.
+int RenderWeightOfObjects::BULLET_RENDER_WEIGHT = 2;
+int RenderWeightOfObjects::ITEM_RENDER_WEIGHT = 1;
+int RenderWeightOfObjects::OBJECT_RENDER_WEIGHT = 0;

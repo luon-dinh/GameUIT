@@ -1,6 +1,6 @@
-﻿#include "PlayerDashingState.h"
+﻿#include "PlayerClimbingState.h"
 
-BoundingBox PlayerDashingState::getBoundingBox() {
+BoundingBox PlayerClimbingState::getBoundingBox() {
 	Player *player = Player::getInstance();
 	BoundingBox box;
 	box.vx = player->vx;
@@ -10,7 +10,7 @@ BoundingBox PlayerDashingState::getBoundingBox() {
 	if (player->GetMoveDirection() == Object::MoveDirection::RightToLeft)
 	{
 		box.left = player->pos.x - 19;
-		box.right = player->pos.x ;
+		box.right = player->pos.x;
 	}
 	else if (player->GetMoveDirection() == Player::MoveDirection::LeftToRight)
 	{
@@ -22,47 +22,23 @@ BoundingBox PlayerDashingState::getBoundingBox() {
 	return box;
 }
 
-PlayerDashingState::PlayerDashingState() {
+PlayerClimbingState::PlayerClimbingState() {
 	this->state = State::DASHING;
 	this->curDashTime = 0;
 }
 
-void PlayerDashingState::InputHandler() {
+void PlayerClimbingState::InputHandler() {
 	auto player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
-	
-
-	// chuyển sang trạng thái nhảy
-	if (keyboard->isKeyDown(PLAYER_JUMP)) {
-		player->ChangeState(State::JUMPING);
-		this->curDashTime = 0;
-		return;
-	}
-
-	// chuyển sang trạng thái ngồi
-	if (keyboard->isKeyDown(PLAYER_SIT)) {
-		player->ChangeState(State::DUCKING);
-		this->curDashTime = 0;
-		return;
-	}
-	
-	// chuyển về trạng thái đứng
-	if (this->curDashTime > MAX_DASHING_TIME) {
-		player->ChangeState(State::STANDING);
-		this->curDashTime = 0;
-		return;
-	}
-
-	this->curDashTime += 13;
 }
 
-void PlayerDashingState::Update(float dt) {
+void PlayerClimbingState::Update(float dt) {
 	InputHandler();
 }
 
-void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
+void PlayerClimbingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
-	
+
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
 		player->ChangeState(State::STANDING);

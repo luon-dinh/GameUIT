@@ -49,19 +49,6 @@ public:
 	bool shieldActive;
 	BOOL hasShield;
 
-	enum MoveDirection {
-		LeftToRight,
-		RightToLeft,
-	};
-
-	enum OnAir {
-		Jumping,
-		Falling,
-		DropToWater,
-		None,
-		JumpFromWater
-	};
-
 	enum ShieldReturnEdge {
 		Top,
 		Left,
@@ -70,18 +57,11 @@ public:
 		Default		//	 Sử dụng tọa độ của player
 	};
 
-	enum MoveBehavior {
-		Normal,
-		StoppedByVerticalBoxOnLeft,
-		StoppedByVerticalBoxOnRight,
-		GoThrough,
-	};
-
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
 	int getWidth();
 	int getHeight();
 	void ChangeState(PlayerState* newplayerstate);
-	void ChangeState(State stateName);
+	void ChangeState(State stateName) override;
 	void Update(float dt);
 
 	void Render();
@@ -90,51 +70,30 @@ public:
 	void SetPreviousState(State stateName);
 	BoundingBox getBoundingBox();
 	State state;
-	MoveDirection direction;
 	Type type;
 	static Player* getInstance();
 	Animation * curanimation;
 	PlayerState * playerstate;
-	OnAir onAirState;
-	OnAir preOnAir;
-	D3DXVECTOR2 accelerate;
-	BOOL collideOnGround;
 	ShieldReturnEdge edge;
-	MoveBehavior moveBehave;
-
-
-	GroundCollision* groundCollision;
-	SolidBoxCollision* solidBoxCollision;
 
 	D3DXVECTOR2 shieldReturnPos;
-	bool isStateChanged;
-
-	bool smashRight;
-	bool smashLeft;
-	bool isStopBySolidBox;
 
 	Player();
 	~Player();
 	
 
 #pragma region MyRegion
-	void SetVx(float vx);
 	void SetVx(float vx, BOOL changePlayerDirection);
-	void SetVy(float vy);
-	void SetVelocity(D3DXVECTOR2 veloc);
-	void SetAccelerate(D3DXVECTOR2 acclerate);
+	void SetVx(float vx) override;
 	void SetCollisionAffect(BOOL value);
 	BOOL GetCollisionAffect();
-	virtual void UpdatePosition();
-	void SetAirState(OnAir onAirState);
-	void SetMoveDirection(MoveDirection moveDir);
-	OnAir GetOnAirState();
-	OnAir GetPreOnAirState();
+	virtual void UpdatePosition()				 override;
+	void SetOnAirState(OnAir onAirState)         override;
+	void SetMoveDirection(MoveDirection moveDir) override;
 	BOOL IsReachMaxJump();
 
 	void Float(MoveDirection moveDir);
 
-	BOOL IsOnMainGround();
 	void SetShieldReturnEdge(ShieldReturnEdge edge);
 	ShieldReturnEdge GetShieldReturnEdge();
 	D3DXVECTOR2 GetShieldReturnPos();
@@ -142,35 +101,22 @@ public:
 	bool StandOnCurrentGround();
 
 
-	Object* collidedSolidBox;
-
 #pragma endregion
 
 #pragma region Player Collision Handle
-	void SetGroundCollision(GroundCollision* groundCollision);
-	GroundCollision* GetGroundCollision();
 
 	bool TryStandOnGround(Object* ground);
 
-
 	void DeactivateObjectInGrid()override {};
 
-	bool IsStopBySolidBox();
-	void OnCollision(Object* object, collisionOut* collisionOut);
-	void OnNotCollision(Object* object);
-	bool OnRectCollided(Object* object, CollisionSide side);
-	void OnFallingOffGround();						// xử lý khi rơi khỏi ground
-	void OnStandingOnGround(Object* ground);		// xử lý khi đứng trên ground
-	void OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut);
-	void OnCollisionWithWater(Object* water, collisionOut* side);
-	void OnSmashSolidBox(Object* solid, CollisionSide side);
-	void OnHeadOnSolidBox(Object* solid);
-	bool AcceptNoCollision(Object* object, CollisionSide side);
+	void OnCollision(Object* object, collisionOut* collisionOut)		 override;
+	void OnNotCollision(Object* object)									 override;
+	bool OnRectCollided(Object* object, CollisionSide side)				 override;
+	void OnFallingOffGround()											 override;
+	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
 
 #pragma endregion
 
 
 };
-
-Player::MoveDirection;
 

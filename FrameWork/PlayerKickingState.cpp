@@ -81,6 +81,12 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 	}
 	if (object->type == Type::WATERRL) {
 		player->OnCollisionWithWater(object, collision);
+		return;
+	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+		return;
 	}
 
 	if (object->type == Type::SOLIDBOX) {
@@ -101,17 +107,17 @@ BoundingBox PlayerKickingState::getBoundingBox()
 	box.vy = player->vy;
 	box.top = player->pos.y + 12;
 	box.bottom = player->pos.y - 13;
-	/*if (player->direction == Player::MoveDirection::RightToLeft)
+	if (player->GetMoveDirection() == Player::MoveDirection::RightToLeft)
 	{
 		box.left = player->pos.x - 30;
 		box.right = player->pos.x;
 	}
-	else if (player->direction == Player::MoveDirection::LeftToRight)
+	else if (player->GetMoveDirection() == Player::MoveDirection::LeftToRight)
 	{
 		box.left = player->pos.x;
 		box.right = player->pos.x + 30;
-	}*/
-	box.left = player->pos.x - 11;
-	box.right = player->pos.x + 11;
+	}
+	/*box.left = player->pos.x - 11;
+	box.right = player->pos.x + 11;*/
 	return box;
 }

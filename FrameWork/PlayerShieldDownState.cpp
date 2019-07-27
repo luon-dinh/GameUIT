@@ -14,7 +14,7 @@ void PlayerShieldDownState::InputHandler() {
 	auto player = Player::getInstance();
 
 	if (!keyboard->isKeyDown(PLAYER_SIT)) {
-		if(player->onAirState==Player::OnAir::None)
+		if(player->GetOnAirState() == Player::OnAir::None)
 			player->ChangeState(State::STANDING);
 		else 
 		{
@@ -39,14 +39,18 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 	auto side = collision->side;
 
 	if (object->type == Type::GROUND && side == CollisionSide::bottom) {
-   		player->SetAirState(Player::OnAir::None);
+   		player->SetOnAirState(Player::OnAir::None);
 		player->SetVx(0);
-		player->SetGroundCollision(new GroundCollision(object, side));
+		player->SetStandingGround(object);
 		player->pos.y = object->pos.y + player->getHeight() / 2 + Shield::getInstance()->getHeight() / 2;
 	}
 
 	if (object->type == Type::WATERRL) {
 		player->OnCollisionWithWater(object, collision);
+	}
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
 	}
 }
 

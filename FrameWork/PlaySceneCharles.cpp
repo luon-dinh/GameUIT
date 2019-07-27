@@ -26,8 +26,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 	player->pos.x = 1500;
 	player->pos.y = SCREEN_HEIGHT + 20;
 	player->ChangeState(State::JUMPING);
-	player->SetAirState(Player::OnAir::Falling);
-	player->SetGroundCollision(new GroundCollision());
+	player->SetOnAirState(Player::OnAir::Falling);
 
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();
@@ -37,10 +36,9 @@ void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
-	/*if (player->pos.x >= world->getMapWidth() - 100)
+	if (player->pos.x >= world->getMapWidth() - 100)
 	{
 		Done = true;
 		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
-	}*/
-		
+	}
 }

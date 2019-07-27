@@ -12,7 +12,7 @@ public:
 
 	Bullet()
 	{
-		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3);
+		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3, TIME_PER_FRAME/3);
 	}
 	~Bullet()
 	{
@@ -24,8 +24,6 @@ public:
 	};
 	virtual void Render()
 	{
-		if (!this->GetActive())
-			return;
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 		switch (this->direction) {
 		case Player::MoveDirection::LeftToRight:
@@ -38,6 +36,10 @@ public:
 			break;
 		}
 	};
+	int RenderWeight() override
+	{
+		return RenderWeightOfObjects::BULLET_RENDER_WEIGHT;
+	}
 	virtual void OnCollision(Object* object, collisionOut* colOut)
 	{
 

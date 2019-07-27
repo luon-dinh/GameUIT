@@ -12,8 +12,6 @@ private:
 	//std::vector<Sprite*>sprites;//chứa danh sách các sprite của shield
 	Animation * animation;
 
-	D3DXVECTOR2 accelerator;
-
 	BOOL isActive;
 
 	int numberOfRounds;
@@ -24,10 +22,6 @@ private:
 	const float SHIELD_INITIAL_SPEED = 12;
 
 public:
-	enum ShieldDirection {
-		LeftToRight,
-		RightToLeft
-	};
 
 	enum ShieldState {
 		Defense,
@@ -36,7 +30,7 @@ public:
 		NotRender
 	};
 
-	enum MoveDirection {
+	enum MoveBehavior {
 		FarFromPlayer,
 		BackToPlayer,
 		NotMove
@@ -45,8 +39,7 @@ public:
 
 
 	ShieldState state;
-	ShieldDirection direction;
-	MoveDirection moveDirection;
+	MoveBehavior moveBehave;
 
 
 	static Shield* getInstance();
@@ -54,16 +47,10 @@ public:
 	void Render();
 	void RenderInGrid() {}; //Cấm không cho Shield render trong grid.
 	void InputHandler(float dt);
-	void OnCollision(Object* object, collisionOut out);
+
 	void setFrameIndex(int index);
 	void SetShieldState(ShieldState state);
-	BoundingBox getBoundingBox();
-
-
-	void SetShieldDirection(BOOL usePlayerDirection, Shield::ShieldDirection direction = ShieldDirection::LeftToRight);
-
-	Shield::ShieldDirection GetShieldDirection();
-
+	BoundingBox getBoundingBox() override;
 
 	void SetNumberOfRounds(int numberOfRounds);
 	void SetFramePerRound(int fpr);
@@ -78,5 +65,13 @@ public:
 	~Shield();
 
 	void DeactivateObjectInGrid() override {};
+	void SetMoveDirection(MoveDirection moveDir) override;
+
+
+	void ChangeState(State stateName) override {};
+	void OnCollision(Object* object, collisionOut* out) override;
+	void OnNotCollision(Object* object) override {};
+	bool OnRectCollided(Object* object, CollisionSide side) override { return false; };
+
 };
 

@@ -13,8 +13,6 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (!this->GetActive())//nếu không active không update
-			return;
 
 		if (this->direction == Player::MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
@@ -24,12 +22,13 @@ public:
 		}
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
-		if (existTime >= ENEMY_BULLET_EXIST_TIME)
+		animation->Update(dt);
+		if (existTime > ENEMY_BULLET_EXIST_TIME||animation->curframeindex==2)
 		{
-			this->SetActive(false);
 			existTime = 0;
+			DeactivateObjectInGrid();
 		}
-		else
+		else 
 		{
 			existTime += dt;
 		}
@@ -37,7 +36,29 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		
-
+		switch (object->tag)
+		{
+		case Tag::PLAYER:
+			this->animation = animationExplode;
+			this->pos.x -= this->vx;
+			this->vx = this->vy = 0;
+			break;
+		case Tag::SHIELD:
+			break;
+		default:
+			break;
+		}
 	}
+	BoundingBox getBoundingBox()override
+	{
+		BoundingBox box;
+		box.vx = this->vx;
+		box.vy = this->vy;
+		box.left = this->pos.x - 3;
+		box.right = this->pos.x + 3;
+		box.top = this->pos.y + 3;
+		box.bottom = this->pos.y - 3;
+		return box;
+	}
+
 };

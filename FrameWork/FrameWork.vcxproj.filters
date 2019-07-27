@@ -282,6 +282,9 @@
     <ClCompile Include="WhiteRockerter.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerClimbingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="MapStaticObject.h">
       <Filter>Objects\MapStaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerClimbingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

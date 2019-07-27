@@ -1,96 +1,118 @@
 ﻿#include"Item.h"
 #include"Camera.h"
-
-Item::Item(Type type)
+Item::Item(ItemType itemtype)
 {
-	Animation* animation = new Animation(Tag::ITEM, 0, 8);
 	this->tag = ITEM;
-	this->type = type;
-	this->vy = ITEM_SPEED;
-	existTime = ITEM_EXIST_TIME;
-	this->isActive = false;
-	switch (type)
+	this-> itemtype= itemtype;
+	this->vx = 0;
+	this->vy = -ITEM_SPEED;
+	this->existTime = ITEM_EXIST_TIME;
+	this->countFrame = 0;
+	switch (itemtype)
 	{
-	case Type::ITEM1:
-		sprite = animation->getSprite(0);
+	case ItemType::UP:
+		animation = new Animation(Tag::ITEM, 0);
 		break;
-	case Type::ITEM2:
-		sprite = animation->getSprite(1);
+	
+	case ItemType::STAR:
+		animation = new Animation(Tag::ITEM, 1);
 		break;
-	case Type::ITEM3:
-		sprite = animation->getSprite(2);
+	case ItemType::EXIT:
+		animation = new Animation(Tag::ITEM, 2, 4);
 		break;
-	case Type::ITEM4:
-		sprite = animation->getSprite(3);
+	case ItemType::HEART:
+		animation = new Animation(Tag::ITEM, 4);
 		break;
-	case Type::ITEM5:
-		sprite = animation->getSprite(4);
+	case ItemType::HALFHEART:
+		animation = new Animation(Tag::ITEM, 5);
 		break;
-	case Type::ITEM6:
-		sprite = animation->getSprite(5);
+	case ItemType::HP:
+		animation = new Animation(Tag::ITEM, 6);
 		break;
-	case Type::ITEM7:
-		sprite = animation->getSprite(6);
+	case ItemType::GEM:
+		animation = new Animation(Tag::ITEM, 7,9);
 		break;
-	case Type::ITEM8:
-		sprite = animation->getSprite(7);
+	case ItemType::SMALLGEM:
+		animation = new Animation(Tag::ITEM, 9,11);
 		break;
 	}
-	delete animation;
 }
 Item::~Item()
 {
-	if (sprite)
-		delete sprite;
+
 }
 
 void Item::Update(float dt)
 {
-	if (isActive)
+	countFrame++;
+
+	if (countFrame<20)
+		this->vy = ITEM_SPEED;
+	else
 	{
-		this->pos.y += this->vy;
+		if(this->vy!=0)
+			this->vy = -ITEM_SPEED;
+	}
+
+	this->pos.y += this->vy;
+	animation->Update(dt);
+	if(this->vy==0)
 		existTime -= dt;
-		if (existTime <= 0)
-			isActive = false;
+	if (existTime <= 0)
+	{
+		DeactivateObjectInGrid();
 	}
 }
 void Item::Render()
 {
-	if (isActive)
+	D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	if (existTime < 0.25*ITEM_EXIST_TIME)
 	{
-		D3DXVECTOR3 position = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-		sprite->Render(position);
+		if((int)existTime%2==0)
+			animation->Render(position);
+		return;
 	}
+	animation->Render(position);
 }
 
 BoundingBox Item::getBoundingBox()
 {
 	BoundingBox box;
-	box.top = this->pos.y + 7;
-	box.bottom = this->pos.y - 7;
+	box.top = this->pos.y + 8;
+	box.bottom = this->pos.y - 8;
 	box.left = this->pos.x - 6;
 	box.right = this->pos.x + 6;
-	box.vx = box.vy = 0;
+	box.vx = this->vx;
+	box.vy = this->vy;
 	return box;
 }
 
 void Item::OnCollision(Object* object, collisionOut* colOut)
 {
-	if (!isActive)
-		return;
 	switch (object->type)
 	{
-		//va chạm với player
-		case Type::NONE:
-		{
-			this->isActive = false;
-		}
-		//va chạm với đất
-		case Type::GROUND:
-		{
-			this->pos.y = object->pos.y + this->getHeight() / 2;
-			this->vy = 0;
-			break;
-		}
+	case Type::GROUND:
+	case Type::SOLIDBOX:
+	case Type::WATERRL:
+		this->vx = this->vy = 0;
+		this->pos.y = object->pos.y + this->getHeight() / 2;
+		break;
+		//xuwr lis va chamj voiws player
+	case Type::NONE:
+		if(object->tag==Tag::PLAYER)
+			DeactivateObjectInGrid();
+		break;
+	default:
+		break;
 	}
+}
+
+bool Item::OnRectCollided(Object* object, CollisionSide side)
+{
+	if (object->tag == Tag::PLAYER)
+	{
+	// xử lí va chạm với player	
+		DeactivateObjectInGrid();
+	}
+	return true;
 }

@@ -15,7 +15,7 @@ struct collisionOut {
 
 struct BoundingBox {
 	float top, left, right, bottom;
-	int vx, vy;
+	float vx, vy;
 	BoundingBox(float top_, float left_, float bottom_, float right_, int vx_, int vy_)
 	{
 		top = top_;

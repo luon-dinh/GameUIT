@@ -1,6 +1,7 @@
 ﻿#include "Grid.h"
 #include <unordered_set>
 #include <set>
+#include <map>
 #include <fstream>
 #include <sstream>
 
@@ -31,7 +32,7 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const ch
 	for (int i = 0; i < mapHeight; ++i)
 		objectIDPerPosition[i] = new int[mapWidth];
 
-	//Xoá sạch mảng (reset lại về 0).
+	//Xoá sạch mảng (reset lại về -1).
 	for (int i = 0; i < mapHeight; ++i)
 	{
 		for (int j = 0; j < mapWidth; ++j)
@@ -64,10 +65,10 @@ Grid::~Grid()
 		}
 		delete[]cells[i];
 	}
-
+	delete cells;
 	//Xoá các object tĩnh.
-	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá toàn bộ.
-	//Xác định xem object đã được giết trước đó chưa.
+	//Lưu ý object tĩnh có thể trải dài trên nhiều cell. Vì vậy sẽ cần một cách để xoá không lặp.
+	//Dùng set để lưu lại các object một cách không trùng lặp.
 	std::set<MapStaticObject*> mapStaticObjects;
 	for (int i = 0; i < gridHeight; ++i)
 	{
@@ -208,6 +209,8 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 	int objectTopLeftY = -1;
 	int objectWidth = -1;
 	int objectHeight = -1;
+	int objectDirection = -1;
+	int objectSpecialID = -1;
 
 	int numOfObject;
 
@@ -220,7 +223,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		Object* object = nullptr;
 		std::getline(inFile, sInputString);
 		std::istringstream iss(sInputString);
-		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight;
+		iss >> objectID >> objectTopLeftX >> objectTopLeftY >> objectWidth >> objectHeight >>objectDirection >> objectSpecialID;
 
 		int midX = objectTopLeftX + objectWidth / 2;
 		int midY = objectTopLeftY - objectHeight / 2;
@@ -228,7 +231,9 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		objectIDPerPosition[midY][midX] = objectID;
 		//Add object vô grid nào.
 		if (objectID == ObjectID::ITEMLOOTER)
-			object = new Container();
+			object = new Container((ItemType)objectSpecialID);
+		else if (objectID == ObjectID::BLUESOLDIER)
+			object = new Solder(RunType::SPECIAL);
 
 		if (object == nullptr)
 			continue;
@@ -286,6 +291,10 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			{
 				//ItemLooter không được sinh lần 2.
 				//newObject = new Container(); //Tạo mới object dựa vào ID.
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
+			{
+				newObject = new Solder(RunType::SPECIAL);
 			}
 			if (newObject == nullptr)
 				continue;
@@ -522,6 +531,9 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	std::unordered_set<Object*> isChecked;
 	for (auto object : firstCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!object->GetActivatedInGridStatus())
+			continue;
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
 		for (auto staticObject : firstStaticCell)
@@ -541,6 +553,9 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	}
 	for (auto object : secondCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!object->GetActivatedInGridStatus())
+			continue;
 		if (isChecked.find(object) != isChecked.end()) //Đã kiểm tra trước đó.
 			continue;
 		for (auto staticObject : firstStaticCell)
@@ -562,9 +577,15 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 	//Xét va chạm object động.
 	for (auto firstObj : firstCell)
 	{
+		//Nếu object không được activated thì ta không xét va chạm luôn.
+		if (!firstObj->GetActivatedInGridStatus())
+			continue;
 		for (auto secondObj : secondCell)
 		{
-			//Lấy tất cả static trong cả 2 cell va chạm với cả 2 object đang xét.
+			//Nếu object không được activated thì ta không xét va chạm luôn.
+			if (!secondObj->GetActivatedInGridStatus())
+				continue;
+			//Xét việc va chạm 2 dynamic object với nhau.
 			CollisionProcessOfDynamicObjects(firstObj, secondObj);
 		}
 	}
@@ -585,6 +606,25 @@ void Grid::UpdateActivatedCells(double dt)
 				//Duyệt hết các phần tử có trong cells này.
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
+
+				//Nếu object đang không được activated thì mình bỏ qua không update.
+				if (!(*it)->GetActivatedInGridStatus())
+				{
+					++it;
+					continue;
+				}
+				//Thêm item vào Grid.
+				std::list<Object*>* additionalItems = ((*it)->getAdditionalObjects());
+				if (additionalItems != nullptr)
+				{
+					auto addItemIt = additionalItems->begin();
+					while (addItemIt != additionalItems->end())
+					{
+						Add((*addItemIt));
+						additionalItems->erase(addItemIt++);
+					}
+				}
+
 				(*it)->Update(dt);
 				if ((*it)->tag == Tag::PLAYER)
 				{
@@ -616,14 +656,27 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		cells[cellY][cellX].erase(it++);
 	else
 		cells[cellY][cellX].erase(it--);
-
-	//Thêm object vào cell mới.
-	Add(object);
+	//Kiểm tra nếu object còn nằm trong active zone thì mới thêm lại vào Grid.
+	if (nextCellY >= bottomY && nextCellY <= topY && nextCellX >= leftX && nextCellX <= rightX)
+	{
+		//Thêm object vào cell mới.
+		Add(object);
+	}
+	//Nếu object không nằm trong Active Zone thì ta delete nếu không còn được active.
+	else
+	{
+		object->DeactivateObjectInGrid();
+		if (!object->GetActivatedInGridStatus())
+			delete object;
+	}
 	return it;
 }
 
 void Grid::RenderActivatedCells()
 {
+	auto cmp = [](Object* a, Object* b) { return (a->RenderWeight() < b->RenderWeight()); };
+	std::multiset<Object*, decltype(cmp)> orderOfRenders(cmp);
+
 	//Vẽ tất cả các cells được activated.
 	for (int i = bottomY; i <= topY; ++i)
 	{
@@ -632,20 +685,29 @@ void Grid::RenderActivatedCells()
 			//Vẽ tất cả các object có trong cell.
 			for (auto object : cells[i][j])
 			{
+				//Nếu object không được activated thì ta không thực hiện render.
+				if (!object->GetActivatedInGridStatus())
+					continue;
 				MapStaticObject* itemLooter = dynamic_cast<MapStaticObject*> (object);
 				if (itemLooter != nullptr)
 				{
 					int a = 10;
 				}
-				object->RenderInGrid();
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				//Thêm object vào set chuẩn bị vẽ.
+				orderOfRenders.insert(object);
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
-			//Vẽ các object tĩnh.
-			for (auto object : cellsOfStaticObjects[i][j])
-			{
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
-			}
+			////Vẽ debug các object tĩnh.
+			//for (auto object : cellsOfStaticObjects[i][j])
+			//{
+			//	//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+			//}
 		}
+	}
+	//Vẽ theo thứ tự.
+	for (auto object : orderOfRenders)
+	{
+		object->Render();
 	}
 	//DrawDebugObject();
 }

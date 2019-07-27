@@ -6,8 +6,8 @@
 #include <WinUser.h>
 #include <unordered_map>
 
-#define WINDOW_CLASS_NAME "Frame Work"		
-#define GAME_TITLE "Frame Work"		
+#define WINDOW_CLASS_NAME "Captain America"		
+#define GAME_TITLE "Captain America"		
 #define SCREEN_WIDTH 256						
 #define SCREEN_HEIGHT 224			
 #define MAX_FRAME_RATE 90					
@@ -33,7 +33,7 @@
 #define WATER_SPEED					0.75
 
 //item define
-#define ITEM_SPEED -1
+#define ITEM_SPEED 1
 #define ITEM_EXIST_TIME 3000
 //enemy define
 #define ENEMY_BULLET_EXIST_TIME 3000
@@ -43,7 +43,7 @@
 //blue solder enemy define
 #define BLUE_SOLDER_STANDING_TIME 500
 #define BLUE_SOLDER_DUCKING_TIME 2000
-#define BLUE_SOLDER_RUNNING_TIME 3000
+#define BLUE_SOLDER_RUNNING_TIME 1500
 //Red rockerter define
 #define RED_ROCKERTER_STATE_TIME 2000
 
@@ -83,6 +83,16 @@ public:
 	static int DOOR;
 	static int SPIKE;
 	static int ITEMLOOTER;
+	static int BLUESOLDIER;
+};
+
+//Đây là class chứa trọng số vẽ.
+class RenderWeightOfObjects
+{
+public:
+	static int OBJECT_RENDER_WEIGHT;
+	static int ITEM_RENDER_WEIGHT;
+	static int BULLET_RENDER_WEIGHT;
 };
 
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
@@ -92,6 +102,23 @@ struct PlayerInfo
 {
 	float playerX;
 	float playerY;
+};
+//dung cho enemy
+enum RunType {
+	NOTRUN,
+	CANRUN,
+	SPECIAL,
+};
+
+enum ItemType {
+	HALFHEART = 0,
+	HEART = 1,
+	SMALLGEM = 2,
+	GEM = 3,
+	HP = 4,
+	UP = 5,
+	EXIT = 6,
+	STAR,
 };
 
 enum Tag {
@@ -129,6 +156,7 @@ enum Tag {
 	REDROCKERTER,
 	WHITEROCKERTER,
 };
+
 enum Type {
 	NONE,
 	CLOUD,
@@ -142,14 +170,6 @@ enum Type {
 	ROPE,
 	ONOFF,
 	DOOR,
-	ITEM1,
-	ITEM2,
-	ITEM3,
-	ITEM4,
-	ITEM5,
-	ITEM6,
-	ITEM7,
-	ITEM8,
 	ITEMCONTAINERTYPE
 	//cac loai dan
 };
@@ -174,7 +194,8 @@ enum State {
 	DIVING,
 	SHIELD_ATTACK,
 	STAND_PUNCH,
-	BEATEN
+	BEATEN,
+	CLIMBING
 };
 
 enum MapName

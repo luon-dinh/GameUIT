@@ -69,7 +69,6 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::GROUND) { 
 		if (side == CollisionSide::bottom ) {
 			player->OnStandingOnGround(object);
-			this->SetCollisionInfo(object, collision->side);
 			DebugOut(L"\nState Now: ");
 			PrintDebugNumber(player->state);
 			return;
@@ -97,7 +96,7 @@ BoundingBox PlayerJumpingState::getBoundingBox()
 	box.vx = player->vx;
 	box.vy = player->vy;
 	box.top = player->pos.y + 20;
-	box.bottom = player->pos.y - 18;
+	box.bottom = player->pos.y - 21;
 	box.left = player->pos.x - 11;
 	box.right = player->pos.x + 11;
 	return box;

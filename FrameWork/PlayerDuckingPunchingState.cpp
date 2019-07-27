@@ -34,7 +34,7 @@ BoundingBox PlayerDuckingPunchingState::getBoundingBox()
 	box.vy = player->vy;
 	box.top = player->pos.y + 6;
 	box.bottom = player->pos.y - 21;
-	if (player->direction == Player::MoveDirection::RightToLeft)
+	if (player->GetMoveDirection() == Object::MoveDirection::RightToLeft)
 	{
 		box.left = player->pos.x - 26;
 		box.right = player->pos.x + 12;
