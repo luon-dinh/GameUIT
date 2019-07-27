@@ -6,6 +6,9 @@
 #include <WinUser.h>
 #include <unordered_map>
 
+//Define toán học.
+#define PI 3.14159265
+
 #define WINDOW_CLASS_NAME "Captain America"		
 #define GAME_TITLE "Captain America"		
 #define SCREEN_WIDTH 256						
@@ -153,6 +156,9 @@ enum Tag {
 	WHITEROCKERTERBULLET,
 	GREENCANNONBULLET,
 	WHITEFLYROBOTBULLET,
+	//Theo chiều kim đồng hồ. Bắt đầu từ vị trí hướng lên trên.
+	WHITEFLYINGROBOTBULLET,
+	WHITEFLYINGROBOT,
 	REDROCKERTER,
 	WHITEROCKERTER,
 };

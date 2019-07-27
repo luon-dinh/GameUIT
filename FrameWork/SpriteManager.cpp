@@ -125,6 +125,15 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 0, 48, 46, 72));
 	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 46, 0, 92, 24));
 	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTER, 92, 0, 138, 24));
+	//Cắt sprite cho white flying robot bullet.
+	const int whiteFlyingRobotBulletSize = 17;
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 2; ++j)
+		{
+			spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOTBULLET, i*whiteFlyingRobotBulletSize, j*whiteFlyingRobotBulletSize, (i + 1)*whiteFlyingRobotBulletSize, (j + 1)*whiteFlyingRobotBulletSize));
+		}
+	}
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

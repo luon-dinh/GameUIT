@@ -12,6 +12,7 @@ PlaySceneCharles::PlaySceneCharles()
 
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
+	grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
 }
 
 PlaySceneCharles::~PlaySceneCharles()
