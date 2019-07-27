@@ -23,8 +23,11 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::BLUESOLDIER, (char*)".\\..\\Resources\\Images\\Enermy\\BlueSoldier.png");
 	textures->addTexture(Tag::BLUESOLDERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\SoldierBullet.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
+
 	//add texture dùng cho bullet explode
 	textures->addTexture(Tag::BULLETEXPLODE, (char*)".\\..\\Resources\\Images\\Enermy\\BulletExplode.png");
+	textures->addTexture(Tag::ENEMYEXPLODE, (char*)".\\..\\Resources\\Images\\Enermy\\BulletExplode.png");
+
 	//texture dùng cho redrockerter
 	textures->addTexture(Tag::REDROCKERTERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\RedRockerterBullet.png");
 	textures->addTexture(Tag::REDROCKERTER, (char*)".\\..\\Resources\\Images\\Enermy\\RedRockerter.png");
@@ -34,6 +37,7 @@ void TextureManager::loadResources()
 
 	//texture dùng cho white flying rocketer.
 	textures->addTexture(Tag::WHITEFLYINGROBOTBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BulletWhiteFlyRobot.png");
+	textures->addTexture(Tag::WHITEFLYINGROBOT, (char*)".\\..\\Resources\\Images\\Enermy\\NewFixedWhiteFlyingRobot.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

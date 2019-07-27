@@ -607,17 +607,14 @@ void Grid::UpdateActivatedCells(double dt)
 				//Kiểm tra xem có sự thay đổi cells của các object hay không.
 				//Lưu lại thông tin của object hiện tại.
 
-				//Nếu object đang không được activated thì mình bỏ qua không update.
+				//Nếu object đang không được activated thì mình bỏ qua không update và xoá khỏi Grid luôn.
 				if (!(*it)->GetActivatedInGridStatus())
 				{
-					++it;
+					delete *it;
+					cells[i][j].erase(it++);
 					continue;
 				}
 				(*it)->Update(dt);
-				if ((*it)->tag == Tag::PLAYER)
-				{
-					int a = 1;
-				}
 				it = MoveObjectAndIncrementIterator(cellX, cellY, it, (*it)); //Lúc này là đã di chuyển luôn iterator rồi.
 			}
 		}

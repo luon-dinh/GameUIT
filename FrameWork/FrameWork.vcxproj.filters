@@ -288,6 +288,9 @@
     <ClCompile Include="BulletWhiteFlyingRocketer.cpp">
       <Filter>Objects\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="WhiteFlyingRobot.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -486,10 +489,13 @@
       <Filter>Objects\MapStaticObject</Filter>
     </ClInclude>
     <ClInclude Include="PlayerClimbingState.h">
-  <Filter>Objects\Player</Filter>
+      <Filter>Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="BulletWhiteFlyingRocketer.h">
       <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteFlyingRobot.h">
+      <Filter>Objects\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

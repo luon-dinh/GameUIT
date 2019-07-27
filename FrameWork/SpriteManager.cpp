@@ -101,6 +101,11 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 0, 28, 30));
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 30, 28, 60));
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 60, 28, 90));
+
+	//Cắt sprite cho hiệu ứng nổ của enemy.
+	spriteManager->addSprite(new Sprite(Tag::ENEMYEXPLODE, 0, 0, 28, 30));
+	spriteManager->addSprite(new Sprite(Tag::ENEMYEXPLODE, 0, 30, 28, 60));
+	spriteManager->addSprite(new Sprite(Tag::ENEMYEXPLODE, 0, 60, 28, 90));
 	//cắt sprite cho blue solder bullet
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDERBULLET, 0, 0, 6, 6));
 	//cắt sprite cho redrockerter bullet
@@ -134,6 +139,12 @@ void SpriteManager::LoadResources()
 			spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOTBULLET, i*whiteFlyingRobotBulletSize, j*whiteFlyingRobotBulletSize, (i + 1)*whiteFlyingRobotBulletSize, (j + 1)*whiteFlyingRobotBulletSize));
 		}
 	}
+
+	//Cắt sprite cho white flying robot.
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 0, 0, 36, 27));
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 0, 28, 36, 55));
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 0, 73, 27));
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 28, 73, 55));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Shield.h"
 #include "BulletWhiteFlyingRocketer.h"
+#include "WhiteFlyingRobot.h"
 #include "Global.h"
 #include "DrawDebug.h"
 

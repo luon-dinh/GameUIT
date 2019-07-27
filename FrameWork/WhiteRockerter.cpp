@@ -41,7 +41,7 @@ void WhiteRockerter::Update(float dt)
 	//nếu bị shield đánh chuyển sang beaten---> test 
 	if (Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox()) && shield->state == Shield::ShieldState::Attack)
 		ChangeState(State::BEATEN);
-	this->curentAnimation->Update(dt);
+	this->currentAnimation->Update(dt);
 	switch (this->stateName)
 	{
 	case State::STANDING:
@@ -127,10 +127,10 @@ void WhiteRockerter::Render()
 	switch (this->direction)
 	{
 	case Player::MoveDirection::LeftToRight:
-		this->curentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+		this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 		break;
 	case Player::MoveDirection::RightToLeft:
-		this->curentAnimation->Render(pos);
+		this->currentAnimation->Render(pos);
 		break;
 	default:
 		break;
@@ -176,7 +176,7 @@ void WhiteRockerter::ChangeState(State stateName)
 	switch (stateName)
 	{
 	case State::RUNNING:
-		this->curentAnimation = animations[State::RUNNING];
+		this->currentAnimation = animations[State::RUNNING];
 		if (this->direction == Player::MoveDirection::LeftToRight)
 			this->vx = ENEMY_SPEED;
 		else
@@ -184,12 +184,12 @@ void WhiteRockerter::ChangeState(State stateName)
 		isDead = false;
 		break;
 	case State::DUCKING:
-		this->curentAnimation = animations[State::DUCKING];
+		this->currentAnimation = animations[State::DUCKING];
 		this->vx = this->vy = 0;
 		isDead = false;
 		break;
 	case State::BEATEN:
-		this->curentAnimation = animations[State::BEATEN];
+		this->currentAnimation = animations[State::BEATEN];
 		this->vx = this->vy = 0;
 		if (this->direction == Player::MoveDirection::LeftToRight)
 			this->pos.x -= 3;
@@ -199,7 +199,7 @@ void WhiteRockerter::ChangeState(State stateName)
 		}
 		break;
 	case State::STANDING:
-		this->curentAnimation = animations[State::STANDING];
+		this->currentAnimation = animations[State::STANDING];
 		this->vx = this->vy = 0;
 		isDead = false;
 		break;
