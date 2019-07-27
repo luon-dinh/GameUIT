@@ -43,6 +43,7 @@ private:
 	PlayerState* prevState;
 
 public:
+	
 	int health;
 	int live;
 	int energy;

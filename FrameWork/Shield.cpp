@@ -236,7 +236,23 @@ void Shield::Update(float dt)
 			return;
 		}
 		if (player->state == State::SHIELD_ATTACK)
-			animation->curframeindex = 2;
+		{
+			this->animation->curframeindex = 2;
+			BoundingBox box = player->getBoundingBox();
+			this->pos.y = box.top - 4;
+			switch (direction)
+			{
+			case Object::LeftToRight:
+				this->pos.x = box.left + 2;
+				break;
+			case Object::RightToLeft:
+				this->pos.x = box.right - 2;
+				break;
+			default:
+				break;
+			}
+			return;
+		}
 		if (this->state == ShieldState::NotRender) {
 			this->pos = player->pos;
 		}

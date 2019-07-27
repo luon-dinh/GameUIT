@@ -36,9 +36,9 @@ void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
-	/*if (player->pos.x >= world->getMapWidth() - 100)
+	if (player->pos.x >= world->getMapWidth() - 100)
 	{
 		Done = true;
 		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
-	}*/
+	}
 }
