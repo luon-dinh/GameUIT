@@ -454,6 +454,10 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	// không xét va chạm với shield
 	if (object->tag == Tag::SHIELD)
 		return;
+	if (collisionOut->side == CollisionSide::left || collisionOut->side == CollisionSide::right)
+	{
+		canDash = false;
+	}
 	this->playerstate->OnCollision(object, collisionOut);
 	this->collisionDetected = true;
 }
@@ -487,8 +491,34 @@ void Player::OnNotCollision(Object* object) {
 	}
 }
 bool Player::OnRectCollided(Object* object, CollisionSide side) {
+
+	if (this->state == State::DASHING && (side==CollisionSide::left||side==CollisionSide::right))
+	{
+		// collide with ground
+		this->ChangeState(State::STANDING);
+		switch (side)
+		{
+		case CollisionSide::left:
+			this->ChangeState(State::STANDING);
+			this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
+			break;
+		case CollisionSide::right:
+			this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+
+	auto box = this->getBoundingBox();
+	auto bound = object->getBoundingBox();
 	switch (object->type) {
 		case Type::GROUND:{
+			if (side == CollisionSide::left || side == CollisionSide::right)
+			{
+				canDash = false;
+			}
 			// Nếu đang rơi xuống nước thì không xét va chạm với ground
 			if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
@@ -513,48 +543,39 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}	
 		case Type::SOLIDBOX: {
+			if (side == CollisionSide::left || side == CollisionSide::right)
+			{
+				canDash = false;
+			}
     		if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;
 					if (this->vx == 0 && this->state != State::STANDING) {
 						this->SetVx(PLAYER_NORMAL_SPEED);
+						return true;
 					}
 				}
-				else {
-					this->SetVx(0);
-					return true;
-				}
-				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
+				else if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
 					if (this->vx == 0 && this->state != State::STANDING) {
 						this->SetVx(-PLAYER_NORMAL_SPEED);
+						return true;
 					}
 				}
 				else {
 					this->SetVx(0);
 					true;
 				}
-				if (side == CollisionSide::bottom) {
+				if (side == CollisionSide::bottom && box.left != bound.right&&box.right != bound.left) {
 					TryStandOnGround(object);
 				}
-				if (side == CollisionSide::bottom)
-					TryStandOnGround(object);
 			}
 			else {
 				collisionOut colOut;
 				colOut.side = side;
 				if (side == CollisionSide::left || side == CollisionSide::right) {
 					OnCollisionWithSolidBox(object, &colOut);
-					if (side == CollisionSide::left) {
-						this->pos.x += 3;
-					}
-					else {
-						this->pos.x -= 8;
-					}
 					return true;
-				}
-				if (side == CollisionSide::bottom) {
-					this->TryStandOnGround(object);
 				}
 			}
 			return false;
@@ -604,22 +625,45 @@ bool Player::TryStandOnGround(Object* ground) {
 	return FALSE;
 }
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
+	KeyboardManager *keyboard = KeyboardManager::getInstance();
 	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
 		this->SetVx(0);
 	this->collidedSolidBox = object;
 	if (this->GetOnAirState() == OnAir::Jumping){
+		this->vy = 0;
 		this->SetOnAirState(OnAir::Falling);
 	}
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2 - 4;
+			if(keyboard->isKeyDown(PLAYER_MOVE_LEFT) && this->onAirState!=OnAir::None)
+				this->pos.x = bound.right + this->getWidth() / 2;
+			else 
+			{
+				if (this->onAirState == OnAir::None)
+					this->pos.x = bound.right + this->getWidth() / 2 + 4;
+				else
+				{
+					this->pos.x = bound.right + this->getWidth() / 2 + 2;
+				}
+			}
+			
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-     		this->pos.x = bound.left - this->getWidth() / 2 + 4;
+			if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT) && this->onAirState != OnAir::None)
+				this->pos.x = bound.left - this->getWidth() / 2;
+			else
+			{
+				if (this->onAirState == OnAir::None)
+					this->pos.x = bound.left - this->getWidth() / 2 - 4;
+				else
+				{
+					this->pos.x = bound.left - this->getWidth() / 2 - 2;
+				}
+			}
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

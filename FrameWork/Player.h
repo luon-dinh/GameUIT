@@ -51,7 +51,7 @@ public:
 	int energy;
 	bool shieldActive;
 	BOOL hasShield;
-
+	bool canDash = true;
 	enum ShieldReturnEdge {
 		Top,
 		Left,

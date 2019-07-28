@@ -692,7 +692,8 @@ void Grid::RenderActivatedCells()
 			//Vẽ debug các object tĩnh.
 			/*for (auto object : cellsOfStaticObjects[i][j])
 			{
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+				if(object->type==Type::SOLIDBOX)
+					DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
 			}*/
 		}
 	}
