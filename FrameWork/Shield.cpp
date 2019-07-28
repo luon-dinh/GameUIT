@@ -253,6 +253,29 @@ void Shield::Update(float dt)
 			}
 			return;
 		}
+		if (player->state == State::CLIMBING)
+		{
+			this->pos.y = player->pos.y;
+			switch (direction)
+			{
+			case Object::LeftToRight:
+				this->pos.x = player->getBoundingBox().left;
+				this->direction = Object::RightToLeft;
+				break;
+			case Object::RightToLeft:
+				this->direction = Object::LeftToRight;
+				this->pos.x = player->getBoundingBox().right;
+				break;
+			default:
+				break;
+			}
+		}
+		if (player->state == State::DUCKING_PUNCHING)
+		{
+			this->pos.y = player->pos.y;
+			this->pos.x = player->pos.x;
+			return;
+		}
 		if (this->state == ShieldState::NotRender) {
 			this->pos = player->pos;
 		}

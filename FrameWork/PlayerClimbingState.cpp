@@ -16,6 +16,23 @@ void PlayerClimbingState::InputHandler() {
 		this->currentFrame = 0;
 		return;
 	}
+	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
+	{
+		player->SetMoveDirection(Object::MoveDirection::LeftToRight);
+		return;
+	}
+	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
+	{
+		player->SetMoveDirection(Object::MoveDirection::RightToLeft);
+		return;
+	}
+	if (keyboard->isKeyDown(PLAYER_SIT))
+	{
+		player->SetOnAirState(Player::OnAir::Falling);
+		player->ChangeState(State::JUMPING);
+		player->pos.y -= 2;
+		return;
+	}
 }
 
 void PlayerClimbingState::Update(float dt) {
