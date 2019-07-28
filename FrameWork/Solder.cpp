@@ -87,7 +87,6 @@ void Solder::OnNotCollision(Object* object)
 
 void Solder::Update(float dt)
 {
-
 	if (!isDead)
 	{
 		if (runType == RunType::NOTRUN)

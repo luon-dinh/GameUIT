@@ -8,6 +8,7 @@
 
 //Define toán học.
 #define PI 3.14159265
+#define SQRT2 0.70710678118
 
 #define WINDOW_CLASS_NAME "Captain America"		
 #define GAME_TITLE "Captain America"		

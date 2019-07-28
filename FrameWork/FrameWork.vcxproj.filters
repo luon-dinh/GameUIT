@@ -291,6 +291,9 @@
     <ClCompile Include="WhiteFlyingRobot.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="BulletRedRocket.cpp">
+      <Filter>Objects\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -496,6 +499,12 @@
     </ClInclude>
     <ClInclude Include="WhiteFlyingRobot.h">
       <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RedRocketRobot.h">
+      <Filter>Objects\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletRedRocket.h">
+      <Filter>Objects\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

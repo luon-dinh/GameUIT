@@ -18,8 +18,11 @@ private:
 
 	//Tốc độ tối đa theo 2 trục X,Y.
 	//Dựa vào tốc độ tối đa mà ta cũng có thể xác định quỹ đạo bay.
-	double VXMax = 3;
-	double VYMax = 1;
+	const double VXMax = 3;
+	const double VYMax = 1;
+
+	//Thời gian beaten.
+	const int beatenTime = 1000;
 
 	//Do quỹ đạo bay là 1 ellipse, vì vậy ta sẽ quét góc theo tâm.
 	//Góc hiện tại.
@@ -27,6 +30,12 @@ private:
 
 	//Delay time dùng để xét khoảng thời gian đã qua.
 	int delayTime = 0;
+
+	//Thời gian đã qua của state hiện tại.
+	int currentStateTime = 0;
+
+	//Thời gian đã qua của việc chớp chớp.
+	int currentBeatenTick = 0;
 
 	//Một map để lưu trữ từng animation tương ứng với state.
 	std::unordered_map<State, Animation*> stateAnim;
@@ -38,8 +47,14 @@ private:
 public:
 	WhiteFlyingRobot(int posX, int posY);
 	~WhiteFlyingRobot();
+	void ChangeState(State) override;
 	void Update(float dt) override;
 	void Render() override;
+
+	void EnemyAliveUpdate(double dt) override;
+	void EnemyBeatenUpdate(double dt) override;
+	void EnemyDeadUpdate(double dt) override;
+
 	void LoadAllAnimation();
 	void OnCollision(Object* object, collisionOut* colout) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override;

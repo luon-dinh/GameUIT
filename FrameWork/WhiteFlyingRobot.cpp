@@ -1,5 +1,6 @@
 ﻿#include "WhiteFlyingRobot.h"
 #include "SceneManager.h"
+#include "Debug.h"
 
 WhiteFlyingRobot::WhiteFlyingRobot(int posX, int posY)
 {
@@ -13,6 +14,7 @@ WhiteFlyingRobot::WhiteFlyingRobot(int posX, int posY)
 	this->pos.x = posX;
 	this->pos.y = posY;
 	isDead = false;
+	health = 2;
 }
 
 WhiteFlyingRobot::~WhiteFlyingRobot()
@@ -22,9 +24,34 @@ WhiteFlyingRobot::~WhiteFlyingRobot()
 		delete anim.second;
 }
 
-void WhiteFlyingRobot::Update(float dt)
+void WhiteFlyingRobot::EnemyDeadUpdate(double dt)
+{
+	PrintDebug("\nCurrentStateTime : ");
+	PrintDebugNumber(currentStateTime);
+	if (robotState == State::DEAD) //Nổ tung và deactivate nó.
+	{
+		if (currentStateTime > explodeTime)
+		{
+			DeactivateObjectInGrid();
+			return;
+		}
+	}
+	else //Trạng thái falling.
+	{
+		//Nếu đang trong trạng thái falling thì ta cho nó rơi xuống đến khi đụng đất.
+		this->vx = 0;
+		this->vy = -1;
+		this->pos.x += this->vx;
+		this->pos.y += this->vy;
+	}
+	
+	this->currentAnimation->Update(dt);
+}
+
+void WhiteFlyingRobot::EnemyAliveUpdate(double dt)
 {
 	delayTime += dt;
+
 	if (delayTime < delayFlyingTime)
 		return;
 	delayTime = 0;
@@ -34,7 +61,7 @@ void WhiteFlyingRobot::Update(float dt)
 	auto inRange = [](double value, double realValue) {return (value - 1 <= realValue) && (realValue <= value + 1); };
 
 	//Quái chỉ bắn khi ở góc 0 độ và góc 90 độ.
-	if (inRange(0,currentDegree) || inRange(90,currentDegree))
+	if (inRange(0, currentDegree) || inRange(90, currentDegree))
 	{
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletWhiteFlyingRocketer(this->direction, this->pos.x, this->pos.y));
 	}
@@ -55,22 +82,48 @@ void WhiteFlyingRobot::Update(float dt)
 	this->currentAnimation->Update(dt);
 }
 
+void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
+{
+	//Nếu đã hết thời gian beaten  thì ta quay lại trạng thái bay bình thường.
+	if (currentStateTime > beatenTime)
+		ChangeState(State::FLYING);
+	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
+	EnemyAliveUpdate(dt);
+}
+
+void WhiteFlyingRobot::Update(float dt)
+{
+	currentStateTime += dt;
+	//Xét từng state.
+	if (robotState == State::FLYING)
+		EnemyAliveUpdate(dt);
+
+	else if (robotState == State::BEATEN)
+		EnemyBeatenUpdate(dt);
+
+	else if (robotState == State::FALLING || robotState == State::DEAD)
+		EnemyDeadUpdate(dt);
+}
+
 void WhiteFlyingRobot::Render()
 {
-	if (!isDead)
+	//Nếu đang ở trạng thái beaten mà thời gian chưa đủ để render tiếp thì không render.
+	if (robotState == State::BEATEN && currentBeatenTick < delayBeatenSprite/2)
 	{
-		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-		switch (this->direction)
-		{
-		case Player::MoveDirection::LeftToRight:
-			this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
-			break;
-		case Player::MoveDirection::RightToLeft:
-			this->currentAnimation->Render(pos);
-			break;
-		default:
-			break;
-		}
+		return;
+	}
+
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	switch (this->direction)
+	{
+	case Player::MoveDirection::LeftToRight:
+		this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+		break;
+	case Player::MoveDirection::RightToLeft:
+		this->currentAnimation->Render(pos);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -85,9 +138,44 @@ void WhiteFlyingRobot::LoadAllAnimation()
 	stateAnim.insert(spinningPair);
 }
 
+void WhiteFlyingRobot::ChangeState(State state)
+{
+	currentStateTime = 0;
+	switch (state)
+	{
+	case State::FLYING:
+	case State::BEATEN:
+		break;
+	case State::FALLING:
+		currentAnimation = stateAnim[State::FALLING];
+		break;
+	case State::DEAD:
+		currentAnimation = explodeAnim;
+		break;
+	}
+	robotState = state;
+}
+
 void WhiteFlyingRobot::OnCollision(Object* object, collisionOut* colout)
 {
-
+	Shield* shield = dynamic_cast<Shield*> (object);
+	//Nếu vật đánh trúng enemy là shield.
+	if (shield != nullptr)
+	{
+		if (shield->state == (Shield::ShieldState::Attack))
+		{
+			//Nếu không đang trong trạng thái beaten mới trừ máu.
+			if (robotState != State::BEATEN)
+				--health;
+			if (health <= 0)
+				ChangeState(State::FALLING);
+			else
+				ChangeState(State::BEATEN);
+		}
+	}
+	//Nếu rơi trúng object tĩnh thì cho nổ tung.
+	if (robotState == State::FALLING && object->tag == Tag::STATICOBJECT)
+		ChangeState(State::DEAD);
 }
 
 bool WhiteFlyingRobot::OnRectCollided(Object* object, CollisionSide side)

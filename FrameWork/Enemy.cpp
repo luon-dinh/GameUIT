@@ -2,12 +2,12 @@
 #include"Camera.h"
 Enemy::Enemy()
 {
-	explode = new Animation(Tag::ENEMYEXPLODE, 0, 3, delaySpriteExplode);
+	explodeAnim = new Animation(Tag::ENEMYEXPLODE, 0, 3, delaySpriteExplode);
 }
 
 Enemy::~Enemy() {
-	if (explode != nullptr)
-		delete explode;
+	if (explodeAnim != nullptr)
+		delete explodeAnim;
 }
 
 
@@ -24,10 +24,10 @@ void Enemy::Render()
 		switch (this->direction)
 		{
 		case Player::MoveDirection::LeftToRight:
-			this->currentAnimation->Render(D3DXVECTOR2(this->pos), TransformationMode::FlipHorizontal);
+			this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 			break;
 		case Player::MoveDirection::RightToLeft:
-			this->currentAnimation->Render(this->pos);
+			this->currentAnimation->Render(pos);
 			break;
 		default:
 			break;

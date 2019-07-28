@@ -108,8 +108,8 @@ void BulletWhiteFlyingRocketer::Update(float dt)
 	this->animation = getAnimOnDeg();
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
-	PrintDebug("\nCurrent Degree : ");
-	PrintDebugNumber(currentDegree);
+	/*PrintDebug("\nCurrent Degree : ");
+	PrintDebugNumber(currentDegree);*/
 }
 
 BoundingBox BulletWhiteFlyingRocketer::getBoundingBox()
