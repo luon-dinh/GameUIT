@@ -456,6 +456,7 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 	this->playerstate->OnCollision(object, collisionOut);
+	this->collisionDetected = true;
 }
 void Player::OnNotCollision(Object* object) {
 	switch (object->type) { 
@@ -513,24 +514,29 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}	
 		case Type::SOLIDBOX: {
-
-			if (this->collidedSolidBox == object) {
+    		if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;
+					if (this->vx == 0 && this->state != State::STANDING) {
+						this->SetVx(PLAYER_NORMAL_SPEED);
+					}
 				}
 				else {
-					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 4;
-					}
+					this->SetVx(0);
+					return true;
 				}
 				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
-
+					if (this->vx == 0 && this->state != State::STANDING) {
+						this->SetVx(-PLAYER_NORMAL_SPEED);
+					}
 				}
 				else {
-					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x -= 8;
-					}
+					this->SetVx(0);
+					true;
+				}
+				if (side == CollisionSide::bottom) {
+					TryStandOnGround(object);
 				}
 			}
 			else {
@@ -544,6 +550,10 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 					else {
 						this->pos.x -= 8;
 					}
+					return true;
+				}
+				if (side == CollisionSide::bottom) {
+					this->TryStandOnGround(object);
 				}
 			}
 			return false;

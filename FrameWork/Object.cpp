@@ -63,7 +63,6 @@ void Object::SetMoveDirection(MoveDirection moveDir) {
 	if (this->direction == moveDir)
 		return;
 	this->direction = moveDir;
-
 	this->vx *= -1;
 }
 
@@ -190,6 +189,12 @@ void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 	}
 	case CollisionSide::bottom: {
 		if (this->GetOnAirState() == OnAir::Falling) {
+			if (this->vx > 0) {
+				this->pos.x += 3;
+			}
+			else {
+				this->pos.x -= 3;
+			}
 			OnStandingOnGround(solidBox);
 		}
 		break;

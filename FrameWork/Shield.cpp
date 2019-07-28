@@ -414,7 +414,7 @@ void Shield::Move() {
 		else {
 			if (this->moveBehave == MoveBehavior::BackToPlayer) {
 				if (!MoveBackToPlayer(this->restFrames)) {
-   					ShieldBackToPlayer();
+        			ShieldBackToPlayer();
 					ResetMoveStatus();
 					return;
 				}

@@ -6,9 +6,9 @@
 
 class PlayerJumpingState : public PlayerState{
 private:
-	const int MIN_TIME_JUMP_1 = 27;
-	const int MIN_TIME_JUMP_2 = 45;
-	const int MIN_TIME_ROLL = 55;
+	const int MIN_TIME_JUMP_1 = 20;
+	const int MIN_TIME_JUMP_2 = 30;
+	const int MIN_TIME_ROLL = 40;
 	const float ADDED_SPEED_1 = 0.09;
 	const float ADDED_SPEED_2 = 0.14;
 

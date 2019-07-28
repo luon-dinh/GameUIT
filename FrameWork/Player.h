@@ -42,6 +42,7 @@ private:
 	BOOL collisionAffect;
 
 	PlayerState* prevState;
+	bool collisionDetected;
 
 public:
 	
