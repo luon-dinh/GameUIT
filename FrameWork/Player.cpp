@@ -155,6 +155,7 @@ void Player::ChangeState(State stateName) {
 	auto shield = Shield::getInstance();
 	float PosToBottom2 = this->getPosToBotom();
 	this->pos.y = this->pos.y + (PosToBottom2 - PosToBottom1);
+	
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 		case State::STANDING: {
@@ -190,6 +191,8 @@ void Player::ChangeState(State stateName) {
 				return;
 			}
 			this->SetOnAirState(OnAir::Jumping);
+			this->collidedSolidBox = NULL;
+			this->currentGround = NULL;
 			break;
 		}
 		case State::DASHING:{
@@ -228,12 +231,6 @@ void Player::ChangeState(State stateName) {
 		case State::KICKING: {
 			if (this->hasShield) {
 				shield->SetShieldState(Shield::ShieldState::Transparent);
-				if (this->direction == MoveDirection::LeftToRight) {
-					shield->SetMoveDirection(MoveDirection::RightToLeft);
-				}
-				else {
-					shield->SetMoveDirection(MoveDirection::LeftToRight);
-				}
 			}
 			break;
 		}
@@ -306,6 +303,8 @@ D3DXVECTOR2 Player::GetShieldReturnPos() {
 	case State::STANDING:
 	case State::STAND_PUNCH:
 	case State::JUMPING:
+	case State::DUCKING_PUNCHING:
+	case State::DUCKING:
 		SetShieldReturnEdge(ShieldReturnEdge::Default);break;
 	case State::ROLLING:
 	case State::SHIELD_DOWN:
@@ -532,6 +531,8 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 						this->pos.x -= 8;
 					}
 				}
+				if (side == CollisionSide::bottom)
+					TryStandOnGround(object);
 			}
 			else {
 				collisionOut colOut;

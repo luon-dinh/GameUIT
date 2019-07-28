@@ -88,6 +88,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	}
 
 	if (object->type == Type::ROPE) {
-		player->OnClimbingTheRope(object);
+		if(player->pos.x>=object->getBoundingBox().left&&player->pos.x<=object->getBoundingBox().right)
+			player->OnClimbingTheRope(object);
 	}
  }
