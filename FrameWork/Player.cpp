@@ -510,7 +510,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 		}
 		return true;
 	}
-
+	SoundManager::getinstance()->play(SoundManager::SoundName::stage2, false);
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
