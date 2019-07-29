@@ -4,7 +4,7 @@
 class BulletRedRocketNonLinear : public BulletRedRocket
 {
 	//Quãng đường đi tối đa trước khi đổi hướng.
-	const int linearLength = 20;
+	const int linearLength = 25;
 
 	//Góc xoay của viên đạn (mặc định trong game là 40 độ).
 	const double rocketAngle = 40;

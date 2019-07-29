@@ -545,5 +545,8 @@
     <ClInclude Include="WhiteFlyingRobot.h">
       <Filter>Objects\Enemy\WhiteFlyingRobot</Filter>
     </ClInclude>
+    <ClInclude Include="RedRocketRobotTwoSidedNonLinear.h">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

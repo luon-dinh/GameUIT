@@ -81,10 +81,7 @@ void RedRocketRobotTwoSided::EnemyAttackingUpdate(double dt)
 	{
 		currentFiringTick = 0;
 		isAttacked = true;
-		if (robotState == State::DUCKING)
-			SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction,this->pos.x, this->pos.y,rocketSpeed));
-		else
-			SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
+		Fire();
 	}
 }
 
@@ -184,4 +181,12 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colout)
 				ChangeState(State::BEATEN);
 		}
 	}
+}
+
+void RedRocketRobotTwoSided::Fire()
+{
+	if (robotState == State::DUCKING)
+		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y, rocketSpeed));
+	else
+		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
 }

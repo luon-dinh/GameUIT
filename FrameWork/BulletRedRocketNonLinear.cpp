@@ -4,12 +4,14 @@ BulletRedRocketNonLinear::BulletRedRocketNonLinear(MoveDirection rocketDirection
 {
 	rocketAnim = new Animation(Tag::REDROCKERTERBULLET, 0, 2, rocketFlashingRate);
 	rocketNonLinearAnim = new Animation(Tag::REDROCKERTERBULLET, 2, 4, rocketFlashingRate);
+	direction = rocketDirection;
+	animation = rocketAnim;
+	isLinear = true;
 }
 
 BulletRedRocketNonLinear::~BulletRedRocketNonLinear()
 {
-	if (rocketAnim != nullptr)
-		delete rocketAnim;
+
 }
 
 void BulletRedRocketNonLinear::Update(float dt)
@@ -27,7 +29,7 @@ void BulletRedRocketNonLinear::Update(float dt)
 		}
 		else
 		{
-			linearGone += this->vx;
+			linearGone += abs(this->vx);
 		}
 		this->pos.x += this->vx;
 	}

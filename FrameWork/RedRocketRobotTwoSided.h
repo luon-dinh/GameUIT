@@ -17,12 +17,16 @@ class RedRocketRobotTwoSided : public RedRocketRobot
 public:
 	RedRocketRobotTwoSided(int posX, int posY);
 	~RedRocketRobotTwoSided();
+protected:
 	void Update(float dt);
 	void Render();
 	void EnemyWalkingUpdate(double dt);
 	void EnemyAttackingUpdate(double dt);
 	void EnemyBeatenUpdate(double dt) override;
 	void EnemyDeadUpdate(double dt) override;
+
+	virtual void Fire();
+
 	void ChangeState(State);
 	void OnCollision(Object* object, collisionOut* colout) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override { return true; };

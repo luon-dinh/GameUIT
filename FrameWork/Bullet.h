@@ -39,10 +39,10 @@ public:
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 		switch (direction) {
 		case Player::MoveDirection::LeftToRight:
-			animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+			this->animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 			break;
 		case Player::MoveDirection::RightToLeft:
-			animation->Render(pos);
+			this->animation->Render(pos);
 			break;
 		default:
 			break;

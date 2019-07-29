@@ -271,6 +271,7 @@
     <ClInclude Include="RedRocketRobotNonShooting.h" />
     <ClInclude Include="RedRocketRobotOneSided.h" />
     <ClInclude Include="RedRocketRobotTwoSided.h" />
+    <ClInclude Include="RedRocketRobotTwoSidedNonLinear.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shield.h" />
