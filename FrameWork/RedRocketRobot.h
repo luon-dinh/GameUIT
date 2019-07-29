@@ -11,9 +11,15 @@ public:
 		TWOSIDED,
 		NONSHOOTING
 	};
-private:
+protected:
 	//Delay cho animation đi bộ.
 	const int walkingSpriteDelay = 300;
+	//Thời gian dừng lại từ lúc chuyển trạng thái đến trước khi bắn.
+	const int attackingDelay = 300;
+	//Tốc độ đi.
+	const int walkingSpeed = 3;
+	//Máu.
+	const int RedRocketRobotHealth = 3;
 
 	//Animation.
 	Animation* walking;
@@ -24,11 +30,18 @@ private:
 	RedRocketRobotType robotType;
 	Player * player;
 
+	//Biến quy định xét xem liệu quái đã bắn chưa.
+
 	//State.
 	State robotState;
 
+	//Biến cho biết trong trạng thái hiện tại robot đã tấn công hay chưa.
+	bool isAttacked = false;
+
 	void LoadAllAnimation();
 public:
-	RedRocketRobot(RedRocketRobotType robotType, int posX, int posY);
+	RedRocketRobot(int posX, int posY);
 	~RedRocketRobot();
+	virtual void Update(float dt) override;
+	virtual void ChangeState() {};
 };
