@@ -516,42 +516,42 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
     		if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;
-					if (this->vx == 0 && this->state != State::STANDING) {
-						this->SetVx(PLAYER_NORMAL_SPEED);
-					}
 				}
 				else {
 					this->SetVx(0);
-					return true;
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x += 3;
+
+					}
+					//return true;
 				}
 				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
-					if (this->vx == 0 && this->state != State::STANDING) {
-						this->SetVx(-PLAYER_NORMAL_SPEED);
-					}
 				}
 				else {
 					this->SetVx(0);
-					true;
+					// push thêm vài pixel để đẩy nhân vật rơi xuống
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x -= 3;
+					}
+					//return true;
 				}
 				if (side == CollisionSide::bottom) {
-					TryStandOnGround(object);
+					this->TryStandOnGround(object);
 				}
-				if (side == CollisionSide::bottom)
-					TryStandOnGround(object);
 			}
 			else {
 				collisionOut colOut;
 				colOut.side = side;
 				if (side == CollisionSide::left || side == CollisionSide::right) {
-					OnCollisionWithSolidBox(object, &colOut);
+  					OnCollisionWithSolidBox(object, &colOut);
 					if (side == CollisionSide::left) {
 						this->pos.x += 3;
 					}
 					else {
 						this->pos.x -= 8;
 					}
-					return true;
+					//return true;
 				}
 				if (side == CollisionSide::bottom) {
 					this->TryStandOnGround(object);
@@ -607,9 +607,9 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
 		this->SetVx(0);
 	this->collidedSolidBox = object;
-	if (this->GetOnAirState() == OnAir::Jumping){
-		this->SetOnAirState(OnAir::Falling);
-	}
+	//if (this->GetOnAirState() == OnAir::Jumping){
+	//	this->SetOnAirState(OnAir::Falling);
+	//}
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {

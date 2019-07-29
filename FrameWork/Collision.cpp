@@ -199,5 +199,6 @@ bool Collision::IsCollide(BoundingBox box1, BoundingBox box2, CollisionSide* pri
 		*prioritySide = CollisionSide::top;
 	}
 
+	*prioritySide = CollisionSide::none;
 	return true;
 }

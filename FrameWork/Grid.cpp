@@ -478,7 +478,7 @@ void Grid::CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2)
 	if (obj1CollisionSide.side != CollisionSide::none)
 	{
 		//Xử lý va chạm giữa 2 object với nhau.
-		obj1->OnCollision(obj2, &obj1CollisionSide);
+ 		obj1->OnCollision(obj2, &obj1CollisionSide);
 		obj2->OnCollision(obj1, &obj2CollisionSide);
 	}
 }
@@ -689,11 +689,11 @@ void Grid::RenderActivatedCells()
 				orderOfRenders.insert(object);
 				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
-			//Vẽ debug các object tĩnh.
-			/*for (auto object : cellsOfStaticObjects[i][j])
-			{
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
-			}*/
+			////Vẽ debug các object tĩnh.
+			//for (auto object : cellsOfStaticObjects[i][j])
+			//{
+			//	DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTBLUE);
+			//}
 		}
 	}
 	//Vẽ theo thứ tự.
