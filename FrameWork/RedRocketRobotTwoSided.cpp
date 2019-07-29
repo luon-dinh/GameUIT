@@ -91,6 +91,7 @@ void RedRocketRobotTwoSided::EnemyBeatenUpdate(double dt)
 	if (health <= 0)
 	{
 		isBeingBeaten = false;
+		this->pos.x += this->vx;
 		if (currentStateTime > deadShockingTime)
 			ChangeState(State::DEAD);
 		return;
@@ -148,6 +149,8 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		isBeingBeaten = true;
 		this->currentAnimation = shocking;
 		--health;
+		if (health == 0)
+			this->vx = Shield::getInstance()->vx / 10;
 		break;
 	case State::STANDING:
 		this->currentAnimation = standing;

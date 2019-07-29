@@ -40,7 +40,7 @@ protected:
 	const int shockingTime = 200;
 
 	//Thời gian shocking khi chết.
-	const int deadShockingTime = 800;
+	const int deadShockingTime = 300;
 
 	//Thời gian của trạng thái hiện tại.
 	int currentStateTime = 0;
