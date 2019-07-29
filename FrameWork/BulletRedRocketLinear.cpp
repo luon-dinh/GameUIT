@@ -3,6 +3,7 @@
 BulletRedRocketLinear::BulletRedRocketLinear(MoveDirection rocketDirection, int posX, int posY, int Speed) : BulletRedRocket(rocketDirection, posX, posY, Speed)
 {
 	rocketAnim = new Animation(Tag::REDROCKERTERBULLET, 0, 2, rocketFlashingRate);
+	animation = rocketAnim;
 }
 
 BulletRedRocketLinear::~BulletRedRocketLinear()

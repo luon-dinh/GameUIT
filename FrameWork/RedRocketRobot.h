@@ -13,11 +13,11 @@ public:
 	};
 protected:
 	//Delay cho animation đi bộ.
-	const int walkingSpriteDelay = 300;
+	const int walkingSpriteDelay = 200;
 	//Thời gian dừng lại từ lúc chuyển trạng thái đến trước khi bắn.
 	const int attackingDelay = 300;
 	//Tốc độ đi.
-	const int walkingSpeed = 3;
+	const double walkingSpeed = 1;
 	//Máu.
 	const int RedRocketRobotHealth = 3;
 

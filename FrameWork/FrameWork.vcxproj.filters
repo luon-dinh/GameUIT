@@ -100,6 +100,15 @@
     <Filter Include="Objects\Bullet">
       <UniqueIdentifier>{0733bdf0-08e1-468f-9bdd-d99434520860}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Bullet\BulletRedRocket">
+      <UniqueIdentifier>{079cddc0-7ed1-45cf-bb47-69e5818243bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Enemy\RedRocketRobot">
+      <UniqueIdentifier>{4c8926eb-1644-4ca7-ae9d-b046e15dc7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Enemy\WhiteFlyingRobot">
+      <UniqueIdentifier>{c351c26d-7145-412c-aa53-2ce0c21fa8d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -288,11 +297,23 @@
     <ClCompile Include="BulletWhiteFlyingRocketer.cpp">
       <Filter>Objects\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="WhiteFlyingRobot.cpp">
-      <Filter>Objects\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="BulletRedRocket.cpp">
-      <Filter>Objects\Bullet</Filter>
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletRedRocketLinear.cpp">
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletRedRocketNonLinear.cpp">
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="RedRocketRobot.cpp">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="RedRocketRobotOneSided.cpp">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteFlyingRobot.cpp">
+      <Filter>Objects\Enemy\WhiteFlyingRobot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,14 +518,29 @@
     <ClInclude Include="BulletWhiteFlyingRocketer.h">
       <Filter>Objects\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="WhiteFlyingRobot.h">
-      <Filter>Objects\Enemy</Filter>
+    <ClInclude Include="BulletRedRocket.h">
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletRedRocketLinear.h">
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletRedRocketNonLinear.h">
+      <Filter>Objects\Bullet\BulletRedRocket</Filter>
     </ClInclude>
     <ClInclude Include="RedRocketRobot.h">
-      <Filter>Objects\Enemy</Filter>
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
     </ClInclude>
-    <ClInclude Include="BulletRedRocket.h">
-      <Filter>Objects\Bullet</Filter>
+    <ClInclude Include="RedRocketRobotOneSided.h">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="RedRocketRobotTwoSided.h">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="RedRocketRobotNonShooting.h">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteFlyingRobot.h">
+      <Filter>Objects\Enemy\WhiteFlyingRobot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

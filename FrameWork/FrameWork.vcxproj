@@ -141,6 +141,8 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="BulletRedRocket.cpp" />
+    <ClCompile Include="BulletRedRocketLinear.cpp" />
+    <ClCompile Include="BulletRedRocketNonLinear.cpp" />
     <ClCompile Include="BulletWhiteFlyingRocketer.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -189,6 +191,8 @@
     <ClCompile Include="PlayScenePittsburghPortal02.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
     <ClCompile Include="RedRockerter.cpp" />
+    <ClCompile Include="RedRocketRobot.cpp" />
+    <ClCompile Include="RedRocketRobotOneSided.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shield.cpp" />
@@ -210,6 +214,8 @@
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="BulletRedRockerter.h" />
     <ClInclude Include="BulletRedRocket.h" />
+    <ClInclude Include="BulletRedRocketLinear.h" />
+    <ClInclude Include="BulletRedRocketNonLinear.h" />
     <ClInclude Include="BulletSolder.h" />
     <ClInclude Include="BulletWhiteFlyingRocketer.h" />
     <ClInclude Include="BulletWhiteRockerter.h" />
@@ -261,6 +267,9 @@
     <ClInclude Include="PlaySceneWithLight.h" />
     <ClInclude Include="RedRockerter.h" />
     <ClInclude Include="RedRocketRobot.h" />
+    <ClInclude Include="RedRocketRobotNonShooting.h" />
+    <ClInclude Include="RedRocketRobotOneSided.h" />
+    <ClInclude Include="RedRocketRobotTwoSided.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shield.h" />

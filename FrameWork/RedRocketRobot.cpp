@@ -3,7 +3,7 @@
 RedRocketRobot::RedRocketRobot(int posX, int posY)
 {
 	player = Player::getInstance();
-
+	LoadAllAnimation();
 	//Gán giá trị.
 	this->pos.x = posX;
 	this->pos.y = posY;

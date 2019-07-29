@@ -8,7 +8,6 @@ BulletRedRocket::BulletRedRocket(MoveDirection rocketDirection, int posX, int po
 		_rocketSpeed *= (-1);
 	isExploded = false;
 
-	this->animation = rocketAnim;
 	this->direction = rocketDirection;
 	rocketSpeed = _rocketSpeed;
 	this->pos.x = posX;
@@ -19,8 +18,7 @@ BulletRedRocket::BulletRedRocket(MoveDirection rocketDirection, int posX, int po
 
 BulletRedRocket::~BulletRedRocket()
 {
-	if (rocketAnim != nullptr)
-		delete rocketAnim;
+
 }
 
 void BulletRedRocket::Update(float dt)

@@ -11,6 +11,7 @@ RedRocketRobotOneSided::RedRocketRobotOneSided(int posX, int posY) : RedRocketRo
 		isMovingLeftToRight = true;
 	else
 		isMovingLeftToRight = false;
+	robotState = State::WALKING;
 }
 
 RedRocketRobotOneSided::~RedRocketRobotOneSided()
@@ -25,25 +26,64 @@ void RedRocketRobotOneSided::Update(float dt)
 	else
 		this->vx = -walkingSpeed;
 
-	if (robotState == State::WALKING)
+	//Cập nhật thời gian cho trạng thái beaten (chớp chớp).
+	if (isBeingBeaten)
 	{
-		EnemyAliveUpdate(dt);
+		currentBeatenTick += dt;
+		flashingTick += dt;
+		if (currentBeatenTick > beatenTime)
+			isBeingBeaten = false;
 	}
+	
+	currentStateTime += dt;
+
+	if (robotState == State::WALKING)
+		EnemyAliveUpdate(dt);
 	else if (robotState == State::STANDING || robotState == State::DUCKING)
 		EnemyAttackingUpdate(dt);
+
 	else if (robotState == State::BEATEN)
 		EnemyBeatenUpdate(dt);
+
 	else if (robotState == State::DEAD)
 		EnemyDeadUpdate(dt);
 
 	this->currentAnimation->Update(dt);
 }
 
+void RedRocketRobotOneSided::Render()
+{
+	//Nếu đang ở trạng thái beaten mà thời gian chưa đủ để render tiếp thì không render.
+	if (isBeingBeaten && flashingTick < delayBeatenSprite / 2)
+	{
+		return;
+	}
+	flashingTick = 0;
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	switch (this->direction)
+	{
+	case Player::MoveDirection::LeftToRight:
+		this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+		break;
+	case Player::MoveDirection::RightToLeft:
+		this->currentAnimation->Render(pos);
+		break;
+	default:
+		break;
+	}
+}
+
 void RedRocketRobotOneSided::EnemyAliveUpdate(double dt)
 {
+	currentWalkingTick += dt;
 	if (isMovingLeftToRight && this->pos.x <= maxX || !isMovingLeftToRight && this->pos.x >= minX)
 	{
-		this->pos.x += this->vx;
+		//Chỉ khi đạt đủ delay thì mới cho phép đi.
+		if (currentWalkingTick >= walkingDelay)
+		{
+			this->pos.x += this->vx;
+			currentWalkingTick = 0;
+		}
 	}
 	else //Dừng lại và bắn.
 	{
@@ -90,7 +130,7 @@ void RedRocketRobotOneSided::EnemyAttackingUpdate(double dt)
 			return;
 		else if (!isAttacked)
 		{
-			SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocket(this->direction, this->pos.x, this->pos.y, rocketSpeed));
+			SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(this->direction, this->pos.x, this->pos.y, rocketSpeed));
 			isAttacked = true;
 		}
 	}
@@ -98,8 +138,32 @@ void RedRocketRobotOneSided::EnemyAttackingUpdate(double dt)
 
 void RedRocketRobotOneSided::EnemyBeatenUpdate(double dt)
 {
-	//Trạng thái khi nhân vật "ăn đòn" của player.
+	//Xét xem, nếu hết máu thì xử lý theo cách khác.
+	if (health <= 0)
+	{
+		isBeingBeaten = false;
+		if (currentStateTime > deadShockingTime)
+			ChangeState(State::DEAD);
+		return;
+	}
+	//Nếu đủ thời gian shocking thì chuyển lại qua trạng thái trước đó.
+	if (currentStateTime > shockingTime)
+	{
+		ChangeState(previousState);
+		return;
+	}
+}
 
+void RedRocketRobotOneSided::EnemyDeadUpdate(double dt)
+{
+	if (robotState == State::DEAD) //Nổ tung và deactivate nó.
+	{
+		if (currentStateTime > explodeTime)
+		{
+			DeactivateObjectInGrid();
+			return;
+		}
+	}
 }
 
 void RedRocketRobotOneSided::ChangeState(State newState)
@@ -108,6 +172,11 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 	switch (newState)
 	{
 	case State::BEATEN:
+		currentBeatenTick = 0;
+		flashingTick = 0;
+		isBeingBeaten = true;
+		this->currentAnimation = shocking;
+		--health;
 		break;
 	case State::STANDING:
 		this->currentAnimation = standing;
@@ -117,6 +186,9 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		break;
 	case State::DUCKING:
 		this->currentAnimation = crouching;
+		break;
+	case State::DEAD:
+		this->currentAnimation = explodeAnim;
 		break;
 	}
 
@@ -128,4 +200,18 @@ void RedRocketRobotOneSided::ChangeMoveDirection()
 {
 	isMovingLeftToRight = !isMovingLeftToRight;
 	this->vx *= (-1);
+}
+
+void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
+{
+	if (object->tag == Tag::SHIELD)
+	{
+		Shield *shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			//Nếu đang không bị beaten thì mới chuyển trạng thái.
+			if (robotState != State::BEATEN)
+				ChangeState(State::BEATEN);
+		}
+	}
 }
