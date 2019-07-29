@@ -564,7 +564,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				}
 				else {
 					this->SetVx(0);
-					true;
+					return true;
 				}
 				if (side == CollisionSide::bottom && box.left != bound.right&&box.right != bound.left) {
 					TryStandOnGround(object);
