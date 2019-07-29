@@ -13,7 +13,7 @@ RedRocketRobot::RedRocketRobot(int posX, int posY)
 	else
 		direction = MoveDirection::RightToLeft;
 	currentAnimation = standing;
-	robotState = State::STANDING;
+	robotState = State::WALKING;
 	health = RedRocketRobotHealth;
 }
 
@@ -35,9 +35,4 @@ void RedRocketRobot::LoadAllAnimation()
 	standing = new Animation(Tag::REDROCKERTER, 0, 1);
 	crouching = new Animation(Tag::REDROCKERTER, 3, 4);
 	shocking = new Animation(Tag::REDROCKERTER, 4, 5);
-}
-
-void RedRocketRobot::Update(float dt)
-{
-
 }

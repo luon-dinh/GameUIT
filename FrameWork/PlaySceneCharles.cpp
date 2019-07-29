@@ -3,6 +3,7 @@
 #include "WhiteFlyingRobot.h"
 #include "BulletRedRocket.h"
 #include "RedRocketRobotOneSided.h"
+#include "RedRocketRobotTwoSided.h"
 #include "Solder.h"
 
 PlaySceneCharles::PlaySceneCharles()
@@ -25,6 +26,7 @@ PlaySceneCharles::PlaySceneCharles()
 	grid->Add(soldier);
 	//grid->Add(new BulletRedRocket(Object::MoveDirection::LeftToRight, 1550, 51, 1));
 	grid->Add(new RedRocketRobotOneSided(1400, 51));
+	grid->Add(new RedRocketRobotTwoSided(1600, 51));
 }
 
 PlaySceneCharles::~PlaySceneCharles()

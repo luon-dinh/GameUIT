@@ -193,6 +193,7 @@
     <ClCompile Include="RedRockerter.cpp" />
     <ClCompile Include="RedRocketRobot.cpp" />
     <ClCompile Include="RedRocketRobotOneSided.cpp" />
+    <ClCompile Include="RedRocketRobotTwoSided.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shield.cpp" />

@@ -11,7 +11,6 @@ RedRocketRobotOneSided::RedRocketRobotOneSided(int posX, int posY) : RedRocketRo
 		isMovingLeftToRight = true;
 	else
 		isMovingLeftToRight = false;
-	robotState = State::WALKING;
 }
 
 RedRocketRobotOneSided::~RedRocketRobotOneSided()
@@ -210,7 +209,7 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 		if (shield->state == Shield::ShieldState::Attack)
 		{
 			//Nếu đang không bị beaten thì mới chuyển trạng thái.
-			if (robotState != State::BEATEN)
+			if (!isBeingBeaten)
 				ChangeState(State::BEATEN);
 		}
 	}

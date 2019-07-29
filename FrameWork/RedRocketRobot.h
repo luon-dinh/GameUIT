@@ -21,6 +21,45 @@ protected:
 	//Máu.
 	const int RedRocketRobotHealth = 3;
 
+	//Đây là delay giữa những lần đi của robot.
+	const int walkingDelay = 0;
+
+	//Đây là tốc độ đạn mà quái bắn ra.
+	int rocketSpeed = 5;
+
+	//Thời gian delay đến khi ngồi xuống.
+	const int standingDelay = 500;
+
+	//Thời gian cho state ngồi.
+	const int crouchingState = attackingDelay + 200;
+
+	//Thời gian beaten.
+	const int beatenTime = 2000;
+
+	//Thời gian shocking.
+	const int shockingTime = 200;
+
+	//Thời gian shocking khi chết.
+	const int deadShockingTime = 800;
+
+	//Thời gian của trạng thái hiện tại.
+	int currentStateTime = 0;
+
+	//Thời gian đã qua của việc chớp chớp.
+	int currentBeatenTick = 0;
+
+	//Thời gian dùng để điều khiển việc chớp chớp.
+	int flashingTick = 0;
+
+	//Thời gian đã qua của việc đi.
+	int currentWalkingTick = 0;
+
+	//Thời gian dùng để điều khiển thời gian chờ khi bắn.
+	int currentFiringTick = 0;
+
+	//Cờ đánh dấu là đang bị beaten (chớp chớp).
+	bool isBeingBeaten = false;
+
 	//Animation.
 	Animation* walking;
 	Animation* standing;
@@ -42,6 +81,16 @@ protected:
 public:
 	RedRocketRobot(int posX, int posY);
 	~RedRocketRobot();
-	virtual void Update(float dt) override;
-	virtual void ChangeState() {};
+	virtual void Update(float dt) override {};
+	virtual void Render() override {};
+	virtual void EnemyAliveUpdate(double dt) override {};
+	virtual void EnemyAttackingUpdate(double dt) {};
+	virtual void EnemyBeatenUpdate(double dt) override {};
+	virtual void EnemyDeadUpdate(double dt) override {};
+	//Hàm dùng để thay đổi hướng đi của robot.
+	virtual void ChangeMoveDirection() {};
+	virtual void ChangeState(State) {};
+	virtual void OnCollision(Object* object, collisionOut* colout) override {};
+	virtual bool OnRectCollided(Object* object, CollisionSide side) override { return true; };
+	virtual void OnNotCollision(Object* object) override {};
 };

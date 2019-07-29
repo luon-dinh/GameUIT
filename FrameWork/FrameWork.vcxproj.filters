@@ -315,6 +315,9 @@
     <ClCompile Include="WhiteFlyingRobot.cpp">
       <Filter>Objects\Enemy\WhiteFlyingRobot</Filter>
     </ClCompile>
+    <ClCompile Include="RedRocketRobotTwoSided.cpp">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
