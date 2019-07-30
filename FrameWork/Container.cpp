@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Camera.h"
 #include "Debug.h"
+#include "SceneManager.h"
 #include<cstdlib>
 
 Container::Container(ItemType type )
@@ -31,7 +32,6 @@ void Container::Update(float dt)
 		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
 		{
 			auto scene = SceneManager::getInstance();
-
 			animation->curframeindex = 1;
 			ticuframe = 500;
 			if (item != nullptr)
@@ -93,7 +93,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				additionalItems.push_back(item);
+				SceneManager::getInstance()->AddObjectToCurrentScene(item);
 				item = nullptr;
 				return;
 			}
@@ -102,7 +102,6 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
 				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
-
 				numberItems--;
 			}
 		}

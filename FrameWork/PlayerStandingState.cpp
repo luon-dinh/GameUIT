@@ -39,17 +39,9 @@ void PlayerStandingState::InputHandler()
 		bool keyPressed = keyboard->getKeyPressedOnce(PLAYER_MOVE_LEFT, timePressedMove);
 		if (keyPressed || (!keyPressed && timePressedMove <= 20)) {
 			if (ChangeToDash(BeforeDash::DashLeft)) {
-				if (player->canDash)
-				{
-					player->ChangeState(State::DASHING);
-					StopFrameFlip();
-					return;
-				}
-				else
-				{
-					player->canDash = true;
-					return;
-				}
+				player->ChangeState(State::DASHING);
+				StopFrameFlip();
+				return;
 			}
 		}
 		
@@ -63,19 +55,12 @@ void PlayerStandingState::InputHandler()
 		bool keyPressed = keyboard->getKeyPressedOnce(PLAYER_MOVE_RIGHT, timePressedMove);
 		if (keyPressed || (!keyPressed && timePressedMove <= 20)) {
 			if (ChangeToDash(BeforeDash::DashRight)) {
-				//if (player->canDash)
-				//{
-					player->ChangeState(State::DASHING);
-					StopFrameFlip();
-					return;
-				//}
-				//else
-				//{
-				//	player->canDash = true;
-				//	return;
-				//}
+				player->ChangeState(State::DASHING);
+				StopFrameFlip();
+				return;
 			}
 		}
+
 		player->ChangeState(State::RUNNING);
 		return;
 	}
@@ -151,3 +136,16 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 	}
 }
 
+
+BoundingBox PlayerStandingState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 24;
+	box.bottom = player->pos.y - 21;
+	box.left = player->pos.x - 11;
+	box.right = player->pos.x + 11;
+	return box;
+}

@@ -159,14 +159,12 @@ void Shield::Update(float dt)
 			if (direction == Player::MoveDirection::LeftToRight)
 			{
 				this->pos.y = player->pos.y;
-				this->pos.x = player->getBoundingBox().left;
-				this->direction = Player::MoveDirection::RightToLeft;
+				this->pos.x = player->pos.x - 10;
 			}
 			else if (direction == Player::MoveDirection::RightToLeft)
 			{
 				this->pos.y = player->pos.y;
-				this->pos.x = player->getBoundingBox().right;
-				this->direction = Player::MoveDirection::LeftToRight;
+				this->pos.x = player->pos.x + 10;
 			}
 			return;
 		}
@@ -178,12 +176,12 @@ void Shield::Update(float dt)
 			{
 			case Player::LeftToRight:
 			{
-				this->pos.x = player->getBoundingBox().right;//shield ở vị trí bên phải của player
+				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
 				break;
 			}
 			case Player::RightToLeft:
 			{
-				this->pos.x = player->getBoundingBox().left;//shield ở vị trí bên trái của player
+				this->pos.x = player->playerstate->getBoundingBox().left + 2;//shield ở vị trí bên trái của player
 				break;
 			}
 			default:
@@ -198,13 +196,13 @@ void Shield::Update(float dt)
 			{
 			case Player::MoveDirection::LeftToRight:
 			{
-				this->pos.x = player->getBoundingBox().right ;//shield ở vị trí bên phải của player
+				this->pos.x = player->playerstate->getBoundingBox().right + 1;//shield ở vị trí bên phải của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
 			case Player::MoveDirection::RightToLeft:
 			{
-				this->pos.x = player->getBoundingBox().left ;//shield ở vị trí bên trái của player
+				this->pos.x = player->playerstate->getBoundingBox().left;//shield ở vị trí bên trái của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
@@ -220,14 +218,14 @@ void Shield::Update(float dt)
 			{
 			case Player::MoveDirection::LeftToRight:
 			{
-				this->pos.x = player->getBoundingBox().right;//shield ở vị trí bên phải của player
-				this->pos.y = player->pos.y;
+				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.y = player->pos.y - 10;
 				break;
 			}
 			case Player::MoveDirection::RightToLeft:
 			{
-				this->pos.x = player->getBoundingBox().left ;//shield ở vị trí bên trái của player
-				this->pos.y = player->pos.y;
+				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
+				this->pos.y = player->pos.y - 10;
 				break;
 			}
 			default:
@@ -235,45 +233,25 @@ void Shield::Update(float dt)
 			}
 			return;
 		}
-		if (player->state == State::SHIELD_ATTACK)
-		{
+		if (player->state == State::SHIELD_ATTACK) {
 			this->animation->curframeindex = 2;
-			BoundingBox box = player->getBoundingBox();
-			this->pos.y = box.top - 4;
 			switch (direction)
 			{
-			case Object::LeftToRight:
-				this->pos.x = box.left + 2;
-				break;
-			case Object::RightToLeft:
-				this->pos.x = box.right - 2;
-				break;
-			default:
-				break;
-			}
-			return;
-		}
-		if (player->state == State::CLIMBING)
-		{
-			this->pos.y = player->pos.y;
-			switch (direction)
-			{
-			case Object::LeftToRight:
-				this->pos.x = player->getBoundingBox().left;
-				this->direction = Object::RightToLeft;
-				break;
-			case Object::RightToLeft:
-				this->direction = Object::LeftToRight;
-				this->pos.x = player->getBoundingBox().right;
-				break;
-			default:
-				break;
-			}
-		}
-		if (player->state == State::DUCKING_PUNCHING)
-		{
-			this->pos.y = player->pos.y;
-			this->pos.x = player->pos.x;
+				case Player::MoveDirection::LeftToRight:
+				{
+					this->pos.x = player->pos.x - 20;//shield ở vị trí bên phải của player
+					this->pos.y = player->pos.y + 16;
+					break;
+				}
+				case Player::MoveDirection::RightToLeft:
+				{
+					this->pos.x = player->pos.x + 20;//shield ở vị trí bên trái của player
+					this->pos.y = player->pos.y + 16;
+					break;
+				}
+				default:
+					break;
+				}
 			return;
 		}
 		if (this->state == ShieldState::NotRender) {
@@ -437,7 +415,7 @@ void Shield::Move() {
 		else {
 			if (this->moveBehave == MoveBehavior::BackToPlayer) {
 				if (!MoveBackToPlayer(this->restFrames)) {
-        			ShieldBackToPlayer();
+   					ShieldBackToPlayer();
 					ResetMoveStatus();
 					return;
 				}

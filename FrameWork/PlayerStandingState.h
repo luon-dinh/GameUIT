@@ -26,5 +26,6 @@ public:
 	BOOL ChangeToDash(BeforeDash currentDash);
 	void ResetFrameFlip();
 	void StopFrameFlip();
+	BoundingBox getBoundingBox();
 	
 };

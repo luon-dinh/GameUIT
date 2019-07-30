@@ -10,8 +10,6 @@ public:
 	Animation *animation;
 	Item* item;
 	int numberItems;
-	std::list<Object*> additionalItems;
-	std::list<Object*>* getAdditionalObjects() { return &additionalItems; };
 	BoundingBox getBoundingBox();
 	void Update(float dt);
 	void Render();

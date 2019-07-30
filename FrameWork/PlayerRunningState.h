@@ -8,6 +8,7 @@ class PlayerRunningState :
 private:
 
 public:
+	BoundingBox getBoundingBox();
 	void InputHandler();
 	void Update(float dt);
 	void OnCollision(Object* object, collisionOut* collision);

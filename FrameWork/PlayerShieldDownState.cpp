@@ -42,7 +42,7 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
    		player->SetOnAirState(Player::OnAir::None);
 		player->SetVx(0);
 		player->SetStandingGround(object);
-		player->pos.y = object->getStaticObjectBoundingBox().top + player->getHeight() / 2;
+		player->pos.y = object->pos.y + player->getHeight() / 2 + Shield::getInstance()->getHeight() / 2;
 	}
 
 	if (object->type == Type::WATERRL) {
@@ -52,4 +52,17 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
 	}
+}
+
+BoundingBox PlayerShieldDownState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 8;
+	box.bottom = player->pos.y - 19;
+	box.left = player->pos.x - 10;
+	box.right = player->pos.x + 11;
+	return box;
 }

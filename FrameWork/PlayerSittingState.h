@@ -7,6 +7,7 @@ class PlayerSittingState : public PlayerState {
 public:
 	PlayerSittingState();
 	~PlayerSittingState();
+	BoundingBox getBoundingBox();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;

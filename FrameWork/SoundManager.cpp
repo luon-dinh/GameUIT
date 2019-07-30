@@ -17,21 +17,12 @@ void SoundManager::Create(HWND hwnd)
 
 void SoundManager::loadResources()
 {
-	manager->Create(&sounds[SoundName::stage1], (char*)".\\..\\Resources\\Sounds\\Opening.wav");
-	manager->Create(&sounds[SoundName::stage2], (char*)".\\..\\Resources\\Sounds\\Map_of_America.wav");
+	manager->Create(&sounds[1], (char*)".\\..\\Resources\\Sounds\\pong_jump_a.wav");
+	manager->Create(&sounds[2], (char*)".\\..\\Resources\\Sounds\\pong_jump_b.wav");
 }
 
-void SoundManager::play(SoundName soundName, bool loop)
+void SoundManager::play(int index)
 {
-	if (loop)
-	{
-		sounds[soundName]->Play(0, 0, DSBPLAY_LOOPING);
-	}
-	else
-	{
-		sounds[soundName]->Stop();
-		sounds[soundName]->Reset();
-		sounds[soundName]->Play();
-	}
+	sounds[index]->Play();
 }
 

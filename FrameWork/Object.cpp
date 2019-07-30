@@ -42,12 +42,12 @@ BOOL Object::GetActive() {
 }
 
 
-float Object::getWidth()
+int Object::getWidth()
 {
 	return SpriteManager::getInstance()->getSprite(this->tag)->getRECT().right - SpriteManager::getInstance()->getSprite(this->tag)->getRECT().left;
 }
 
-float Object::getHeight()
+int Object::getHeight()
 {
 	auto rect = SpriteManager::getInstance()->getSprite(this->tag)->getRECT();
 	auto height =  rect.top - rect.bottom;
@@ -63,6 +63,7 @@ void Object::SetMoveDirection(MoveDirection moveDir) {
 	if (this->direction == moveDir)
 		return;
 	this->direction = moveDir;
+
 	this->vx *= -1;
 }
 
@@ -127,10 +128,8 @@ void Object::SetOnAirState(Object::OnAir onAirState) {
 }
 
 bool Object::IsOnGround() {
-	return this->currentGround->type == Type::GROUND;
+	return this->currentGround->type == Type::GROUND || this->currentGround->type == Type::SOLIDBOX;
 }
-
-
 
 Object* Object::GetStandingGround() {
 	return this->currentGround;
@@ -173,13 +172,12 @@ void Object::OnFallingOffGround() {
 void Object::OnStandingOnGround(Object* ground) {
 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->getBoundingBox().top + this->getHeight() / 2 - 2;
+	this->pos.y = ground->getStaticObjectBoundingBox().top + this->getHeight() / 2 - 8;
 }
 
 void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 	this->collidedSolidBox = solidBox;
 	auto bound = solidBox->getStaticObjectBoundingBox();
-	auto box = this->getBoundingBox();
 	switch (colOut->side) {
 	case CollisionSide::left:	OnSmashSolidBox(solidBox, CollisionSide::left); break;
 	case CollisionSide::right:	OnSmashSolidBox(solidBox, CollisionSide::right);break;
@@ -189,7 +187,7 @@ void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 		break;
 	}
 	case CollisionSide::bottom: {
-		if (this->GetOnAirState() == OnAir::Falling && bound.left!=box.right&& bound.right!=box.left) {
+		if (this->GetOnAirState() == OnAir::Falling) {
 			OnStandingOnGround(solidBox);
 		}
 		break;
@@ -203,22 +201,20 @@ void Object::OnCollisionWithWater(Object* water, collisionOut* colOut) {
 	this->SetStandingGround(NULL);
 }
 void Object::OnSmashSolidBox(Object* object, CollisionSide side) {
-	if ((side == CollisionSide::left) || (side == CollisionSide::right))
+	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
 		this->SetVx(0);
 	//this->collidedSolidBox = object;
 
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			if(object!=this->collidedSolidBox)
-				this->pos.x = bound.right + this->getWidth() / 2 + 4;
+			this->pos.x = bound.right + this->getWidth() / 2;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-			if (object != this->collidedSolidBox)
-				this->pos.x = bound.left - this->getWidth() / 2 - 4;
+			this->pos.x = bound.left - this->getWidth() / 2 + 8;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

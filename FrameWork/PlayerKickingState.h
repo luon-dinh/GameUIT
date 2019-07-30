@@ -14,6 +14,7 @@ public:
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
+	BoundingBox getBoundingBox();
 
 	const int MAX_KICKING_TIME = 15;
 };

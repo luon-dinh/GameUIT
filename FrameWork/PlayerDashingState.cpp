@@ -1,5 +1,26 @@
 ﻿#include "PlayerDashingState.h"
 
+BoundingBox PlayerDashingState::getBoundingBox() {
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 8;
+	box.bottom = player->pos.y - 21;
+	if (player->GetMoveDirection() == Object::MoveDirection::RightToLeft)
+	{
+		box.left = player->pos.x - 19;
+		box.right = player->pos.x ;
+	}
+	else if (player->GetMoveDirection() == Player::MoveDirection::LeftToRight)
+	{
+		box.left = player->pos.x;
+		box.right = player->pos.x + 19;
+	}
+	//box.left = player->pos.x - 11;
+	//box.right = player->pos.x + 11;
+	return box;
+}
 
 PlayerDashingState::PlayerDashingState() {
 	this->state = State::DASHING;
@@ -40,20 +61,11 @@ void PlayerDashingState::Update(float dt) {
 }
 
 void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
-	auto side = collision->side;
 	auto player = Player::getInstance();
-	this->curDashTime = 0;
-	// collide with ground
-	player->ChangeState(State::STANDING);
-	switch (collision->side)
-	{
-	case CollisionSide::left:
-		player->pos.x = object->getBoundingBox().right + player->getWidth() / 2 + 4;
-		break;
-	case CollisionSide::right:
-		player->pos.x = object->getBoundingBox().left - player->getWidth() / 2 - 4;
-		break;
-	default:
-		break;
+	
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+		player->ChangeState(State::STANDING);
+		this->curDashTime = 0;
 	}
 }

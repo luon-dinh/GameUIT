@@ -29,3 +29,24 @@ void PlayerStandPunchState::InputHandler()
 void PlayerStandPunchState::OnCollision(Object* object, collisionOut* collision) {
 }
 
+
+BoundingBox PlayerStandPunchState::getBoundingBox()
+{
+	Player *player = Player::getInstance();
+	BoundingBox box;
+	box.vx = player->vx;
+	box.vy = player->vy;
+	box.top = player->pos.y + 20;
+	box.bottom = player->pos.y - 21;
+	if (player->GetMoveDirection() == Player::MoveDirection::RightToLeft)
+	{
+		box.left = player->pos.x - 18;
+		box.right = player->pos.x + 11;	
+	}
+	else
+	{
+		box.left = player->pos.x - 11;
+		box.right = player->pos.x + 18;
+	}
+	return box;
+}

@@ -7,23 +7,12 @@
 
 class SoundManager {
 private:
-	
+	std::unordered_map<int, CSound *> sounds;
 	static SoundManager* instance;
 	static CSoundManager* manager;
 public:
-	enum SoundName {
-		stage1,
-		stage2,
-		stage3,
-		stage4,
-		playerattack,
-		playerdie,
-		itemfall,
-		enemydie,
-	};
-	std::unordered_map<SoundName, CSound *> sounds;
 	static SoundManager* getinstance();
 	void Create(HWND hwnd);
 	void loadResources();
-	void play(SoundName soundName, bool loop);
+	void play(int index);
 };

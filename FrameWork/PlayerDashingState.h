@@ -6,6 +6,7 @@ class PlayerDashingState : public PlayerState {
 private:
 	int curDashTime;
 public:
+	BoundingBox getBoundingBox();
 	PlayerDashingState();
 	void InputHandler() override;
 	void Update(float dt) override;

@@ -11,6 +11,7 @@ private:
 	const int MAX_TIME_DROP = 300;			//	 miliseconds
 	int countAnimationFrame;
 public:
+	BoundingBox getBoundingBox();
 	PlayerFloatingState();
 	~PlayerFloatingState();
 	void InputHandler() override;

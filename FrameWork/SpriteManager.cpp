@@ -51,47 +51,25 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 32));
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 32, 16, 64));
 	//Cắt sprite cho từng trạng thái của player
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 4, 19, 49, 41));//stand 0
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 62, 18, 105, 42));//run 1
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 62, 78, 105, 102)); //2
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 62, 138, 105, 162)); //3
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 62, 198, 105, 222)); //4
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 118, 18, 161, 42)); //shield up 5
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 189, 18, 217, 42));// duck //6
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 235, 19, 273, 41));//jump 7
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 305, 19, 324, 39));//roll 8
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 305, 81, 324, 100)); //9
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 305, 141, 324, 161));//10
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 305, 200, 324, 220));//11
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 353, 0, 378, 40));//kick 12
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 402, 18, 441, 52));// shield attack 13
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 402, 62, 441, 101));//14
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 456, 3, 497, 41));//stand punch //15
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 456, 72, 497, 101));//16
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 526, 3, 553, 42));// duck punch 17
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 526, 74, 553, 102));//18
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 581, 18, 609, 42));//dash //19
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 581, 61, 609, 92));//20
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 581, 110, 609, 149));//21
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 638, 20, 665, 41));//shield down 22
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 671, 21, 724, 40));//hang on 23
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 671, 80, 724, 100));//24
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 671, 144, 724, 160));//25
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 861, 12, 889, 41));//die stand/26
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 861, 76, 889, 101));//27
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 12, 992, 44));//float 28
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 72, 992, 104));//29
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 132, 992, 164));//30
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 199, 992, 219));//31
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 262, 992, 278));//32
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 326, 992, 334));//33
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 385, 992, 394));//34
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 441, 992, 459));//35
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 502, 992, 518));//36
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1040, 262, 1048, 278));//diving //37
-	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1040, 322, 1048, 338));//38
-
-
+	spriteManager->addSprite(Tag::PLAYER, 0, 1);//stad
+	spriteManager->addSprite(Tag::PLAYER, 1, 4);//run
+	spriteManager->addSprite(Tag::PLAYER, 2, 1);//shieldup
+	spriteManager->addSprite(Tag::PLAYER, 3, 1);//sit
+	spriteManager->addSprite(Tag::PLAYER, 4, 1);//jump
+	spriteManager->addSprite(Tag::PLAYER, 5, 2);//roll
+	spriteManager->addSprite(Tag::PLAYER, 6, 1);//kick
+	spriteManager->addSprite(Tag::PLAYER, 7, 2);//attack/throwshield
+	spriteManager->addSprite(Tag::PLAYER, 8, 2);//punch_stand
+	spriteManager->addSprite(Tag::PLAYER, 9, 2);//punching_sit
+	spriteManager->addSprite(Tag::PLAYER, 10, 2);//dash
+	spriteManager->addSprite(Tag::PLAYER, 11, 1);//shielddown
+	spriteManager->addSprite(Tag::PLAYER, 12, 3);//hangon
+	spriteManager->addSprite(Tag::PLAYER, 13, 1);//jumpdown
+	spriteManager->addSprite(Tag::PLAYER, 14, 2);//jump form rotate
+	spriteManager->addSprite(Tag::PLAYER, 15, 2);//die /onground 
+	spriteManager->addSprite(Tag::PLAYER, 16, 3);//die onair
+	spriteManager->addSprite(Tag::PLAYER, 17, 9); //flow
+	spriteManager->addSprite(Tag::PLAYER, 18, 6); // dive
 	//Cắt sprite cho từng trạng thái của shield
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 27, 16, 42));

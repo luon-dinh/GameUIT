@@ -246,6 +246,9 @@
     <ClCompile Include="PlayerDashingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>GameMap\Grid</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerDivingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
@@ -291,8 +294,8 @@
     <ClCompile Include="PlayerClimbingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>GameMap\Grid</Filter>
+    <ClCompile Include="BulletWhiteFlyingRocketer.cpp">
+      <Filter>Objects\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BulletRedRocket.cpp">
       <Filter>Objects\Bullet\BulletRedRocket</Filter>
@@ -449,6 +452,9 @@
     <ClInclude Include="PlayerDashingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>GameMap\Grid</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerDivingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
@@ -512,8 +518,8 @@
     <ClInclude Include="PlayerClimbingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>GameMap\Grid</Filter>
+    <ClInclude Include="BulletWhiteFlyingRocketer.h">
+      <Filter>Objects\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletRedRocket.h">
       <Filter>Objects\Bullet\BulletRedRocket</Filter>
