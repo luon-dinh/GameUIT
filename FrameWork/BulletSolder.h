@@ -36,18 +36,9 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		switch (object->tag)
-		{
-		case Tag::PLAYER:
-			this->animation = animationExplode;
-			this->pos.x -= this->vx;
-			this->vx = this->vy = 0;
-			break;
-		case Tag::SHIELD:
-			break;
-		default:
-			break;
-		}
+		this->animation = animationExplode;
+		this->pos.x -= this->vx;
+		this->vx = this->vy = 0;
 	}
 	BoundingBox getBoundingBox()override
 	{

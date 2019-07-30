@@ -9,6 +9,7 @@ Solder::Solder(RunType runType)
 	timeCurrentState = 0;
 	this->vy = 0;
 	this->runType = runType;
+	this->canJump = true;
 	this->direction = Player::MoveDirection::RightToLeft;
 	if (runType == RunType::SPECIAL)
 		ChangeState(State::RUNNING);
@@ -49,18 +50,29 @@ BoundingBox Solder::getBoundingBox()
 
 
 void Solder::OnCollision(Object* object, collisionOut* colOut) {
+	this->onAirState == OnAir::None;
 	switch (object->type)
 	{
 	case Type::GROUND:
 	case Type::SOLIDBOX:
 		this->vy = 0;
 		this->pos.y = object->getStaticObjectBoundingBox().top + this->getHeight() / 2;
+		if (stateName == State::JUMPING)
+			ChangeState(State::RUNNING);
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
 		break;
 	default:
 		break;
+	}
+	if (object->tag == Tag::SHIELD)
+	{
+		auto shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			ChangeState(State::BEATEN);
+		}
 	}
 }
 
@@ -70,12 +82,26 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 	{
 	case Type::GROUND:
 	case Type::SOLIDBOX:
-		this->vy = 0;
+		if (side == CollisionSide::bottom &&onAirState!=Jumping)
+		{
+			this->vy = 0;
+			if (stateName == State::JUMPING)
+				ChangeState(State::RUNNING);
+			this->onAirState == OnAir::None;
+		}
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
 	default:
 		break;
+	}
+	if (object->tag == Tag::SHIELD)
+	{
+		auto shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			ChangeState(State::BEATEN);
+		}
 	}
 	return true;
 }
@@ -83,13 +109,20 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 void Solder::OnNotCollision(Object* object)
 {
 	this->vy -= GROUND_GRAVITY;
+	if(this->vy>0)
+		this->onAirState == OnAir::Jumping;
+	else
+	{
+		this->onAirState == OnAir::Falling;
+	}
 }
+
 
 void Solder::Update(float dt)
 {
 	if (!isDead)
 	{
-		if (runType == RunType::NOTRUN)
+		if (runType == RunType::NOTRUN||runType==RunType::THREESHOOTER)
 		{
 			auto player = Player::getInstance();
 			float deltax = this->pos.x - player->pos.x;
@@ -100,15 +133,10 @@ void Solder::Update(float dt)
 				this->direction = Player::MoveDirection::LeftToRight;
 			}
 		}
+		
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
-		// nếu đang ở trạng thái beaten và hết thời gian của trạng thái beaten thì blue solder bị chết
-		if (stateName == State::BEATEN&&timeCurrentState>=ENEMY_BEATEN_TIME)
-			isDead = true;
 		auto shield = Shield::getInstance();
-		//nếu bị shield đánh chuyển sang beaten---> test 
-		if (Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox()) && shield->state == Shield::ShieldState::Attack)
-			ChangeState(State::BEATEN);
 		this->currentAnimation->Update(dt);
 		//tùy theo trạng thái hiện tại mà thay đổi trạng thái
 		switch (this->stateName)
@@ -122,24 +150,56 @@ void Solder::Update(float dt)
 			{
 				timeCurrentState += dt;
 			}
+
 			break;
 		case State::STANDING:
 			if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
 			{
-				if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
+				if (runType == RunType::NOTRUN)
 				{
-					auto bullet = new BulletSolder();
-					bullet->existTime = 0;
-					bullet->direction = this->direction;
-					bullet->pos.y = this->getBoundingBox().top - 4;
-					bullet->pos.x = this->pos.x;
-					SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
+					if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
+					{
+						auto scene = SceneManager::getInstance();
+						auto bullet = new BulletSolder();
+						bullet->existTime = 0;
+						bullet->direction = this->direction;
+						bullet->pos.y = this->getBoundingBox().top - 4;
+						bullet->pos.x = this->pos.x;
+						scene->AddObjectToCurrentScene(bullet);
+					}
+				}
+				if (runType == RunType::THREESHOOTER)
+				{
+					if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
+					{
+						auto scene = SceneManager::getInstance();
+						auto bullet = new BulletSolder();
+						bullet->existTime = 0;
+						bullet->direction = this->direction;
+						bullet->pos.y = this->getBoundingBox().top - 4;
+						bullet->pos.x = this->pos.x;
+						scene->AddObjectToCurrentScene(bullet);
+						auto bullet1 = new BulletSolder();
+						bullet1->vy = -0.5;
+						bullet1->existTime = 0;
+						bullet1->direction = this->direction;
+						bullet1->pos.y = this->getBoundingBox().top - 4;
+						bullet1->pos.x = this->pos.x;
+						scene->AddObjectToCurrentScene(bullet1);
+						auto bullet2 = new BulletSolder();
+						bullet2->vy = 0.5;
+						bullet2->existTime = 0;
+						bullet2->direction = this->direction;
+						bullet2->pos.y = this->getBoundingBox().top - 4;
+						bullet2->pos.x = this->pos.x;
+						scene->AddObjectToCurrentScene(bullet2);
+					}
 				}
 				timeCurrentState += dt;
 			}
 			else
 			{
-				if(runType==RunType::NOTRUN)
+				if(runType==RunType::NOTRUN||runType==RunType::THREESHOOTER)
 					ChangeState(State::DUCKING);
 				else
 				{
@@ -148,10 +208,17 @@ void Solder::Update(float dt)
 			}
 			break;
 		case State::RUNNING:
-			if (canJump)
+			if (runType==RunType::SPECIAL)
 			{
 				if (shield->state == Shield::ShieldState::Attack&&shield->GetMoveDirection() != this->direction)
-					this->vy = 2;
+				{
+					if (canJump)
+					{
+						ChangeState(State::JUMPING);
+						canJump = false;
+					}
+				}
+				
 			}
 			if (timeCurrentState > BLUE_SOLDER_RUNNING_TIME)
 			{
@@ -163,30 +230,46 @@ void Solder::Update(float dt)
 				timeCurrentState += dt;
 			}	
 			break;
+		case State::BEATEN:
+			if (timeCurrentState > ENEMY_BEATEN_TIME)
+				ChangeState(State::DEAD);
+			else
+			{
+				timeCurrentState += dt;
+			}
+			break;
+		case State::DEAD:
+			if (currentAnimation->curframeindex == currentAnimation->toframe - 1)
+			{
+				DeactivateObjectInGrid();
+			}
+			break;
+		case State::JUMPING:
+			this->vy -= GROUND_GRAVITY;
+			deltaY += this->vy;
+			if (deltaY >= 60&&onAirState==OnAir::Jumping)
+				onAirState == OnAir::Falling;
+			break;
 		default:
 			timeCurrentState += dt;
 			break;
 		}
 	}
-
 }
 
 void Solder::Render()
 {
-	if (!isDead)
+	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
+	switch (this->direction)
 	{
-		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-		switch (this->direction)
-		{
-		case Player::MoveDirection::LeftToRight:
-			this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
-			break;
-		case Player::MoveDirection::RightToLeft:
-			this->currentAnimation->Render(pos);
-			break;
-		default:
-			break;
-		}
+	case Player::MoveDirection::LeftToRight:
+		this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+		break;
+	case Player::MoveDirection::RightToLeft:
+		this->currentAnimation->Render(pos);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -208,6 +291,7 @@ void Solder::ChangeState(State stateName)
 		this->currentAnimation = animations[State::STANDING];
 		this->vx = 0;
 		isDead = false;
+		this->onAirState == OnAir::None;
 		break;
 	case State::RUNNING:
 		this->currentAnimation = animations[State::RUNNING];
@@ -216,11 +300,15 @@ void Solder::ChangeState(State stateName)
 		else
 			this->vx = -ENEMY_SPEED*PLAYER_NORMAL_SPEED;
 		isDead = false;
+		if (runType == RunType::SPECIAL)
+			this->vx *= 1.5;
+		this->onAirState == OnAir::None;
 		break;
 	case State::DUCKING:
 		this->currentAnimation = animations[State::DUCKING];
 		this->vx = 0;
 		isDead = false;
+		this->onAirState == OnAir::None;
 		break;
 	case State::BEATEN:
 		this->currentAnimation = animations[State::BEATEN];
@@ -231,6 +319,13 @@ void Solder::ChangeState(State stateName)
 		{
 			this->pos.x += 3;
 		}
+		break;
+	case State::DEAD:
+		this->currentAnimation = explodeAnim;
+		break;
+	case State::JUMPING:
+		this->vy = 10;
+		this->onAirState == OnAir::Jumping;
 		break;
 	default:
 		break;

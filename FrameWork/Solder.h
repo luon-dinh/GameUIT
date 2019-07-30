@@ -12,6 +12,7 @@ public:
 	State stateName;
 	RunType runType;
 	float timeCurrentState;
+	float deltaY = 0;
 	std::unordered_map<State, Animation*> animations;
 	void LoadAllAnimation();
 	void ChangeState(State state)override; 

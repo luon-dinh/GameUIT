@@ -109,6 +109,7 @@ struct PlayerInfo
 };
 //dung cho enemy
 enum RunType {
+	THREESHOOTER,
 	NOTRUN,
 	CANRUN,
 	SPECIAL,
@@ -203,7 +204,7 @@ enum State {
 	SHIELD_ATTACK,
 	STAND_PUNCH,
 	BEATEN,
-	CLIMBING
+	CLIMBING,
 };
 
 enum MapName
