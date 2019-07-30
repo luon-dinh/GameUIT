@@ -28,7 +28,6 @@ void Game::Init(HWND hwnd, HINSTANCE hInstance)
 	D3DXCreateSprite(d3ddev, &spriteHandler);
 	KeyboardManager::getInstance()->Create(hInstance, hwnd);
 
-
 	SoundManager::getinstance()->Create(hwnd);
 }
 void Game::LoadResources()
@@ -44,7 +43,6 @@ void Game::Run()
 	MSG msg;
 	auto frameStart = GetTickCount();
 	auto tickPerFrame = 1000 / MAX_FRAME_RATE;
-
 	while (true)
 	{
 		if (PeekMessage(&msg,NULL, NULL, NULL, PM_REMOVE))
@@ -54,7 +52,7 @@ void Game::Run()
 		}
 		auto now = GetTickCount();
 		auto dt = now - frameStart;
-
+		SoundManager::getinstance()->play(SoundManager::SoundName::stage1, true);
 		if (dt > tickPerFrame)
 		{
 			frameStart = now;
