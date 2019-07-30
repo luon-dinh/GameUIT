@@ -475,6 +475,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			}
 			return false;
 		}	
+
 		case Type::SOLIDBOX: {
 			if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
