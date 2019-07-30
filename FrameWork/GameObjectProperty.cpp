@@ -36,7 +36,3 @@ bool GameObjectProperty::IsDead() {
 
 	return this->health == 0;
 }
-
-bool GameObjectProperty::IsNonAttackable() {
-	
-}
