@@ -1,4 +1,8 @@
-﻿#include "Grid.h"
+﻿#pragma once
+#include "Grid.h"
+#include "RedRocketRobotOneSided.h"
+#include "RedRocketRobotTwoSided.h"
+#include "RedRocketRobotTwoSidedNonLinear.h"
 #include <unordered_set>
 #include <set>
 #include <map>
@@ -32,12 +36,26 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const ch
 	for (int i = 0; i < mapHeight; ++i)
 		objectIDPerPosition[i] = new int[mapWidth];
 
+	//Khởi tạo danh sách một mảng 2 chiều.
+	objectSpecialIDPerPosition = new int *[mapHeight];
+	for (int i = 0; i < mapHeight; ++i)
+		objectSpecialIDPerPosition[i] = new int[mapWidth];
+
 	//Xoá sạch mảng (reset lại về -1).
 	for (int i = 0; i < mapHeight; ++i)
 	{
 		for (int j = 0; j < mapWidth; ++j)
 		{
 			objectIDPerPosition[i][j] = -1;
+		}
+	}
+
+	//Xoá sạch mảng (reset lại về -1).
+	for (int i = 0; i < mapHeight; ++i)
+	{
+		for (int j = 0; j < mapWidth; ++j)
+		{
+			objectSpecialIDPerPosition[i][j] = -1;
 		}
 	}
 
@@ -229,11 +247,27 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		int midY = objectTopLeftY - objectHeight / 2;
 		//Xét từng ID để xem nó là loại object động gì.
 		objectIDPerPosition[midY][midX] = objectID;
+		objectSpecialIDPerPosition[midY][midX] = objectSpecialID;
 		//Add object vô grid nào.
 		if (objectID == ObjectID::ITEMLOOTER)
 			object = new Container((ItemType)objectSpecialID);
 		else if (objectID == ObjectID::BLUESOLDIER)
 			object = new Solder(RunType::SPECIAL);
+		else if (objectID == ObjectID::REDROCKET)
+		{
+			switch (objectSpecialID)
+			{
+			case RedRocketRobotType::ONESIDED:
+				object = new RedRocketRobotOneSided(midX, midY);
+				break;
+			case RedRocketRobotType::TWOSIDED:
+				object = new RedRocketRobotTwoSided(midX, midY);
+				break;
+			case RedRocketRobotType::TWOSIDEDNONLINEAR:
+				object = new RedRocketRobotTwoSidedNonLinear(midX, midY);
+				break;
+			}
+		}
 
 		if (object == nullptr)
 			continue;
@@ -296,6 +330,23 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			{
 				newObject = new Solder(RunType::SPECIAL);
 			}
+
+			else if (objectIDPerPosition[i][j] == ObjectID::REDROCKET)
+			{
+				switch (objectSpecialIDPerPosition[i][j])
+				{
+				case RedRocketRobotType::ONESIDED:
+					newObject = new RedRocketRobotOneSided(j, i);
+					break;
+				case RedRocketRobotType::TWOSIDED:
+					newObject = new RedRocketRobotTwoSided(j, i);
+					break;
+				case RedRocketRobotType::TWOSIDEDNONLINEAR:
+					newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
+					break;
+				}
+			}
+
 			if (newObject == nullptr)
 				continue;
 			newObject->pos.x = j;

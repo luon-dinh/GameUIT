@@ -144,6 +144,7 @@
     <ClCompile Include="BulletRedRocketLinear.cpp" />
     <ClCompile Include="BulletRedRocketNonLinear.cpp" />
     <ClCompile Include="BulletWhiteFlyingRocketer.cpp" />
+    <ClCompile Include="BulletWizardNormal.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Container.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="BulletSolder.h" />
     <ClInclude Include="BulletWhiteFlyingRocketer.h" />
     <ClInclude Include="BulletWhiteRockerter.h" />
+    <ClInclude Include="BulletWizardNormal.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Container.h" />

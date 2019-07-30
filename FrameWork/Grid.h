@@ -24,6 +24,9 @@ class Grid // lam singleton
 	//Danh sách các loại object sẽ được sinh ra tại vị trí từng cell.
 	int ** objectIDPerPosition;
 
+	//Danh sách các tính năng đặc biệt của từng loại object.
+	int ** objectSpecialIDPerPosition;
+
 	long gridWidth;
 	long gridHeight;
 

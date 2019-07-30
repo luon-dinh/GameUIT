@@ -88,6 +88,7 @@ public:
 	static int SPIKE;
 	static int ITEMLOOTER;
 	static int BLUESOLDIER;
+	static int REDROCKET;
 };
 
 //Đây là class chứa trọng số vẽ.
@@ -113,6 +114,13 @@ enum RunType {
 	NOTRUN,
 	CANRUN,
 	SPECIAL,
+};
+
+enum RedRocketRobotType
+{
+	ONESIDED = 0,
+	TWOSIDED = 1,
+	TWOSIDEDNONLINEAR = 2,
 };
 
 enum ItemType {
@@ -164,6 +172,8 @@ enum Tag {
 	WHITEFLYINGROBOT,
 	REDROCKERTER,
 	WHITEROCKERTER,
+	BOSSWIZARD,
+	BOSSWIZARDBULLET
 };
 
 enum Type {
