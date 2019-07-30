@@ -173,12 +173,13 @@ void Object::OnFallingOffGround() {
 void Object::OnStandingOnGround(Object* ground) {
 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
-	this->pos.y = ground->getBoundingBox().top + this->getHeight() / 2 -2;
+	this->pos.y = ground->getBoundingBox().top + this->getHeight() / 2 - 2;
 }
 
 void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 	this->collidedSolidBox = solidBox;
 	auto bound = solidBox->getStaticObjectBoundingBox();
+	auto box = this->getBoundingBox();
 	switch (colOut->side) {
 	case CollisionSide::left:	OnSmashSolidBox(solidBox, CollisionSide::left); break;
 	case CollisionSide::right:	OnSmashSolidBox(solidBox, CollisionSide::right);break;
@@ -188,7 +189,7 @@ void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 		break;
 	}
 	case CollisionSide::bottom: {
-		if (this->GetOnAirState() == OnAir::Falling) {
+		if (this->GetOnAirState() == OnAir::Falling && bound.left!=box.right&& bound.right!=box.left) {
 			OnStandingOnGround(solidBox);
 		}
 		break;
@@ -209,13 +210,15 @@ void Object::OnSmashSolidBox(Object* object, CollisionSide side) {
 	auto bound = object->getStaticObjectBoundingBox();
 	switch (side) {
 		case CollisionSide::left: {
-			this->pos.x = bound.right + this->getWidth() / 2 + 2;
+			if(object!=this->collidedSolidBox)
+				this->pos.x = bound.right + this->getWidth() / 2 + 4;
 			this->smashLeft = true;
 			this->smashRight = false;
 			break;
 		}
 		case CollisionSide::right: {
-			this->pos.x = bound.left - this->getWidth() / 2 - 2;
+			if (object != this->collidedSolidBox)
+				this->pos.x = bound.left - this->getWidth() / 2 - 4;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

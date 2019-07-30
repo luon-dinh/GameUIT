@@ -43,8 +43,8 @@ public:
 	float width, height;
 
 	virtual BoundingBox getBoundingBox();
-	float getWidth();
-	float getHeight();
+	virtual float getWidth();
+	virtual float getHeight();
 	
 	BoundingBox getStaticObjectBoundingBox();
 
