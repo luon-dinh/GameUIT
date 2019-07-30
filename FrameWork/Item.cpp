@@ -94,8 +94,8 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 	case Type::GROUND:
 	case Type::SOLIDBOX:
 	case Type::WATERRL:
-		this->vx = this->vy = 0;
-		this->pos.y = object->pos.y + this->getHeight() / 2;
+		this->vx = this->vy = 0; 
+		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 		break;
 		//xuwr lis va chamj voiws player
 	case Type::NONE:
