@@ -69,8 +69,6 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	if (object->type == Type::GROUND) { 
 		if (side == CollisionSide::bottom ) {
 			player->OnStandingOnGround(object);
-			DebugOut(L"\nState Now: ");
-			PrintDebugNumber(player->state);
 			return;
 		}
 	}
@@ -85,19 +83,12 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 
 	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
-		player->OnCollisionWithSolidBox(object, collision);
+  		player->OnCollisionWithSolidBox(object, collision);
+		return;
+	}
+
+	if (object->type == Type::ROPE) {
+		if(player->pos.x>=object->getBoundingBox().left&&player->pos.x<=object->getBoundingBox().right)
+			player->OnClimbingTheRope(object);
 	}
  }
-
-BoundingBox PlayerJumpingState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 20;
-	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 11;
-	box.right = player->pos.x + 11;
-	return box;
-}

@@ -55,7 +55,7 @@ void PlayerFloatingState::Update(float dt) {
 	auto player = Player::getInstance();
 	auto shield = Shield::getInstance();
 	if (this->countAnimationFrame == 0 || player->GetPreviousState()->state == State::DIVING) {
-		player->curanimation = new Animation(Tag::PLAYER, 38, 40);
+		player->curanimation = new Animation(Tag::PLAYER, 35, 37);
 	}
 	else {
 		this->countAnimationFrame--;
@@ -68,17 +68,4 @@ void PlayerFloatingState::Update(float dt) {
 }
 
 void PlayerFloatingState::OnCollision(Object* object, collisionOut* collision) {
-}
-
-BoundingBox PlayerFloatingState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 13;
-	box.bottom = player->pos.y - 12;
-	box.left = player->pos.x - 18;
-	box.right = player->pos.x + 14;
-	return box;
 }

@@ -12,7 +12,8 @@ public:
 		Falling,
 		DropToWater,
 		None,
-		JumpFromWater
+		JumpFromWater,
+		HangOnTheRope
 	};
 
 	enum MoveDirection {
@@ -39,11 +40,11 @@ public:
 	Tag tag;
 	Type type;
 
-	int width, height;
+	float width, height;
 
 	virtual BoundingBox getBoundingBox();
-	int getWidth();
-	int getHeight();
+	virtual float getWidth();
+	virtual float getHeight();
 	
 	BoundingBox getStaticObjectBoundingBox();
 
@@ -67,6 +68,8 @@ public:
 
 	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
 	virtual bool IsMovableInGrid() { return true; }
+
+	virtual std::list<Object*>* getAdditionalObjects() { return nullptr; };
 	virtual void Update(float dt);
 	virtual void Respawn() {} ;
 
@@ -94,6 +97,7 @@ public:
 	virtual void SetOnAirState(OnAir airState);
 
 	virtual bool IsOnGround();
+
 	virtual Object* GetStandingGround();
 	virtual void SetStandingGround(Object* ground);
 

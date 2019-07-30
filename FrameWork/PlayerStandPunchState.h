@@ -5,7 +5,6 @@
 class PlayerStandPunchState : public PlayerState {
 private:
 public:
-	BoundingBox getBoundingBox();
 	PlayerStandPunchState();
 	void InputHandler() override;
 	void Update(float dt) override;

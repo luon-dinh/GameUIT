@@ -1,6 +1,5 @@
 ﻿#include"Solder.h"
 #include"Camera.h"
-#include "SceneManager.h"
 
 Solder::Solder(RunType runType)
 {
@@ -193,7 +192,6 @@ void Solder::Update(float dt)
 						bullet2->pos.y = this->getBoundingBox().top - 4;
 						bullet2->pos.x = this->pos.x;
 						scene->AddObjectToCurrentScene(bullet2);
-					}
 				}
 				timeCurrentState += dt;
 			}

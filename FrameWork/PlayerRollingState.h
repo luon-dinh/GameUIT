@@ -6,17 +6,16 @@
 
 class PlayerRollingState : public PlayerState {
 private:
-
+	int curRollTime;
 public:
 	PlayerRollingState();
 	~PlayerRollingState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
-	BoundingBox getBoundingBox();
 	
 	BOOL HasRollFullTime();
-	const int MAX_ROLLING_TIME = 15; // thời gian rolling time tối đa
+	const int MAX_ROLLING_TIME = 25; // thời gian rolling time tối đa
 	const int ADDED_SPEED = 0.2;
-	static int curRollTime;
+
 };

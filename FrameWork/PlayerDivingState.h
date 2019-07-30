@@ -6,7 +6,6 @@ class PlayerDivingState : public PlayerState {
 private:
 	int countAnimationFrame;
 public:
-	BoundingBox getBoundingBox();
 	PlayerDivingState();
 	void InputHandler() override;
 	void Update(float dt) override;
