@@ -146,8 +146,26 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 0, 73, 27));
 	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 28, 73, 55));
 
+
 	////Cắt sprite cho boss wizard.
-	//spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, ))
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 3, 14, 52, 37));//stand 0
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 3, 66, 52, 89));//1 stand smile
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 3, 118, 52, 141));//2 stand smile
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 59, 10, 104, 41));//run 3
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 59, 70, 104, 86));//4
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 59, 115, 104, 144));//5
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 59, 174, 104, 190));//6
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 110, 12, 151, 41));//fall shooted 7
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 129, 60, 156, 93)); //die 8
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 136, 112, 156, 148)); //9
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 253, 39));//shoot 10
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 253, 91));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 253, 143));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 12, 260, 41));//fly 13
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 64, 260, 93));//14
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 119, 260, 145));//15
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 268, 10, 312, 38));//stand punch 16
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 268, 54, 312, 90));//17
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

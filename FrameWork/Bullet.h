@@ -23,7 +23,8 @@ public:
 	}
 	virtual void Update(float dt)
 	{
-
+		this->pos.x += this->vx;
+		this->pos.y += this->vy;
 	};
 
 	virtual void UpdateOnExploded(float dt)

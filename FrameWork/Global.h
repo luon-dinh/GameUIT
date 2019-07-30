@@ -215,6 +215,8 @@ enum State {
 	STAND_PUNCH,
 	BEATEN,
 	CLIMBING,
+	STAND_SMILE,
+	ATTACK,
 };
 
 enum MapName
