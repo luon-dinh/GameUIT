@@ -38,6 +38,10 @@ void TextureManager::loadResources()
 	//texture dùng cho white flying rocketer.
 	textures->addTexture(Tag::WHITEFLYINGROBOTBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BulletWhiteFlyRobot.png");
 	textures->addTexture(Tag::WHITEFLYINGROBOT, (char*)".\\..\\Resources\\Images\\Enermy\\NewFixedWhiteFlyingRobot.png");
+
+	//texture dùng cho boss wizard màn 1.
+	textures->addTexture(Tag::BOSSWIZARD, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizard.png");
+	textures->addTexture(Tag::BOSSWIZARDBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizardEnergyBullet.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

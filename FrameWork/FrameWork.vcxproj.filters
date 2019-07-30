@@ -109,6 +109,9 @@
     <Filter Include="Objects\Enemy\WhiteFlyingRobot">
       <UniqueIdentifier>{c351c26d-7145-412c-aa53-2ce0c21fa8d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Bullet\BulletWizard">
+      <UniqueIdentifier>{b0c66db6-e2a5-44cc-9c12-6ef543a4e48c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="RedRocketRobotTwoSided.cpp">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletWizardNormal.cpp">
+      <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -547,6 +553,9 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotTwoSidedNonLinear.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletWizardNormal.h">
+      <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
