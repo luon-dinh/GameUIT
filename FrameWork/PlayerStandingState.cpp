@@ -63,17 +63,17 @@ void PlayerStandingState::InputHandler()
 		bool keyPressed = keyboard->getKeyPressedOnce(PLAYER_MOVE_RIGHT, timePressedMove);
 		if (keyPressed || (!keyPressed && timePressedMove <= 20)) {
 			if (ChangeToDash(BeforeDash::DashRight)) {
-				if (player->canDash)
-				{
+				//if (player->canDash)
+				//{
 					player->ChangeState(State::DASHING);
 					StopFrameFlip();
 					return;
-				}
-				else
-				{
-					player->canDash = true;
-					return;
-				}
+				//}
+				//else
+				//{
+				//	player->canDash = true;
+				//	return;
+				//}
 			}
 		}
 		player->ChangeState(State::RUNNING);
