@@ -555,7 +555,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				else {
  					this->SetVx(0);
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 3;
+						this->pos.x += 4;
 					}
 					//return true;
 				}
@@ -566,23 +566,23 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 					this->SetVx(0);
 					// push thêm vài pixel để đẩy nhân vật rơi xuống
 					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x -= 3;
+						this->pos.x -= 4;
 					}
 					//return true;
 				}
 				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
-					return this->TryStandOnGround(object);
+					this->TryStandOnGround(object);
 				}
 			}
 			else {
 				collisionOut colOut;
 				colOut.side = side;
-				if (side == CollisionSide::left || side == CollisionSide::right) {
-					OnCollisionWithSolidBox(object, &colOut);
+				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
+					OnSmashSolidBox(object, side);
 				}
 
 				if (side == CollisionSide::bottom) {
-					return this->TryStandOnGround(object);
+					this->TryStandOnGround(object);
 				}
 			}
 			return false;
@@ -649,7 +649,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 					this->pos.x = bound.right + this->getWidth() / 2 + 2;
 				}
 			}*/
-			this->pos.x = bound.right + this->getWidth() / 2 - 2;
+			this->pos.x = bound.right + this->getWidth() / 2 - 4;
 			
 			this->smashLeft = true;
 			this->smashRight = false;
@@ -667,7 +667,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 			//		this->pos.x = bound.left - this->getWidth() / 2 - 2;
 			//	}
 			//}
-			this->pos.x = bound.left - this->getWidth() / 2 + 2;
+			this->pos.x = bound.left - this->getWidth() / 2 + 4;
 			this->smashRight = true;
 			this->smashLeft = false;
 		}

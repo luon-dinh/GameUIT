@@ -185,7 +185,7 @@ void Object::OnCollisionWithSolidBox(Object* solidBox, collisionOut* colOut) {
 	case CollisionSide::right:	OnSmashSolidBox(solidBox, CollisionSide::right);break;
 	case CollisionSide::top: {
 		this->SetVy(0);
-		this->pos.y = bound.bottom - this->getHeight() / 2 - 2;
+		this->pos.y = bound.bottom - this->getHeight() / 2 + 4;
 		break;
 	}
 	case CollisionSide::bottom: {
