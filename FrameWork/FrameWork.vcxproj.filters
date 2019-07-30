@@ -318,6 +318,12 @@
     <ClCompile Include="RedRocketRobotTwoSided.cpp">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectProperty.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayerProperty.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -547,6 +553,12 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotTwoSidedNonLinear.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectProperty.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayerProperty.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -153,6 +153,8 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="GameObjectProperty.cpp" />
+    <ClCompile Include="GamePlayerProperty.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GroundCollision.cpp" />
@@ -229,6 +231,8 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="GameObjectProperty.h" />
+    <ClInclude Include="GamePlayerProperty.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GroundCollision.h" />
