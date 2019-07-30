@@ -3,7 +3,6 @@
 
 GamePlayerProperty::GamePlayerProperty() {
 	this->nonAttackableFrameCount = 0;
-
 }
 
 GamePlayerProperty::~GamePlayerProperty() {
@@ -65,3 +64,10 @@ void GamePlayerProperty::LoseChildHealth() {
 	}
 }
 
+void GamePlayerProperty::LootItem(Item* item) {
+
+}
+
+void GamePlayerProperty::ResetProperty() {
+
+}

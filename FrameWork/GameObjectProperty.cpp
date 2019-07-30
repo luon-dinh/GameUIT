@@ -34,5 +34,5 @@ bool GameObjectProperty::IsDead() {
 	if (this->health > 0)
 		return false;
 
-	return this->health == 0;
+	return true;
 }

@@ -8,14 +8,16 @@ protected:
 
 	virtual int GetHealth();
 	virtual void SetHealth(int health);
-	int GetDamage();
-	void SetDamage(int damage);
-	bool IsDead();
+	
 
 public:
 	GameObjectProperty();
 	~GameObjectProperty();
 
+	virtual int GetDamage();
+	virtual void SetDamage(int damage);
 	virtual void BeingAttacked(int objectDamage);
+	virtual bool IsDead();
 	virtual void Update() = 0;
+	virtual void ResetProperty() = 0;
 };

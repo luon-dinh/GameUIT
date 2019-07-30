@@ -20,10 +20,10 @@
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
+#include "GamePlayerProperty.h"
 
 
-
-class Player :public Object
+class Player :public Object, public GamePlayerProperty
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player

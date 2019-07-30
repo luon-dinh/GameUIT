@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "GameObjectProperty.h"
 #include "Item.h"
+#include "Player.h"
 
 class GamePlayerProperty : public GameObjectProperty {
 protected:
@@ -23,7 +24,7 @@ public:
 	~GamePlayerProperty();
 
 	void Update() override;
-	void BeingAttacked(int objectDamage) override;
+
 
 	bool IsNonAttackable();
 	void UpdateNonAttackableState();
@@ -31,4 +32,8 @@ public:
 	bool IsNearlyDead();
 
 	void LootItem(Item* item);			//	 khi va chạm với item thì loot item đó
+
+
+	void ResetProperty()				 override;
+	void BeingAttacked(int objectDamage) override;
 };
