@@ -23,7 +23,7 @@ void PlayerDivingState::Update(float dt) {
 	auto player = Player::getInstance();
 
 	if (this->countAnimationFrame == 0) {
-		player->curanimation = new Animation(PLAYER, 44, 46);
+		player->curanimation = new Animation(PLAYER, 37, 39);
 	}
 	else {
 		this->countAnimationFrame--;

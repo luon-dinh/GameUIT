@@ -159,12 +159,14 @@ void Shield::Update(float dt)
 			if (direction == Player::MoveDirection::LeftToRight)
 			{
 				this->pos.y = player->pos.y;
-				this->pos.x = player->pos.x - 10;
+				this->pos.x = player->getBoundingBox().left;
+				this->direction = Player::MoveDirection::RightToLeft;
 			}
 			else if (direction == Player::MoveDirection::RightToLeft)
 			{
 				this->pos.y = player->pos.y;
-				this->pos.x = player->pos.x + 10;
+				this->pos.x = player->getBoundingBox().right;
+				this->direction = Player::MoveDirection::LeftToRight;
 			}
 			return;
 		}

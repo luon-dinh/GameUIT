@@ -24,12 +24,12 @@ void PlayerShieldAttackState::Update(float dt) {
 
 	// lúc gồng
 	if (countFrame <= MAX_FRAME_PREPARE_ATTACK / 2) {
-		player->curanimation = new Animation(PLAYER, 11, 12);
+		player->curanimation = animation1;
 
 	}
 	else {
 		// lúc quăng shield
-		player->curanimation = new Animation(PLAYER, 12, 13);
+		player->curanimation = animation2;
 		shield->SetShieldState(Shield::ShieldState::Attack);
 	}
 

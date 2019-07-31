@@ -4,13 +4,12 @@
 
 class PlayerClimbingState : public PlayerState {
 private:
-	int curDashTime;
+	const int FRAME_PER_ANIMATION = 35;
+	const int NUMBER_OF_ANIMATION = 3;
+	int currentFrame;
 public:
 	PlayerClimbingState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;
-
-
-	const int MAX_DASHING_TIME = 400;
 };

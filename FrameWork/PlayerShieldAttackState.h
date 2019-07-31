@@ -5,6 +5,9 @@
 class PlayerShieldAttackState : public PlayerState {
 private:
 	int countFrame;
+
+	Animation* animation1 = new Animation(Tag::PLAYER, 13, 14);
+	Animation* animation2 = new Animation(Tag::PLAYER, 14, 15);
 public:
 	PlayerShieldAttackState();
 	void InputHandler() override;

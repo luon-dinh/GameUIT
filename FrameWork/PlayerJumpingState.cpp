@@ -86,5 +86,11 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	// đang nhảy va chạm với solid box
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
+		return;
+	}
+
+	if (object->type == Type::ROPE) {
+		if (player->pos.x >= object->getBoundingBox().left&&player->pos.x <= object->getBoundingBox().right)
+			player->OnClimbingTheRope(object);
 	}
  }
