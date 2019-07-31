@@ -2,7 +2,7 @@
 #include"Global.h"
 #include"Collision.h"
 #include"Object.h"
-#include"SceneManager.h"
+
 class BossWizardState {
 public:
 	State stateName;

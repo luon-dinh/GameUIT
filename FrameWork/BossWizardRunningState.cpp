@@ -24,7 +24,6 @@ void BossWizardRunningState::Update(float dt)
 	{
 		wizard->vx = 0;
 		wizard->deltaX = 0;
-		wizard->flyMode = 2;
-		wizard->ChangeState(State::FLYING);
+		wizard->ChangeState(State::ATTACK);
 	}
 }

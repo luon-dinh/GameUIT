@@ -21,6 +21,7 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn, world01BossMapObject);
 	//Thêm player và shield vào Grid.
+	grid->Add(BossWizard::getInstance());
 }
 
 PlaySceneCharlesBoss::~PlaySceneCharlesBoss()
@@ -50,9 +51,9 @@ void PlaySceneCharlesBoss::Update(double dt)
 		TurnOnOffLight();
 
 	//Kiểm tra xem player đã đi đến đích chưa.
-	if (player->pos.x > SCREEN_WIDTH - 50)
+	/*if (player->pos.x > SCREEN_WIDTH - 50)
 	{
 		Done = true;
 		ReplaceToThisMap = MapName::PITTSBURGHDARK;
-	}
+	}*/
 }
