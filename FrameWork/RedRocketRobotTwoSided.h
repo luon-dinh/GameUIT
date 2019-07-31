@@ -4,13 +4,22 @@
 class RedRocketRobotTwoSided : public RedRocketRobot
 {
 	//Khoảng cách đi đến khi chuyển state.
-	const int walkingDistant = 50;
+	const int walkingDistant = 100;
 
 	//Khoảng thời gian cho từng state đứng & ngồi.
 	const int attackingStateTime = attackingDelay + 1000;
+
+	//Chiều dài đoạn mà nó nhảy.
+	const int jumpLength = 50;
+
+	//Độ cao mà nó nhảy.
+	const int jumpHeight = 50;
 	
 	//Quãng đường đã đi.
 	int gone = 0;
+
+	//Đích đến khi nhảy.
+	int destJumpX;
 
 	//State trước đó.
 	State previousState;
@@ -26,6 +35,8 @@ protected:
 	void EnemyDeadUpdate(double dt) override;
 
 	virtual void Fire();
+
+	void EnemyJumpingUpdate(double dt);
 
 	void ChangeState(State);
 	void OnCollision(Object* object, collisionOut* colout) override;

@@ -40,7 +40,7 @@ void RedRocketRobotOneSided::Update(float dt)
 		EnemyAliveUpdate(dt);
 	else if (robotState == State::STANDING || robotState == State::DUCKING)
 		EnemyAttackingUpdate(dt);
-	else if (robotState == State::JUMPING)
+	else if (robotState == State::JUMPING || robotState == State::FALLING)
 		EnemyJumpingUpdate(dt);
 	else if (robotState == State::BEATEN)
 		EnemyBeatenUpdate(dt);
@@ -53,19 +53,24 @@ void RedRocketRobotOneSided::Update(float dt)
 void RedRocketRobotOneSided::EnemyJumpingUpdate(double dt)
 {
 	//Khi vẫn còn trong trạng thái nhảy lên thì nhảy lên.
-	if (abs(this->pos.x - destJumpX) > jumpLength / 2)
+	if (robotState == State::JUMPING)
+	{
+		if (abs(this->pos.x - destJumpX) > jumpLength / 2)
+		{
+			this->pos.y += this->vy;
+			this->pos.x += this->vx;
+		}
+		else
+		{
+			ChangeState(State::FALLING);
+		}
+	}
+
+	else if (robotState == State::FALLING)
 	{
 		this->pos.y += this->vy;
 		this->pos.x += this->vx;
 	}
-	else
-	{
-		this->pos.y -= this->vy;
-		this->pos.x += this->vx;
-	}
-	//Xét nếu jumping xong rồi thì chuyển state lại qua standing.
-	if (this->pos.y <= prevJumpY)
-		ChangeState(State::STANDING);
 }
 
 void RedRocketRobotOneSided::Render()
@@ -236,6 +241,10 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 			destJumpX = this->pos.x - jumpLength;
 		this->vy = (2*jumpHeight*abs(this->vx))/jumpLength;
 		break;
+	case State::FALLING:
+		this->currentAnimation = crouching;
+		if (this->vy > 0)
+			this->vy *= (-1);
 	}
 
 	previousState = this->robotState;
@@ -260,4 +269,19 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 				ChangeState(State::BEATEN);
 		}
 	}
+	if (object->tag == Tag::STATICOBJECT)
+	{
+		//Chỉ chuyển sang trạng thái standing khi đang rơi.
+		if (object->type == Type::GROUND && robotState == State::FALLING && colOut->side == CollisionSide::bottom)
+		{
+			ChangeState(State::STANDING);
+			this->pos.y -= colOut->collisionTime * vy + (2* object->height / 3);
+		}
+	}
+	
+}
+
+bool RedRocketRobotOneSided::OnRectCollided(Object* object, CollisionSide colOut)
+{
+	return true;
 }
