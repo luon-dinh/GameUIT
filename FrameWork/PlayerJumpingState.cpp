@@ -89,8 +89,17 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		return;
 	}
 
+	// chạm dây đu
 	if (object->type == Type::ROPE) {
 		if (player->pos.x >= object->getBoundingBox().left&&player->pos.x <= object->getBoundingBox().right)
 			player->OnClimbingTheRope(object);
+	}
+
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
+		return;
+	}
+	if (object->type == Type::BULLETTYPE) {
+		player->OnCollisionWithEnemy(object);
 	}
  }

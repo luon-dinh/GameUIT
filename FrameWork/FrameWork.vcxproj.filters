@@ -369,6 +369,9 @@
     <ClCompile Include="PlayerDyingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerHandPunch.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -648,6 +651,9 @@
       <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDyingState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHandPunch.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>

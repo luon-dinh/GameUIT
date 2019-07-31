@@ -70,6 +70,9 @@ public:
 	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
 	virtual bool IsMovableInGrid() { return true; }
 
+	//Hàm dùng để lấy giá trị của biến isCollidable.
+	bool IsCollidable() { return isCollidable; }
+
 	virtual std::list<Object*>* getAdditionalObjects() { return nullptr; };
 	virtual void Update(float dt);
 	virtual void Respawn() {};
@@ -124,7 +127,7 @@ protected:
 	//Vì trạng thái của ItemLooter sẽ được lưu giữ lại chứ không mất đi như enemy. 
 	bool isActivatedInGrid = true;
 
-
+	bool isCollidable = true;
 
 	OnAir onAirState;
 	OnAir preOnAirState;

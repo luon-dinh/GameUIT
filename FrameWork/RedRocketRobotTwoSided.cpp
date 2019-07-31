@@ -27,10 +27,14 @@ void RedRocketRobotTwoSided::Update(float dt)
 	{
 		currentBeatenTick += dt;
 		flashingTick += dt;
+		isCollidable = false;
 		if (currentBeatenTick > beatenTime)
+		{
 			isBeingBeaten = false;
+			isCollidable = true;
+		}
+			
 	}
-
 	//Trạng thái đi.
 	if (robotState == State::WALKING)
 		EnemyWalkingUpdate(dt);

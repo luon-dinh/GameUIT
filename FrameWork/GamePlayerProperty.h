@@ -4,7 +4,6 @@
 
 class GamePlayerProperty : public GameObjectProperty {
 protected:
-
 	int nonAttackableFrameCount;
 	bool isNonAttackable;
 	bool isNearlyDead;

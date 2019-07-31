@@ -365,6 +365,8 @@ void Shield::ShieldBackToPlayer() {
 	case State::DASHING:
 		this->SetShieldState(ShieldState::NotRender);
 		break;
+	default:
+		this->SetShieldState(ShieldState::NotRender);
 	}
 }
 
