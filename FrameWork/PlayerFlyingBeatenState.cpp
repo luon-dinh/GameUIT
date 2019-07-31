@@ -10,6 +10,11 @@ void PlayerFlyingBeatenState::InputHandler() {
 }
 
 void PlayerFlyingBeatenState::Update(float dt) {
+	auto player = Player::getInstance();
+
+	if (player->IsDead()) {
+		player->OnFallingOffGround();
+	}
 }
 
 void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collision) {
