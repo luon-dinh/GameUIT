@@ -1,16 +1,5 @@
 ﻿#include "PlayerShieldAttackState.h"
 
-BoundingBox PlayerShieldAttackState::getBoundingBox() {
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 15;
-	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 11;
-	box.right = player->pos.x + 21;
-	return box;
-}
 
 PlayerShieldAttackState::PlayerShieldAttackState() {
 	this->state = State::SHIELD_ATTACK;

@@ -16,7 +16,6 @@ private:
 	int curDelayTime;
 	
 public:
-	BoundingBox getBoundingBox();
 	PlayerJumpingState() { state = State::JUMPING; this->curDelayTime = 0; }
 	void InputHandler() override;
 	void Update(float dt) override;

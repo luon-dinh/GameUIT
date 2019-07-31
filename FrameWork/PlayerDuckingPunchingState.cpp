@@ -25,24 +25,3 @@ void PlayerDuckingPunchingState::Update(float dt) {
 void PlayerDuckingPunchingState::OnCollision(Object* object, collisionOut* collision) {
 
 }
-
-BoundingBox PlayerDuckingPunchingState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 6;
-	box.bottom = player->pos.y - 21;
-	if (player->GetMoveDirection() == Object::MoveDirection::RightToLeft)
-	{
-		box.left = player->pos.x - 26;
-		box.right = player->pos.x + 12;
-	}
-	else
-	{
-		box.left = player->pos.x - 12;
-		box.right = player->pos.x + 26;
-	}
-	return box;
-}

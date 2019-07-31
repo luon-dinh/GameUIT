@@ -1,9 +1,5 @@
 ﻿#include "PlayerDivingState.h"
 
-BoundingBox PlayerDivingState::getBoundingBox() {
-	// not implemented
-	return BoundingBox();
-}
 
 PlayerDivingState::PlayerDivingState() {
 	this->state = State::DIVING;

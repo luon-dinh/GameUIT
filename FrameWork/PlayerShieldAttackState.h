@@ -6,7 +6,6 @@ class PlayerShieldAttackState : public PlayerState {
 private:
 	int countFrame;
 public:
-	BoundingBox getBoundingBox();
 	PlayerShieldAttackState();
 	void InputHandler() override;
 	void Update(float dt) override;

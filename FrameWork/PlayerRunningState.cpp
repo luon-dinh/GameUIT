@@ -89,16 +89,3 @@ void PlayerRunningState::Update(float dt)
 {
 	this->InputHandler();
 }
-
-BoundingBox PlayerRunningState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 21;
-	box.bottom = player->pos.y - 21;
-	box.left = player->pos.x - 13;
-	box.right = player->pos.x + 12;
-	return box;
-}

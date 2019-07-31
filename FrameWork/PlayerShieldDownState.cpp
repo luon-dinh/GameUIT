@@ -53,16 +53,3 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 		player->OnCollisionWithSolidBox(object, collision);
 	}
 }
-
-BoundingBox PlayerShieldDownState::getBoundingBox()
-{
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 8;
-	box.bottom = player->pos.y - 19;
-	box.left = player->pos.x - 10;
-	box.right = player->pos.x + 11;
-	return box;
-}
