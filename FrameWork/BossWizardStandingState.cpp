@@ -27,6 +27,7 @@ void BossWizardStandingState::Update(float dt)
 		wizard->flyTimes--;
 		return;
 	}
+
 	if (deltaPlayer >= wizard->xRun)
 	{
 		wizard->ChangeState(State::RUNNING);

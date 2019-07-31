@@ -1,5 +1,5 @@
 ﻿#include"BossWizardFlyingState.h"
-
+#include"SceneManager.h"
 BossWizardFlyingState::BossWizardFlyingState()
 {
 
@@ -17,6 +17,7 @@ void BossWizardFlyingState::InputHandler()
 void BossWizardFlyingState::Fly(int flyMode)
 {
 	auto wizard = BossWizard::getInstance();
+	auto player = Player::getInstance();
 	wizard->deltaY += abs(wizard->vy);
 	wizard->deltaX += abs(wizard->vx);
 	if (flyMode == 1)
@@ -62,10 +63,21 @@ void BossWizardFlyingState::Fly(int flyMode)
 			wizard->vx = -wizard->flySpeedx2;
 		}
 		wizard->curanimation->curframeindex = 0;
-		if (wizard->deltaX>mapWidth-wizard->height/2)
+		if (abs(wizard->pos.x - player->pos.x) < 1)
 		{
-			wizard->SetOnAirState(BossWizard::OnAir::Falling);
+			wizard->curanimation->curframeindex = 2;
+			auto bullet = new BulletWizardSpecial();
+			bullet->pos.x = wizard->pos.x;
+			bullet->pos.y = wizard->pos.y - wizard->height / 2;
+			bullet->vx = 0;
+			bullet->vy = -2.5;
+			SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 		}
+		/*if (wizard->deltaX>mapWidth-wizard->width/2)
+		{
+			wizard->vx = 0;
+			wizard->SetOnAirState(BossWizard::OnAir::Falling);
+		}*/
 		break;
 	default:
 		break;

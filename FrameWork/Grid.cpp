@@ -319,7 +319,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			{
 				if (currentEnemyNumber < maxEnemyAtOnce)
 				{
-					newObject = new Solder(RunType::SPECIAL);
+					newObject = new Solder((RunType)objectIDPerPosition[i][j]);
 				}
 			}
 

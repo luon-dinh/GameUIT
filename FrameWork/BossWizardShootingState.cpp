@@ -2,7 +2,7 @@
 #include"SceneManager.h"
 BossWizardShootingState::BossWizardShootingState()
 {
-
+	timeToShoot = 0;
 }
 BossWizardShootingState::~BossWizardShootingState()
 {
@@ -17,9 +17,7 @@ void BossWizardShootingState::InputHandler()
 void BossWizardShootingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
-	int currentFrameIndex = wizard->curanimation->curframeindex;
-	int maxFrameIndex = wizard->curanimation->toframe;
-	if (currentFrameIndex == maxFrameIndex - 2)
+	if (timeToShoot>=120*3)
 	{
 		auto scene = SceneManager::getInstance();
 		auto bullet = new BulletWizardNormal();
@@ -41,30 +39,27 @@ void BossWizardShootingState::Update(float dt)
 			break;
 		}
 		scene->AddObjectToCurrentScene(bullet);
-	}
-	else
-	{
-		if (currentFrameIndex == maxFrameIndex - 1)
+		auto player = Player::getInstance();
+		float deltaPlayer = abs(player->pos.x - wizard->pos.x);
+		if (deltaPlayer >= wizard->xRun)
 		{
-			auto player = Player::getInstance();
-			float deltaPlayer = abs(player->pos.x - wizard->pos.x);
-			if (deltaPlayer >= wizard->xRun)
+			wizard->ChangeState(State::RUNNING);
+		}
+		else
+		{
+			if (deltaPlayer < wizard->xPunch&&player->GetOnAirState()==BossWizard::OnAir::None)
 			{
-				wizard->ChangeState(State::RUNNING);
+				wizard->ChangeState(State::STAND_PUNCH);
 			}
 			else
 			{
-				if (deltaPlayer < wizard->xPunch&&player->GetOnAirState()==BossWizard::OnAir::None)
-				{
-					wizard->ChangeState(State::STAND_PUNCH);
-				}
-				else
-				{
-					wizard->flyMode = 1;
-					wizard->ChangeState(State::FLYING);
-				}
+				wizard->flyMode = 1;
+				wizard->ChangeState(State::FLYING);
 			}
 		}
 	}
-
+	else
+	{
+		timeToShoot += dt;
+	}
 }
