@@ -16,6 +16,7 @@ public:
 	Bullet()
 	{
 		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3, TIME_PER_FRAME/3);
+		this->tag == Tag::BULLET;
 	}
 	~Bullet()
 	{
@@ -57,4 +58,5 @@ public:
 	{
 
 	}
+	virtual int GetBulletDamage() { return 0; }
 };

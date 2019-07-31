@@ -8,6 +8,7 @@ WhiteRockerter::WhiteRockerter()
 	this->vx = ENEMY_SPEED;
 	ChangeState(State::RUNNING);
 	canRun = true;
+	this->tag = Tag::WHITEROCKERTER;
 }
 
 WhiteRockerter::~WhiteRockerter()

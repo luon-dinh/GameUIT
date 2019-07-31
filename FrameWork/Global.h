@@ -98,6 +98,7 @@ public:
 	static int OBJECT_RENDER_WEIGHT;
 	static int ITEM_RENDER_WEIGHT;
 	static int BULLET_RENDER_WEIGHT;
+	static int ENEMY_RENDER_WEIGHT;
 };
 
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
@@ -162,6 +163,7 @@ enum Tag {
 	BLUESOLDIER,
 	STATICOBJECT,
 	BLUESOLDERBULLET,
+	BULLET,
 	BULLETEXPLODE,
 	REDROCKERTERBULLET,
 	WHITEROCKERTERBULLET,

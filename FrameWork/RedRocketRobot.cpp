@@ -2,6 +2,7 @@
 
 RedRocketRobot::RedRocketRobot(int posX, int posY)
 {
+	this->tag = Tag::REDROCKERTER;
 	player = Player::getInstance();
 	LoadAllAnimation();
 	//Gán giá trị.
