@@ -16,14 +16,15 @@
 #include "PlayerStandPunchState.h"
 #include "PlayerShieldDownState.h"
 #include "PlayerShieldAttackState.h"
+#include "PlayerClimbingState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
-#include "GamePlayerProperty.h"
 
 
-class Player :public Object, public GamePlayerProperty
+
+class Player :public Object
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
@@ -41,14 +42,16 @@ private:
 	BOOL collisionAffect;
 
 	PlayerState* prevState;
+	bool collisionDetected;
 
 public:
+
 	int health;
 	int live;
 	int energy;
 	bool shieldActive;
 	BOOL hasShield;
-
+	bool canDash = true;
 	enum ShieldReturnEdge {
 		Top,
 		Left,
@@ -58,12 +61,12 @@ public:
 	};
 
 	//	std::list<Object*> collideObject;	//danh sach cac object va cham voi player
-	int getWidth();
-	int getHeight();
+	float getWidth();
+	float getHeight();
 	void ChangeState(PlayerState* newplayerstate);
 	void ChangeState(State stateName) override;
 	void Update(float dt);
-
+	float getPosToBotom();
 	void Render();
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
@@ -80,7 +83,7 @@ public:
 
 	Player();
 	~Player();
-	
+
 
 #pragma region MyRegion
 	void SetVx(float vx, BOOL changePlayerDirection);
@@ -102,6 +105,8 @@ public:
 	D3DXVECTOR2 GetShieldReturnPos();
 
 	bool StandOnCurrentGround();
+	bool IsFootStepOn();
+
 
 
 #pragma endregion
@@ -117,6 +122,7 @@ public:
 	bool OnRectCollided(Object* object, CollisionSide side)				 override;
 	void OnFallingOffGround()											 override;
 	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
+	void OnClimbingTheRope(Object* rope);
 
 #pragma endregion
 

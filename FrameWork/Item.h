@@ -1,5 +1,7 @@
-﻿#include"Object.h"
+﻿#pragma once
+#include"Object.h"
 #include"Collision.h"
+
 class Item:public Object {
 private:
 

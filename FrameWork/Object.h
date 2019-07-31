@@ -12,7 +12,8 @@ public:
 		Falling,
 		DropToWater,
 		None,
-		JumpFromWater
+		JumpFromWater,
+		HangOnTheRope
 	};
 
 	enum MoveDirection {

@@ -6,7 +6,6 @@ class PlayerClimbingState : public PlayerState {
 private:
 	int curDashTime;
 public:
-	BoundingBox getBoundingBox();
 	PlayerClimbingState();
 	void InputHandler() override;
 	void Update(float dt) override;

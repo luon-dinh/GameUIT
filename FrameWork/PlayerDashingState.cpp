@@ -1,26 +1,5 @@
 ﻿#include "PlayerDashingState.h"
 
-BoundingBox PlayerDashingState::getBoundingBox() {
-	Player *player = Player::getInstance();
-	BoundingBox box;
-	box.vx = player->vx;
-	box.vy = player->vy;
-	box.top = player->pos.y + 8;
-	box.bottom = player->pos.y - 21;
-	if (player->GetMoveDirection() == Object::MoveDirection::RightToLeft)
-	{
-		box.left = player->pos.x - 19;
-		box.right = player->pos.x ;
-	}
-	else if (player->GetMoveDirection() == Player::MoveDirection::LeftToRight)
-	{
-		box.left = player->pos.x;
-		box.right = player->pos.x + 19;
-	}
-	//box.left = player->pos.x - 11;
-	//box.right = player->pos.x + 11;
-	return box;
-}
 
 PlayerDashingState::PlayerDashingState() {
 	this->state = State::DASHING;
