@@ -6,6 +6,7 @@ public:
 	BulletSolder()
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
+		this->tag = Tag::BLUESOLDERBULLET;
 		this->isActive = false;
 		this->vy = 0;
 		this->existTime = 0;
