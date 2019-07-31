@@ -39,20 +39,19 @@ void Player::SetPreviousState(State stateName) {
 void Player::LoadAllAnimations() {
 	animations[STANDING] = new Animation(PLAYER, 0, 1);
 	animations[RUNNING] = new Animation(PLAYER, 1, 5);
-	animations[SHIELD_UP] = new Animation(PLAYER, 5, 6);
-	animations[DUCKING] = new Animation(PLAYER, 6, 7);
 	animations[JUMPING] = new Animation(PLAYER, 7, 8);
-	animations[ROLLING] = new Animation(PLAYER, 8, 12);
-	animations[KICKING] = new Animation(PLAYER, 12, 13);
-	animations[SHIELD_ATTACK] = new Animation(PLAYER, 13, 15);
-	animations[STAND_PUNCH] = new Animation(PLAYER, 15, 17);
-	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 17, 19);
-	animations[DASHING] = new Animation(PLAYER, 19, 22);
-	animations[SHIELD_DOWN] = new Animation(PLAYER, 22, 23);
-	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
-	animations[FLOATING] = new Animation(PLAYER, 28, 37);
-	animations[DIVING] = new Animation(PLAYER, 37, 39);
-	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
+	animations[DUCKING] = new Animation(PLAYER, 6, 7);
+	animations[DUCKING_PUNCHING] = new Animation(PLAYER, 15, 17);
+	animations[SHIELD_UP] = new Animation(PLAYER, 5, 6);
+	animations[ROLLING] = new Animation(PLAYER, 8, 10);
+	animations[KICKING] = new Animation(PLAYER, 10, 11);
+	animations[DASHING] = new Animation(PLAYER, 17, 19);
+	animations[FLOATING] = new Animation(PLAYER, 32, 40);
+	animations[DIVING] = new Animation(PLAYER, 40, 46);
+	animations[SHIELD_DOWN] = new Animation(PLAYER, 19, 20);
+	animations[SHIELD_ATTACK] = new Animation(PLAYER, 11, 13);
+	animations[STAND_PUNCH] = new Animation(PLAYER, 13, 15);
+	//animations[CLIMBING] = new Animation(PLAYER, 23, 26);
 }
 
 void Player::LoadAllStates() {
