@@ -625,10 +625,15 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 		//Nếu object không được activated thì ta không xét va chạm luôn.
 		if (!firstObj->GetActivatedInGridStatus())
 			continue;
+		if (!firstObj->IsCollidable())
+			continue;
 		for (auto secondObj : secondCell)
 		{
 			//Nếu object không được activated thì ta không xét va chạm luôn.
 			if (!secondObj->GetActivatedInGridStatus())
+				continue;
+			//Nếu object không xét được va chạm thì không xét va chạm luôn.
+			if (!secondObj->IsCollidable())
 				continue;
 			//Xét việc va chạm 2 dynamic object với nhau.
 			CollisionProcessOfDynamicObjects(firstObj, secondObj);
@@ -731,7 +736,7 @@ void Grid::RenderActivatedCells()
 				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 			////Vẽ debug các object tĩnh.
 			//for (auto object : cellsOfStaticObjects[i][j])

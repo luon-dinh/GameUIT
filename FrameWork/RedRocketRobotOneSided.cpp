@@ -26,12 +26,18 @@ void RedRocketRobotOneSided::Update(float dt)
 		this->vx = -walkingSpeed;
 
 	//Cập nhật thời gian cho trạng thái beaten (chớp chớp).
+	//Kiểm tra có đang bị beaten hay không để phục vụ xét va chạm.
 	if (isBeingBeaten)
 	{
 		currentBeatenTick += dt;
 		flashingTick += dt;
+		isCollidable = false;
 		if (currentBeatenTick > beatenTime)
+		{
 			isBeingBeaten = false;
+			isCollidable = true;
+		}
+			
 	}
 	
 	currentStateTime += dt;
@@ -272,16 +278,27 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 	if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
-		if (object->type == Type::GROUND && robotState == State::FALLING && colOut->side == CollisionSide::bottom)
+		if (object->type == Type::GROUND  && colOut->side == CollisionSide::bottom)
 		{
-			ChangeState(State::STANDING);
-			this->pos.y -= colOut->collisionTime * vy + (2* object->height / 3);
+			if (robotState == State::FALLING)
+			{
+				ChangeState(State::STANDING);
+				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+			}
+			this->SetStandingGround(object);
 		}
 	}
-	
 }
 
 bool RedRocketRobotOneSided::OnRectCollided(Object* object, CollisionSide colOut)
 {
 	return true;
+}
+
+void RedRocketRobotOneSided::OnNotCollision(Object * object)
+{
+	if (object->type == Type::GROUND && !this->StandOnCurrentGround() && this->robotState == State::WALKING)
+	{
+		ChangeState(State::FALLING);
+	}
 }

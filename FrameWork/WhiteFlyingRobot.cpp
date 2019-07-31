@@ -86,8 +86,12 @@ void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 {
 	//Nếu đã hết thời gian beaten  thì ta quay lại trạng thái bay bình thường.
 	if (currentStateTime > beatenTime)
+	{
 		ChangeState(State::FLYING);
+		isCollidable = true;
+	}		
 	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
+	isCollidable = false;
 	EnemyAliveUpdate(dt);
 }
 
