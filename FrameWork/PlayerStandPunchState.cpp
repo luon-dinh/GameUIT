@@ -27,4 +27,25 @@ void PlayerStandPunchState::InputHandler()
 }
 
 void PlayerStandPunchState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
+
+	if (object->type == Type::SOLIDBOX) {
+		player->OnCollisionWithSolidBox(object, collision);
+	}
+
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
+		return;
+	}
+
+	if (object->type == Type::BULLETTYPE) {
+		auto castBullet = (Bullet*)object;
+
+		if (player->GetMoveDirection() != castBullet->GetMoveDirection() && !castBullet->CanGetThroughShield()) {
+			return;
+		}
+
+		player->OnCollisionWithBullet(castBullet);
+	}
 }

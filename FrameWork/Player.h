@@ -106,6 +106,8 @@ public:
 	void SetOnAirState(OnAir onAirState)         override;
 	void SetMoveDirection(MoveDirection moveDir) override;
 	int GetDamage()								 override;
+	bool IsNonAttackable()						 override;
+	bool IsImmortal()						     override;
 	BOOL IsReachMaxJump();
 
 	void OnHeadOnSolidBox(Object* solid);
@@ -118,6 +120,8 @@ public:
 	D3DXVECTOR2 GetShieldReturnPos();
 
 	bool IsFootStepOn();
+
+
 
 
 

@@ -57,5 +57,20 @@ void PlayerSittingState::Update(float dt) {
 }
 
 void PlayerSittingState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
 
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
+		return;
+	}
+
+	if (object->type == Type::BULLETTYPE) {
+		auto castBullet = (Bullet*)object;
+
+		if (castBullet->GetMoveDirection() != player->GetMoveDirection() && !castBullet->CanGetThroughShield() && player->hasShield){
+			return;
+		}
+		player->OnCollisionWithBullet(castBullet);
+	}
 }

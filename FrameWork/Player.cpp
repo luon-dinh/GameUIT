@@ -197,6 +197,25 @@ int Player::GetDamage() {
 	return this->damage;
 }
 
+bool Player::IsNonAttackable() {
+	this->isCollidable = false;
+	if (GamePlayerProperty::IsNonAttackable()) {
+		this->isCollidable = false;
+		return true;
+	}
+	this->isCollidable = true;
+	return false;
+}
+
+bool Player::IsImmortal() {
+	if (GamePlayerProperty::IsImmortal()) {
+		this->isCollidable = false;
+		return true;
+	}
+	this->isCollidable = true;
+	return false;
+}
+
 void Player::ChangeState(State stateName) {
 	if (this->state == stateName)
 		return;
@@ -521,20 +540,8 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
+	this->playerstate->OnCollision(object, collisionOut);
 	this->collisionDetected = true;
-
-	switch (object->type) {
-		case Type::ENEMY: 
-			if (this->state != State::SHIELD_DOWN)
-			return;
-				OnCollisionWithEnemy(object);
-		case Type::BULLETTYPE:
-			OnCollisionWithBullet((Bullet*)object);
-			return;
-		default: {
-			this->playerstate->OnCollision(object, collisionOut);
-		}
-	}
 }
 void Player::OnNotCollision(Object* object) {
 	switch (object->type) {

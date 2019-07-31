@@ -31,5 +31,20 @@ void PlayerShieldUpState::Update(float dt) {
 }
 
 void PlayerShieldUpState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
 
+	if (object->type == Type::BULLETTYPE) {
+		auto castBullet = (Bullet*)object;
+
+		if (side == CollisionSide::top && !castBullet->CanGetThroughShield()) {
+			return;
+		}
+		player->OnCollisionWithBullet(castBullet);
+		return;
+	}
+
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
+	}
 }

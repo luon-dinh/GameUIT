@@ -22,14 +22,14 @@ public:
 	GamePlayerProperty();
 	~GamePlayerProperty();
 
-	bool IsNonAttackable();
-	bool IsImmortal();
-	void SetToImmortalState();				// Chuyển sang trạng thái bất tử
-	void SetToNormalState();					// Chuyển sang trạng thái bình thường
+	virtual bool IsNonAttackable();
+	virtual bool IsImmortal();
+	virtual void SetToImmortalState();				// Chuyển sang trạng thái bất tử
+	virtual void SetToNormalState();				// Chuyển sang trạng thái bình thường
 	bool IsNearlyDead();
-	int GetHeart();						// Lấy trái tim để render
+	int GetHeart();									// Lấy trái tim để render
 
-	void LootItem(Item* item);			//	 khi va chạm với item thì loot item đó
+	void LootItem(Item* item);						//	 khi va chạm với item thì loot item đó
 	void UpdateGameProperty()				 override;
 	void ResetGameProperty()				 override;
 	void BeingAttacked(int objectDamage)	 override;
