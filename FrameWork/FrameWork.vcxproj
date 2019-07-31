@@ -139,6 +139,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BossWizard.cpp" />
+    <ClCompile Include="BossWizardDeadState.cpp" />
+    <ClCompile Include="BossWizardFlyingState.cpp" />
+    <ClCompile Include="BossWizardPunchingState.cpp" />
+    <ClCompile Include="BossWizardRunningState.cpp" />
+    <ClCompile Include="BossWizardShootingState.cpp" />
+    <ClCompile Include="BossWizardStandingState.cpp" />
+    <ClCompile Include="BossWizardStandSmileState.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="BulletRedRocket.cpp" />
     <ClCompile Include="BulletRedRocketLinear.cpp" />
@@ -216,6 +224,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BossWizard.h" />
+    <ClInclude Include="BossWizardDeadState.h" />
+    <ClInclude Include="BossWizardFlyingState.h" />
+    <ClInclude Include="BossWizardPunchingState.h" />
+    <ClInclude Include="BossWizardRunningState.h" />
+    <ClInclude Include="BossWizardShootingState.h" />
+    <ClInclude Include="BossWizardStandingState.h" />
+    <ClInclude Include="BossWizardStandSmileState.h" />
+    <ClInclude Include="BossWizardState.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletGreenCannon.h" />
     <ClInclude Include="BulletManager.h" />
@@ -227,6 +244,7 @@
     <ClInclude Include="BulletWhiteFlyingRocketer.h" />
     <ClInclude Include="BulletWhiteRockerter.h" />
     <ClInclude Include="BulletWizardNormal.h" />
+    <ClInclude Include="BulletWizardSpecial.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Container.h" />

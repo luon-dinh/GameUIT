@@ -13,10 +13,12 @@ BossWizard::BossWizard()
 	this->vy = 0;
 	this->deltaX = this->deltaY = 0;
 	this->hitTime = 0;
+	this->isCollide = false;
 	this->direction = Object::MoveDirection::LeftToRight;
 	this->flyMode = 1;
 	this->tag = Tag::BOSSWIZARD;
 	this->type = Type::WIZARD;
+	this->timeNotRender = 0;
 	this->wizardState = wizardStates[State::FLYING];
 	this->curanimation = animations[State::FLYING];
 	this->state = State::FLYING;
@@ -79,6 +81,10 @@ void BossWizard::Update(float dt)
 	this->wizardState->Update(dt);
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
+	if (isCollide)
+	{
+		timeNotRender += dt;
+	}
 	if (hitTime >= 2 && this->onAirState == OnAir::None)
 	{
 		flyTimes = rand() % 3 + 1;
@@ -90,15 +96,23 @@ void BossWizard::Update(float dt)
 	}
 	if (this->pos.x < minMap|| this->pos.x > maxMap)
 	{
-		this->pos.x -= this->vx;
-		this->vx = 0;
-		if (this->state != State::FLYING)
-			this->ChangeState(State::STANDING);
-		else
+		if (this->state == State::FLYING)
 		{
+			this->vx = 0;
 			this->onAirState = OnAir::Falling;
+			return;
 		}
-		return;
+		if (this->pos.x < minMap&&this->direction == MoveDirection::RightToLeft)
+		{
+			this->vx = 0;
+			ChangeState(State::STANDING);
+			return;
+		}
+		if (this->pos.x > maxMap&&this->direction == MoveDirection::LeftToRight)
+		{
+			this->vx = 0;
+			ChangeState(State::STANDING);
+		}
 	}
 	
 }
@@ -106,12 +120,34 @@ void BossWizard::Update(float dt)
 void BossWizard::Render()
 {
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
-	if (this->direction == Player::MoveDirection::LeftToRight) {
-		// move from left to right
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+	
+	if (this->timeNotRender == 0)
+	{
+		if (this->direction == Player::MoveDirection::LeftToRight) {
+			// move from left to right
+			curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+		}
+		else {
+			curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+		}
 	}
-	else {
-		curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+	else
+	{
+		if ((int)timeNotRender % 2 == 0)
+		{
+			if (this->direction == Player::MoveDirection::LeftToRight) {
+				// move from left to right
+				curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+			}
+			else {
+				curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+			}
+		}
+		if (timeNotRender > 500)
+		{
+			timeNotRender = 0;
+			isCollide = false;
+		}
 	}
 }
 
@@ -134,14 +170,15 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 				this->direction = MoveDirection::LeftToRight;
 			}
 			
-			if (this->flyMode != 1)
+			/*if (this->flyMode != 1)
 			{
 				ChangeState(State::STANDING);
 			}
 			else
 			{
 				ChangeState(State::RUNNING);
-			}
+			}*/
+			ChangeState(State::RUNNING);
 		}
 		deltaX = deltaY = 0;
 		break;
@@ -156,15 +193,22 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			//render khong render
 			//this->curanimation = animations[State::DEAD];
 			this->hitTime++;
+			this->isCollide = true;
 		}
+	}
+	if (object->tag == Tag::PLAYER)
+	{
+		this->isCollide = true;
 	}
 }
 
 void BossWizard::OnNotCollision(Object* object)
 {
-	/*if(this->state!=State::FLYING)
-		this->vy = -2;*/
+	if (object->type == Type::GROUND)
+		this->vx = -2;
 }
+
+
 
 
 void BossWizard::ChangeState(State stateName)
@@ -217,12 +261,6 @@ void BossWizard::ChangeState(State stateName)
 		break;
 	case State::RUNNING:
 		this->vy = 0;
-		if(this->direction==MoveDirection::LeftToRight)
-			this->vx = 2*ENEMY_SPEED;
-		else
-		{
-			this->vx = -2*ENEMY_SPEED;
-		}
 		this->onAirState = OnAir::None;
 		break;
 	default:

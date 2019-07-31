@@ -7,6 +7,7 @@
 #include"BossWizardPunchingState.h"
 #include"BossWizardStandSmileState.h"
 #include"BulletWizardNormal.h"
+#include"BulletWizardSpecial.h"
 
 class BossWizard :public Enemy {
 private:
@@ -19,7 +20,6 @@ private:
 	void AddPosX();
 	void AddPosY();
 public:
-	int flyTimes;
 	const float minMap = 15;
 	const float maxMap = 250;
 	const float flySpeedx1 = 0.8;
@@ -27,6 +27,7 @@ public:
 	const float flySpeedy = 2;
 	const float xRun = 100;
 	const float xPunch = 30;
+	bool isCollide;
 	int hitTime;
 	float deltaY;
 	float deltaX;
@@ -35,6 +36,8 @@ public:
 	float getPosToBottom();
 	float getPosToRight();
 	int flyMode;
+	int flyTimes;
+	float timeNotRender ;
 	BossWizardState * wizardState;
 	static BossWizard* getInstance();
 	void ChangeState(State stateName) override;

@@ -112,6 +112,9 @@
     <Filter Include="Objects\Bullet\BulletWizard">
       <UniqueIdentifier>{b0c66db6-e2a5-44cc-9c12-6ef543a4e48c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy\BossWizard">
+      <UniqueIdentifier>{e5c99b1e-a2a9-4d38-ad2f-b4a13705b178}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -336,11 +339,32 @@
     <ClCompile Include="PlayerFlyingBeatenState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDyingState.cpp">
-      <Filter>Objects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="HealthPoint.cpp">
       <Filter>Objects\MapStaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizard.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardDeadState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardFlyingState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardPunchingState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardRunningState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardShootingState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardStandingState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWizardStandSmileState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -587,11 +611,38 @@
     <ClInclude Include="PlayerFlyingBeatenState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerDyingState.h">
-      <Filter>Objects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="HealthPoint.h">
       <Filter>Objects\MapStaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizard.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardDeadState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardFlyingState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardPunchingState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardRunningState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardShootingState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardStandingState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardStandSmileState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWizardState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletWizardSpecial.h">
+      <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
