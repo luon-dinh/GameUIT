@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -139,6 +139,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BossWizard.cpp" />
+    <ClCompile Include="BossWizardDeadState.cpp" />
+    <ClCompile Include="BossWizardFlyingState.cpp" />
+    <ClCompile Include="BossWizardPunchingState.cpp" />
+    <ClCompile Include="BossWizardRunningState.cpp" />
+    <ClCompile Include="BossWizardShootingState.cpp" />
+    <ClCompile Include="BossWizardStandingState.cpp" />
+    <ClCompile Include="BossWizardStandSmileState.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="BulletRedRocket.cpp" />
     <ClCompile Include="BulletRedRocketLinear.cpp" />
@@ -213,6 +221,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BossWizard.h" />
+    <ClInclude Include="BossWizardDeadState.h" />
+    <ClInclude Include="BossWizardFlyingState.h" />
+    <ClInclude Include="BossWizardPunchingState.h" />
+    <ClInclude Include="BossWizardRunningState.h" />
+    <ClInclude Include="BossWizardShootingState.h" />
+    <ClInclude Include="BossWizardStandingState.h" />
+    <ClInclude Include="BossWizardStandSmileState.h" />
+    <ClInclude Include="BossWizardState.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletGreenCannon.h" />
     <ClInclude Include="BulletManager.h" />
