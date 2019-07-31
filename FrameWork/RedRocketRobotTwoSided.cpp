@@ -247,6 +247,7 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 		{
 			ChangeState(State::STANDING);
 			this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+			this->SetStandingGround(object);
 		}
 	}
 }
@@ -261,6 +262,8 @@ void RedRocketRobotTwoSided::Fire()
 
 void RedRocketRobotTwoSided::OnNotCollision(Object * object)
 {
-	if (object->type == Type::GROUND && this->robotState == State::WALKING)
+	if (object->type == Type::GROUND && this->StandOnCurrentGround() && this->robotState == State::WALKING)
+	{
 		ChangeState(State::FALLING);
+	}
 }

@@ -27,4 +27,8 @@ public:
 	virtual void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	BoundingBox getBoundingBox() override;
+	int GetBulletDamage() override {
+		return 1;
+	};
+	bool CanGetThroughShield() override { return true; }
 };

@@ -98,6 +98,7 @@ public:
 	static int OBJECT_RENDER_WEIGHT;
 	static int ITEM_RENDER_WEIGHT;
 	static int BULLET_RENDER_WEIGHT;
+	static int ENEMY_RENDER_WEIGHT;
 };
 
 //Struct này dùng để lưu lại thông tin của player khi qua các màn khác nhau.
@@ -110,10 +111,10 @@ struct PlayerInfo
 };
 //dung cho enemy
 enum RunType {
-	THREESHOOTER,
-	NOTRUN,
-	CANRUN,
-	SPECIAL,
+	THREESHOOTER = 0,
+	NOTRUN = 1,
+	CANRUN = 2,
+	SPECIAL = 3,
 };
 
 enum RedRocketRobotType
@@ -162,6 +163,7 @@ enum Tag {
 	BLUESOLDIER,
 	STATICOBJECT,
 	BLUESOLDERBULLET,
+	BULLET,
 	BULLETEXPLODE,
 	REDROCKERTERBULLET,
 	WHITEROCKERTERBULLET,
@@ -191,7 +193,8 @@ enum Type {
 	ONOFF,
 	DOOR,
 	ITEMCONTAINERTYPE,
-	ENEMY
+	ENEMY,
+	BULLETTYPE
 	//cac loai dan
 };
 

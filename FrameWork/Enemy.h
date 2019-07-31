@@ -36,4 +36,9 @@ public:
 	virtual void Update(float dt);
 	virtual void Render();
 	virtual void Respawn();
+
+	int RenderWeight() override
+	{
+		return RenderWeightOfObjects::ENEMY_RENDER_WEIGHT;
+	}
 };

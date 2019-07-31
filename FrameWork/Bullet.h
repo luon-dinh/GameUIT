@@ -16,6 +16,8 @@ public:
 	Bullet()
 	{
 		animationExplode = new Animation(Tag::BULLETEXPLODE, 0, 3, TIME_PER_FRAME/3);
+		this->tag == Tag::BULLET;
+		this->type == Type::BULLETTYPE;
 	}
 	~Bullet()
 	{
@@ -57,4 +59,6 @@ public:
 	{
 
 	}
+	virtual int GetBulletDamage() { return 0; }
+	virtual bool CanGetThroughShield() { return false; }
 };

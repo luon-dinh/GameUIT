@@ -24,6 +24,7 @@ int ObjectID::BLUESOLDIER = 9;
 int ObjectID::REDROCKET = 10;
 
 //Định nghĩa trọng số render của các loại object khác nhau.
-int RenderWeightOfObjects::BULLET_RENDER_WEIGHT = 2;
+int RenderWeightOfObjects::BULLET_RENDER_WEIGHT = 3;
 int RenderWeightOfObjects::ITEM_RENDER_WEIGHT = 1;
 int RenderWeightOfObjects::OBJECT_RENDER_WEIGHT = 0;
+int RenderWeightOfObjects::ENEMY_RENDER_WEIGHT = 2;
