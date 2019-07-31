@@ -27,7 +27,7 @@ Player::Player() : GamePlayerProperty()
 
 	this->flipRenderFrame = 0;
 
-	this->SetHealth(999 * HEALTH_PER_HEART);
+	this->SetHealth(4 * HEALTH_PER_HEART);
 }
 
 PlayerState* Player::GetPreviousState() {
