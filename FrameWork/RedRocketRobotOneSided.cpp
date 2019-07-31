@@ -40,14 +40,32 @@ void RedRocketRobotOneSided::Update(float dt)
 		EnemyAliveUpdate(dt);
 	else if (robotState == State::STANDING || robotState == State::DUCKING)
 		EnemyAttackingUpdate(dt);
-
+	else if (robotState == State::JUMPING)
+		EnemyJumpingUpdate(dt);
 	else if (robotState == State::BEATEN)
 		EnemyBeatenUpdate(dt);
-
 	else if (robotState == State::DEAD)
 		EnemyDeadUpdate(dt);
 
 	this->currentAnimation->Update(dt);
+}
+
+void RedRocketRobotOneSided::EnemyJumpingUpdate(double dt)
+{
+	//Khi vẫn còn trong trạng thái nhảy lên thì nhảy lên.
+	if (abs(this->pos.x - destJumpX) > jumpLength / 2)
+	{
+		this->pos.y += this->vy;
+		this->pos.x += this->vx;
+	}
+	else
+	{
+		this->pos.y -= this->vy;
+		this->pos.x += this->vx;
+	}
+	//Xét nếu jumping xong rồi thì chuyển state lại qua standing.
+	if (this->pos.y <= prevJumpY)
+		ChangeState(State::STANDING);
 }
 
 void RedRocketRobotOneSided::Render()
@@ -83,6 +101,22 @@ void RedRocketRobotOneSided::EnemyAliveUpdate(double dt)
 			this->pos.x += this->vx;
 			currentWalkingTick = 0;
 		}
+		//Nếu mặt đang hướng theo hướng player, đi đến player và player chọi khiên thì nhảy.
+		if (Shield::getInstance()->state == Shield::ShieldState::Attack && Shield::getInstance()->GetMoveDirection() != this->direction)
+		{
+			//Chỉ nhảy khi thấy player ném khiên.
+			//Nếu player đang đứng bên trái của robot.
+			if (player->pos.x > this->pos.x && isMovingLeftToRight && this->direction == MoveDirection::LeftToRight)
+			{
+				//Nếu ném khiên.
+				ChangeState(State::JUMPING);
+			}
+			else if (player->pos.x < this->pos.x && !isMovingLeftToRight && this->direction == MoveDirection::RightToLeft)
+			{
+				ChangeState(State::JUMPING);
+			}
+		}
+			
 	}
 	else //Dừng lại và bắn.
 	{
@@ -93,8 +127,7 @@ void RedRocketRobotOneSided::EnemyAliveUpdate(double dt)
 void RedRocketRobotOneSided::EnemyAttackingUpdate(double dt)
 {
 	//Xét nếu đã tấn công rồi thì ta xử lý riêng.
-	if (isAttacked)
-	{
+	if (isAttacked)	{
 		if (robotState == State::DUCKING)
 		{
 			if (currentStateTime > crouchingState)
@@ -182,6 +215,7 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		break;
 	case State::STANDING:
 		this->currentAnimation = standing;
+		this->vy = 0;
 		break;
 	case State::WALKING:
 		this->currentAnimation = walking;
@@ -192,6 +226,15 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 	case State::DEAD:
 		this->currentAnimation = explodeAnim;
 		this->vx = Shield::getInstance()->vx / 3;
+		break;
+	case State::JUMPING:
+		this->currentAnimation = crouching;
+		this->prevJumpY = pos.y;
+		if (isMovingLeftToRight)
+			destJumpX = this->pos.x + jumpLength;
+		else
+			destJumpX = this->pos.x - jumpLength;
+		this->vy = (2*jumpHeight*abs(this->vx))/jumpLength;
 		break;
 	}
 
