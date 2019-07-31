@@ -593,7 +593,6 @@ void Player::OnFallingOffGround() {
 			this->SetOnAirState(Player::OnAir::Falling);
 		this->ChangeState(State::JUMPING);
 		this->vy -= 0.9;
-		this->pos.x += 5 * vx;
 		this->SetStandingGround(NULL);
 	}
 }
