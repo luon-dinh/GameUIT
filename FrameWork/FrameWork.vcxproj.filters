@@ -336,6 +336,12 @@
     <ClCompile Include="PlayerFlyingBeatenState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDyingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthPoint.cpp">
+      <Filter>Objects\MapStaticObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -580,6 +586,12 @@
     </ClInclude>
     <ClInclude Include="PlayerFlyingBeatenState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDyingState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthPoint.h">
+      <Filter>Objects\MapStaticObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

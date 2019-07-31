@@ -19,8 +19,17 @@ private:
 	void AddPosX();
 	void AddPosY();
 public:
-	float deltaY = 0;
-	float deltaX = 0;
+	int flyTimes;
+	const float minMap = 15;
+	const float maxMap = 250;
+	const float flySpeedx1 = 0.8;
+	const float flySpeedx2 = 2.5;
+	const float flySpeedy = 2;
+	const float xRun = 100;
+	const float xPunch = 30;
+	int hitTime;
+	float deltaY;
+	float deltaX;
 	float getWidth();
 	float getHeight();
 	float getPosToBottom();

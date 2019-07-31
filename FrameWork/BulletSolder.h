@@ -6,6 +6,7 @@ public:
 	BulletSolder()
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
+		this->tag = Tag::BLUESOLDERBULLET;
 		this->isActive = false;
 		this->vy = 0;
 		this->existTime = 0;
@@ -13,7 +14,7 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (this->direction == Player::MoveDirection::RightToLeft)
+		if (this->direction == MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
 		else
 		{
@@ -22,15 +23,6 @@ public:
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
 		animation->Update(dt);
-		if (existTime > ENEMY_BULLET_EXIST_TIME||animation->curframeindex==2)
-		{
-			existTime = 0;
-			DeactivateObjectInGrid();
-		}
-		else 
-		{
-			existTime += dt;
-		}
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override

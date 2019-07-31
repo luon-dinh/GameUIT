@@ -3,8 +3,9 @@
 #include"BossWizard.h"
 class BossWizardFlyingState :public BossWizardState {
 public:
-	float maxX=250;
-	float maxY=100;
+	const float mapWidth = 256;
+	const float mapHeight = 220;
+	const float maxFly1 = 50;
 	void Update(float dt) override;
 	void Fly(int flyMode);
 	void InputHandler() override;

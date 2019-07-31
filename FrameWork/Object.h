@@ -41,6 +41,7 @@ public:
 	Type type;
 
 	float width, height;
+	MoveDirection direction;
 
 	virtual BoundingBox getBoundingBox();
 	virtual float getWidth();
@@ -123,9 +124,7 @@ protected:
 	//Vì trạng thái của ItemLooter sẽ được lưu giữ lại chứ không mất đi như enemy. 
 	bool isActivatedInGrid = true;
 
-	bool renderFlip; // Render không liên tục
 
-	MoveDirection direction;
 
 	OnAir onAirState;
 	OnAir preOnAirState;
