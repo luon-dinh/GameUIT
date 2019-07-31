@@ -176,12 +176,12 @@ void Shield::Update(float dt)
 			{
 			case Player::LeftToRight:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.x = player->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
 				break;
 			}
 			case Player::RightToLeft:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().left + 2;//shield ở vị trí bên trái của player
+				this->pos.x = player->getBoundingBox().left + 2;//shield ở vị trí bên trái của player
 				break;
 			}
 			default:
@@ -196,13 +196,13 @@ void Shield::Update(float dt)
 			{
 			case Player::MoveDirection::LeftToRight:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().right + 1;//shield ở vị trí bên phải của player
+				this->pos.x = player->getBoundingBox().right + 1;//shield ở vị trí bên phải của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
 			case Player::MoveDirection::RightToLeft:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().left;//shield ở vị trí bên trái của player
+				this->pos.x = player->getBoundingBox().left;//shield ở vị trí bên trái của player
 				this->pos.y = player->pos.y + 10;
 				break;
 			}
@@ -218,13 +218,13 @@ void Shield::Update(float dt)
 			{
 			case Player::MoveDirection::LeftToRight:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
+				this->pos.x = player->getBoundingBox().right - 2;//shield ở vị trí bên phải của player
 				this->pos.y = player->pos.y - 10;
 				break;
 			}
 			case Player::MoveDirection::RightToLeft:
 			{
-				this->pos.x = player->playerstate->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
+				this->pos.x = player->getBoundingBox().left + 1;//shield ở vị trí bên trái của player
 				this->pos.y = player->pos.y - 10;
 				break;
 			}
