@@ -48,6 +48,11 @@ void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
 		this->curDashTime = 0;
 	}
 
+	if (object->type == Type::BULLETTYPE) {
+		player->OnCollisionWithBullet((Bullet*)object);
+		return;
+	}
+
 	
 	//this->curDashTime = 0;
 	//// collide with ground

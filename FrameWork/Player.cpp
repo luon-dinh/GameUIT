@@ -526,8 +526,8 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	switch (object->type) {
 		case Type::ENEMY: 
 			if (this->state != State::SHIELD_DOWN)
-				OnCollisionWithEnemy(object);
 			return;
+				OnCollisionWithEnemy(object);
 		case Type::BULLETTYPE:
 			OnCollisionWithBullet((Bullet*)object);
 			return;
@@ -729,41 +729,34 @@ bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 }
 
 void Player::OnCollisionWithEnemy(Object* enemy) {
-	// ở trạng thái vô địch thì không xét va chạm
-	if (this->IsNonAttackable() || this->IsImmortal()) {
-		return;
-	}
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
 		this->pos.x -= 5;
 	}
 	else {
 		this->pos.x += 5;
 	}
-	if (this->state == State::JUMPING) {
-		this->ChangeState(State::FLYING_BEATEN);
+	if (this->GetOnAirState() == OnAir::None) {
+		this->ChangeState(State::BEATEN);
 	}
 	else {
-		this->ChangeState(State::BEATEN);
+		this->ChangeState(State::FLYING_BEATEN);
 	}
 	// sát thương khi va chạm enemy luôn là 1
 	this->BeingAttacked(1);
 }
 void Player::OnCollisionWithBullet(Bullet* bullet) {
-	// trong trường hợp có shield và đạn không xuyên shield được
-	if (this->hasShield && !bullet->CanGetThroughShield()) {
-		return;
-	}
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
 		this->pos.x -= 5;
 	}
 	else {
 		this->pos.x += 5;
 	}
-	if (this->state == State::JUMPING) {
-		this->ChangeState(State::FLYING_BEATEN);
+	this->SetVx(0);
+	if (this->GetOnAirState() == OnAir::None) {
+		this->ChangeState(State::BEATEN);
 	}
 	else {
-		this->ChangeState(State::BEATEN);
+		this->ChangeState(State::FLYING_BEATEN);
 	}
 	this->BeingAttacked(bullet->GetBulletDamage());
 }

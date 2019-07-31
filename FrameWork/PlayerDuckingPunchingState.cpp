@@ -23,5 +23,20 @@ void PlayerDuckingPunchingState::Update(float dt) {
 }
 
 void PlayerDuckingPunchingState::OnCollision(Object* object, collisionOut* collision) {
+	auto player = Player::getInstance();
+	auto side = collision->side;
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
+		return;
+	}
 
+	if (object->type == Type::BULLETTYPE) {
+		auto castBullet = (Bullet*)object;
+		if (player->hasShield) {
+			if ((player->GetMoveDirection() == Object::MoveDirection::LeftToRight && side == CollisionSide::right) || (player->GetMoveDirection() == Object::MoveDirection::RightToLeft && side == CollisionSide::left) && !castBullet->CanGetThroughShield()) {
+				return;
+			}
+		}
+		player->OnCollisionWithBullet(castBullet);
+	}
 }

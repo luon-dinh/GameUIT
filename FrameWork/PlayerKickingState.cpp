@@ -86,8 +86,8 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 		return;
 	}
 
-	if (object->type == Type::SOLIDBOX) {
-		player->OnCollisionWithSolidBox(object, collision);
+	if (object->type == Type::ENEMY) {
+		player->OnCollisionWithEnemy(object);
 	}
 }
 
