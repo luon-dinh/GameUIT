@@ -192,7 +192,8 @@ enum Type {
 	ONOFF,
 	DOOR,
 	ITEMCONTAINERTYPE,
-	ENEMY
+	ENEMY,
+	BULLETTYPE
 	//cac loai dan
 };
 
