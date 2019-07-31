@@ -4,7 +4,7 @@
 
 Player* Player::instance = NULL;
 
-Player::Player()
+Player::Player() : GamePlayerProperty()
 {
 	LoadAllAnimations();
 	LoadAllStates();
@@ -26,6 +26,8 @@ Player::Player()
 	this->collisionAffect = TRUE;
 
 	this->SetMoveProperty(MoveProperties::StoppedBySolidBox);
+
+	this->flipRenderFrame = 0;
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -53,7 +55,9 @@ void Player::LoadAllAnimations() {
 	animations[FLOATING] = new Animation(PLAYER, 28, 37);
 	animations[DIVING] = new Animation(PLAYER, 37, 39);
 	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
-	animations[BEATEN] = new Animation(PLAYER, 29, 30);
+	animations[BEATEN] = new Animation(PLAYER, 26, 27);
+	// dùng tạm animation của BEATEN 
+	animations[FLYING_BEATEN] = new Animation(PLAYER, 26, 28);
 }
 
 void Player::LoadAllStates() {
@@ -73,6 +77,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::STAND_PUNCH] = new PlayerStandPunchState();
 	this->playerStates[State::CLIMBING] = new PlayerClimbingState();
 	this->playerStates[State::BEATEN] = new PlayerBeatenState();
+	this->playerStates[State::FLYING_BEATEN] = new PlayerFlyingBeatenState();
 }
 
 
@@ -111,6 +116,9 @@ void Player::Update(float dt)
 	// Update state
 	this->playerstate->Update(dt);
 
+	// update các thuộc tính của game
+	this->UpdateGameProperty();
+
 	UpdatePosition();
 
 	// Update animation
@@ -119,6 +127,26 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
+	// Đang không ở trạng thâí vô địch thì render như thường
+	if (!this->IsNonAttackable()) {
+		InnerRender();
+		return;
+	}
+
+	this->flipRenderFrame++;
+	if (this->flipRenderFrame < FLIP_RENDER_FRAME / 2) {
+		return;
+	}
+	else {
+		InnerRender();
+		if (this->flipRenderFrame == FLIP_RENDER_FRAME) {
+			this->flipRenderFrame = 0;
+		}
+	}
+
+}
+
+void Player::InnerRender() {
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
 	if (this->direction == Player::MoveDirection::LeftToRight) {
 		// move from left to right
@@ -155,6 +183,10 @@ void Player::ChangeState(PlayerState* newplayerstate)
 void Player::ChangeState(State stateName) {
 	if (this->state == stateName)
 		return;
+	// nếu đang bất tử thì chuyển sang normal
+	if (this->state == State::DASHING || this->state == State::ROLLING) {
+		this->SetToNormalState();
+	}
 	float PosToBottom1 = this->getPosToBotom();
 	InnerChangeState(stateName);
 	auto shield = Shield::getInstance();
@@ -210,7 +242,7 @@ void Player::ChangeState(State stateName) {
 		else {
 			SetVx(-PLAYER_DASH_SPEED);
 		}
-		//this->SetVx(PLAYER_DASH_SPEED);
+		this->SetToImmortalState();				// chuyển sang trạng thái bất tử
 		break;
 	}
 	case State::DIVING: {
@@ -231,7 +263,7 @@ void Player::ChangeState(State stateName) {
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::NotRender);
 		}
-
+		this->SetToImmortalState();
 		break;
 	}
 	case State::KICKING: {
@@ -263,6 +295,11 @@ void Player::ChangeState(State stateName) {
 		}
 		this->SetOnAirState(OnAir::HangOnTheRope);
 		break;
+	}
+	case State::FLYING_BEATEN: {
+		this->SetVx(0);
+		this->SetOnAirState(OnAir::Falling);
+		return;
 	}
 	}
 }
@@ -461,12 +498,21 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
-	switch (object->type) {
-		case Type::ENEMY: OnCollisionWithEnemy(object);return;
+	// ở trạng thái vô địch
+	if (this->IsNonAttackable() || this->IsImmortal()) {
+		this->playerstate->OnCollision(object, collisionOut);
+		this->collisionDetected = true;
+		return;
 	}
-
-	this->playerstate->OnCollision(object, collisionOut);
-	this->collisionDetected = true;
+	switch (object->type) {
+		case Type::ENEMY: 
+			OnCollisionWithEnemy(object);
+			return;
+		default: {
+			this->playerstate->OnCollision(object, collisionOut);
+			this->collisionDetected = true;
+		}
+	}
 }
 void Player::OnNotCollision(Object* object) {
 	switch (object->type) {
@@ -522,11 +568,6 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
 	case Type::GROUND: {
-		//if (side == CollisionSide::left || side == CollisionSide::right)
-		//{
-		//	canDash = false;
-		//}
-		// Nếu đang rơi xuống nước thì không xét va chạm với ground
 		if (this->GetOnAirState() == OnAir::DropToWater)
 			return false;
 		if (this->GetOnAirState() == OnAir::Falling) {
@@ -683,8 +724,19 @@ bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 }
 
 void Player::OnCollisionWithEnemy(Object* enemy) {
-	this->pos.x -= 3 * vx;
-	this->ChangeState(State::BEATEN);
+	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
+		this->pos.x -= 10;
+	}
+	else {
+		this->pos.x += 10;
+	}
+	if (this->state == State::JUMPING) {
+		this->ChangeState(State::FLYING_BEATEN);
+	}
+	else {
+		this->ChangeState(State::BEATEN);
+	}
+	this->BeingAttacked(1);
 }
 #pragma endregion
 

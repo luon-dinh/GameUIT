@@ -2,12 +2,12 @@
 #include "PlayerState.h"
 #include "Player.h"
 
-class PlayerBeatenState : public PlayerState {
+class PlayerFlyingBeatenState : public PlayerState {
 private:
 	const int ANIMATION_FRAME = 8;
 	int currentFrame;
 public:
-	PlayerBeatenState();
+	PlayerFlyingBeatenState();
 	void InputHandler() override;
 	void Update(float dt) override;
 	void OnCollision(Object* object, collisionOut* collision) override;

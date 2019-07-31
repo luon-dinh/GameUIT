@@ -127,6 +127,8 @@ void Object::SetOnAirState(Object::OnAir onAirState) {
 }
 
 bool Object::IsOnGround() {
+	if (this->currentGround == NULL)
+		return false;
 	return this->currentGround->type == Type::GROUND;
 }
 

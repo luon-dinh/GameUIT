@@ -18,15 +18,18 @@
 #include "PlayerShieldAttackState.h"
 #include "PlayerClimbingState.h"
 #include "PlayerBeatenState.h"
+#include "PlayerFlyingBeatenState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
+#include "GamePlayerProperty.h"
+
 #include "Enemy.h"
 
 
 
-class Player :public Object
+class Player :public Object, GamePlayerProperty
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
@@ -46,6 +49,11 @@ private:
 	PlayerState* prevState;
 	bool collisionDetected;
 
+	void InnerRender();
+	
+	int flipRenderFrame;
+	const int FLIP_RENDER_FRAME = 10;
+	
 public:
 
 	int health;

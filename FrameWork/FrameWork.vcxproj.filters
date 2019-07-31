@@ -333,6 +333,9 @@
     <ClCompile Include="PlayerBeatenState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerFlyingBeatenState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -573,6 +576,9 @@
       <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClInclude>
     <ClInclude Include="PlayerBeatenState.h">
+      <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFlyingBeatenState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
