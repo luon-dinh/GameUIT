@@ -197,6 +197,9 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 20, 4, 28, 11));//3
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 20, 27, 28));//4
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 36, 26, 44));//5
+
+	// cắt sprite cho HP
+	spriteManager->addSprite(new Sprite(Tag::HP_RENDER, 0, 0, 8, 8));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

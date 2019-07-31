@@ -159,6 +159,7 @@
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GroundCollision.cpp" />
+    <ClCompile Include="HealthPoint.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GroundCollision.h" />
+    <ClInclude Include="HealthPoint.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyboardManager.h" />

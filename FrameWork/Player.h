@@ -19,12 +19,13 @@
 #include "PlayerClimbingState.h"
 #include "PlayerBeatenState.h"
 #include "PlayerFlyingBeatenState.h"
+#include "PlayerDyingState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
 #include "GamePlayerProperty.h"
-
+#include "HealthPoint.h"
 #include "Enemy.h"
 
 
@@ -56,9 +57,6 @@ private:
 	
 public:
 
-	int health;
-	int live;
-	int energy;
 	bool shieldActive;
 	BOOL hasShield;
 	bool canDash = true;
@@ -78,7 +76,6 @@ public:
 	void Update(float dt);
 	float getPosToBotom();
 	void Render();
-	void RenderFlip(float dt);
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
 	void SetPreviousState(State stateName);
@@ -115,7 +112,6 @@ public:
 	ShieldReturnEdge GetShieldReturnEdge();
 	D3DXVECTOR2 GetShieldReturnPos();
 
-	bool StandOnCurrentGround();
 	bool IsFootStepOn();
 
 
@@ -136,6 +132,7 @@ public:
 	void OnClimbingTheRope(Object* rope);
 
 	void OnCollisionWithEnemy(Object* enemy);
+	void OnCollisionWithBullet(Object* bullet);
 
 #pragma endregion
 
