@@ -247,6 +247,7 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 		{
 			ChangeState(State::STANDING);
 			this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+			previousGround = object;
 		}
 	}
 }
@@ -261,6 +262,24 @@ void RedRocketRobotTwoSided::Fire()
 
 void RedRocketRobotTwoSided::OnNotCollision(Object * object)
 {
-	if (object->type == Type::GROUND && this->robotState == State::WALKING)
-		ChangeState(State::FALLING);
+	//Thử va chạm nếu có vận tốc.
+	int prevVy = this->vy;
+	int prevY = this->pos.y;
+	this->vy = -2;
+	this->pos.y -= this->vy;
+	if (object->type == Type::GROUND && object == previousGround && this->robotState == State::WALKING)
+	{
+		this->vy = prevVy;
+		this->pos.y = prevY;
+		//Nếu không còn va chạm thì ta cho nó falling luôn.
+		if (Collision::getInstance()->SweptAABB(this->getBoundingBox(), object->getBoundingBox()).collisionTime >= 1)
+		{
+			ChangeState(State::FALLING);
+		}
+	}
+	else
+	{
+		this->vy = prevVy;
+		this->pos.y = prevY;
+	}
 }

@@ -24,6 +24,9 @@ protected:
 
 	//State trước đó.
 	State previousState;
+
+	//Ground trước đó mà nó đụng (dùng để xét rơi khỏi ground).
+	Object* previousGround;
 public:
 	RedRocketRobotTwoSided(int posX, int posY);
 	~RedRocketRobotTwoSided();

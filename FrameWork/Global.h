@@ -110,10 +110,10 @@ struct PlayerInfo
 };
 //dung cho enemy
 enum RunType {
-	THREESHOOTER,
-	NOTRUN,
-	CANRUN,
-	SPECIAL,
+	THREESHOOTER = 0,
+	NOTRUN = 1,
+	CANRUN = 2,
+	SPECIAL = 3,
 };
 
 enum RedRocketRobotType
