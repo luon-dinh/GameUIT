@@ -15,6 +15,18 @@ class Grid // lam singleton
 {
 	const int cellSize = 72;
 
+	//Số lượng enemy tối đa được thêm vào một Active Zone cùng lúc.
+	const int maxEnemyAtOnce = 2;
+
+	//Số lượng item tối đa trong một Active Zone cùng lúc.
+	const int maxItemAtOnce = 3;
+
+	//Số lượng enemy hiện có trong Grid.
+	int currentEnemyNumber = 0;
+
+	//Số lượng item hiện có trong Grid.
+	int currentItemNumber = 0;
+
 	//Danh sách các object được tổ chức dưới dạng 2 chiều (từng cell) và trong các cell chứa các Unit.
 	std::list<Object*> ** cells;
 	
@@ -46,6 +58,7 @@ public:
 	void Add(Object *); //Thêm object vào grid dựa vào toạ độ của object.
 	//Đây là hàm thêm đặc biệt, nó sẽ trải static object ra trên nhiều cell thay vì chỉ 1 cell như hàm trên.
 	void AddStaticMapObjects(MapStaticObject *); 
+	bool AddObjectAndIncreaseCounter(Object *);
 
 	void ActivateCells(); //Activate những vùng sẽ được xử lý bởi Grid (vùng được khoanh bởi Camera).
 	//Nhớ kiểm tra va chạm trước khi Update.
@@ -59,6 +72,8 @@ private:
 	void CollisionProcessCellToCell(int firstCellX, int firstCellY, int secondCellX, int secondCellY);
 	void CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2);
 	bool CollisionProcessOfStaticObject(MapStaticObject* sObj1, Object* obj2);
+
+	void DeleteObjectAndDecreaseCounter(Object *);
 
 	void LoadSpawnPosition(const char *);
 	void LoadMapObjects(const char *);

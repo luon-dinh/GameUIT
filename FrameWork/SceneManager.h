@@ -28,7 +28,7 @@ public:
 	Scene* getCurrentScene();
 
 	//Hàm dùng để thêm một object vào Scene.
-	void AddObjectToCurrentScene(Object* object);
+	bool AddObjectToCurrentScene(Object* object);
 
 	//Hàm dùng để cập nhật Scene hiện tại.
 	void Update(double dt);

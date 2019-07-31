@@ -41,6 +41,9 @@ private:
 	long mapHeight;
 	long mapWidth;
 
+	//Biến dùng để giữ trạng thái khoá của Camera.
+	bool isCameraLocked = false;
+
 	static Camera * cameraInstance;
 
 public:
@@ -90,4 +93,9 @@ public:
 	//Hàm này sẽ hỗ trợ chuyển từ WorldPort sang ViewPort
 	D3DXVECTOR3 convertWorldToViewPort(D3DXVECTOR3 worldPortPos);
 	Camera(Camera*);
+
+	//Hàm dùng để khoá camera.
+	void LockCamera();
+	void UnlockCamera();
+	bool GetCameraLockState() { return isCameraLocked; }
 };

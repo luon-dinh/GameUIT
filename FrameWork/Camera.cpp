@@ -149,3 +149,12 @@ D3DXVECTOR3 Camera::convertWorldToViewPort(D3DXVECTOR3 worldPortPos)
 	D3DXVECTOR3 viewPortPos(vp_pos.x, vp_pos.y, 0);
 	return viewPortPos;
 }
+
+void Camera::LockCamera()
+{
+	isCameraLocked = true;
+}
+void Camera::UnlockCamera()
+{
+	isCameraLocked = false;
+}
