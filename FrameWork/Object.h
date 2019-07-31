@@ -97,6 +97,7 @@ public:
 	virtual void SetOnAirState(OnAir airState);
 
 	virtual bool IsOnGround();
+	virtual bool StandOnCurrentGround();
 
 	virtual Object* GetStandingGround();
 	virtual void SetStandingGround(Object* ground);

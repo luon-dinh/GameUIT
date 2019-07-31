@@ -132,6 +132,21 @@ bool Object::IsOnGround() {
 	return this->currentGround->type == Type::GROUND;
 }
 
+bool Object::StandOnCurrentGround() {
+	auto ground = this->GetStandingGround();
+
+	if (ground == NULL)
+		return FALSE;
+
+	auto groundBox = ground->getStaticObjectBoundingBox();
+	auto objectBox = this->getBoundingBox();
+
+	if (Collision::getInstance()->IsCollide(objectBox, groundBox)) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 
 Object* Object::GetStandingGround() {
