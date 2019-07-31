@@ -27,7 +27,7 @@ void PlayerRunningState::InputHandler()
 			player->ChangeState(State::JUMPING);
 			return;
 		}
-		if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
+		if (keyboard->getKeyPressedOnce	(PLAYER_ATTACK)) {
 			// nếu đang có shield thì chuyển qua trạng thái shield attack
 			if (player->hasShield) {
 				player->ChangeState(State::SHIELD_ATTACK);
