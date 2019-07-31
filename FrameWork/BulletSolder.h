@@ -23,15 +23,6 @@ public:
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
 		animation->Update(dt);
-		if (existTime > ENEMY_BULLET_EXIST_TIME||animation->curframeindex==2)
-		{
-			existTime = 0;
-			DeactivateObjectInGrid();
-		}
-		else 
-		{
-			existTime += dt;
-		}
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override

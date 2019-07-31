@@ -57,8 +57,7 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 	case Type::SOLIDBOX:
 		this->vy = 0;
 		this->pos.y = object->getStaticObjectBoundingBox().top + this->getHeight() / 2;
-		if (stateName == State::JUMPING)
-			ChangeState(State::RUNNING);
+		ChangeState(State::RUNNING);
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
@@ -82,13 +81,7 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 	{
 	case Type::GROUND:
 	case Type::SOLIDBOX:
-		if (side == CollisionSide::bottom &&onAirState!=Jumping)
-		{
 			this->vy = 0;
-			if (stateName == State::JUMPING)
-				ChangeState(State::RUNNING);
-			this->onAirState == OnAir::None;
-		}
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
@@ -155,7 +148,7 @@ void Solder::Update(float dt)
 		case State::STANDING:
 			if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
 			{
-				if (runType == RunType::NOTRUN)
+				if (runType == RunType::NOTRUN|| runType == RunType::CANRUN)
 				{
 					if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
 					{
@@ -165,34 +158,24 @@ void Solder::Update(float dt)
 						bullet->direction = this->direction;
 						bullet->pos.y = this->getBoundingBox().top - 4;
 						bullet->pos.x = this->pos.x;
-						scene->AddObjectToCurrentScene(bullet);
-					}
-				}
-				if (runType == RunType::THREESHOOTER)
-				{
-					if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
-					{
-						auto scene = SceneManager::getInstance();
-						auto bullet = new BulletSolder();
-						bullet->existTime = 0;
-						bullet->direction = this->direction;
-						bullet->pos.y = this->getBoundingBox().top - 4;
-						bullet->pos.x = this->pos.x;
-						scene->AddObjectToCurrentScene(bullet);
-						auto bullet1 = new BulletSolder();
-						bullet1->vy = -0.5;
-						bullet1->existTime = 0;
-						bullet1->direction = this->direction;
-						bullet1->pos.y = this->getBoundingBox().top - 4;
-						bullet1->pos.x = this->pos.x;
-						scene->AddObjectToCurrentScene(bullet1);
-						auto bullet2 = new BulletSolder();
-						bullet2->vy = 0.5;
-						bullet2->existTime = 0;
-						bullet2->direction = this->direction;
-						bullet2->pos.y = this->getBoundingBox().top - 4;
-						bullet2->pos.x = this->pos.x;
-						scene->AddObjectToCurrentScene(bullet2);
+  						scene->AddObjectToCurrentScene(bullet);
+						if (runType == RunType::THREESHOOTER)
+						{
+							auto bullet1 = new BulletSolder();
+							bullet1->vy = -0.5;
+							bullet1->existTime = 0;
+							bullet1->direction = this->direction;
+							bullet1->pos.y = this->getBoundingBox().top - 4;
+							bullet1->pos.x = this->pos.x;
+							scene->AddObjectToCurrentScene(bullet1);
+							auto bullet2 = new BulletSolder();
+							bullet2->vy = 0.5;
+							bullet2->existTime = 0;
+							bullet2->direction = this->direction;
+							bullet2->pos.y = this->getBoundingBox().top - 4;
+							bullet2->pos.x = this->pos.x;
+							scene->AddObjectToCurrentScene(bullet2);
+						}
 					}
 				}
 				timeCurrentState += dt;
@@ -218,7 +201,6 @@ void Solder::Update(float dt)
 						canJump = false;
 					}
 				}
-				
 			}
 			if (timeCurrentState > BLUE_SOLDER_RUNNING_TIME)
 			{
@@ -249,9 +231,7 @@ void Solder::Update(float dt)
 			deltaY += this->vy;
 			if (deltaY >= 60&&onAirState==OnAir::Jumping)
 				onAirState == OnAir::Falling;
-			break;
 		default:
-			timeCurrentState += dt;
 			break;
 		}
 	}

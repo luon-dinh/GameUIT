@@ -30,9 +30,9 @@ SceneManager::~SceneManager()
 		delete pittsburghPortal02;
 }
 
-void SceneManager::AddObjectToCurrentScene(Object *object)
+bool SceneManager::AddObjectToCurrentScene(Object *object)
 {
-	currentScene->AddObjectToPlayScene(object);
+	return currentScene->AddObjectToPlayScene(object);
 }
 
 void SceneManager::Update(double dt)
