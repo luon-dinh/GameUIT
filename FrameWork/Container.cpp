@@ -37,16 +37,20 @@ void Container::Update(float dt)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				scene->AddObjectToCurrentScene(item);
-				item = nullptr;
+				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+				if (scene->AddObjectToCurrentScene(item))
+					item = nullptr;
 				return;
 			}
 			if (numberItems != 0)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				scene->AddObjectToCurrentScene(newItem);
-				numberItems--;
+				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+				if (scene->AddObjectToCurrentScene(newItem))
+					numberItems--;
 			}
 		}
 	}
