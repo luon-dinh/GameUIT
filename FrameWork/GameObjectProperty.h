@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-
 class GameObjectProperty {
 protected:
 	int health;

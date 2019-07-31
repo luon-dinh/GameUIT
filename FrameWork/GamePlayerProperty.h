@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "GameObjectProperty.h"
 #include "Item.h"
-#include "Player.h"
 
 class GamePlayerProperty : public GameObjectProperty {
 protected:

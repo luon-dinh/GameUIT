@@ -109,6 +109,11 @@ Grid::~Grid()
 	for (int i = 0; i < mapHeight; ++i)
 		delete[]objectIDPerPosition[i];
 	delete objectIDPerPosition;
+
+	//Xoá danh sách các object.
+	for (int i = 0; i < mapHeight; ++i)
+		delete[]objectSpecialIDPerPosition[i];
+	delete objectSpecialIDPerPosition;
 }
 
 void Grid::LoadMapObjects(const char * mapObjectFilePath)
