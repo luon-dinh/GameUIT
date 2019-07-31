@@ -14,7 +14,7 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (this->direction == Player::MoveDirection::RightToLeft)
+		if (this->direction == MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
 		else
 		{

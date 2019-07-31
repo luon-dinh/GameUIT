@@ -1,13 +1,12 @@
 ﻿#pragma once
 #include"Object.h"
 #include"Camera.h"
-#include"Player.h"
+
 class Bullet:public Object {
 public:
 	float speed;
 	Animation* animation;
 	Animation* animationExplode;
-	Player::MoveDirection direction;
 	float existTime;
 	//Thời gian để sau khi nổ thì đạn biến mất.
 	const int delayDisappear = 300;
@@ -41,10 +40,10 @@ public:
 	{
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
 		switch (direction) {
-		case Player::MoveDirection::LeftToRight:
+		case MoveDirection::LeftToRight:
 			this->animation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
 			break;
-		case Player::MoveDirection::RightToLeft:
+		case MoveDirection::RightToLeft:
 			this->animation->Render(pos);
 			break;
 		default:
