@@ -14,12 +14,11 @@ void GamePlayerProperty::UpdateGameProperty() {
 	if (this->IsNonAttackable() && this->nonAttackableFrameCount != -1) {
 		this->UpdateNonAttackableState();
 	}
-
 }
 
 void GamePlayerProperty::BeingAttacked(int objectDamage) {
 	// giảm máu con của player
-	this->LoseHealth(this->health);
+	this->LoseHealth(objectDamage);
 
 	// nếu đang bất tử thì không xử lý
 	if (this->IsImmortal()) {

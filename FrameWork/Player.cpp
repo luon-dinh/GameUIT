@@ -13,8 +13,6 @@ Player::Player() : GamePlayerProperty()
 	this->pos.y = 80;
 	this->tag = Tag::PLAYER;
 	this->type = Type::NONE;
-	this->health = 100;
-	this->energy = 0;
 	this->vx = 0;
 	this->vy = 0;
 	this->direction = MoveDirection::LeftToRight;
@@ -28,6 +26,8 @@ Player::Player() : GamePlayerProperty()
 	this->SetMoveProperty(MoveProperties::StoppedBySolidBox);
 
 	this->flipRenderFrame = 0;
+
+	this->SetHealth(2 * HEALTH_PER_HEART);
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -58,6 +58,7 @@ void Player::LoadAllAnimations() {
 	animations[BEATEN] = new Animation(PLAYER, 26, 27);
 	// dùng tạm animation của BEATEN 
 	animations[FLYING_BEATEN] = new Animation(PLAYER, 26, 28);
+	//animations[DEAD] = new Animation(PLAYER, 29, 31);
 }
 
 void Player::LoadAllStates() {
@@ -78,6 +79,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::CLIMBING] = new PlayerClimbingState();
 	this->playerStates[State::BEATEN] = new PlayerBeatenState();
 	this->playerStates[State::FLYING_BEATEN] = new PlayerFlyingBeatenState();
+	//this->playerStates[State::DEAD] = new PlayerDead
 }
 
 
@@ -118,11 +120,18 @@ void Player::Update(float dt)
 
 	// update các thuộc tính của game
 	this->UpdateGameProperty();
+	HealthPoint::getInstance()->Update(this->GetHeart());
+
+	if (this->IsDead()) {
+		//this->ChangeState(State::DEAD);
+		return;
+	}
 
 	UpdatePosition();
 
 	// Update animation
 	this->curanimation->Update(dt);
+
 }
 
 void Player::Render()
@@ -130,20 +139,20 @@ void Player::Render()
 	// Đang không ở trạng thâí vô địch thì render như thường
 	if (!this->IsNonAttackable()) {
 		InnerRender();
-		return;
-	}
-
-	this->flipRenderFrame++;
-	if (this->flipRenderFrame < FLIP_RENDER_FRAME / 2) {
-		return;
 	}
 	else {
-		InnerRender();
-		if (this->flipRenderFrame == FLIP_RENDER_FRAME) {
-			this->flipRenderFrame = 0;
+		this->flipRenderFrame++;
+		if (this->flipRenderFrame < FLIP_RENDER_FRAME / 2) {
+			// do nothing here
+		}
+		else {
+			InnerRender();
+			if (this->flipRenderFrame == FLIP_RENDER_FRAME) {
+				this->flipRenderFrame = 0;
+			}
 		}
 	}
-
+	HealthPoint::getInstance()->Render();
 }
 
 void Player::InnerRender() {
@@ -157,11 +166,6 @@ void Player::InnerRender() {
 	}
 }
 
-void Player::RenderFlip(float dt) {
-	if ((int)dt % 2 == 0) {
-		Render();
-	}
-}
 
 Player* Player::getInstance()
 {
@@ -498,7 +502,7 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
-	// ở trạng thái vô địch
+	// ở trạng thái vô địch chỉ xét va chạm với static object
 	if (this->IsNonAttackable() || this->IsImmortal()) {
 		this->playerstate->OnCollision(object, collisionOut);
 		this->collisionDetected = true;
@@ -590,7 +594,6 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 		}
 		return false;
 	}
-
 	case Type::SOLIDBOX: {
 		if (this->collidedSolidBox == object) {
 			if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
@@ -643,20 +646,6 @@ void Player::OnFallingOffGround() {
 		this->SetStandingGround(NULL);
 	} 
 }
-bool Player::StandOnCurrentGround() {
-	auto ground = this->GetStandingGround();
-
-	if (ground == NULL)
-		return FALSE;
-
-	auto groundBox = ground->getStaticObjectBoundingBox();
-	auto playerBox = this->getBoundingBox();
-
-	if (Collision::getInstance()->IsCollide(playerBox, groundBox)) {
-		return TRUE;
-	}
-	return FALSE;
-}
 bool Player::TryStandOnGround(Object* ground) {
 	if (ground->type != Type::GROUND && ground->type != Type::SOLIDBOX)
 		return FALSE;
@@ -697,12 +686,10 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 void Player::OnHeadOnSolidBox(Object* solid) {
 	this->SetVy(0);
 }
-
 void Player::OnClimbingTheRope(Object* rope) {
 	this->ChangeState(State::CLIMBING);
 	this->pos.y = rope->getStaticObjectBoundingBox().bottom + 4 - this->getHeight() / 2;
 }
-
 bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 	auto objBox = object->getStaticObjectBoundingBox();
 	auto playerBox = this->getBoundingBox();
@@ -737,6 +724,9 @@ void Player::OnCollisionWithEnemy(Object* enemy) {
 		this->ChangeState(State::BEATEN);
 	}
 	this->BeingAttacked(1);
+}
+void Player::OnCollisionWithBullet(Object* bullet) {
+	
 }
 #pragma endregion
 
