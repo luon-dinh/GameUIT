@@ -512,6 +512,9 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 		case Type::ENEMY: 
 			OnCollisionWithEnemy(object);
 			return;
+		case Type::BULLETTYPE:
+			OnCollisionWithBullet((Bullet*)object);
+			return;
 		default: {
 			this->playerstate->OnCollision(object, collisionOut);
 			this->collisionDetected = true;
@@ -723,10 +726,27 @@ void Player::OnCollisionWithEnemy(Object* enemy) {
 	else {
 		this->ChangeState(State::BEATEN);
 	}
+	// sát thương khi va chạm enemy luôn là 1
 	this->BeingAttacked(1);
 }
-void Player::OnCollisionWithBullet(Object* bullet) {
-	
+void Player::OnCollisionWithBullet(Bullet* bullet) {
+	// trong trường hợp có shield và đạn không xuyên shield được
+	if (this->hasShield && !bullet->CanGetThroughShield()) {
+		return;
+	}
+	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
+		this->pos.x -= 10;
+	}
+	else {
+		this->pos.x += 10;
+	}
+	if (this->state == State::JUMPING) {
+		this->ChangeState(State::FLYING_BEATEN);
+	}
+	else {
+		this->ChangeState(State::BEATEN);
+	}
+	this->BeingAttacked(bullet->GetBulletDamage());
 }
 #pragma endregion
 

@@ -26,7 +26,11 @@
 #include "SolidBoxCollision.h"
 #include "GamePlayerProperty.h"
 #include "HealthPoint.h"
-#include "Enemy.h"
+#include "Bullet.h"
+#include "BulletGreenCannon.h"
+#include "BulletRedRocket.h"
+#include "BulletRedRocketLinear.h"
+#include "BulletRedRocketNonLinear.h"
 
 
 
@@ -132,7 +136,7 @@ public:
 	void OnClimbingTheRope(Object* rope);
 
 	void OnCollisionWithEnemy(Object* enemy);
-	void OnCollisionWithBullet(Object* bullet);
+	void OnCollisionWithBullet(Bullet* bullet);
 
 #pragma endregion
 
