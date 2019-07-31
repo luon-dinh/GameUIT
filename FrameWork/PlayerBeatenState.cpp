@@ -1,4 +1,4 @@
-#include "PlayerBeatenState.h"
+﻿#include "PlayerBeatenState.h"
 
 
 PlayerBeatenState::PlayerBeatenState() {
@@ -10,8 +10,14 @@ void PlayerBeatenState::InputHandler() {
 }
 
 void PlayerBeatenState::Update(float dt) {
-	auto player = Player::getInstance();
 	InputHandler();
+	auto player = Player::getInstance();
+	
+	// nếu chết thì chuyển sang trạng thái Dead
+	if (player->IsDead()) {
+		player->ChangeState(State::DEAD);
+		this->currentFrame = 0;
+	}
 	
 	this->currentFrame++;
 	if (this->currentFrame > ANIMATION_FRAME) {

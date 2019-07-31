@@ -31,10 +31,10 @@
 #include "BulletRedRocket.h"
 #include "BulletRedRocketLinear.h"
 #include "BulletRedRocketNonLinear.h"
+#include "PlayerHandPunch.h"
 
 
-
-class Player :public Object, GamePlayerProperty
+class Player :public Object, public GamePlayerProperty
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
@@ -105,6 +105,7 @@ public:
 	virtual void UpdatePosition()				 override;
 	void SetOnAirState(OnAir onAirState)         override;
 	void SetMoveDirection(MoveDirection moveDir) override;
+	int GetDamage()								 override;
 	BOOL IsReachMaxJump();
 
 	void OnHeadOnSolidBox(Object* solid);
