@@ -40,12 +40,12 @@ public:
 	Tag tag;
 	Type type;
 
-	int width, height;
+	float width, height;
 
 	virtual BoundingBox getBoundingBox();
-	int getWidth();
-	int getHeight();
-	
+	virtual float getWidth();
+	virtual float getHeight();
+
 	BoundingBox getStaticObjectBoundingBox();
 
 	virtual void SetActive(BOOL value);
@@ -54,7 +54,7 @@ public:
 	virtual void Render();
 	//Hàm dùng để xác định xem liệu object có được render trong grid không ?
 	//Mặc định là sẽ được Render. Những object cần render theo kiểu đặc biệt thì ta override lại và để trống.
-	virtual void RenderInGrid() { Render(); }; 
+	virtual void RenderInGrid() { Render(); };
 
 	//Weight nhỏ render trước, weight lớn render sau.
 	//Render sau sẽ che render trước.
@@ -68,8 +68,10 @@ public:
 
 	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
 	virtual bool IsMovableInGrid() { return true; }
+
+	virtual std::list<Object*>* getAdditionalObjects() { return nullptr; };
 	virtual void Update(float dt);
-	virtual void Respawn() {} ;
+	virtual void Respawn() {};
 
 	virtual void OnCollisionWithDynamicObject(Object* object) {}
 
@@ -95,6 +97,7 @@ public:
 	virtual void SetOnAirState(OnAir airState);
 
 	virtual bool IsOnGround();
+
 	virtual Object* GetStandingGround();
 	virtual void SetStandingGround(Object* ground);
 

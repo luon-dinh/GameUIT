@@ -61,4 +61,5 @@ void PlayerDashingState::OnCollision(Object* object, collisionOut* collision) {
 		break;
 	default:
 		break;
+	}
 }
