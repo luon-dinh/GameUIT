@@ -5,7 +5,7 @@
 class RedRocketRobotOneSided : public RedRocketRobot
 {
 	//Đây là khoảng mà robot sẽ đi qua đi lại.
-	const int walkRange = 100;
+	const int walkRange = 80;
 
 	//Thời gian delay đến khi được đi tiếp khi đứng lên.
 	const int standingToWalkingDelay = 200;

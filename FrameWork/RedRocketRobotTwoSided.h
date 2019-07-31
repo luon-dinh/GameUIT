@@ -3,6 +3,7 @@
 
 class RedRocketRobotTwoSided : public RedRocketRobot
 {
+protected:
 	//Khoảng cách đi đến khi chuyển state.
 	const int walkingDistant = 100;
 
@@ -41,5 +42,5 @@ protected:
 	void ChangeState(State);
 	void OnCollision(Object* object, collisionOut* colout) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override { return true; };
-	void OnNotCollision(Object* object) override {};
+	void OnNotCollision(Object* object) override;
 };

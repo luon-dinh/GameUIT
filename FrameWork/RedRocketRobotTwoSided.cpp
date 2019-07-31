@@ -220,6 +220,8 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		this->currentAnimation = crouching;
 		if (this->vy > 0)
 			this->vy *= (-1);
+		else if (this->vy == 0)
+			this->vy = -1;
 	}
 
 	previousState = this->robotState;
@@ -255,4 +257,10 @@ void RedRocketRobotTwoSided::Fire()
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y, rocketSpeed));
 	else
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
+}
+
+void RedRocketRobotTwoSided::OnNotCollision(Object * object)
+{
+	if (object->type == Type::GROUND && this->robotState == State::WALKING)
+		ChangeState(State::FALLING);
 }
