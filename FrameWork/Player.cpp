@@ -57,8 +57,8 @@ void Player::LoadAllAnimations() {
 	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
 	animations[BEATEN] = new Animation(PLAYER, 26, 27);
 	// dùng tạm animation của BEATEN 
-	animations[FLYING_BEATEN] = new Animation(PLAYER, 26, 28);
-	//animations[DEAD] = new Animation(PLAYER, 29, 31);
+	animations[FLYING_BEATEN] = new Animation(PLAYER, 39, 40);
+	animations[DEAD] = new Animation(PLAYER, 27, 28);
 }
 
 void Player::LoadAllStates() {
@@ -79,7 +79,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::CLIMBING] = new PlayerClimbingState();
 	this->playerStates[State::BEATEN] = new PlayerBeatenState();
 	this->playerStates[State::FLYING_BEATEN] = new PlayerFlyingBeatenState();
-	//this->playerStates[State::DEAD] = new PlayerDead
+	this->playerStates[State::DEAD] = new PlayerDyingState();
 }
 
 
@@ -122,8 +122,8 @@ void Player::Update(float dt)
 	this->UpdateGameProperty();
 	HealthPoint::getInstance()->Update(this->GetHeart());
 
-	if (this->IsDead()) {
-		//this->ChangeState(State::DEAD);
+	if (this->IsDead() && this->GetOnAirState() == OnAir::None) {
+		this->ChangeState(State::DEAD);
 		return;
 	}
 
@@ -184,11 +184,24 @@ void Player::ChangeState(PlayerState* newplayerstate)
 	this->state = playerstate->state;
 }
 
+int Player::GetDamage() {
+	switch (this->state) {
+		case State::DASHING:			
+		case State::SHIELD_DOWN:		SetDamage(6);break;
+		case State::STAND_PUNCH: 
+		case State::DUCKING_PUNCHING:  
+		case State::KICKING:			SetDamage(2);break;
+		default:
+			SetDamage(1);
+	}
+	return this->damage;
+}
+
 void Player::ChangeState(State stateName) {
 	if (this->state == stateName)
 		return;
 	// nếu đang bất tử thì chuyển sang normal
-	if (this->state == State::DASHING || this->state == State::ROLLING) {
+	if (this->state == State::ROLLING) {
 		this->SetToNormalState();
 	}
 	float PosToBottom1 = this->getPosToBotom();
@@ -246,7 +259,6 @@ void Player::ChangeState(State stateName) {
 		else {
 			SetVx(-PLAYER_DASH_SPEED);
 		}
-		this->SetToImmortalState();				// chuyển sang trạng thái bất tử
 		break;
 	}
 	case State::DIVING: {
@@ -287,7 +299,12 @@ void Player::ChangeState(State stateName) {
 	}
 	case State::STAND_PUNCH: {
 		SetVx(0);
+		PlayerHandPunch::getInstance()->SetPositionToPlayer();
 		break;
+	}
+	case State::DUCKING_PUNCHING: {
+		PlayerHandPunch::getInstance()->SetPositionToPlayer();
+		return;
 	}
 	case State::DUCKING: {
 		SetVx(0);
@@ -303,6 +320,10 @@ void Player::ChangeState(State stateName) {
 	case State::FLYING_BEATEN: {
 		this->SetVx(0);
 		this->SetOnAirState(OnAir::Falling);
+		return;
+	}
+	case State::DEAD: {
+		this->SetActive(false);
 		return;
 	}
 	}
@@ -479,8 +500,6 @@ void Player::SetOnAirState(OnAir onAirState) {
 }
 
 
-
-
 float Player::getWidth()
 {
 	auto sprite = this->curanimation->getSprite(curanimation->curframeindex);
@@ -502,22 +521,18 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
-	// ở trạng thái vô địch chỉ xét va chạm với static object
-	if (this->IsNonAttackable() || this->IsImmortal()) {
-		this->playerstate->OnCollision(object, collisionOut);
-		this->collisionDetected = true;
-		return;
-	}
+	this->collisionDetected = true;
+
 	switch (object->type) {
 		case Type::ENEMY: 
-			OnCollisionWithEnemy(object);
+			if (this->state != State::SHIELD_DOWN)
+				OnCollisionWithEnemy(object);
 			return;
 		case Type::BULLETTYPE:
 			OnCollisionWithBullet((Bullet*)object);
 			return;
 		default: {
 			this->playerstate->OnCollision(object, collisionOut);
-			this->collisionDetected = true;
 		}
 	}
 }
@@ -714,11 +729,15 @@ bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 }
 
 void Player::OnCollisionWithEnemy(Object* enemy) {
+	// ở trạng thái vô địch thì không xét va chạm
+	if (this->IsNonAttackable() || this->IsImmortal()) {
+		return;
+	}
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
-		this->pos.x -= 10;
+		this->pos.x -= 5;
 	}
 	else {
-		this->pos.x += 10;
+		this->pos.x += 5;
 	}
 	if (this->state == State::JUMPING) {
 		this->ChangeState(State::FLYING_BEATEN);
@@ -735,10 +754,10 @@ void Player::OnCollisionWithBullet(Bullet* bullet) {
 		return;
 	}
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
-		this->pos.x -= 10;
+		this->pos.x -= 5;
 	}
 	else {
-		this->pos.x += 10;
+		this->pos.x += 5;
 	}
 	if (this->state == State::JUMPING) {
 		this->ChangeState(State::FLYING_BEATEN);

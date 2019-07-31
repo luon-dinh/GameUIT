@@ -80,7 +80,8 @@ void Camera::SetPosition(float x, float y)
 
 void Camera::MoveLeft(long s)
 {
-	//Chỉnh lại camera sao cho nó move một khoảng hợp lý.
+	if (isCameraLocked)
+		return;
 	if (topLeftX - s < 0)
 		topLeftX = 0;
 	else
@@ -89,6 +90,8 @@ void Camera::MoveLeft(long s)
 
 void Camera::MoveRight(long s)
 {
+	if (isCameraLocked)
+		return;
 	if (topLeftX + SCREEN_WIDTH + s >= mapWidth)
 		topLeftX = mapWidth - SCREEN_WIDTH;
 	else
@@ -97,6 +100,8 @@ void Camera::MoveRight(long s)
 
 void Camera::MoveUp(long s)
 {
+	if (isCameraLocked)
+		return;
 	if (topLeftY + s >= mapHeight)
 		topLeftY = mapHeight;
 	else
@@ -105,6 +110,8 @@ void Camera::MoveUp(long s)
 
 void Camera::MoveDown(long s)
 {
+	if (isCameraLocked)
+		return;
 	if (topLeftY - SCREEN_HEIGHT - s < 0)
 		topLeftY = SCREEN_HEIGHT;
 	else
@@ -148,4 +155,14 @@ D3DXVECTOR3 Camera::convertWorldToViewPort(D3DXVECTOR3 worldPortPos)
 	//Xong xuôi thì ta lấy kết quả thu được trả về.
 	D3DXVECTOR3 viewPortPos(vp_pos.x, vp_pos.y, 0);
 	return viewPortPos;
+}
+
+void Camera::LockCamera()
+{
+	isCameraLocked = true;
+}
+
+void Camera::UnlockCamera()
+{
+	isCameraLocked = false;
 }

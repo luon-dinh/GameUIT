@@ -4,6 +4,7 @@
 
 class RedRocketRobotOneSided : public RedRocketRobot
 {
+protected:
 	//Đây là khoảng mà robot sẽ đi qua đi lại.
 	const int walkRange = 80;
 
@@ -53,5 +54,5 @@ public:
 	void ChangeState(State);
 	void OnCollision(Object* object, collisionOut* colout) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override;
-	void OnNotCollision(Object* object) override {};
+	void OnNotCollision(Object* object) override;
 };

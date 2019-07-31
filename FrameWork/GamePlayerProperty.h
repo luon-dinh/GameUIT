@@ -34,4 +34,5 @@ public:
 	void UpdateGameProperty()				 override;
 	void ResetGameProperty()				 override;
 	void BeingAttacked(int objectDamage)	 override;
+	virtual int GetDamage() 				 override { return GameObjectProperty::GetDamage(); };
 };

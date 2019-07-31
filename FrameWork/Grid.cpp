@@ -254,32 +254,16 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		objectIDPerPosition[midY][midX] = objectID;
 		objectSpecialIDPerPosition[midY][midX] = objectSpecialID;
 		//Add object vô grid nào.
+		//Chỉ add nếu như là Container thôi.
+		//Còn lại để tự Spawn.
 		if (objectID == ObjectID::ITEMLOOTER)
 			object = new Container((ItemType)objectSpecialID);
-		else if (objectID == ObjectID::BLUESOLDIER)
-			object = new Solder((RunType)objectSpecialIDPerPosition[midY][midX]);
-		else if (objectID == ObjectID::REDROCKET)
-		{
-			switch (objectSpecialID)
-			{
-			case RedRocketRobotType::ONESIDED:
-				object = new RedRocketRobotOneSided(midX, midY);
-				break;
-			case RedRocketRobotType::TWOSIDED:
-				object = new RedRocketRobotTwoSided(midX, midY);
-				break;
-			case RedRocketRobotType::TWOSIDEDNONLINEAR:
-				object = new RedRocketRobotTwoSidedNonLinear(midX, midY);
-				break;
-			}
-		}
-
 		if (object == nullptr)
 			continue;
 
 		object->pos.x = midX;
 		object->pos.y = midY;
-		Add(object);
+		AddObjectAndIncreaseCounter(object);
 	}
 }
 
@@ -303,7 +287,7 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 			++it;
 			continue;
 		}
-		delete (*it);
+		DeleteObjectAndDecreaseCounter(*it);
 		curList.erase(it++);
 	}
 }
@@ -333,22 +317,27 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
 			{
-				newObject = new Solder(RunType::SPECIAL);
+				if (currentEnemyNumber < maxEnemyAtOnce)
+				{
+					newObject = new Solder(RunType::SPECIAL);
+				}
 			}
 
 			else if (objectIDPerPosition[i][j] == ObjectID::REDROCKET)
 			{
-				switch (objectSpecialIDPerPosition[i][j])
-				{
-				case RedRocketRobotType::ONESIDED:
-					newObject = new RedRocketRobotOneSided(j, i);
-					break;
-				case RedRocketRobotType::TWOSIDED:
-					newObject = new RedRocketRobotTwoSided(j, i);
-					break;
-				case RedRocketRobotType::TWOSIDEDNONLINEAR:
-					newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
-					break;
+				if (currentItemNumber < maxItemAtOnce) {
+					switch (objectSpecialIDPerPosition[i][j])
+					{
+					case RedRocketRobotType::ONESIDED:
+						newObject = new RedRocketRobotOneSided(j, i);
+						break;
+					case RedRocketRobotType::TWOSIDED:
+						newObject = new RedRocketRobotTwoSided(j, i);
+						break;
+					case RedRocketRobotType::TWOSIDEDNONLINEAR:
+						newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
+						break;
+					}
 				}
 			}
 
@@ -357,7 +346,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			newObject->pos.x = j;
 			newObject->pos.y = i;
 			//Sau đó thêm nó vào GRID luôn.
-			Add(newObject);
+			AddObjectAndIncreaseCounter(newObject);
 		}
 	}
 }
@@ -666,7 +655,7 @@ void Grid::UpdateActivatedCells(double dt)
 				//Nếu object đang không được activated thì mình bỏ qua không update và xoá khỏi Grid luôn.
 				if (!(*it)->GetActivatedInGridStatus())
 				{
-					delete *it;
+					DeleteObjectAndDecreaseCounter(*it);
 					cells[i][j].erase(it++);
 					continue;
 				}
@@ -712,7 +701,9 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		if (object->GetActivatedInGridStatus())
 			Add(object);
 		else
-			delete object;
+		{
+			DeleteObjectAndDecreaseCounter(object);
+		}
 	}
 	return it;
 }
@@ -740,7 +731,7 @@ void Grid::RenderActivatedCells()
 				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 			////Vẽ debug các object tĩnh.
 			//for (auto object : cellsOfStaticObjects[i][j])
@@ -755,6 +746,34 @@ void Grid::RenderActivatedCells()
 		object->Render();
 	}
 	//DrawDebugObject();
+}
+
+void Grid::DeleteObjectAndDecreaseCounter(Object * object)
+{
+	if (object->tag == Tag::ITEM)
+		--currentItemNumber;
+	else if (object->tag == Tag::ENERMY || object->type == Type::ENEMY)
+		--currentEnemyNumber;
+	delete object;
+}
+
+bool Grid::AddObjectAndIncreaseCounter(Object * object)
+{
+	if (object->tag == Tag::ITEM)
+	{
+		if (currentItemNumber >= maxItemAtOnce)
+			return false;
+		++currentItemNumber;
+	}
+		
+	else if (object->tag == Tag::ENERMY || object->type == Type::ENEMY)
+	{
+		if (currentEnemyNumber >= maxEnemyAtOnce)
+			return false;
+		++currentEnemyNumber;
+	}
+	Add(object);
+	return true;
 }
 
 void Grid::DrawDebugObject()
