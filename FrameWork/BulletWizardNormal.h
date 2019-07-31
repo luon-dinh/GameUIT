@@ -7,6 +7,7 @@ public:
 	BulletWizardNormal()
 	{
 		this->animation = new Animation(Tag::BOSSWIZARDBULLET, 3, 6);
+		this->tag = Tag::BOSSWIZARDBULLET;
 	}
 	~BulletWizardNormal()
 	{
@@ -29,6 +30,8 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
+		if (object->tag == this->tag)
+			return;
 		switch (object->type)
 		{
 		case Type::SOLIDBOX:
@@ -45,7 +48,7 @@ public:
 			if (object->tag == Tag::PLAYER)
 			{
 				this->animation = animationExplode;
-				this->pos.x -= this->vx;
+ 				this->pos.x -= this->vx;
 				this->vx = this->vy = 0;
 			}
 		}

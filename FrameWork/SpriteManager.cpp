@@ -90,6 +90,10 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 965, 502, 992, 518));//36
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1040, 262, 1048, 278));//diving //37
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1040, 322, 1048, 338));//38
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 905, 12,943, 41));//die on air!=none 39
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 917, 72, 945, 102));//40
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 922, 136, 945, 162));//41
+
 	//Cắt sprite cho từng trạng thái của shield
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 27, 16, 42));
@@ -187,7 +191,7 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 268, 10, 312, 38));//stand punch 16
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 268, 54, 312, 90));//17
 	//cắt sprite cho wizard bullet
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 4, 12, 0, 16));//0
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 4, 0, 12, 16));//0
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 0, 16, 16, 32));//1
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 0, 36, 16, 43));//2
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 20, 4, 28, 11));//3

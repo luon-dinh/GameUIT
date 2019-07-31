@@ -16,9 +16,17 @@ void BossWizardPunchingState::InputHandler()
 
 void BossWizardPunchingState::Update(float dt)
 {
+	
 	auto wizard = BossWizard::getInstance();
 	auto player = Player::getInstance();
-	float deltaPlayer = abs(player->pos.x - wizard->pos.x);
+	float deltaPlayer = wizard->pos.x - player->pos.x;
+	if (deltaPlayer > 0)
+		wizard->direction = BossWizard::MoveDirection::RightToLeft;
+	else
+	{
+		wizard->direction = BossWizard::MoveDirection::LeftToRight;
+	}
+	deltaPlayer = abs(deltaPlayer);
 	if (deltaPlayer >= 100)
 		wizard->ChangeState(State::RUNNING);
 	else

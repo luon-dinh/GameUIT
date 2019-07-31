@@ -30,12 +30,12 @@ void BossWizardShootingState::Update(float dt)
 		switch (bullet->direction)
 		{
 		case BossWizard::MoveDirection::LeftToRight:
-			bullet->vx = 1.5;
+			bullet->vx = ENEMY_BULLET_SPEED*3;
 			bullet->pos.x = box.right;
 			break;
 		case BossWizard::MoveDirection::RightToLeft:
-			bullet->vx = -1.5;
-			bullet->pos.x = box.right;
+			bullet->vx = -ENEMY_BULLET_SPEED*3;
+			bullet->pos.x = box.left;
 			break;
 		default:
 			break;
@@ -48,35 +48,19 @@ void BossWizardShootingState::Update(float dt)
 		{
 			auto player = Player::getInstance();
 			float deltaPlayer = abs(player->pos.x - wizard->pos.x);
-			if (deltaPlayer >= 100)
+			if (deltaPlayer >= wizard->xRun)
 			{
-				if (deltaPlayer > 130)
-				{
-					wizard->flyMode = 2;
-					wizard->ChangeState(State::FLYING);
-					return;
-				}
 				wizard->ChangeState(State::RUNNING);
 			}
 			else
 			{
-				if (deltaPlayer < 30)
+				if (deltaPlayer < wizard->xPunch&&player->GetOnAirState()==BossWizard::OnAir::None)
 				{
-					if (wizard->pos.x < 15 || wizard->pos.x>230)
-					{
-						wizard->flyMode = 3;
-						wizard->ChangeState(State::FLYING);
-					}
 					wizard->ChangeState(State::STAND_PUNCH);
 				}
 				else
 				{
-					if(wizard->pos.x < 25 || wizard->pos.x>210)
-						wizard->flyMode = 3;
-					else
-					{
-						wizard->flyMode = 1;
-					}
+					wizard->flyMode = 1;
 					wizard->ChangeState(State::FLYING);
 				}
 			}

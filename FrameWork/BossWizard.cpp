@@ -11,8 +11,12 @@ BossWizard::BossWizard()
 	this->pos.y = 120;
 	this->vx = 0;
 	this->vy = 0;
+	this->deltaX = this->deltaY = 0;
+	this->hitTime = 0;
 	this->direction = Object::MoveDirection::LeftToRight;
-	this->flyMode = 3;
+	this->flyMode = 1;
+	this->tag = Tag::BOSSWIZARD;
+	this->type = Type::WIZARD;
 	this->wizardState = wizardStates[State::FLYING];
 	this->curanimation = animations[State::FLYING];
 	this->state = State::FLYING;
@@ -75,18 +79,28 @@ void BossWizard::Update(float dt)
 	this->wizardState->Update(dt);
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
-	if (this->pos.x < 15&&state!=State::FLYING)
+	if (hitTime >= 2 && this->onAirState == OnAir::None)
 	{
-		this->pos.x = 15;
-		this->vx = 0;
-		this->ChangeState(State::STANDING);
+		flyTimes = rand() % 3 + 1;
+		flyMode = rand() % 3 + 2;
+		ChangeState(State::FLYING);
+		flyTimes--;
+		hitTime = 0;
+		return;
 	}
-	if (this->pos.x > 250&&state!=State::FLYING)
+	if (this->pos.x < minMap|| this->pos.x > maxMap)
 	{
-		this->pos.x = 250;
+		this->pos.x -= this->vx;
 		this->vx = 0;
-		this->ChangeState(State::STANDING);
+		if (this->state != State::FLYING)
+			this->ChangeState(State::STANDING);
+		else
+		{
+			this->onAirState = OnAir::Falling;
+		}
+		return;
 	}
+	
 }
 
 void BossWizard::Render()
@@ -111,6 +125,7 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 		if(colOut->side==CollisionSide::bottom)
 		{
 			this->vy = 0;
+			this->vx = 0;
 			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2;
 			if (this->direction == MoveDirection::LeftToRight)
 				this->direction = MoveDirection::RightToLeft;
@@ -118,7 +133,15 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			{
 				this->direction = MoveDirection::LeftToRight;
 			}
-			ChangeState(State::RUNNING);
+			
+			if (this->flyMode != 1)
+			{
+				ChangeState(State::STANDING);
+			}
+			else
+			{
+				ChangeState(State::RUNNING);
+			}
 		}
 		deltaX = deltaY = 0;
 		break;
@@ -130,18 +153,17 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 		auto shield = Shield::getInstance();
 		if (shield->state == Shield::ShieldState::Attack)
 		{
-			this->curanimation = animations[State::DEAD];
+			//render khong render
+			//this->curanimation = animations[State::DEAD];
+			this->hitTime++;
 		}
 	}
 }
 
 void BossWizard::OnNotCollision(Object* object)
 {
-	if (this->state != State::FLYING&&object->type == Type::GROUND)
-	{
-		if(Collision::getInstance()->IsCollide(this->getBoundingBox(),object->getBoundingBox()))
-			this->vy = -2;
-	}
+	/*if(this->state!=State::FLYING)
+		this->vy = -2;*/
 }
 
 
@@ -174,7 +196,8 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::None;
 		break;
 	case State::FLYING:
-		this->vy = 2;
+		this->vy = flySpeedy;
+		this->deltaX = this->deltaY = 0;
 		this->onAirState = OnAir::Jumping;
 		break;
 	case State::ATTACK:
@@ -183,6 +206,8 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::None;
 		break;
 	case State::STAND_PUNCH:
+		this->vy = 0;
+		this->vx = 0;
 		this->onAirState = OnAir::None;
 		break;
 	case State::STAND_SMILE:
@@ -193,10 +218,10 @@ void BossWizard::ChangeState(State stateName)
 	case State::RUNNING:
 		this->vy = 0;
 		if(this->direction==MoveDirection::LeftToRight)
-			this->vx = 2;
+			this->vx = 2*ENEMY_SPEED;
 		else
 		{
-			this->vx = -2;
+			this->vx = -2*ENEMY_SPEED;
 		}
 		this->onAirState = OnAir::None;
 		break;
@@ -204,6 +229,7 @@ void BossWizard::ChangeState(State stateName)
 		break;
 	}
 	curanimation->curframeindex = 0;
+	this->deltaX = this->deltaY = 0;
 }
 
 void BossWizard::LoadAllAnimations()
