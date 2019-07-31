@@ -17,10 +17,12 @@
 #include "PlayerShieldDownState.h"
 #include "PlayerShieldAttackState.h"
 #include "PlayerClimbingState.h"
+#include "PlayerBeatenState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
+#include "Enemy.h"
 
 
 
@@ -68,6 +70,7 @@ public:
 	void Update(float dt);
 	float getPosToBotom();
 	void Render();
+	void RenderFlip(float dt);
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
 	void SetPreviousState(State stateName);
@@ -123,6 +126,8 @@ public:
 	void OnFallingOffGround()											 override;
 	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
 	void OnClimbingTheRope(Object* rope);
+
+	void OnCollisionWithEnemy(Object* enemy);
 
 #pragma endregion
 

@@ -330,6 +330,9 @@
     <ClCompile Include="BulletWizardNormal.cpp">
       <Filter>Objects\Bullet\BulletWizard</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerBeatenState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -568,6 +571,9 @@
     </ClInclude>
     <ClInclude Include="BulletWizardNormal.h">
       <Filter>Objects\Bullet\BulletWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBeatenState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

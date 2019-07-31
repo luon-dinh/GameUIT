@@ -20,7 +20,7 @@ public:
 	//Phải set lại trong constructor của từng quái khác nhau.
 	double health = 0;
 
-	Player::MoveDirection direction;
+	MoveDirection direction;
 	Animation* currentAnimation;
 	Animation* explodeAnim;
 

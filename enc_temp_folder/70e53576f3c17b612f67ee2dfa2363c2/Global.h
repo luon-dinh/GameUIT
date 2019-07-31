@@ -189,8 +189,7 @@ enum Type {
 	ROPE,
 	ONOFF,
 	DOOR,
-	ITEMCONTAINERTYPE,
-	ENEMY
+	ITEMCONTAINERTYPE
 	//cac loai dan
 };
 

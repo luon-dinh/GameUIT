@@ -460,11 +460,10 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	// không xét va chạm với shield
 	if (object->tag == Tag::SHIELD)
 		return;
-
-	switch (object->type) {
-		case Type::ENEMY: OnCollisionWithEnemy(object);return;
+	switch (object->tag) {
+		case Tag::BULLETEXPLODE: 
+			OnCollisionWithEnemy(object);return;
 	}
-
 	this->playerstate->OnCollision(object, collisionOut);
 	this->collisionDetected = true;
 }

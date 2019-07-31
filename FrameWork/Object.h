@@ -122,7 +122,7 @@ protected:
 	//Vì trạng thái của ItemLooter sẽ được lưu giữ lại chứ không mất đi như enemy. 
 	bool isActivatedInGrid = true;
 
-
+	bool renderFlip; // Render không liên tục
 
 	MoveDirection direction;
 

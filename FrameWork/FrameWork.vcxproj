@@ -170,6 +170,7 @@
     <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBeatenState.cpp" />
     <ClCompile Include="PlayerClimbingState.cpp" />
     <ClCompile Include="PlayerDashingState.cpp" />
     <ClCompile Include="PlayerDivingState.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="MapStaticObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBeatenState.h" />
     <ClInclude Include="PlayerClimbingState.h" />
     <ClInclude Include="PlayerDashingState.h" />
     <ClInclude Include="PlayerDivingState.h" />
