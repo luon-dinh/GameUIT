@@ -51,4 +51,5 @@ public:
 	Animation * curanimation;
 	void OnCollision(Object* object, collisionOut* collision)override;
 	void OnNotCollision(Object* object)override;
+	bool OnRectCollided(Object* object, CollisionSide side)override;
 };

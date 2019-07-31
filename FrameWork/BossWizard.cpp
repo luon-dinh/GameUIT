@@ -74,8 +74,6 @@ BoundingBox BossWizard::getBoundingBox()
 void BossWizard::Update(float dt)
 {
 	auto player = Player::getInstance();
-	if(player->GetStandingGround() !=NULL&& player->GetStandingGround()->type==Type::GROUND &&this->onAirState==OnAir::None)
-		this->ChangeState(State::STAND_SMILE);
 	if (this->state != State::FLYING)
 		this->curanimation->Update(dt);
 	this->wizardState->Update(dt);
@@ -92,6 +90,12 @@ void BossWizard::Update(float dt)
 		ChangeState(State::FLYING);
 		flyTimes--;
 		hitTime = 0;
+		return;
+	}
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None)
+	{
+		this->vx = 0;
+		this->ChangeState(State::STAND_SMILE);
 		return;
 	}
 	if (this->pos.x < minMap|| this->pos.x > maxMap)
@@ -204,8 +208,32 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 
 void BossWizard::OnNotCollision(Object* object)
 {
-	if (object->type == Type::GROUND)
-		this->vx = -2;
+	/*if (this->state != State::FLYING)
+	{
+		this->onAirState = OnAir::Falling;
+		ChangeState(State::FLYING);
+	}*/
+}
+
+bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
+{
+	/*if (this->onAirState == OnAir::None)
+	{
+		switch (object->type)
+		{
+		case Type::GROUND:
+		case Type::SOLIDBOX:
+			this->vy = 0;
+			return true;
+		case Type::WATERRL:
+			DeactivateObjectInGrid();
+			return true;
+		default:
+			break;
+		}
+	}
+	return false;*/
+	return false;
 }
 
 

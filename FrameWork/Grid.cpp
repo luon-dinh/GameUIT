@@ -319,7 +319,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			{
 				if (currentEnemyNumber < maxEnemyAtOnce)
 				{
-					newObject = new Solder(RunType::SPECIAL);
+					newObject = new Solder((RunType)objectIDPerPosition[i][j]);
 				}
 			}
 
@@ -736,7 +736,7 @@ void Grid::RenderActivatedCells()
 				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
-				DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 			}
 			////Vẽ debug các object tĩnh.
 			//for (auto object : cellsOfStaticObjects[i][j])
