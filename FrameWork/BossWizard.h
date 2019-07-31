@@ -4,6 +4,9 @@
 #include"BossWizardShootingState.h"
 #include"BossWizardStandingState.h"
 #include"BossWizardFlyingState.h"
+#include"BossWizardPunchingState.h"
+#include"BossWizardStandSmileState.h"
+#include"BulletWizardNormal.h"
 
 class BossWizard :public Enemy {
 private:
@@ -20,6 +23,8 @@ public:
 	float deltaX = 0;
 	float getWidth();
 	float getHeight();
+	float getPosToBottom();
+	float getPosToRight();
 	int flyMode;
 	BossWizardState * wizardState;
 	static BossWizard* getInstance();
@@ -32,5 +37,6 @@ public:
 	State state;
 	Type type;
 	Animation * curanimation;
-	void OnCollision(Object* object, collisionOut* collision);
+	void OnCollision(Object* object, collisionOut* collision)override;
+	void OnNotCollision(Object* object)override;
 };

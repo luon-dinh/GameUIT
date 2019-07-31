@@ -5,7 +5,7 @@
 class RedRocketRobotOneSided : public RedRocketRobot
 {
 	//Đây là khoảng mà robot sẽ đi qua đi lại.
-	const int walkRange = 100;
+	const int walkRange = 80;
 
 	//Thời gian delay đến khi được đi tiếp khi đứng lên.
 	const int standingToWalkingDelay = 200;
@@ -52,6 +52,6 @@ public:
 	void ChangeMoveDirection();
 	void ChangeState(State);
 	void OnCollision(Object* object, collisionOut* colout) override;
-	bool OnRectCollided(Object* object, CollisionSide side) override { return true; };
+	bool OnRectCollided(Object* object, CollisionSide side) override;
 	void OnNotCollision(Object* object) override {};
 };

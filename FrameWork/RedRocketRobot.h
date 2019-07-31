@@ -25,7 +25,7 @@ protected:
 	const int walkingDelay = 0;
 
 	//Đây là tốc độ đạn mà quái bắn ra.
-	int rocketSpeed = 5;
+	int rocketSpeed = 6;
 
 	//Thời gian delay đến khi ngồi xuống.
 	const int standingDelay = 500;
@@ -34,7 +34,7 @@ protected:
 	const int crouchingState = attackingDelay + 200;
 
 	//Thời gian beaten.
-	const int beatenTime = 2000;
+	const int beatenTime = 700;
 
 	//Thời gian shocking.
 	const int shockingTime = 200;

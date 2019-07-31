@@ -19,16 +19,16 @@ PlaySceneCharles::PlaySceneCharles()
 
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
-	grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
-	grid->Add(new WhiteFlyingRobot(1500, 180));
-	Solder* soldier = new Solder(RunType::NOTRUN);
-	soldier->pos.x = 1500;
-	soldier->pos.y = 180;
-	grid->Add(soldier);
-	//grid->Add(new BulletRedRocket(Object::MoveDirection::LeftToRight, 1550, 51, 1));
-	grid->Add(new RedRocketRobotOneSided(1400, 51));
-	grid->Add(new RedRocketRobotTwoSided(1600, 51));
-	grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
+	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
+	//grid->Add(new WhiteFlyingRobot(1500, 180));
+	//Solder* soldier = new Solder(RunType::NOTRUN);
+	//soldier->pos.x = 1500;
+	//soldier->pos.y = 180;
+	//grid->Add(soldier);
+	////grid->Add(new BulletRedRocket(Object::MoveDirection::LeftToRight, 1550, 51, 1));
+	//grid->Add(new RedRocketRobotOneSided(1400, 51));
+	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
+	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 }
 
 PlaySceneCharles::~PlaySceneCharles()

@@ -34,6 +34,8 @@ void RedRocketRobotTwoSided::Update(float dt)
 	//Trạng thái đi.
 	if (robotState == State::WALKING)
 		EnemyWalkingUpdate(dt);
+	else if (robotState == State::JUMPING || robotState == State::FALLING)
+		EnemyJumpingUpdate(dt);
 	else if (robotState == State::STANDING || robotState == State::DUCKING)
 		EnemyAttackingUpdate(dt);
 	else if (robotState == State::BEATEN)
@@ -47,8 +49,25 @@ void RedRocketRobotTwoSided::EnemyWalkingUpdate(double dt)
 {
 	if (gone < walkingDistant)
 	{
-		this->pos.x += this->vx;
-		gone += abs(this->vx);
+		if (Shield::getInstance()->state == Shield::ShieldState::Attack && Shield::getInstance()->GetMoveDirection() != this->direction)
+		{
+			//Chỉ nhảy khi thấy player ném khiên.
+			//Nếu player đang đứng bên trái của robot.
+			if (player->pos.x > this->pos.x && this->direction == MoveDirection::LeftToRight)
+			{
+				//Nếu ném khiên.
+				ChangeState(State::JUMPING);
+			}
+			else if (player->pos.x < this->pos.x && this->direction == MoveDirection::RightToLeft)
+			{
+				ChangeState(State::JUMPING);
+			}
+		}
+		else
+		{
+			this->pos.x += this->vx;
+			gone += abs(this->vx);
+		}
 	}
 	else //Nếu đã đi đủ rồi thì chuyển qua trạng thái khác.
 	{
@@ -77,7 +96,7 @@ void RedRocketRobotTwoSided::EnemyAttackingUpdate(double dt)
 	}
 
 	//Đủ thời gian chờ thì ta bắn luôn.
-	if (!isAttacked && currentFiringTick > attackingDelay)
+	if (!isAttacked && currentStateTime > attackingDelay)
 	{
 		currentFiringTick = 0;
 		isAttacked = true;
@@ -138,6 +157,29 @@ void RedRocketRobotTwoSided::Render()
 	}
 }
 
+void RedRocketRobotTwoSided::EnemyJumpingUpdate(double dt)
+{
+	//Khi vẫn còn trong trạng thái nhảy lên thì nhảy lên.
+	if (robotState == State::JUMPING)
+	{
+		if (abs(this->pos.x - destJumpX) > jumpLength / 2)
+		{
+			this->pos.y += this->vy;
+			this->pos.x += this->vx;
+		}
+		else
+		{
+			ChangeState(State::FALLING);
+		}
+	}
+
+	else if (robotState == State::FALLING)
+	{
+		this->pos.y += this->vy;
+		this->pos.x += this->vx;
+	}
+}
+
 void RedRocketRobotTwoSided::ChangeState(State newState)
 {
 	currentStateTime = 0;
@@ -166,13 +208,27 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 	case State::DEAD:
 		this->currentAnimation = explodeAnim;
 		break;
+	case State::JUMPING:
+		this->currentAnimation = crouching;
+		if (direction == MoveDirection::LeftToRight)
+			destJumpX = this->pos.x + jumpLength;
+		else
+			destJumpX = this->pos.x - jumpLength;
+		this->vy = (2 * jumpHeight*abs(this->vx)) / jumpLength;
+		break;
+	case State::FALLING:
+		this->currentAnimation = crouching;
+		if (this->vy > 0)
+			this->vy *= (-1);
+		else if (this->vy == 0)
+			this->vy = -1;
 	}
 
 	previousState = this->robotState;
 	this->robotState = newState;
 }
 
-void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colout)
+void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 {
 	if (object->tag == Tag::SHIELD)
 	{
@@ -184,6 +240,15 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colout)
 				ChangeState(State::BEATEN);
 		}
 	}
+	if (object->tag == Tag::STATICOBJECT)
+	{
+		//Chỉ chuyển sang trạng thái standing khi đang rơi.
+		if (object->type == Type::GROUND && robotState == State::FALLING && colOut->side == CollisionSide::bottom)
+		{
+			ChangeState(State::STANDING);
+			this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+		}
+	}
 }
 
 void RedRocketRobotTwoSided::Fire()
@@ -192,4 +257,10 @@ void RedRocketRobotTwoSided::Fire()
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y, rocketSpeed));
 	else
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
+}
+
+void RedRocketRobotTwoSided::OnNotCollision(Object * object)
+{
+	if (object->type == Type::GROUND && this->robotState == State::WALKING)
+		ChangeState(State::FALLING);
 }

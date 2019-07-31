@@ -5,7 +5,7 @@ class BulletSolder:public Bullet {
 public:
 	BulletSolder()
 	{
-		this->animation = new Animation(Tag::BLUESOLDERBULLET,0);
+		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
 		this->isActive = false;
 		this->vy = 0;
 		this->existTime = 0;
@@ -13,7 +13,6 @@ public:
 	}
 	void Update(float dt) override
 	{
-
 		if (this->direction == Player::MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
 		else
@@ -36,9 +35,26 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		this->animation = animationExplode;
-		this->pos.x -= this->vx;
-		this->vx = this->vy = 0;
+		switch (object->type)
+		{
+		case Type::SOLIDBOX:
+		case Type::GROUND:
+			this->animation = animationExplode;
+			this->pos.x += this->vx;
+			this->vx = this->vy = 0;
+			break;
+		default:
+			break;
+		}
+		if (object->type == Type::NONE)
+		{
+			if (object->tag == Tag::PLAYER)
+			{
+				this->animation = animationExplode;
+				this->pos.x += this->vx;
+				this->vx = this->vy = 0;
+			}
+		}
 	}
 	BoundingBox getBoundingBox()override
 	{
@@ -51,5 +67,8 @@ public:
 		box.bottom = this->pos.y - 3;
 		return box;
 	}
-
+	~BulletSolder()
+	{
+		
+	}
 };

@@ -19,7 +19,7 @@ public:
 	}
 	~Bullet()
 	{
-
+		
 	}
 	virtual void Update(float dt)
 	{
