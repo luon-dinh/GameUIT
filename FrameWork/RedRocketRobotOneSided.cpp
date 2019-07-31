@@ -26,12 +26,18 @@ void RedRocketRobotOneSided::Update(float dt)
 		this->vx = -walkingSpeed;
 
 	//Cập nhật thời gian cho trạng thái beaten (chớp chớp).
+	//Kiểm tra có đang bị beaten hay không để phục vụ xét va chạm.
 	if (isBeingBeaten)
 	{
 		currentBeatenTick += dt;
 		flashingTick += dt;
+		isCollidable = false;
 		if (currentBeatenTick > beatenTime)
+		{
 			isBeingBeaten = false;
+			isCollidable = true;
+		}
+			
 	}
 	
 	currentStateTime += dt;

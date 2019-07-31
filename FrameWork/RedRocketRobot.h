@@ -19,7 +19,7 @@ protected:
 	//Tốc độ đi.
 	const double walkingSpeed = 1;
 	//Máu.
-	const int RedRocketRobotHealth = 999;
+	const int RedRocketRobotHealth = 3;
 
 	//Đây là delay giữa những lần đi của robot.
 	const int walkingDelay = 0;

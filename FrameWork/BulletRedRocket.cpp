@@ -26,6 +26,7 @@ void BulletRedRocket::Update(float dt)
 	if (isExploded)
 	{
 		UpdateOnExploded(dt);
+		isCollidable = false;
 		return;
 	}
 	this->animation->Update(dt);
@@ -62,6 +63,7 @@ void BulletRedRocket::OnCollision(Object* object, collisionOut* colOut)
 		this->animation = animationExplode;
 		this->vx = this->vy = 0;
 		isExploded = true;
+		isCollidable = false;
 		curDelayTime = 0;
 		break;
 	case Tag::SHIELD:
