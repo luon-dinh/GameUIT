@@ -17,14 +17,19 @@
 #include "PlayerShieldDownState.h"
 #include "PlayerShieldAttackState.h"
 #include "PlayerClimbingState.h"
+#include "PlayerBeatenState.h"
+#include "PlayerFlyingBeatenState.h"
 #include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
+#include "GamePlayerProperty.h"
+
+#include "Enemy.h"
 
 
 
-class Player :public Object
+class Player :public Object, GamePlayerProperty
 {
 private:
 	std::unordered_map<State, Animation *>animations; //cac animation cua player
@@ -44,6 +49,11 @@ private:
 	PlayerState* prevState;
 	bool collisionDetected;
 
+	void InnerRender();
+	
+	int flipRenderFrame;
+	const int FLIP_RENDER_FRAME = 10;
+	
 public:
 
 	int health;
@@ -68,6 +78,7 @@ public:
 	void Update(float dt);
 	float getPosToBotom();
 	void Render();
+	void RenderFlip(float dt);
 	void RenderInGrid() {}; //Cấm không cho player render trong Grid.
 	PlayerState* GetPreviousState();
 	void SetPreviousState(State stateName);
@@ -123,6 +134,8 @@ public:
 	void OnFallingOffGround()											 override;
 	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
 	void OnClimbingTheRope(Object* rope);
+
+	void OnCollisionWithEnemy(Object* enemy);
 
 #pragma endregion
 

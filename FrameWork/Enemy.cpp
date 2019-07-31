@@ -3,6 +3,7 @@
 Enemy::Enemy()
 {
 	explodeAnim = new Animation(Tag::ENEMYEXPLODE, 0, 3, delaySpriteExplode);
+	this->type = Type::ENEMY;
 }
 
 Enemy::~Enemy() {
