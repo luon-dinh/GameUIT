@@ -200,6 +200,9 @@ void SpriteManager::LoadResources()
 
 	// cắt sprite cho HP
 	spriteManager->addSprite(new Sprite(Tag::HP_RENDER, 0, 0, 8, 8));
+
+	// cắt sprite cho biển EXIT
+	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 29));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

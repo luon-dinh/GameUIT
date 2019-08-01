@@ -553,8 +553,8 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
-	// không xét va chạm swept với enemy
-	if (object->type == Type::ENEMY) {
+	if (object->tag == Tag::ITEM) {
+		this->LootItem((Item*)object);
 		return;
 	}
 
@@ -614,77 +614,72 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
-	case Type::GROUND: {
-		if (this->GetOnAirState() == OnAir::DropToWater)
-			return false;
-		if (this->GetOnAirState() == OnAir::Falling) {
-			// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
-			if (this->GetPreOnAirState() == OnAir::None)
+		case Type::GROUND: {
+			if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
-			this->TryStandOnGround(object);
-			return true;
-		}
-		return false;
-	}
-	case Type::WATERRL: {
-		if (this->GetOnAirState() == OnAir::JumpFromWater) {
+			if (this->GetOnAirState() == OnAir::Falling) {
+				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
+				if (this->GetPreOnAirState() == OnAir::None)
+					return false;
+				this->TryStandOnGround(object);
+				return true;
+			}
 			return false;
 		}
-		if (this->GetOnAirState() == OnAir::Falling) {
-			collisionOut colOut;
-			colOut.side = CollisionSide::bottom;
-			this->OnCollisionWithWater(object, &colOut);
-		}
-		return false;
-	}
-	case Type::SOLIDBOX: {
-		if (this->collidedSolidBox == object) {
-			if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
-				this->smashLeft = false;
+		case Type::WATERRL: {
+			if (this->GetOnAirState() == OnAir::JumpFromWater) {
+				return false;
 			}
-			else {
-				this->SetVx(0);
-				// push thêm vài pixel để đẩy nhân vật rơi xuống
-				if (this->GetOnAirState() == OnAir::None) {
-					this->pos.x += 4;
+			if (this->GetOnAirState() == OnAir::Falling) {
+				collisionOut colOut;
+				colOut.side = CollisionSide::bottom;
+				this->OnCollisionWithWater(object, &colOut);
+			}
+			return false;
+		}
+		case Type::SOLIDBOX: {
+			if (this->collidedSolidBox == object) {
+				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
+					this->smashLeft = false;
+				}
+				else {
+					this->SetVx(0);
+					// push thêm vài pixel để đẩy nhân vật rơi xuống
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x += 4;
+					}
+				}
+				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
+					this->smashRight = false;
+				}
+				else {
+					this->SetVx(0);
+					// push thêm vài pixel để đẩy nhân vật rơi xuống
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x -= 4;
+					}
+				}
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
+					this->TryStandOnGround(object);
 				}
 			}
-			if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
-				this->smashRight = false;
-			}
 			else {
-				this->SetVx(0);
-				// push thêm vài pixel để đẩy nhân vật rơi xuống
-				if (this->GetOnAirState() == OnAir::None) {
-					this->pos.x -= 4;
+				collisionOut colOut;
+				colOut.side = side;
+				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
+					OnSmashSolidBox(object, side);
 				}
-			}
-			if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
-				this->TryStandOnGround(object);
-			}
-		}
-		else {
-			collisionOut colOut;
-			colOut.side = side;
-			if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
-				OnSmashSolidBox(object, side);
-			}
 
-			if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
-				this->TryStandOnGround(object);
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
+					this->TryStandOnGround(object);
+				}
 			}
-		}
-		return false;
-	}		
-	case Type::ENEMY: {
+			return false;
+		}		
+		case Type::ENEMY: {
 		this->OnCollisionWithEnemy(object);
 		return true;
 	}
-	}
-
-	if (object->tag == Tag::ITEM) {
-		this->LootItem((Item*)object);
-		return true;
 	}
 }
 void Player::OnFallingOffGround() {

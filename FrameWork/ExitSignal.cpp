@@ -5,7 +5,7 @@ ExitSignal* ExitSignal::instance = NULL;
 ExitSignal::ExitSignal() {
 	this->isActive = false;
 	this->currentFlipFrame = 0;
-	this->animation = new Animation(Tag::ITEM, 2, 4);
+	this->animation = new Animation(Tag::EXITSIGN, 0);
 }
 
 ExitSignal* ExitSignal::getInstance() {
@@ -42,5 +42,5 @@ void ExitSignal::Render() {
 }
 
 void ExitSignal::InnerRender() {
-	animation->Render(44, 20);
+	animation->Render(60, 23);
 }
