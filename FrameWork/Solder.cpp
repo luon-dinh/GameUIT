@@ -12,6 +12,7 @@ Solder::Solder(RunType runType, float x, float y)
 	this->pos.y = y;
 	this->runType = runType;
 	this->canJump = true;
+	this->health = 2;
 	this->onAirState = OnAir::None;
 	this->currentAnimation = animations[State::STANDING];
 	auto player = Player::getInstance();
@@ -96,8 +97,25 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 		auto shield = Shield::getInstance();
 		if (shield->state == Shield::ShieldState::Attack)
 		{
+			if (shield->direction == MoveDirection::LeftToRight)
+				this->vx = 1;
+			else
+			{
+				this->vx = -1;
+			}
 			ChangeState(State::BEATEN);
+			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
 		}
+	}
+	if (object->tag == Tag::PLAYER)
+	{
+		auto player = Player::getInstance();
+		this->health -= player->GetCollisionDamage();
+		this->isCollidable = false;
+	}
+	else
+	{
+		this->isCollidable = true;
 	}
 }
 
@@ -119,8 +137,25 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 		auto shield = Shield::getInstance();
 		if (shield->state == Shield::ShieldState::Attack)
 		{
+			if (shield->direction == MoveDirection::LeftToRight)
+				this->vx = 1;
+			else
+			{
+				this->vx = -1;
+			}
 			ChangeState(State::BEATEN);
+			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
 		}
+	}
+	if (object->tag == Tag::PLAYER)
+	{
+		auto player = Player::getInstance();
+		this->health -= player->GetCollisionDamage();
+		this->isCollidable = false;
+	}
+	else
+	{
+		this->isCollidable = true;
 	}
 	return false;
 }
@@ -142,6 +177,11 @@ void Solder::OnNotCollision(Object* object)
 
 void Solder::Update(float dt)
 {
+	if (this->health <= 0 && this->stateName != State::BEATEN&&this->stateName != State::DEAD)
+	{
+		ChangeState(State::BEATEN);
+		return;
+	}
 	if (runType == RunType::NOTRUN||runType==RunType::THREESHOOTER)
 	{
 		auto player = Player::getInstance();
@@ -244,7 +284,9 @@ void Solder::Update(float dt)
 		break;
 	case State::BEATEN:
 		if (timeCurrentState > ENEMY_BEATEN_TIME)
+		{
 			ChangeState(State::DEAD);
+		}
 		else
 		{
 			timeCurrentState += dt;
@@ -329,7 +371,7 @@ void Solder::ChangeState(State stateName)
 		break;
 	case State::BEATEN:
 		this->currentAnimation = animations[State::BEATEN];
-		this->vx = this->vy = 0;
+		this->vy = 0;
 		if (this->direction == Player::MoveDirection::LeftToRight)
 			this->pos.x -= 3;
 		else

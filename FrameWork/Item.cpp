@@ -78,12 +78,16 @@ void Item::Render()
 BoundingBox Item::getBoundingBox()
 {
 	BoundingBox box;
-	box.top = this->pos.y + 8;
-	box.bottom = this->pos.y - 8;
-	box.left = this->pos.x - 6;
-	box.right = this->pos.x + 6;
 	box.vx = this->vx;
 	box.vy = this->vy;
+	auto sprite = this->animation->getSprite(this->animation->curframeindex);
+	RECT rect = sprite->getRECT();
+	height = rect.top - rect.bottom;
+	width = rect.right - rect.left;
+	box.top = this->pos.y + height / 2;
+	box.bottom = this->pos.y - height / 2;
+	box.left = this->pos.x - width / 2;
+	box.right = this->pos.x + width / 2;
 	return box;
 }
 
@@ -98,13 +102,27 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 		break;
 		//xuwr lis va chamj voiws player
-	case Type::NONE:
-		if(object->tag==Tag::PLAYER)
-			DeactivateObjectInGrid();
-		break;
 	default:
 		break;
 	}
+	if (object->tag == Tag::PLAYER)
+		DeactivateObjectInGrid();
+}
+
+float Item::getHeight()
+{
+	auto sprite = this->animation->getSprite(this->animation->curframeindex);
+	RECT rect = sprite->getRECT();
+	height = rect.top - rect.bottom;
+	return height;
+}
+
+float Item::getWidth()
+{
+	auto sprite = this->animation->getSprite(this->animation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	return width;
 }
 
 bool Item::OnRectCollided(Object* object, CollisionSide side)
@@ -118,12 +136,10 @@ bool Item::OnRectCollided(Object* object, CollisionSide side)
 		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 		break;
 		//xuwr lis va chamj voiws player
-	case Type::NONE:
-		if (object->tag == Tag::PLAYER)
-			DeactivateObjectInGrid();
-		break;
 	default:
 		break;
 	}
+	if (object->tag == Tag::PLAYER)
+		DeactivateObjectInGrid();
 	return true;
 }
