@@ -65,7 +65,12 @@ bool GamePlayerProperty::CanGoNextScene() {
 }
 
 void GamePlayerProperty::IncreaseHealth(int value) {
-	this->SetHealth(this->health + value);
+	int newValue = this->health + value;
+	if (newValue > HEALTH_PER_HEART * MAX_HEART) {
+		this->SetHealth(HEALTH_PER_HEART * MAX_HEART);
+		return;
+	}
+	this->SetHealth(newValue);
 }
 
 void GamePlayerProperty::LoseHealth(int value) {
@@ -122,5 +127,9 @@ int GamePlayerProperty::GetHeart() {
 }
 
 void GamePlayerProperty::SetHeart(int heart) {
+	if (heart >= MAX_HEART) {
+		this->SetHealth(MAX_HEART * HEALTH_PER_HEART);
+		return;
+	}
 	this->SetHealth(heart * HEALTH_PER_HEART);
 }

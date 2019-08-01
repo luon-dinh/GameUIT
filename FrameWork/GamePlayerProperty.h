@@ -22,6 +22,7 @@ protected:
 
 	const int MAX_NON_ATTACKABLE_FRAME = 105;
 	const int HEALTH_PER_HEART = 4;
+	const int MAX_HEART = 5;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();
