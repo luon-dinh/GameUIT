@@ -32,7 +32,6 @@ void Container::Update(float dt)
 		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
 		{
 			auto scene = SceneManager::getInstance();
-			animation->curframeindex = 1;
 			ticuframe = 500;
 			if (item != nullptr)
 			{
@@ -42,7 +41,7 @@ void Container::Update(float dt)
 				if (scene->AddObjectToCurrentScene(item))
 				{
 					//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
-					if (!item->itemtype == ItemType::EXIT || player->CanGoNextScene())
+					if (!(item->itemtype == ItemType::EXIT) || player->CanGoNextScene())
 					{
 						item = nullptr;
 					}
@@ -117,7 +116,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 				if (scene->AddObjectToCurrentScene(item))
 				{
 					//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
-					if (!item->itemtype == ItemType::EXIT || player->CanGoNextScene())
+					if (!(item->itemtype == ItemType::EXIT) || player->CanGoNextScene())
 					{
 						item = nullptr;
 					}
@@ -131,8 +130,10 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(newItem);
-				numberItems--;
+				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+				if (scene->AddObjectToCurrentScene(newItem))
+					numberItems--;
 			}
 		}
 		break;
