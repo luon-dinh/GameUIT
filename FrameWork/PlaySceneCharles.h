@@ -22,4 +22,7 @@ private:
 	const char * world01SpawnLocation = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_spawn.txt";
 
 	bool isCameraAlreadyLockedOnce = false;
+	bool isCameraLocking = false;
+
+	bool isAddSoldier = false;
 };

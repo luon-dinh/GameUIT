@@ -96,4 +96,6 @@ public:
 	virtual void OnCollision(Object* object, collisionOut* colout) override {};
 	virtual bool OnRectCollided(Object* object, CollisionSide side) override { return true; };
 	virtual void OnNotCollision(Object* object) override {};
+
+	void KillObject() override;
 };

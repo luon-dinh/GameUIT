@@ -14,7 +14,7 @@
 class Grid // lam singleton
 {
 	const int cellSizeHeight = 72;
-	const int cellSizeWidth = 45;
+	const int cellSizeWidth = 55;
 
 	//Số lượng enemy tối đa được thêm vào một Active Zone cùng lúc.
 	const int maxEnemyAtOnce = 2;
@@ -60,6 +60,8 @@ public:
 	//Đây là hàm thêm đặc biệt, nó sẽ trải static object ra trên nhiều cell thay vì chỉ 1 cell như hàm trên.
 	void AddStaticMapObjects(MapStaticObject *); 
 	bool AddObjectAndIncreaseCounter(Object *);
+
+	void KillAllEnemyInActiveCells();
 
 	void ActivateCells(); //Activate những vùng sẽ được xử lý bởi Grid (vùng được khoanh bởi Camera).
 	//Nhớ kiểm tra va chạm trước khi Update.

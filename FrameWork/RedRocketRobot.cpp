@@ -36,3 +36,11 @@ void RedRocketRobot::LoadAllAnimation()
 	crouching = new Animation(Tag::REDROCKERTER, 3, 4);
 	shocking = new Animation(Tag::REDROCKERTER, 4, 5);
 }
+
+void RedRocketRobot::KillObject()
+{
+	this->vx = 0;
+	this->vy = 0;
+	this->health = 0;
+	ChangeState(State::BEATEN);
+}

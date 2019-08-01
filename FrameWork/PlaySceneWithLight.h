@@ -17,11 +17,11 @@ public:
 	}
 	PlaySceneWithLight();
 	~PlaySceneWithLight();
+	void TurnOnOffLight() override;
 protected:
 	bool isLightOn;
 	GameMap* worldDark;
 	GameMap* currentWorld;
-	void TurnOnOffLight();
 	virtual void ProcessUpdates(double dt) override;
 	virtual void UpdateCameraWithPlayerPos(double dt = 0) override;
 	virtual void CollisionProcess(double dt) override;

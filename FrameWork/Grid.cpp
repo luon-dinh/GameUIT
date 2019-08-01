@@ -117,6 +117,28 @@ Grid::~Grid()
 	delete objectSpecialIDPerPosition;
 }
 
+void Grid::KillAllEnemyInActiveCells()
+{
+	//Duyệt từ dưới lên trước, sau đó duyệt từ trái qua phải.
+	for (int i = bottomY; i <= topY; ++i)
+	{
+		int cellY = i;
+		for (int j = leftX; j <= rightX; ++j)
+		{
+			int cellX = j;
+			std::list<Object*>::iterator it = cells[i][j].begin();
+			while (it != cells[i][j].end())
+			{
+				//Xét nếu là enemy thì mới giết nó.
+				if ((*it)->tag == Tag::ENERMY || (*it)->type == Type::ENEMY)
+					(*it)->KillObject();
+				++it;
+			}
+		}
+	}
+
+}
+
 void Grid::LoadMapObjects(const char * mapObjectFilePath)
 {
 	//Load tất cả các Map Object (Ground, Non-Ground,...).

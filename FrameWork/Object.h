@@ -70,6 +70,9 @@ public:
 	//Hàm xác định xem object có khả năng được di chuyển trong Grid không. Mặc định là có.
 	virtual bool IsMovableInGrid() { return true; }
 
+	//Hàm dùng để giết chết object.
+	virtual void KillObject() {};
+
 	//Hàm dùng để lấy giá trị của biến isCollidable.
 	bool IsCollidable() { return isCollidable; }
 

@@ -20,6 +20,7 @@ class PlayScene : public Scene
 public:
 	virtual void Update(double dt);
 	virtual void Draw();
+	virtual void TurnOnOffLight() {};
 	bool isDone() { return Done; }
 	MapName GetAndResetDestinationMap();
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
@@ -38,6 +39,7 @@ protected:
 	virtual void EnvironmentUpdate(double dt);
 	virtual void DrawDebugBoxForPlayer();
 	virtual void DrawDebugBoxForStaticObjects();
+	void KillAllEnemyInActiveCells() { grid->KillAllEnemyInActiveCells(); };
 	GameMap* world;
 	Grid* grid;
 	Camera * camera;
