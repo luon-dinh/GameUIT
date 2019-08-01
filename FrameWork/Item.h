@@ -21,6 +21,8 @@ public:
 	void OnCollision(Object* object, collisionOut* colOut)override;
 	bool OnRectCollided(Object* object, CollisionSide side)override;
 	void OnNotCollision(Object* object)override {};
+	float getWidth();
+	float getHeight();
 	Item(ItemType type);
 	Item() {};
 	~Item();

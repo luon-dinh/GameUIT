@@ -81,11 +81,16 @@ void Container::Render()
 BoundingBox Container::getBoundingBox()
 {
 	BoundingBox box;
-	box.top = this->pos.y + 8;
-	box.bottom = this->pos.y - 8;
-	box.left = this->pos.x - 8;
-	box.right = this->pos.x + 8;
-	box.vx = box.vy = 0;
+	box.vx = this->vx;
+	box.vy = this->vy;
+	auto sprite = this->animation->getSprite(this->animation->curframeindex);
+	RECT rect = sprite->getRECT();
+	height = rect.top - rect.bottom;
+	width = rect.right - rect.left;
+	box.top = this->pos.y + height / 2;
+	box.bottom = this->pos.y - height / 2;
+	box.left = this->pos.x - width / 2;
+	box.right = this->pos.x + width / 2;
 	return box;
 }
 
