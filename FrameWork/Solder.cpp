@@ -9,11 +9,19 @@ Solder::Solder(RunType runType)
 	this->vy = 0;
 	this->runType = runType;
 	this->canJump = true;
-	this->direction = Player::MoveDirection::RightToLeft;
 	this->onAirState = OnAir::None;
 	this->currentAnimation = animations[State::STANDING];
 	this->timeCurrentState = 0;
-	if (runType == RunType::SPECIAL)
+	auto player = Player::getInstance();
+	float deltax = this->pos.x - player->pos.x;
+	//this->direction = Player::MoveDirection::RightToLeft;
+	if (deltax > 0)
+		this->direction = Player::MoveDirection::RightToLeft;
+	else
+	{
+		this->direction = Player::MoveDirection::LeftToRight;
+	}
+	if (runType == RunType::SPECIAL||runType==RunType::CANRUN)
 		//this->stateName = State::RUNNING;
 		ChangeState(State::RUNNING);
 	else
@@ -201,8 +209,6 @@ void Solder::Update(float dt)
 		}
 		else
 		{
-			if (runType == RunType::THREESHOOTER)
-				int a = 1;
 			if (runType == RunType::NOTRUN || runType == RunType::THREESHOOTER)
 			{
 				ChangeState(State::DUCKING);

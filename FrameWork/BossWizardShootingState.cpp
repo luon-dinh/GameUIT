@@ -1,4 +1,4 @@
-#include"BossWizardShootingState.h"
+﻿#include"BossWizardShootingState.h"
 #include"SceneManager.h"
 BossWizardShootingState::BossWizardShootingState()
 {
@@ -17,10 +17,13 @@ void BossWizardShootingState::InputHandler()
 void BossWizardShootingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
+	//thời gian shoot 3 viên
 	if (wizard->timeToShoot>0)
 	{
 		if (wizard->delayShoot>=300)
 		{
+			//bắt đầu bắn
+			//nếu là viên thứ 3 của trạng thái rơi từ trên cao xuống
 			if (wizard->timeToShoot < 100&& wizard->flyMode != 1)
 			{
 				auto scene = SceneManager::getInstance();
@@ -92,6 +95,7 @@ void BossWizardShootingState::Update(float dt)
 		}
 		auto player = Player::getInstance();
 		float deltaPlayer = abs(player->pos.x - wizard->pos.x);
+		//nếu gần player, bắn rồi nhảy
 		if (deltaPlayer < wizard->maxXToFly1)
 		{
 			auto scene = SceneManager::getInstance();

@@ -34,7 +34,16 @@ void BossWizardStandingState::Update(float dt)
 	{
 		wizard->direction = BossWizard::MoveDirection::LeftToRight;
 	}
-	wizard->ChangeState(State::RUNNING);
+	if (wizard->flyMode != 1)
+	{
+		wizard->flyMode = 1;
+		wizard->ChangeState(State::FLYING);
+		return;
+	}
+	else
+	{
+		wizard->ChangeState(State::RUNNING);
+	}
 
 	/*if (deltaPlayer >= wizard->xRun)
 	{

@@ -48,17 +48,35 @@ public:
 				this->vx = this->vy = 0;
 			}
 		}
+		switch (colOut->side)
+		{
+		case CollisionSide::top:
+		case CollisionSide::bottom:
+			this->pos.y += this->vy;
+			break;
+		case CollisionSide::left:
+		case CollisionSide::right:
+			this->pos.y += this->vx;
+			break;
+		default:
+			break;
+		}
 	}
+
 
 	BoundingBox getBoundingBox()override
 	{
 		BoundingBox box;
 		box.vx = this->vx;
 		box.vy = this->vy;
-		box.top = this->pos.y + 3;
-		box.left = this->pos.y - 3;
-		box.right = this->pos.x + 4;
-		box.left = this->pos.x - 4;
+		auto sprite = this->animation->getSprite(this->animation->curframeindex);
+		RECT rect = sprite->getRECT();
+		height = rect.top - rect.bottom;
+		width = rect.right - rect.left;
+		box.top = this->pos.y + height / 2;
+		box.bottom = this->pos.y - height / 2;
+		box.left = this->pos.x - width / 2;
+		box.right = this->pos.x + width / 2;
 		return box;
 	}
 };

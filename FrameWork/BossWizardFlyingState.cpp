@@ -56,38 +56,55 @@ void BossWizardFlyingState::Fly(float dt)
 		}
 		break;
 	case BossWizard::OnAir::None:
-		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
-			wizard->vx = wizard->flySpeedx2;
-		else
+		wizard->curanimation->curframeindex = 2;
+		if (wizard->turnOffLight)
 		{
-			wizard->vx = -wizard->flySpeedx2;
+			if (abs(wizard->pos.x - 70) < 5)
+			{
+				wizard->SetOnAirState(BossWizard::OnAir::Falling);
+				return;
+			}
+
 		}
-		wizard->curanimation->curframeindex = 0;
 		if (wizard->canShootOnAir)
 		{
 			wizard->timeDelayShootOnAir += dt;
 		}
-		if (wizard->timeDelayShootOnAir > 50)
+		if (wizard->timeDelayShootOnAir > 40)
 		{
 			auto scene = SceneManager::getInstance();
 			auto bullet = new BulletWizardSpecial();
+			bullet->vx = 0;
 			bullet->vy = ENEMY_BULLET_SPEED * -3;
 			bullet->animation = bullet->animation3;
-			bullet->pos.x = wizard->pos.x;
+			if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
+				bullet->pos.x = wizard->pos.x + wizard->width / 2;
+			else
+			{
+				bullet->pos.x = wizard->pos.x - wizard->width / 2;
+			}
 			bullet->pos.y = wizard->pos.y - wizard->height / 2;
 			scene->AddObjectToCurrentScene(bullet);
 			wizard->timeDelayShootOnAir = 0;
 			wizard->canShootOnAir = false;
+			return;
 		}
-		if (abs(wizard->pos.x - player->pos.x) < 1)
+		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
 		{
-			wizard->canShootOnAir = true;
+			wizard->vx = wizard->flySpeedx2;
+			if (abs(wizard->pos.x + wizard->width/2 - player->pos.x) < 1.5)
+			{
+				wizard->canShootOnAir = true;
+			}
 		}
-		/*if (wizard->deltaX>mapWidth-wizard->width/2)
+		else
 		{
-			wizard->vx = 0;
-			wizard->SetOnAirState(BossWizard::OnAir::Falling);
-		}*/
+			wizard->vx = -wizard->flySpeedx2;
+			if (abs(wizard->pos.x - wizard->width / 2 - player->pos.x) < 1.5)
+			{
+				wizard->canShootOnAir = true;
+			}
+		}
 		break;
 	default:
 		break;

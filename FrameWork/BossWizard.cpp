@@ -1,5 +1,6 @@
 ﻿#include"BossWizard.h"
 #include"Camera.h"
+#include"SceneManager.h"
 
 BossWizard* BossWizard::instance = NULL;
 
@@ -11,6 +12,7 @@ BossWizard::BossWizard()
 	this->pos.y = 120;
 	this->vx = 0;
 	this->vy = 0;
+	this->health = 20;
 	this->deltaX = this->deltaY = 0;
 	this->hitTime = 0;
 	this->isCollide = false;
@@ -77,8 +79,15 @@ BoundingBox BossWizard::getBoundingBox()
 
 void BossWizard::Update(float dt)
 {
+	if (state == State::DEAD)
+	{
+		if (this->curanimation->curframeindex = this->curanimation->curframeindex - 1 && this->timeNotRender > 900)
+			DeactivateObjectInGrid();
+		if (this->onAirState != OnAir::None&&this->state != State::FLYING)
+			this->currentAnimation->Update(dt);
+	}
 	auto player = Player::getInstance();
-	if (this->state != State::FLYING)
+	if (this->state != State::FLYING&&state!=State::DEAD)
 		this->curanimation->Update(dt);
 	//bay vào đầu hoặc cuối map
 	if (this->pos.x < minMap || this->pos.x > maxMap)
@@ -150,7 +159,7 @@ void BossWizard::Render()
 				curanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
 			}
 		}
-		if (timeNotRender > 500)
+		if (timeNotRender > 1000)
 		{
 			timeNotRender = 0;
 			isCollide = false;
@@ -199,6 +208,14 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 		{
 			//render khong render
 			//this->curanimation = animations[State::DEAD];
+			this->health--;
+			if (this->health <= 0)
+			{
+				//isDead = true;
+				ChangeState(State::DEAD);
+			}
+			if (health == 10)
+				this->turnOffLight = true;
 			this->hitTime++;
 			this->isCollide = true;
 			return;
@@ -218,10 +235,16 @@ void BossWizard::OnNotCollision(Object* object)
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
-	/*if (this->onAirState == OnAir::None)
+	if (object->type == Type::GROUND&&side==CollisionSide::bottom&&this->turnOffLight)
 	{
-
-	}*/
+		this->direction = BossWizard::MoveDirection::LeftToRight;
+		this->vy = 0;
+		ChangeState(State::STAND_PUNCH);
+	}
+	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH)
+	{
+		// đổi map 
+	}
 	return true;
 }
 
@@ -282,6 +305,10 @@ void BossWizard::ChangeState(State stateName)
 		this->vy = 0;
 		this->onAirState = OnAir::None;
 		break;
+	case State::DEAD:
+		this->onAirState = OnAir::None;
+		this->vx = this->vy = 0;
+		break;
 	default:
 		break;
 	}
@@ -309,6 +336,7 @@ void BossWizard::LoadAllStates()
 	wizardStates[State::FLYING] = new BossWizardFlyingState();
 	wizardStates[State::STAND_PUNCH] = new BossWizardPunchingState();
 	wizardStates[State::STAND_SMILE] = new BossWizardStandSmileState();
+	wizardStates[State::DEAD] = new BossWizardDeadState();
 }
 
 void BossWizard::AddPosX()

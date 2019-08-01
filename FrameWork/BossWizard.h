@@ -6,6 +6,7 @@
 #include"BossWizardFlyingState.h"
 #include"BossWizardPunchingState.h"
 #include"BossWizardStandSmileState.h"
+#include"BossWizardDeadState.h"
 #include"BulletWizardNormal.h"
 #include"BulletWizardSpecial.h"
 
@@ -42,6 +43,7 @@ public:
 	int flyMode;
 	int flyTimes;
 	float timeNotRender ;
+	bool turnOffLight;
 	BossWizardState * wizardState;
 	static BossWizard* getInstance();
 	void ChangeState(State stateName) override;
