@@ -51,7 +51,7 @@ void GamePlayerProperty::UpdateNonAttackableState() {
 void GamePlayerProperty::SetHealth(int health) {
 	GameObjectProperty::SetHealth(health);
 
-	if (this->GetHealth() == 1) {
+	if (this->GetHealth() == HEALTH_PER_HEART) {
 		this->isNearlyDead = true;
 	}
 }

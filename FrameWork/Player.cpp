@@ -648,24 +648,24 @@ void Player::OnNotCollision(Object* object) {
 }
 bool Player::OnRectCollided(Object* object, CollisionSide side) {
 
-	if (this->state == State::DASHING && (side == CollisionSide::left || side == CollisionSide::right))
-	{
-		// collide with ground
-		this->ChangeState(State::STANDING);
-		switch (side)
-		{
-		case CollisionSide::left:
-			this->ChangeState(State::STANDING);
-			this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
-			break;
-		case CollisionSide::right:
-			this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
-			break;
-		default:
-			break;
-		}
-		return true;
-	}
+	//if (this->state == State::DASHING && (side == CollisionSide::left || side == CollisionSide::right))
+	//{
+	//	// collide with ground
+	//	this->ChangeState(State::STANDING);
+	//	switch (side)
+	//	{
+	//	case CollisionSide::left:
+	//		this->ChangeState(State::STANDING);
+	//		this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
+	//		break;
+	//	case CollisionSide::right:
+	//		this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	return true;
+	//}
 	//SoundManager::getinstance()->play(SoundManager::SoundName::stage2, false);
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
