@@ -27,7 +27,7 @@ Player::Player() : GamePlayerProperty()
 
 	this->flipRenderFrame = 0;
 
-	this->SetHealth(999 * HEALTH_PER_HEART);
+	this->SetHealth(2 * HEALTH_PER_HEART);
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -120,11 +120,11 @@ void Player::Update(float dt)
 
 	// update các thuộc tính của game
 	this->UpdateGameProperty();
+	// update máu để render
 	HealthPoint::getInstance()->Update(this->GetHeart());
 
 	if (this->IsDead() && this->GetOnAirState() == OnAir::None) {
 		this->ChangeState(State::DEAD);
-		return;
 	}
 
 	UpdatePosition();
@@ -153,6 +153,7 @@ void Player::Render()
 		}
 	}
 	HealthPoint::getInstance()->Render();
+	ExitSignal::getInstance()->Render();
 }
 
 void Player::InnerRender() {
@@ -336,13 +337,25 @@ void Player::ChangeState(State stateName) {
 		this->SetOnAirState(OnAir::HangOnTheRope);
 		break;
 	}
+	case State::BEATEN: {
+		this->SetVx(0);
+		if (this->hasShield) {
+			shield->SetShieldState(Shield::ShieldState::NotRender);
+		}
+		return;
+	}
 	case State::FLYING_BEATEN: {
 		this->SetVx(0);
 		this->SetOnAirState(OnAir::Falling);
+		if (this->hasShield) {
+			shield->SetShieldState(Shield::ShieldState::NotRender);
+		}
 		return;
 	}
 	case State::DEAD: {
 		this->SetActive(false);
+		shield->SetShieldState(Shield::ShieldState::NotRender);
+		this->SetToNonAttackableState(300);
 		return;
 	}
 	}
@@ -540,8 +553,13 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	if (object->tag == Tag::SHIELD)
 		return;
 
+	// không xét va chạm swept với enemy
+	if (object->type == Type::ENEMY) {
+		return;
+	}
+
+	// gọi tới hàm va chạm của state
 	this->playerstate->OnCollision(object, collisionOut);
-	this->collisionDetected = true;
 }
 void Player::OnNotCollision(Object* object) {
 	switch (object->type) {
@@ -657,7 +675,16 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			}
 		}
 		return false;
+	}		
+	case Type::ENEMY: {
+		this->OnCollisionWithEnemy(object);
+		return true;
 	}
+	}
+
+	if (object->tag == Tag::ITEM) {
+		this->LootItem((Item*)object);
+		return true;
 	}
 }
 void Player::OnFallingOffGround() {

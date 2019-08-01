@@ -6,6 +6,7 @@ PlayerHandPunch* PlayerHandPunch::instance = NULL;
 PlayerHandPunch::PlayerHandPunch() {
 	this->SetDamage(2);
 	this->SetHealth(1000);
+	this->tag = Tag::PLAYER_PART;
 }
 
 PlayerHandPunch::~PlayerHandPunch() {
@@ -79,6 +80,11 @@ BoundingBox PlayerHandPunch::getBoundingBox() {
 	return box;
 }
 
-void OnCollision(Object* object, collisionOut* colOut) {
+void PlayerHandPunch::OnCollision(Object* object, collisionOut* colOut) {
 
+}
+
+bool PlayerHandPunch::OnRectCollided(Object* object, CollisionSide side) {
+	int a = 1;
+	return false;
 }

@@ -28,19 +28,19 @@ void PlayerKickingState::InputHandler()
 		return;
 	}
 
-	int timePressedJump = 0;
-	// xét thời gian đã press phím jump
-	if (player->GetOnAirState() == Player::OnAir::Jumping) {
-		//phím Jump đã được nhấn từ trước
-		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
-			//chuyển sang trạng thái roll
-			if (timePressedJump / 10 > MAX_KICKING_TIME) {
-				player->ChangeState(State::ROLLING);
-				return;
-			}
-			player->SetVy(player->vy + 0.15);
-		}
-	}
+	//int timePressedJump = 0;
+	//// xét thời gian đã press phím jump
+	//if (player->GetOnAirState() == Player::OnAir::Jumping) {
+	//	//phím Jump đã được nhấn từ trước
+	//	if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
+	//		//chuyển sang trạng thái roll
+	//		if (timePressedJump / 10 > MAX_KICKING_TIME) {
+	//			player->ChangeState(State::ROLLING);
+	//			return;
+	//		}
+	//		player->SetVy(player->vy + 0.15);
+	//	}
+	//}
 
 	//  Đổi hướng qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {

@@ -15,7 +15,7 @@ void PlayerJumpingState::InputHandler() {
 		 //phím Jump đã được nhấn từ trước
 		if (!keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
 			if (timePressedJump / 10 < MIN_TIME_JUMP_1) {
-				return;
+				// do nothing here
 			}
 			else
 				if (timePressedJump / 10 < MIN_TIME_JUMP_2) {
@@ -33,9 +33,7 @@ void PlayerJumpingState::InputHandler() {
 				}
 		}
 	}
-	else {
 
-	}
 	// Nhấn phím tấn công thì chuyển sang trạng thái đá
 	if (keyboard->getKeyPressedOnce(PLAYER_ATTACK)) {
 		player->ChangeState(State::KICKING);

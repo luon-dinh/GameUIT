@@ -160,6 +160,7 @@
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="ExitSignal.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameObjectProperty.cpp" />
@@ -190,6 +191,7 @@
     <ClCompile Include="PlayerHandPunch.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
     <ClCompile Include="PlayerKickingState.cpp" />
+    <ClCompile Include="PlayerKickPart.cpp" />
     <ClCompile Include="PlayerRollingState.cpp" />
     <ClCompile Include="PlayerRunningState.cpp" />
     <ClCompile Include="PlayerShieldAttackState.cpp" />
@@ -254,6 +256,7 @@
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="ExitSignal.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameObjectProperty.h" />
@@ -284,6 +287,7 @@
     <ClInclude Include="PlayerHandPunch.h" />
     <ClInclude Include="PlayerJumpingState.h" />
     <ClInclude Include="PlayerKickingState.h" />
+    <ClInclude Include="PlayerKickPart.h" />
     <ClInclude Include="PlayerRollingState.h" />
     <ClInclude Include="PlayerRunningState.h" />
     <ClInclude Include="PlayerShieldAttackState.h" />

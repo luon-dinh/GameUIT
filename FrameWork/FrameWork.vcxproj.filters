@@ -115,6 +115,9 @@
     <Filter Include="Objects\Enemy\BossWizard">
       <UniqueIdentifier>{e5c99b1e-a2a9-4d38-ad2f-b4a13705b178}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Player\PlayerDistinctParts">
+      <UniqueIdentifier>{34d100ea-0b11-41dd-b551-0048aa5fad80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -369,8 +372,14 @@
     <ClCompile Include="PlayerDyingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="ExitSignal.cpp">
+      <Filter>Objects\MapStaticObject</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerHandPunch.cpp">
-      <Filter>Objects\Player</Filter>
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerKickPart.cpp">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -653,8 +662,14 @@
     <ClInclude Include="PlayerDyingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="ExitSignal.h">
+      <Filter>Objects\MapStaticObject</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerHandPunch.h">
-      <Filter>Objects\Player</Filter>
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerKickPart.h">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

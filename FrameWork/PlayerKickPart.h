@@ -2,21 +2,21 @@
 #include "Object.h"
 #include "Player.h"
 
-class PlayerHandPunch : Object, public GameObjectProperty {
+class PlayerKickPart : Object, public GameObjectProperty {
 private:
-	PlayerHandPunch();
-	~PlayerHandPunch();
+	PlayerKickPart();
+	~PlayerKickPart();
 
-	static PlayerHandPunch* instance;
+	static PlayerKickPart* instance;
 public:
-	
-	static PlayerHandPunch* getInstance();
+
+	static PlayerKickPart* getInstance();
 	static void releaseInstance();
 	void SetPositionToPlayer();
 
 	BOOL GetActive() override;
 	BoundingBox getBoundingBox() override;
-	
+
 	void Render() override;
 	void Update(float dt) override;
 	void UpdateGameProperty() override {};

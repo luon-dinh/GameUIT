@@ -32,6 +32,7 @@
 #include "BulletRedRocketLinear.h"
 #include "BulletRedRocketNonLinear.h"
 #include "PlayerHandPunch.h"
+#include "PlayerKickPart.h"
 
 
 class Player :public Object, public GamePlayerProperty
@@ -52,7 +53,6 @@ private:
 	BOOL collisionAffect;
 
 	PlayerState* prevState;
-	bool collisionDetected;
 
 	void InnerRender();
 	
