@@ -2,19 +2,20 @@
 #include"Camera.h"
 #include "SceneManager.h"
 
-Solder::Solder(RunType runType)
+Solder::Solder(RunType runType, float x, float y)
 {
 	this->tag = Tag::BLUESOLDIER;
 	LoadAllAnimation();
 	this->vy = 0;
+	this->vx = 0;
+	this->pos.x = x;
+	this->pos.y = y;
 	this->runType = runType;
 	this->canJump = true;
 	this->onAirState = OnAir::None;
 	this->currentAnimation = animations[State::STANDING];
-	this->timeCurrentState = 0;
 	auto player = Player::getInstance();
 	float deltax = this->pos.x - player->pos.x;
-	//this->direction = Player::MoveDirection::RightToLeft;
 	if (deltax > 0)
 		this->direction = Player::MoveDirection::RightToLeft;
 	else
