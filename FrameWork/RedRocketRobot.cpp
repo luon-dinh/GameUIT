@@ -14,7 +14,6 @@ RedRocketRobot::RedRocketRobot(int posX, int posY)
 	else
 		direction = MoveDirection::RightToLeft;
 	currentAnimation = standing;
-	robotState = State::WALKING;
 	health = RedRocketRobotHealth;
 }
 

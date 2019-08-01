@@ -60,6 +60,9 @@ protected:
 	//Cờ đánh dấu là đang bị beaten (chớp chớp).
 	bool isBeingBeaten = false;
 
+	//Cờ đánh dấu xem đây có phải là lần đầu tiên nhảy hay không.
+	bool isFirstTimeFalling = true;
+
 	//Animation.
 	Animation* walking;
 	Animation* standing;

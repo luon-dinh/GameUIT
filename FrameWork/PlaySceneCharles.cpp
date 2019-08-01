@@ -28,9 +28,9 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(soldier);
 	////grid->Add(new BulletRedRocket(Object::MoveDirection::LeftToRight, 1550, 51, 1));
 	//grid->Add(new RedRocketRobotOneSided(1400, 51));
-	grid->Add(new RedRocketRobotTwoSided(1600, 51));
+	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
-	grid->Add(new RedRocketRobotNonShooting(1800, 51));
+	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
 }
 
 PlaySceneCharles::~PlaySceneCharles()
@@ -42,7 +42,7 @@ void PlaySceneCharles::ResetPlayerPosition()
 {
 	//Reset lại player luôn.
 	Player * player = Player::getInstance();
-	player->pos.x = 1500;
+	player->pos.x = 0;
 	player->pos.y = SCREEN_HEIGHT + 20;
 	player->ChangeState(State::JUMPING);
 	player->SetOnAirState(Player::OnAir::Falling);

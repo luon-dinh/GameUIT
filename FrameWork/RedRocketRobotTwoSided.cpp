@@ -12,6 +12,7 @@ RedRocketRobotTwoSided::RedRocketRobotTwoSided(int posX, int posY) : RedRocketRo
 	this->currentAnimation = walking;
 	//Con này bắn đạn chậm hơn.
 	this->rocketSpeed = 3;
+	ChangeState(State::FALLING);
 }
 
 RedRocketRobotTwoSided::~RedRocketRobotTwoSided()
@@ -204,6 +205,7 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		break;
 	case State::WALKING:
 		this->currentAnimation = walking;
+		this->vy = 0;
 		break;
 	case State::DUCKING:
 		this->currentAnimation = crouching;
@@ -221,7 +223,7 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		this->vy = (2 * jumpHeight*abs(this->vx)) / jumpLength;
 		break;
 	case State::FALLING:
-		this->currentAnimation = crouching;
+       		this->currentAnimation = crouching;
 		if (this->vy > 0)
 			this->vy *= (-1);
 		else if (this->vy == 0)
@@ -244,14 +246,22 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 				ChangeState(State::BEATEN);
 		}
 	}
-	if (object->tag == Tag::STATICOBJECT)
+ 	if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
 		if (object->type == Type::GROUND  && colOut->side == CollisionSide::bottom)
 		{
 			if (robotState == State::FALLING)
 			{
-				ChangeState(State::STANDING);
+				//Nếu đi chưa hết đoạn đường thì chuyển sang state walking.
+				if (isFirstTimeFalling)
+				{
+					isFirstTimeFalling = false;
+					ChangeState(State::WALKING);
+				}
+				else
+					ChangeState(State::STANDING);
+					
 				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
 			}
 			this->SetStandingGround(object);
@@ -271,6 +281,6 @@ void RedRocketRobotTwoSided::OnNotCollision(Object * object)
 {
 	if (object->type == Type::GROUND && !this->StandOnCurrentGround() && this->robotState == State::WALKING)
 	{
-		ChangeState(State::FALLING);
+		ChangeState(State::JUMPING);
 	}
 }
