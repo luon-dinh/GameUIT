@@ -82,9 +82,6 @@
     <Filter Include="Objects\Shield">
       <UniqueIdentifier>{9003f5ae-1dfd-4656-bc88-933582b0eaa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMap\Grid">
-      <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Enemy">
       <UniqueIdentifier>{dea05333-a33e-4d51-875f-1416567f4247}</UniqueIdentifier>
     </Filter>
@@ -117,6 +114,9 @@
     </Filter>
     <Filter Include="Objects\Player\PlayerDistinctParts">
       <UniqueIdentifier>{34d100ea-0b11-41dd-b551-0048aa5fad80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Grid">
+      <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,7 +256,7 @@
       <Filter>Objects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>GameMap\Grid</Filter>
+      <Filter>Components\Grid</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDivingState.cpp">
       <Filter>Objects\Player</Filter>
@@ -516,7 +516,7 @@
       <Filter>Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>GameMap\Grid</Filter>
+      <Filter>Components\Grid</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDivingState.h">
       <Filter>Objects\Player</Filter>

@@ -3,7 +3,7 @@
 #include"BossWizard.h"
 class BossWizardRunningState :public BossWizardState {
 public:
-	float maxX = 50;
+	float maxX = 30;
 	void Update(float dt) override;
 	void InputHandler() override;
 	BossWizardRunningState();

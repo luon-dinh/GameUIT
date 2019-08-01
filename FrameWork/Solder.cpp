@@ -148,7 +148,7 @@ void Solder::Update(float dt)
 		case State::STANDING:
 			if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
 			{
-				if (runType == RunType::NOTRUN|| runType == RunType::CANRUN)
+				if (runType == RunType::NOTRUN|| runType == RunType::CANRUN || runType == RunType::THREESHOOTER)
 				{
 					if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
 					{

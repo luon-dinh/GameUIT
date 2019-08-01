@@ -28,7 +28,15 @@ void BossWizardStandingState::Update(float dt)
 		return;
 	}
 
-	if (deltaPlayer >= wizard->xRun)
+	if (deltaPlayer > 0)
+		wizard->direction = BossWizard::MoveDirection::RightToLeft;
+	else
+	{
+		wizard->direction = BossWizard::MoveDirection::LeftToRight;
+	}
+	wizard->ChangeState(State::RUNNING);
+
+	/*if (deltaPlayer >= wizard->xRun)
 	{
 		wizard->ChangeState(State::RUNNING);
 	}
@@ -43,5 +51,5 @@ void BossWizardStandingState::Update(float dt)
 			wizard->flyMode = 1;
 			wizard->ChangeState(State::FLYING);
 		}
-	}
+	}*/
 }

@@ -26,7 +26,8 @@ void BossWizardPunchingState::Update(float dt)
 	{
 		wizard->direction = BossWizard::MoveDirection::LeftToRight;
 	}
-	deltaPlayer = abs(deltaPlayer);
+	wizard->ChangeState(State::RUNNING);
+	/*deltaPlayer = abs(deltaPlayer);
 	if (deltaPlayer >= 100)
 		wizard->ChangeState(State::RUNNING);
 	else
@@ -40,5 +41,5 @@ void BossWizardPunchingState::Update(float dt)
 			wizard->flyMode = 1;
 			wizard->ChangeState(State::FLYING);
 		}
-	}
+	}*/
 }

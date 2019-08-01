@@ -11,6 +11,7 @@ RedRocketRobotOneSided::RedRocketRobotOneSided(int posX, int posY) : RedRocketRo
 		isMovingLeftToRight = true;
 	else
 		isMovingLeftToRight = false;
+	ChangeState(State::FALLING);
 }
 
 RedRocketRobotOneSided::~RedRocketRobotOneSided()
@@ -230,6 +231,7 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		break;
 	case State::WALKING:
 		this->currentAnimation = walking;
+		this->vy = 0;
 		break;
 	case State::DUCKING:
 		this->currentAnimation = crouching;
@@ -251,6 +253,8 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		this->currentAnimation = crouching;
 		if (this->vy > 0)
 			this->vy *= (-1);
+		else if (this->vy == 0)
+			this->vy = -1;
 	}
 
 	previousState = this->robotState;
@@ -273,7 +277,7 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 			//Nếu đang không bị beaten thì mới chuyển trạng thái.
 			if (!isBeingBeaten)
 				ChangeState(State::BEATEN);
-		}
+		} 
 	}
 	if (object->tag == Tag::STATICOBJECT)
 	{
@@ -282,7 +286,13 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 		{
 			if (robotState == State::FALLING)
 			{
-				ChangeState(State::STANDING);
+				if (isFirstTimeFalling)
+				{
+					isFirstTimeFalling = false;
+					ChangeState(State::WALKING);
+				}
+				else
+					ChangeState(State::STANDING);
 				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
 			}
 			this->SetStandingGround(object);
@@ -299,6 +309,6 @@ void RedRocketRobotOneSided::OnNotCollision(Object * object)
 {
 	if (object->type == Type::GROUND && !this->StandOnCurrentGround() && this->robotState == State::WALKING)
 	{
-		ChangeState(State::FALLING);
+		ChangeState(State::JUMPING);
 	}
 }
