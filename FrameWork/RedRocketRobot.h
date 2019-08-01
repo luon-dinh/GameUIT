@@ -19,7 +19,7 @@ protected:
 	//Tốc độ đi.
 	const double walkingSpeed = 1;
 	//Máu.
-	const int RedRocketRobotHealth = 3;
+	const int RedRocketRobotHealth = 5;
 
 	//Đây là delay giữa những lần đi của robot.
 	const int walkingDelay = 0;
@@ -96,6 +96,6 @@ public:
 	virtual void OnCollision(Object* object, collisionOut* colout) override {};
 	virtual bool OnRectCollided(Object* object, CollisionSide side) override { return true; };
 	virtual void OnNotCollision(Object* object) override {};
-
+	int GetCollisionDamage() override { return 1; }
 	void KillObject() override;
 };
