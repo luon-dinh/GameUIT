@@ -740,6 +740,8 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				return false;
 			if (this->state == State::DASHING)
 				return false;
+			if (this->state == State::SHIELD_DOWN && side == CollisionSide::bottom)
+				return false;
 			this->OnCollisionWithEnemy(object);
 			return true;
 	}
@@ -748,6 +750,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 		this->LootItem((Item*)object);
 		return true;
 	}
+	return false;
 }
 void Player::OnFallingOffGround() {
 	if (this->GetOnAirState() == Player::OnAir::None) {

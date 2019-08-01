@@ -116,7 +116,8 @@ void GamePlayerProperty::LootItem(Item* item) {
 }
 
 void GamePlayerProperty::ResetGameProperty() {
-
+	ExitSignal::getInstance()->SetActive(false);
+	this->canGoToNextScene = false;
 }
 
 int GamePlayerProperty::GetHeart() {
