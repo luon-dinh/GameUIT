@@ -21,8 +21,11 @@ private:
 	const char * world01MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_object.txt";
 	const char * world01SpawnLocation = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_spawn.txt";
 
+	//Số lượng enemy cần phải giết trước khi cho ra khỏi lock camera.
+	const int blueSoldierKillReq = 3;
+	const int redRocketKillReq = 3;
+
 	bool isCameraAlreadyLockedOnce = false;
-	bool isCameraLocking = false;
 
 	bool isAddSoldier = false;
 };

@@ -65,18 +65,18 @@ void PlaySceneCharles::Update(double dt)
 		{
 			camera->LockCamera();
 			isCameraAlreadyLockedOnce = true;
-			isCameraLocking = true;
 			this->KillAllEnemyInActiveCells();
+			grid->StartEnemyBeatenCounter();
 		}
 	}
 
 	//Xét nếu đang bị khoá camera thì ta sẽ spawn liên tục cho đến khi giết đủ số lượng enemy.
-	if (isCameraLocking)
+	if (camera->GetCameraLockState())
 	{
 		//Thêm vào con robot đỏ bên phải.
 		if (!isAddSoldier)
 		{
-			Object* redRobot = new RedRocketRobotNonShooting(500, 90);
+			Object* redRobot = new RedRocketRobotNonShooting(550, 90);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
 			isAddSoldier = true;
@@ -87,6 +87,13 @@ void PlaySceneCharles::Update(double dt)
 			if (!this->AddObjectToPlayScene(blueSoldier))
 				delete blueSoldier;
 			isAddSoldier = false;
+		}
+		//Trường hợp thoát ra khỏi locking.
+		int blueSoldierBeaten = grid->GetBlueSoldierBeatenCounter();
+		int redRocketBeaten = grid->GetRedRocketRobotBeatenCounter();
+		if (blueSoldierBeaten > blueSoldierKillReq && redRocketBeaten > redRocketKillReq)
+		{
+			camera->UnlockCamera();
 		}
 	}
 

@@ -6,7 +6,7 @@
 #include "SceneManager.h"
 #include<cstdlib>
 
-Container::Container(ItemType type )
+Container::Container(ItemType type)
 {
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
@@ -40,7 +40,16 @@ void Container::Update(float dt)
 				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
 				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
 				if (scene->AddObjectToCurrentScene(item))
-					item = nullptr;
+				{
+					//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
+					if (!item->itemtype == ItemType::EXIT || player->CanGoNextScene())
+					{
+						item = nullptr;
+					}
+					//Nếu vẫn cần nó xuất hiện lần 2 thì ta phải thêm một cục mới.
+					else
+						item = new Item(item->itemtype);
+				}
 				return;
 			}
 			if (numberItems != 0)
@@ -86,6 +95,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 {
 	Player* player = Player::getInstance();
 	Shield* shield = Shield::getInstance();
+	SceneManager* scene = SceneManager::getInstance();
 	switch (object->tag)
 	{
 	case Tag::SHIELD:
@@ -97,8 +107,19 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 			if (item != nullptr)
 			{
 				item->pos = this->pos;
-				SceneManager::getInstance()->AddObjectToCurrentScene(item);
-				item = nullptr;
+				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+				if (scene->AddObjectToCurrentScene(item))
+				{
+					//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
+					if (!item->itemtype == ItemType::EXIT || player->CanGoNextScene())
+					{
+						item = nullptr;
+					}
+					//Nếu vẫn cần nó xuất hiện lần 2 thì ta phải thêm một cục mới.
+					else
+						item = new Item(item->itemtype);
+				}
 				return;
 			}
 			if (numberItems != 0)
