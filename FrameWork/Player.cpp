@@ -27,7 +27,7 @@ Player::Player() : GamePlayerProperty()
 
 	this->flipRenderFrame = 0;
 
-	this->SetHealth(4 * HEALTH_PER_HEART);
+	this->SetHeart(4);
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -171,6 +171,8 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
+	HealthPoint::getInstance()->Render();
+	ExitSignal::getInstance()->Render();
 	// Đang không ở trạng thâí vô địch thì render như thường
 	if (!this->IsNonAttackable()) {
 		InnerRender();
@@ -187,8 +189,7 @@ void Player::Render()
 			}
 		}
 	}
-	HealthPoint::getInstance()->Render();
-	ExitSignal::getInstance()->Render();
+
 }
 
 void Player::InnerRender() {
@@ -735,6 +736,10 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}		
 		case Type::ENEMY: {
+			if (this->IsImmortal() || this->IsNonAttackable())
+				return false;
+			if (this->state == State::DASHING)
+				return false;
 			this->OnCollisionWithEnemy(object);
 			return true;
 	}
