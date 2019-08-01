@@ -17,7 +17,7 @@ void BossWizardPunchingState::InputHandler()
 void BossWizardPunchingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
-	if (wizard->curanimation->curframeindex == wizard->curanimation->toframe-1)
+	if (wizard->currentanimation->curframeindex == wizard->currentanimation->toframe-1)
 	{
 		if (wizard->turnOffLight&&wizard->flyMode != 1)
 		{

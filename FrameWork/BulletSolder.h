@@ -1,27 +1,29 @@
 ﻿#pragma once
 #include"Bullet.h"
 #include"Collision.h"
+#include"Player.h"
+#include"Shield.h"
 class BulletSolder:public Bullet {
 public:
-	BulletSolder()
+	BulletSolder(MoveDirection direction)
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
 		this->tag = Tag::BLUESOLDERBULLET;
 		this->isActive = false;
 		this->vy = 0;
 		this->existTime = 0;
-		this->vx = ENEMY_BULLET_SPEED;
+		this->direction = direction;
+		if (this->direction == MoveDirection::RightToLeft)
+			this->vx = ENEMY_BULLET_SPEED * -2;
+		else
+		{
+			this->vx = ENEMY_BULLET_SPEED * 2;
+		}
 	}
 	void Update(float dt) override
 	{
-		if (animation->curframeindex == 2)
+		if (animation->curframeindex ==animationExplode->toframe-1&&animation==animationExplode)
 			DeactivateObjectInGrid();
-		if (this->direction == MoveDirection::RightToLeft)
-			this->vx = ENEMY_BULLET_SPEED* -1;
-		else
-		{
-			this->vx = ENEMY_BULLET_SPEED;
-		}
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
 		animation->Update(dt);
@@ -29,6 +31,10 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
+		auto player = Player::getInstance();
+		auto shield = Shield::getInstance();
+		float posToShhield = abs(this->pos.x - shield->pos.x);
+		float posToPlayer = abs(this->pos.x - player->pos.x);
 		switch (object->type)
 		{
 		case Type::SOLIDBOX:
@@ -44,11 +50,52 @@ public:
 		{
 			if (object->tag == Tag::PLAYER)
 			{
+				if (player->hasShield&&shield->state==Shield::ShieldState::Defense&&player->direction!=this->direction && (posToShhield < posToPlayer))
+				{
+					this->vy = abs(this->vx);
+					this->vx = 0;
+					return;
+				}
 				this->animation = animationExplode;
 				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}
 		}
+		
+	}
+	bool OnRectCollided(Object* object, CollisionSide side)override
+	{
+		auto player = Player::getInstance();
+		auto shield = Shield::getInstance();
+		float posToShhield = abs(this->pos.x - shield->pos.x);
+		float posToPlayer = abs(this->pos.x - player->pos.x);
+		switch (object->type)
+		{
+		case Type::SOLIDBOX:
+		case Type::GROUND:
+			this->animation = animationExplode;
+			this->pos.x += this->vx;
+			this->vx = this->vy = 0;
+			break;
+		default:
+			break;
+		}
+		if (object->type == Type::NONE)
+		{
+			if (object->tag == Tag::PLAYER)
+			{
+				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction&&(posToShhield<posToPlayer))
+				{
+					this->vy = abs(this->vx);
+					this->vx = 0;
+					return true;
+				}
+				this->animation = animationExplode;
+				this->pos.x += this->vx;
+				this->vx = this->vy = 0;
+			}
+		}
+		
 	}
 	BoundingBox getBoundingBox()override
 	{

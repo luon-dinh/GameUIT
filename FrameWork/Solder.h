@@ -14,6 +14,9 @@ public:
 	float timeCurrentState;
 	float deltaY = 0;
 	float PosToBottom();
+	float delayBeaten;
+	float delayToDead;
+	const float maxDelayBeaten=2000;
 	std::unordered_map<State, Animation*> animations;
 	void LoadAllAnimation();
 	void ChangeState(State state)override; 

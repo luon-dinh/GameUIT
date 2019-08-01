@@ -14,6 +14,8 @@ Solder::Solder(RunType runType, float x, float y)
 	this->canJump = true;
 	this->health = 2;
 	this->onAirState = OnAir::None;
+	this->delayBeaten = 0;
+	this->delayToDead = 0;
 	this->currentAnimation = animations[State::STANDING];
 	auto player = Player::getInstance();
 	float deltax = this->pos.x - player->pos.x;
@@ -103,7 +105,12 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 			{
 				this->vx = -1;
 			}
-			ChangeState(State::BEATEN);
+			this->health -= 2;
+			if (this->health <= 0)
+			{
+				this->ChangeState(State::DEAD);
+			}
+			this->isCollidable = false;
 			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
 		}
 	}
@@ -111,11 +118,11 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 	{
 		auto player = Player::getInstance();
 		this->health -= player->GetCollisionDamage();
+		if (this->health <= 0)
+		{
+			this->ChangeState(State::DEAD);
+		}
 		this->isCollidable = false;
-	}
-	else
-	{
-		this->isCollidable = true;
 	}
 }
 
@@ -143,7 +150,12 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 			{
 				this->vx = -1;
 			}
-			ChangeState(State::BEATEN);
+			this->health -= 2;
+			if (this->health <= 0)
+			{
+				this->ChangeState(State::DEAD);
+			}
+			this->isCollidable = false;
 			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
 		}
 	}
@@ -151,11 +163,11 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 	{
 		auto player = Player::getInstance();
 		this->health -= player->GetCollisionDamage();
+		if (this->health <= 0)
+		{
+			this->ChangeState(State::DEAD);
+		}
 		this->isCollidable = false;
-	}
-	else
-	{
-		this->isCollidable = true;
 	}
 	return false;
 }
@@ -177,10 +189,21 @@ void Solder::OnNotCollision(Object* object)
 
 void Solder::Update(float dt)
 {
-	if (this->health <= 0 && this->stateName != State::BEATEN&&this->stateName != State::DEAD)
+	if (stateName == State::DEAD)
 	{
-		ChangeState(State::BEATEN);
-		return;
+		if (this->currentAnimation == explodeAnim && this->currentAnimation->curframeindex == this->currentAnimation->toframe - 1)
+		{
+			DeactivateObjectInGrid();
+		}
+	}
+	if (this->isCollidable == false)
+	{
+		this->delayBeaten += dt;
+	}
+	if (this->delayBeaten >= maxDelayBeaten)
+	{
+		this->delayBeaten = 0;
+		this->isCollidable = true;
 	}
 	if (runType == RunType::NOTRUN||runType==RunType::THREESHOOTER)
 	{
@@ -221,25 +244,22 @@ void Solder::Update(float dt)
 				{
 					auto scene = SceneManager::getInstance();
 						
-					auto bullet = new BulletSolder();
+					auto bullet = new BulletSolder(this->direction);
 					bullet->existTime = 0;
-					bullet->direction = this->direction;
 					bullet->pos.y = this->getBoundingBox().top - 4;
 					bullet->pos.x = this->pos.x;
 					scene->AddObjectToCurrentScene(bullet);
 					if (runType == RunType::THREESHOOTER)
 					{
-						auto bullet1 = new BulletSolder();
+						auto bullet1 = new BulletSolder(this->direction);
 						bullet1->vy = -0.5;
 						bullet1->existTime = 0;
-						bullet1->direction = this->direction;
 						bullet1->pos.y = this->getBoundingBox().top - 4;
 						bullet1->pos.x = this->pos.x;
 						scene->AddObjectToCurrentScene(bullet1);
-						auto bullet2 = new BulletSolder();
+						auto bullet2 = new BulletSolder(this->direction);
 						bullet2->vy = 0.5;
 						bullet2->existTime = 0;
-						bullet2->direction = this->direction;
 						bullet2->pos.y = this->getBoundingBox().top - 4;
 						bullet2->pos.x = this->pos.x;
 						scene->AddObjectToCurrentScene(bullet2);
@@ -282,21 +302,17 @@ void Solder::Update(float dt)
 			timeCurrentState += dt;
 		}	
 		break;
-	case State::BEATEN:
-		if (timeCurrentState > ENEMY_BEATEN_TIME)
+	case State::DEAD:
+		if (delayToDead>=currentAnimation->tiperframe)
 		{
-			ChangeState(State::DEAD);
+			if(this->currentAnimation != this->explodeAnim)
+			{
+				this->currentAnimation = this->explodeAnim;
+			}
 		}
 		else
 		{
-			timeCurrentState += dt;
-		}
-		break;
-	case State::DEAD:
-		if (currentAnimation->curframeindex == currentAnimation->toframe - 1)
-		{
-			isDead = true;
-			DeactivateObjectInGrid();
+			delayToDead += dt;
 		}
 		break;
 	case State::JUMPING:
@@ -312,16 +328,36 @@ void Solder::Update(float dt)
 void Solder::Render()
 {
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
-	switch (this->direction)
+	if (!this->isCollidable)
 	{
-	case Player::MoveDirection::LeftToRight:
-		this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
-		break;
-	case Player::MoveDirection::RightToLeft:
-		this->currentAnimation->Render(pos);
-		break;
-	default:
-		break;
+		if ((int)this->timeCurrentState % 2 == 0)
+		{
+			switch (this->direction)
+			{
+			case Player::MoveDirection::LeftToRight:
+				this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+				break;
+			case Player::MoveDirection::RightToLeft:
+				this->currentAnimation->Render(pos);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	else
+	{
+		switch (this->direction)
+		{
+		case Player::MoveDirection::LeftToRight:
+			this->currentAnimation->Render(D3DXVECTOR2(pos), TransformationMode::FlipHorizontal);
+			break;
+		case Player::MoveDirection::RightToLeft:
+			this->currentAnimation->Render(pos);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -329,9 +365,9 @@ void Solder::Render()
 void Solder::LoadAllAnimation()
 {
 	animations[State::RUNNING] = new Animation(Tag::BLUESOLDIER, 0, 3);// run
-	animations[State::STANDING] = new Animation(Tag::BLUESOLDIER, 3);//stand
-	animations[State::DUCKING] = new Animation(Tag::BLUESOLDIER, 4);//duck
-	animations[State::BEATEN] = new Animation(Tag::BLUESOLDIER, 5);//beaten
+	animations[State::STANDING] = new Animation(Tag::BLUESOLDIER, 3, 4);//stand
+	animations[State::DUCKING] = new Animation(Tag::BLUESOLDIER, 4, 5);//duck
+	animations[State::DEAD] = new Animation(Tag::BLUESOLDIER, 5, 6);//dead
 }
 
 void Solder::ChangeState(State stateName)
@@ -369,18 +405,8 @@ void Solder::ChangeState(State stateName)
 		isDead = false;
 		this->onAirState == OnAir::None;
 		break;
-	case State::BEATEN:
-		this->currentAnimation = animations[State::BEATEN];
-		this->vy = 0;
-		if (this->direction == Player::MoveDirection::LeftToRight)
-			this->pos.x -= 3;
-		else
-		{
-			this->pos.x += 3;
-		}
-		break;
 	case State::DEAD:
-		this->currentAnimation = explodeAnim;
+		this->currentAnimation = animations[State::DEAD];
 		break;
 	case State::JUMPING:
 		this->vy = 10;

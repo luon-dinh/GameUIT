@@ -54,7 +54,7 @@ public:
 	BoundingBox getBoundingBox()override;
 	State state;
 	Type type;
-	Animation * curanimation;
+	Animation * currentanimation;
 	void OnCollision(Object* object, collisionOut* collision)override;
 	void OnNotCollision(Object* object)override;
 	bool OnRectCollided(Object* object, CollisionSide side)override;

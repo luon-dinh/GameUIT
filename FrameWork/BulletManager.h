@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"BulletSolder.h"
 #include"BulletRedRockerter.h"
 #include"BulletWhiteRockerter.h"
@@ -18,7 +18,7 @@ public:
 		switch (tag)
 		{
 		case Tag::BLUESOLDERBULLET:
-			return new BulletSolder();
+			//return new BulletSolder(); phải truyền vào hướng của nó
 		case Tag::REDROCKERTERBULLET:
 			return new BulletRedRockerter();
 		case Tag::WHITEROCKERTERBULLET:

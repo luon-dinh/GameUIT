@@ -32,7 +32,7 @@ void BossWizardFlyingState::Fly(float dt)
 	switch (wizard->GetOnAirState())
 	{
 	case BossWizard::OnAir::Falling:
-		wizard->curanimation->curframeindex = 1;
+		wizard->currentanimation->curframeindex = 1;
 		wizard->vy = -wizard->flySpeedy;
 		if (wizard->flyMode != 1)
 			wizard->vx = 0;
@@ -41,7 +41,7 @@ void BossWizardFlyingState::Fly(float dt)
 		if(wizard->flyMode!=1)
 			wizard->vx = 0;
 		wizard->vy = wizard->flySpeedy;
-		wizard->curanimation->curframeindex = 0;
+		wizard->currentanimation->curframeindex = 0;
 		if (wizard->flyMode == 1&& wizard->deltaY >= maxFly1)
 		{
 			wizard->deltaY = 0;
@@ -56,7 +56,7 @@ void BossWizardFlyingState::Fly(float dt)
 		}
 		break;
 	case BossWizard::OnAir::None:
-		wizard->curanimation->curframeindex = 2;
+		wizard->currentanimation->curframeindex = 2;
 		if (wizard->turnOffLight)
 		{
 			if (abs(wizard->pos.x - 70) < 5)
