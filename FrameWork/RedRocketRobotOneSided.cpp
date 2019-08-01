@@ -302,6 +302,12 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 
 bool RedRocketRobotOneSided::OnRectCollided(Object* object, CollisionSide colOut)
 {
+	//if (object->tag == Tag::PLAYER)
+	//{
+	//	//Nếu đang không bị beaten thì mới chuyển trạng thái.
+	//	if (!isBeingBeaten)
+	//		ChangeState(State::BEATEN);
+	//}
 	return true;
 }
 

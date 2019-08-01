@@ -56,42 +56,42 @@ void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
 
-	////Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
-	//if (!isCameraAlreadyLockedOnce)
-	//{
-	//	//Xét nếu player nằm trong vùng lock thì lock camera lại.
-	//	auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ( (valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
-	//	if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
-	//	{
-	//		camera->LockCamera();
-	//		isCameraAlreadyLockedOnce = true;
-	//		isCameraLocking = true;
-	//		this->KillAllEnemyInActiveCells();
-	//	}
-	//}
+	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
+	if (!isCameraAlreadyLockedOnce)
+	{
+		//Xét nếu player nằm trong vùng lock thì lock camera lại.
+		auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ( (valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
+		if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
+		{
+			camera->LockCamera();
+			isCameraAlreadyLockedOnce = true;
+			isCameraLocking = true;
+			this->KillAllEnemyInActiveCells();
+		}
+	}
 
-	////Xét nếu đang bị khoá camera thì ta sẽ spawn liên tục cho đến khi giết đủ số lượng enemy.
-	//if (isCameraLocking)
-	//{
-	//	//Thêm vào con robot đỏ bên phải.
-	//	if (!isAddSoldier)
-	//	{
-	//		Object* redRobot = new RedRocketRobotNonShooting(500, 90);
-	//		if (!this->AddObjectToPlayScene(redRobot))
-	//			delete redRobot;
-	//		isAddSoldier = true;
-	//	}
-	//	else
-	//	{
-	//		Object* blueSoldier = new Solder(RunType::CANRUN);
-	//		blueSoldier->pos.x = 300;
-	//		blueSoldier->pos.y = 85;
-	//		blueSoldier->direction = Object::MoveDirection::LeftToRight;
-	//		if (!this->AddObjectToPlayScene(blueSoldier))
-	//			delete blueSoldier;
-	//		isAddSoldier = false;
-	//	}
-	//}
+	//Xét nếu đang bị khoá camera thì ta sẽ spawn liên tục cho đến khi giết đủ số lượng enemy.
+	if (isCameraLocking)
+	{
+		//Thêm vào con robot đỏ bên phải.
+		if (!isAddSoldier)
+		{
+			Object* redRobot = new RedRocketRobotNonShooting(500, 90);
+			if (!this->AddObjectToPlayScene(redRobot))
+				delete redRobot;
+			isAddSoldier = true;
+		}
+		else
+		{
+			Object* blueSoldier = new Solder(RunType::CANRUN);
+			blueSoldier->pos.x = 300;
+			blueSoldier->pos.y = 85;
+			blueSoldier->direction = Object::MoveDirection::LeftToRight;
+			if (!this->AddObjectToPlayScene(blueSoldier))
+				delete blueSoldier;
+			isAddSoldier = false;
+		}
+	}
 
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
 	if (player->pos.x >= world->getMapWidth() - 100)
