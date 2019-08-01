@@ -29,7 +29,9 @@ void HealthPoint::Update(int hp) {
 	if (this->numberOfHP == MIN_FLIP_HP) {
 		this->renderFlip = true;
 	}
-
+	else {
+		this->renderFlip = false;
+	}
 }
 
 void HealthPoint::Render() {

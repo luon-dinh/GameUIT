@@ -1,13 +1,17 @@
 ﻿#pragma once
 #include "GameObjectProperty.h"
 #include "Item.h"
+#include "ExitSignal.h"
 
 class GamePlayerProperty : public GameObjectProperty {
 protected:
 	int nonAttackableFrameCount;
+	int maxNonAttackableFrames;
+
 	bool isNonAttackable;
 	bool isNearlyDead;
 	bool isDead;
+	bool canGoToNextScene;
 
 	void IncreaseHealth(int value);
 	void LoseHealth(int value);
@@ -25,8 +29,11 @@ public:
 	virtual bool IsNonAttackable();
 	virtual bool IsImmortal();
 	virtual void SetToImmortalState();				// Chuyển sang trạng thái bất tử
+	virtual void SetToNonAttackableState(int frames = 105);
 	virtual void SetToNormalState();				// Chuyển sang trạng thái bình thường
+
 	bool IsNearlyDead();
+	bool CanGoNextScene();
 	int GetHeart();									// Lấy trái tim để render
 
 	void LootItem(Item* item);						//	 khi va chạm với item thì loot item đó

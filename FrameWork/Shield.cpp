@@ -276,6 +276,7 @@ void Shield::Update(float dt)
 			this->pos.x = player->pos.x;
 			return;
 		}
+
 		if (this->state == ShieldState::NotRender) {
 			this->pos = player->pos;
 		}
