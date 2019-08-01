@@ -10,10 +10,10 @@ protected:
 	//Khoảng thời gian cho từng state đứng & ngồi.
 	const int attackingStateTime = attackingDelay + 1000;
 	//Chiều dài đoạn mà nó nhảy.
-	const int jumpLength = 40;
+	const int jumpLength = 50;
 
 	//Độ cao mà nó nhảy.
-	const int jumpHeight = 80;
+	const int jumpHeight = 50;
 	
 	//Quãng đường đã đi.
 	int gone = 0;

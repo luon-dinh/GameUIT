@@ -3,6 +3,7 @@
 #include "RedRocketRobotOneSided.h"
 #include "RedRocketRobotTwoSided.h"
 #include "RedRocketRobotTwoSidedNonLinear.h"
+#include "RedRocketRobotOneSidedJumping.h"
 #include <unordered_set>
 #include <set>
 #include <map>
@@ -337,6 +338,8 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 					case RedRocketRobotType::TWOSIDEDNONLINEAR:
 						newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
 						break;
+					case RedRocketRobotType::ONESIDEDJUMPING:
+						newObject = new RedRocketRobotOneSidedJumping(j, i);
 					}
 				}
 			}

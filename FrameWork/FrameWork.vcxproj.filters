@@ -671,5 +671,8 @@
     <ClInclude Include="PlayerKickPart.h">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClInclude>
+    <ClInclude Include="RedRocketRobotOneSidedJumping.h">
+      <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

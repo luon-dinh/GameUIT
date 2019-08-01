@@ -122,6 +122,7 @@ enum RedRocketRobotType
 	ONESIDED = 0,
 	TWOSIDED = 1,
 	TWOSIDEDNONLINEAR = 2,
+	ONESIDEDJUMPING = 3
 };
 
 enum ItemType {
