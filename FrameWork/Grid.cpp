@@ -716,6 +716,7 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		cells[cellY][cellX].erase(it++);
 	else
 		cells[cellY][cellX].erase(it--);
+
 	//Kiểm tra nếu object còn nằm trong active zone thì mới thêm lại vào Grid.
 	if (nextCellY >= bottomY && nextCellY <= topY && nextCellX >= leftX && nextCellX <= rightX)
 	{
@@ -730,6 +731,22 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
 		if (object->GetActivatedInGridStatus())
 			Add(object);
+		//Exception : Nếu object hiện là Shield thì luôn thêm lại vào grid.
+		if (object->tag == Tag::SHIELD)
+		{
+			//Xét xem nó có ra ngoài hem. Có thì chỉnh lại toạ độ để nó vào trong Active Zone.
+			if (nextCellY > topY)
+				nextCellY = topY;
+			else if (nextCellY < bottomY)
+				nextCellY = bottomY;
+
+			//Xét xem nó có ra ngoài hem. Có thì chỉnh lại toạ độ để nó vào trong Active Zone.
+			if (nextCellX < leftX)
+				nextCellX = leftX;
+			else if (nextCellX > rightX)
+				nextCellX = rightX;
+			cells[nextCellY][nextCellX].push_front(object);
+		}
 		else
 		{
 			DeleteObjectAndDecreaseCounter(object);

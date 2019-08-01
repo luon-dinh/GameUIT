@@ -83,10 +83,7 @@ void PlaySceneCharles::Update(double dt)
 		}
 		else
 		{
-			Object* blueSoldier = new Solder(RunType::CANRUN);
-			blueSoldier->pos.x = 300;
-			blueSoldier->pos.y = 85;
-			blueSoldier->direction = Object::MoveDirection::LeftToRight;
+			Object* blueSoldier = new Solder(RunType::CANRUN, 250, 85);
 			if (!this->AddObjectToPlayScene(blueSoldier))
 				delete blueSoldier;
 			isAddSoldier = false;
@@ -96,7 +93,10 @@ void PlaySceneCharles::Update(double dt)
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
 	if (player->pos.x >= world->getMapWidth() - 100)
 	{
-		Done = true;
-		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
+		if (player->CanGoNextScene())
+		{
+			Done = true;
+			ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
+		}
 	}
 }
