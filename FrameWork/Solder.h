@@ -6,7 +6,7 @@
 class Solder : public Enemy {
 private:
 public:
-	Solder(RunType runType);
+	Solder(RunType runType, float x, float y);
 	~Solder();
 	bool canJump;
 	State stateName;
