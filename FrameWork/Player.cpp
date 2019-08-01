@@ -108,6 +108,41 @@ BoundingBox Player::getBoundingBox()
 	box.vy = this->vy;
 	box.top = this->pos.y + height / 2;
 	box.left = this->pos.x - width / 2;
+	if (this->state == State::DUCKING_PUNCHING)
+	{
+		switch (this->direction)
+		{
+		case MoveDirection::LeftToRight:
+			box.left = this->pos.x - this->width / 2; 
+			box.right = this->pos.x + 6;
+			break;
+		case MoveDirection::RightToLeft:
+			box.left = this->pos.x - 6;
+			box.right = this->pos.x + this->width / 2;
+			break;
+		default:
+			break;
+		}
+		return box;
+	}
+	if (this->state == State::STAND_PUNCH)
+	{
+		switch (this->direction)
+		{
+		case MoveDirection::LeftToRight:
+			box.left = this->pos.x - this->width / 2;
+			box.right = this->pos.x  -4;
+			break;
+		case MoveDirection::RightToLeft:
+			box.left = this->pos.x-4;
+			box.right = this->pos.x + this->width / 2;
+			break;
+		default:
+			break;
+		}
+		return box;
+	}
+
 	box.bottom = this->pos.y - height / 2;
 	box.right = this->pos.x + width / 2;
 	return box;

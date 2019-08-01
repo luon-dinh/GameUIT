@@ -123,7 +123,7 @@ void BossWizard::Update(float dt)
 	}
 	this->wizardState->Update(dt);
 	//player đang đứng trên thanh ground thì cười
-	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None)
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None&&this->state!=State::FLYING)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);
@@ -244,6 +244,7 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH)
 	{
 		// đổi map 
+		SceneManager::getInstance()->TurnOnOffLight();
 	}
 	return true;
 }
