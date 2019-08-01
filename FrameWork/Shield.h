@@ -67,6 +67,7 @@ public:
 	void DeactivateObjectInGrid() override {};
 	void SetMoveDirection(MoveDirection moveDir) override;
 
+	int GetCollisionDamage() override { return 2; }
 
 	void ChangeState(State stateName) override {};
 	void OnCollision(Object* object, collisionOut* out) override;

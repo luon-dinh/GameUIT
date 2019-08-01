@@ -246,14 +246,6 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 				ChangeState(State::BEATEN);
 		}
 	}
-	else if (object->tag == Tag::PLAYER)
-	{
-		if (!isBeingBeaten)
-		{
-			health -= object->GetCollisionDamage();
-			ChangeState(State::BEATEN);
-		}
-	}
  	else if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
