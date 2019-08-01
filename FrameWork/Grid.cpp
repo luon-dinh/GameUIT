@@ -562,6 +562,23 @@ void Grid::CollisionProcessOfDynamicObjects(Object* obj1, Object* obj2)
 		obj1->OnCollision(obj2, &obj1CollisionSide);
 		obj2->OnCollision(obj1, &obj2CollisionSide);
 	}
+	else {
+		CollisionSide obj1CollisionSide;
+		if (Collision::getInstance()->IsCollide(obj1BoundingBox, obj2BoundingBox, &obj1CollisionSide))
+		{
+			collisionOut obj1CollisionOut;
+			obj1CollisionOut.collisionTime = 0;
+			obj1CollisionOut.side = obj1CollisionSide;
+			collisionOut obj2CollisionOut = Collision::getInstance()->GetOppositeSide(obj1CollisionOut);
+			obj1->OnRectCollided(obj2, obj1CollisionSide);
+			obj2->OnRectCollided(obj1, obj2CollisionOut.side);
+		}
+		else
+		{
+			obj1->OnNotCollision(obj2);
+			obj2->OnNotCollision(obj1);
+		}
+	}
 }
 
 bool Grid::CollisionProcessOfStaticObject(MapStaticObject* staticObject, Object* object)

@@ -246,7 +246,15 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 				ChangeState(State::BEATEN);
 		}
 	}
- 	if (object->tag == Tag::STATICOBJECT)
+	else if (object->tag == Tag::PLAYER)
+	{
+		if (!isBeingBeaten)
+		{
+			health -= object->GetCollisionDamage();
+			ChangeState(State::BEATEN);
+		}
+	}
+ 	else if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
 		if (object->type == Type::GROUND  && colOut->side == CollisionSide::bottom)
@@ -275,6 +283,33 @@ void RedRocketRobotTwoSided::Fire()
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y, rocketSpeed));
 	else
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
+}
+
+bool RedRocketRobotTwoSided::OnRectCollided(Object* object, CollisionSide colOut)
+{
+	if (object->tag == Tag::SHIELD)
+	{
+		Shield *shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			//Nếu đang không bị beaten thì mới chuyển trạng thái.
+			if (!isBeingBeaten)
+				ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::PLAYER)
+	{
+		if (!isBeingBeaten)
+		{
+			health -= object->GetCollisionDamage();
+			ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::STATICOBJECT)
+	{
+		return false;
+	}
+	return true;
 }
 
 void RedRocketRobotTwoSided::OnNotCollision(Object * object)

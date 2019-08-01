@@ -221,8 +221,7 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		flashingTick = 0;
 		isBeingBeaten = true;
 		this->currentAnimation = shocking;
-		--health;
-		if (health == 0)
+		if (health <= 0)
 			this->vx = Shield::getInstance()->vx / 10;
 		break;
 	case State::STANDING:
@@ -276,10 +275,21 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 		{
 			//Nếu đang không bị beaten thì mới chuyển trạng thái.
 			if (!isBeingBeaten)
+			{
+				health -= object->GetCollisionDamage();
 				ChangeState(State::BEATEN);
+			}
 		} 
 	}
-	if (object->tag == Tag::STATICOBJECT)
+	else if (object->tag == Tag::PLAYER)
+	{
+		if (!isBeingBeaten)
+		{
+			health -= object->GetCollisionDamage();
+			ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
 		if (object->type == Type::GROUND  && colOut->side == CollisionSide::bottom)
@@ -302,12 +312,31 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 
 bool RedRocketRobotOneSided::OnRectCollided(Object* object, CollisionSide colOut)
 {
-	//if (object->tag == Tag::PLAYER)
-	//{
-	//	//Nếu đang không bị beaten thì mới chuyển trạng thái.
-	//	if (!isBeingBeaten)
-	//		ChangeState(State::BEATEN);
-	//}
+	if (object->tag == Tag::SHIELD)
+	{
+		Shield *shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			//Nếu đang không bị beaten thì mới chuyển trạng thái.
+			if (!isBeingBeaten)
+			{
+				health -= object->GetCollisionDamage();
+				ChangeState(State::BEATEN);
+			}
+		}
+	}
+	else if (object->tag == Tag::PLAYER)
+	{
+		if (!isBeingBeaten)
+		{
+			health -= object->GetCollisionDamage();
+			ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::STATICOBJECT)
+	{
+		return false;
+	}
 	return true;
 }
 
