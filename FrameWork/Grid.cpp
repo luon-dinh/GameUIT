@@ -117,6 +117,17 @@ Grid::~Grid()
 	delete objectSpecialIDPerPosition;
 }
 
+void Grid::StartEnemyBeatenCounter()
+{
+	isCountingEnemyBeaten = true;
+	blueSoldierBeatenCounter = redRocketBeatenCounter = 0;
+}
+
+void Grid::StopEnemyBeatenCounter()
+{
+	isCountingEnemyBeaten = false;
+}
+
 void Grid::KillAllEnemyInActiveCells()
 {
 	//Duyệt từ dưới lên trước, sau đó duyệt từ trái qua phải.
@@ -685,6 +696,14 @@ void Grid::UpdateActivatedCells(double dt)
 				//Nếu object đang không được activated thì mình bỏ qua không update và xoá khỏi Grid luôn.
 				if (!(*it)->GetActivatedInGridStatus())
 				{
+					//Xét có cần đếm số enemy đã chết không.
+					if (isCountingEnemyBeaten)
+					{
+						if ((*it)->tag == Tag::BLUESOLDIER)
+							++blueSoldierBeatenCounter;
+						else if ((*it)->tag == Tag::REDROCKERTER)
+							++redRocketBeatenCounter;
+					}
 					DeleteObjectAndDecreaseCounter(*it);
 					cells[i][j].erase(it++);
 					continue;
@@ -728,9 +747,6 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 	else
 	{
 		object->DeactivateObjectInGrid();
-		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
-		if (object->GetActivatedInGridStatus())
-			Add(object);
 		//Exception : Nếu object hiện là Shield thì luôn thêm lại vào grid.
 		if (object->tag == Tag::SHIELD)
 		{
@@ -747,6 +763,9 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 				nextCellX = rightX;
 			cells[nextCellY][nextCellX].push_front(object);
 		}
+		//Nếu không nằm trong Active Zone mà Object không thể bị Deactivate, ta thêm vào Grid.
+		else if (object->GetActivatedInGridStatus())
+			Add(object);
 		else
 		{
 			DeleteObjectAndDecreaseCounter(object);

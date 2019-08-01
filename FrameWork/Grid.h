@@ -14,7 +14,7 @@
 class Grid // lam singleton
 {
 	const int cellSizeHeight = 72;
-	const int cellSizeWidth = 40;
+	const int cellSizeWidth = 50;
 
 	//Số lượng enemy tối đa được thêm vào một Active Zone cùng lúc.
 	const int maxEnemyAtOnce = 2;
@@ -40,6 +40,15 @@ class Grid // lam singleton
 	//Danh sách các tính năng đặc biệt của từng loại object.
 	int ** objectSpecialIDPerPosition;
 
+	//Biến cờ dùng để đánh dấu xem nó có đang tính số enemy bị giết không.
+	bool isCountingEnemyBeaten = false;
+
+	//Biến giữ số lượng Blue Soldier đã bị giết.
+	int blueSoldierBeatenCounter = 0;
+
+	//Biến giữ số lượng Red Rocket đã bị giết.
+	int redRocketBeatenCounter = 0;
+
 	long gridWidth;
 	long gridHeight;
 
@@ -62,6 +71,11 @@ public:
 	bool AddObjectAndIncreaseCounter(Object *);
 
 	void KillAllEnemyInActiveCells();
+
+	void StartEnemyBeatenCounter();
+	void StopEnemyBeatenCounter();
+	int GetBlueSoldierBeatenCounter() { return blueSoldierBeatenCounter; }
+	int GetRedRocketRobotBeatenCounter() { return redRocketBeatenCounter; }
 
 	void ActivateCells(); //Activate những vùng sẽ được xử lý bởi Grid (vùng được khoanh bởi Camera).
 	//Nhớ kiểm tra va chạm trước khi Update.
