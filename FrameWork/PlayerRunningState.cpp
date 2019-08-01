@@ -81,9 +81,6 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 		player->OnCollisionWithSolidBox(object, collision);
 	}
 
-	if (object->type == Type::ENEMY) {
-		player->OnCollisionWithEnemy(object);
-	}
 
 	if (object->type == Type::BULLETTYPE) {
 		auto castBullet = (Bullet*)object;

@@ -51,7 +51,7 @@ void GamePlayerProperty::UpdateNonAttackableState() {
 void GamePlayerProperty::SetHealth(int health) {
 	GameObjectProperty::SetHealth(health);
 
-	if (this->GetHealth() == 1) {
+	if (this->GetHealth() == HEALTH_PER_HEART) {
 		this->isNearlyDead = true;
 	}
 }
@@ -65,7 +65,12 @@ bool GamePlayerProperty::CanGoNextScene() {
 }
 
 void GamePlayerProperty::IncreaseHealth(int value) {
-	this->SetHealth(this->health + value);
+	int newValue = this->health + value;
+	if (newValue > HEALTH_PER_HEART * MAX_HEART) {
+		this->SetHealth(HEALTH_PER_HEART * MAX_HEART);
+		return;
+	}
+	this->SetHealth(newValue);
 }
 
 void GamePlayerProperty::LoseHealth(int value) {
@@ -111,7 +116,8 @@ void GamePlayerProperty::LootItem(Item* item) {
 }
 
 void GamePlayerProperty::ResetGameProperty() {
-
+	ExitSignal::getInstance()->SetActive(false);
+	this->canGoToNextScene = false;
 }
 
 int GamePlayerProperty::GetHeart() {
@@ -122,5 +128,9 @@ int GamePlayerProperty::GetHeart() {
 }
 
 void GamePlayerProperty::SetHeart(int heart) {
+	if (heart >= MAX_HEART) {
+		this->SetHealth(MAX_HEART * HEALTH_PER_HEART);
+		return;
+	}
 	this->SetHealth(heart * HEALTH_PER_HEART);
 }

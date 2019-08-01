@@ -105,8 +105,8 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 	default:
 		break;
 	}
-	if (object->tag == Tag::PLAYER)
-		DeactivateObjectInGrid();
+	//if (object->tag == Tag::PLAYER)
+	//	DeactivateObjectInGrid();
 }
 
 float Item::getHeight()

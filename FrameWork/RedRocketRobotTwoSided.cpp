@@ -195,8 +195,7 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		flashingTick = 0;
 		isBeingBeaten = true;
 		this->currentAnimation = shocking;
-		--health;
-		if (health == 0)
+		if (health <= 0)
 			this->vx = Shield::getInstance()->vx / 10;
 		break;
 	case State::STANDING:
@@ -243,15 +242,11 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 		{
 			//Nếu đang không bị beaten thì mới chuyển trạng thái.
 			if (!isBeingBeaten)
+			{
+				health -= object->GetCollisionDamage();
 				ChangeState(State::BEATEN);
-		}
-	}
-	else if (object->tag == Tag::PLAYER)
-	{
-		if (!isBeingBeaten)
-		{
-			health -= object->GetCollisionDamage();
-			ChangeState(State::BEATEN);
+			}
+				
 		}
 	}
  	else if (object->tag == Tag::STATICOBJECT)
@@ -294,7 +289,10 @@ bool RedRocketRobotTwoSided::OnRectCollided(Object* object, CollisionSide colOut
 		{
 			//Nếu đang không bị beaten thì mới chuyển trạng thái.
 			if (!isBeingBeaten)
+			{
+				health -= object->GetCollisionDamage();
 				ChangeState(State::BEATEN);
+			}
 		}
 	}
 	else if (object->tag == Tag::PLAYER)

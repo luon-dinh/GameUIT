@@ -77,10 +77,6 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 			player->OnClimbingTheRope(object);
 	}
 
-	if (object->type == Type::ENEMY) {
-		player->OnCollisionWithEnemy(object);
-		return;
-	}
 	if (object->type == Type::BULLETTYPE) {
 		player->OnCollisionWithEnemy(object);
 	}

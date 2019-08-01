@@ -27,7 +27,7 @@ Player::Player() : GamePlayerProperty()
 
 	this->flipRenderFrame = 0;
 
-	this->SetHealth(4 * HEALTH_PER_HEART);
+	this->SetHeart(4);
 }
 
 PlayerState* Player::GetPreviousState() {
@@ -171,6 +171,8 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
+	HealthPoint::getInstance()->Render();
+	ExitSignal::getInstance()->Render();
 	// Đang không ở trạng thâí vô địch thì render như thường
 	if (!this->IsNonAttackable()) {
 		InnerRender();
@@ -187,8 +189,7 @@ void Player::Render()
 			}
 		}
 	}
-	HealthPoint::getInstance()->Render();
-	ExitSignal::getInstance()->Render();
+
 }
 
 void Player::InnerRender() {
@@ -227,6 +228,8 @@ int Player::GetDamage() {
 		case State::STAND_PUNCH: 
 		case State::DUCKING_PUNCHING:  
 		case State::KICKING:			SetDamage(2);break;
+		case State::BEATEN:
+		case State::FLYING_BEATEN:		SetDamage(0);break;
 		default:
 			SetDamage(1);
 	}
@@ -648,24 +651,24 @@ void Player::OnNotCollision(Object* object) {
 }
 bool Player::OnRectCollided(Object* object, CollisionSide side) {
 
-	if (this->state == State::DASHING && (side == CollisionSide::left || side == CollisionSide::right))
-	{
-		// collide with ground
-		this->ChangeState(State::STANDING);
-		switch (side)
-		{
-		case CollisionSide::left:
-			this->ChangeState(State::STANDING);
-			this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
-			break;
-		case CollisionSide::right:
-			this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
-			break;
-		default:
-			break;
-		}
-		return true;
-	}
+	//if (this->state == State::DASHING && (side == CollisionSide::left || side == CollisionSide::right))
+	//{
+	//	// collide with ground
+	//	this->ChangeState(State::STANDING);
+	//	switch (side)
+	//	{
+	//	case CollisionSide::left:
+	//		this->ChangeState(State::STANDING);
+	//		this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
+	//		break;
+	//	case CollisionSide::right:
+	//		this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	return true;
+	//}
 	//SoundManager::getinstance()->play(SoundManager::SoundName::stage2, false);
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
@@ -733,6 +736,12 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}		
 		case Type::ENEMY: {
+			if (this->IsImmortal() || this->IsNonAttackable())
+				return false;
+			if (this->state == State::DASHING)
+				return false;
+			if (this->state == State::SHIELD_DOWN && side == CollisionSide::bottom)
+				return false;
 			this->OnCollisionWithEnemy(object);
 			return true;
 	}
@@ -741,6 +750,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 		this->LootItem((Item*)object);
 		return true;
 	}
+	return false;
 }
 void Player::OnFallingOffGround() {
 	if (this->GetOnAirState() == Player::OnAir::None) {

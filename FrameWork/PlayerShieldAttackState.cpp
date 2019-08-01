@@ -42,11 +42,6 @@ void PlayerShieldAttackState::OnCollision(Object* object, collisionOut* collisio
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::ENEMY) {
-		player->OnCollisionWithEnemy(object);
-		return;
-	}
-
 	if (object->type == Type::BULLETTYPE) {
 		player->OnCollisionWithBullet((Bullet*)object);
 	}
