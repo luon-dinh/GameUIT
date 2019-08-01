@@ -14,6 +14,8 @@ public:
 	}
 	void Update(float dt) override
 	{
+		if (animation->curframeindex == 2)
+			DeactivateObjectInGrid();
 		if (this->direction == MoveDirection::RightToLeft)
 			this->vx = ENEMY_BULLET_SPEED* -1;
 		else

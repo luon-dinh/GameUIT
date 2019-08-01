@@ -119,8 +119,8 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 24, 43, 48));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 48, 43, 72));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 43, 0, 86, 24));
-	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 86, 0, 129, 24));
-	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 129, 0, 172, 24));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 102, 0, 129, 24));
+	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 140, 0, 172, 24));
 	//cắt sprite cho bullet explode
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 0, 28, 30));
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 30, 28, 60));

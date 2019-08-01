@@ -13,6 +13,7 @@ public:
 	RunType runType;
 	float timeCurrentState;
 	float deltaY = 0;
+	float PosToBottom();
 	std::unordered_map<State, Animation*> animations;
 	void LoadAllAnimation();
 	void ChangeState(State state)override; 
@@ -21,5 +22,7 @@ public:
 	void OnNotCollision(Object* oject)override;
 	void Update(float dt) override;
 	void Render();
+	float getHeight()override;
+	float getWidth()override;
 	BoundingBox getBoundingBox()override;
 };
