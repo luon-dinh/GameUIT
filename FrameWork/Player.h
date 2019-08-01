@@ -127,7 +127,7 @@ public:
 	D3DXVECTOR2 GetShieldReturnPos();
 
 	bool IsFootStepOn();
-
+	int GetCollisionDamage() override;
 
 
 

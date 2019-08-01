@@ -122,6 +122,8 @@ public:
 	virtual void OnNotCollision(Object* object) {};
 	virtual bool OnRectCollided(Object* object, CollisionSide side) { return false; };
 
+	virtual int GetCollisionDamage() { return 0; };
+
 protected:
 	BOOL isActive;
 	//Mỗi khi Active Zone của Grid thay đổi thì sẽ gọi đến hàm DeactivateObject.

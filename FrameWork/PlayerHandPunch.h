@@ -23,5 +23,5 @@ public:
 	void ResetGameProperty() override {};
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override;
-	int GetCollisionDamage();
+	int GetCollisionDamage() override;
 };

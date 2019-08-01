@@ -61,12 +61,7 @@ void PlayerKickPart::Update(float dt) {
 }
 
 void PlayerKickPart::Render() {
-	// nếu không đang active thì không render
-	if (this->GetActive() == false) {
-		return;
-	}
-
-	// chưa có animation nên chưa render được
+	// Đây là box ảo nên k cân render
 }
 BoundingBox PlayerKickPart::getBoundingBox() {
 	BoundingBox box;

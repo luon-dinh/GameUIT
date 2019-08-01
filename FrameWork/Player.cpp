@@ -233,6 +233,10 @@ int Player::GetDamage() {
 	return this->damage;
 }
 
+int Player::GetCollisionDamage() {
+	return this->GetDamage();
+}
+
 bool Player::IsNonAttackable() {
 	this->isCollidable = false;
 	if (GamePlayerProperty::IsNonAttackable()) {

@@ -64,19 +64,9 @@ void PlayerHandPunch::Update(float dt) {
 }
 
 void PlayerHandPunch::Render() {
-	// nếu không đang active thì không render
-	if (this->GetActive() == false) {
-		return;
-	}
-
-	// chưa có animation nên chưa render được
+	// Đây là box ảo nên không cần render
 }
 BoundingBox PlayerHandPunch::getBoundingBox() {
-	// width: 11;  height: 4
-	// x: 19.5
-	// ngồi xuống : y - 2
-	// đứng: y + 11
-	
 
 	BoundingBox box;
 	box.left = this->pos.x + 4;
