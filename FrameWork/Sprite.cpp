@@ -1,18 +1,18 @@
 #include"Sprite.h"
 
-void Sprite::Render(float x, float y)
+void Sprite::Render(float x, float y, D3DCOLOR color)
 {
 	texture = TextureManager::getInstance()->getTexture(this->tag);
-	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(x,y,0), D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(x,y,0), color);
 }
 
-void Sprite::Render(D3DXVECTOR2 position)
+void Sprite::Render(D3DXVECTOR2 position, D3DCOLOR color)
 {
 	texture = TextureManager::getInstance()->getTexture(this->tag);
-	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(position.x, position.y, 0) , D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(position.x, position.y, 0) , color);
 }
 
-void Sprite::Render(D3DXVECTOR3 pos)
+void Sprite::Render(D3DXVECTOR3 pos, D3DCOLOR color)
 {
 	Render(D3DXVECTOR2(pos.x, pos.y));
 }
@@ -36,7 +36,7 @@ void Sprite::_GetCenter2(D3DXVECTOR2* center) {
 	center->y = this->center.y;
 }
 
-void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 pos) {
+void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 pos, D3DCOLOR color) {
 	D3DXMATRIX matrix;
 	switch (transMode) {
 	case TransformationMode::FlipHorizontal:  _FlipHorizontal(&matrix); break;
@@ -47,13 +47,13 @@ void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 
 	_InnerRender(&matrix, pos);
 }
 
-void Sprite::Render(float scaleRatioX, float scaleRatioY, D3DXVECTOR2 pos) {
+void Sprite::Render(float scaleRatioX, float scaleRatioY, D3DXVECTOR2 pos, D3DCOLOR color) {
 	D3DXMATRIX scaleMatrix;
 	_Scale(scaleRatioX, scaleRatioY, &scaleMatrix);
 	D3DXMATRIX mOld;
 	spriteHandler->GetTransform(&mOld);
 	spriteHandler->SetTransform(&scaleMatrix);
-	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(pos.x - (rect.right - rect.left) ,pos.y, 0), D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(pos.x - (rect.right - rect.left) ,pos.y, 0), color);
 	spriteHandler->SetTransform(&mOld);
 }
 
@@ -92,11 +92,11 @@ void Sprite::_Scale(float ratioX, float ratioY, D3DXMATRIX* matrix) {
 	D3DXMatrixTransformation2D(matrix, &center, 0, &scaleMatrix, NULL, 0, NULL);
 }
 
-void Sprite::_InnerRender(D3DXMATRIX* matrix, D3DXVECTOR2 position) {
+void Sprite::_InnerRender(D3DXMATRIX* matrix, D3DXVECTOR2 position, D3DCOLOR color) {
 	D3DXMATRIX mOld;
 	spriteHandler->GetTransform(&mOld);
 	spriteHandler->SetTransform(matrix);
-	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(-position.x + (this->rect.right - this->rect.left), position.y, 0), D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &this->rect, &center, &D3DXVECTOR3(-position.x + (this->rect.right - this->rect.left), position.y, 0), color);
 	spriteHandler->SetTransform(&mOld);
 }
 #pragma endregion

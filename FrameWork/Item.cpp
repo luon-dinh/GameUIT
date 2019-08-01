@@ -109,10 +109,21 @@ void Item::OnCollision(Object* object, collisionOut* colOut)
 
 bool Item::OnRectCollided(Object* object, CollisionSide side)
 {
-	if (object->tag == Tag::PLAYER)
+	switch (object->type)
 	{
-	// xử lí va chạm với player	
-		DeactivateObjectInGrid();
+	case Type::GROUND:
+	case Type::SOLIDBOX:
+	case Type::WATERRL:
+		this->vx = this->vy = 0;
+		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
+		break;
+		//xuwr lis va chamj voiws player
+	case Type::NONE:
+		if (object->tag == Tag::PLAYER)
+			DeactivateObjectInGrid();
+		break;
+	default:
+		break;
 	}
 	return true;
 }

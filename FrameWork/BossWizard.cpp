@@ -241,10 +241,11 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 		this->vy = 0;
 		ChangeState(State::STAND_PUNCH);
 	}
-	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH)
+	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight)
 	{
 		// đổi map 
 		SceneManager::getInstance()->TurnOnOffLight();
+		this->turnOffLight = false;
 	}
 	return true;
 }
