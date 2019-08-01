@@ -120,3 +120,7 @@ int GamePlayerProperty::GetHeart() {
 
 	return this->GetHealth() / HEALTH_PER_HEART + (this->GetHealth() % HEALTH_PER_HEART > 0);
 }
+
+void GamePlayerProperty::SetHeart(int heart) {
+	this->SetHealth(heart * HEALTH_PER_HEART);
+}
