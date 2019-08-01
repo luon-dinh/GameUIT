@@ -22,7 +22,7 @@ PlaySceneCharles::PlaySceneCharles()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
-	//grid->Add(new WhiteFlyingRobot(1500, 180));
+	//grid->Add(new WhiteFlyingRobot(200, 180));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
 	//soldier->pos.x = 1500;
 	//soldier->pos.y = 180;
@@ -56,16 +56,16 @@ void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
 	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
-	if (!isCameraAlreadyLockedOnce)
-	{
-		//Xét nếu player nằm trong vùng lock thì lock camera lại.
-		auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ( (valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
-		if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
-		{
-			camera->LockCamera();
-			isCameraAlreadyLockedOnce = true;
-		}
-	}
+	//if (!isCameraAlreadyLockedOnce)
+	//{
+	//	//Xét nếu player nằm trong vùng lock thì lock camera lại.
+	//	auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ( (valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
+	//	if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
+	//	{
+	//		camera->LockCamera();
+	//		isCameraAlreadyLockedOnce = true;
+	//	}
+	//}
 	//Xét thêm điều kiện hoàn thành là khi player đi đến tận cùng phải của map.
 	if (player->pos.x >= world->getMapWidth() - 100)
 	{

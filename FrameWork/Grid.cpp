@@ -15,8 +15,8 @@ Grid::Grid(long _mapWidth, long _mapHeight, const char * spawnPosition, const ch
 	mapWidth = _mapWidth;
 	mapHeight = _mapHeight;
 
-	gridWidth = mapWidth / cellSize + 1;
-	gridHeight = mapHeight / cellSize + 1;
+	gridWidth = mapWidth / cellSizeWidth + 1;
+	gridHeight = mapHeight / cellSizeHeight + 1;
 
 	//Khởi tạo danh sách các cells.
 	cells = new std::list<Object*>*[gridHeight]; //Khởi tạo theo chiều dọc trước.
@@ -176,28 +176,28 @@ void Grid::LoadMapObjects(const char * mapObjectFilePath)
 void Grid::AddStaticMapObjects(MapStaticObject * object)
 {
 	//Ta sẽ thêm map object trong nhiều cell, trải dài theo chiều được quy định bởi from và to.
-	int cellXFrom = (object->pos.x - object->width/2) / cellSize;
+	int cellXFrom = (object->pos.x - object->width/2) / cellSizeWidth;
 
 	if (cellXFrom < 0)
 		cellXFrom = 0;
-	else if (cellXFrom * cellSize > mapWidth)
-		cellXFrom = mapWidth / cellSize;
+	else if (cellXFrom * cellSizeWidth > mapWidth)
+		cellXFrom = mapWidth / cellSizeWidth;
 
 	int cellXTo = cellXFrom;
-	int cellYFrom = (object->pos.y + object->height/2) / cellSize;
+	int cellYFrom = (object->pos.y + object->height/2) / cellSizeHeight;
 
 	if (cellYFrom < 0)
 		cellYFrom = 0;
-	else if (cellYFrom * cellSize > mapHeight)
-		cellYFrom = mapHeight / cellSize;
+	else if (cellYFrom * cellSizeHeight > mapHeight)
+		cellYFrom = mapHeight / cellSizeHeight;
 
 	int cellYTo = cellYFrom;
-	while(cellXTo*cellSize <= (object->pos.x + object->width / 2))
+	while(cellXTo*cellSizeWidth <= (object->pos.x + object->width / 2))
 	{
 		++cellXTo;
 	} 
 
-	while (cellYTo * cellSize <= (object->pos.y + object->height / 2))
+	while (cellYTo * cellSizeHeight <= (object->pos.y + object->height / 2))
 	{
 		++cellYTo;
 	} 
@@ -295,10 +295,10 @@ void Grid::KillAndDelAllObjectsInCell(int cellX, int cellY)
 
 void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 {
-	int fromX = cellX * cellSize;
-	int toX = (cellX + 1)* cellSize;
-	int fromY = cellY * cellSize;
-	int toY = (cellY + 1) * cellSize;
+	int fromX = cellX * cellSizeWidth;
+	int toX = (cellX + 1)* cellSizeWidth;
+	int fromY = cellY * cellSizeHeight;
+	int toY = (cellY + 1) * cellSizeHeight;
 
 	//Quét từ dưới lên, từ trái qua phải.
 	for (int i = fromY; i < toY; ++i)
@@ -356,18 +356,18 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 
 void Grid::Add(Object* objectToAdd)
 {
-	int cellX = objectToAdd->pos.x / cellSize;
-	int cellY = objectToAdd->pos.y / cellSize;
+	int cellX = objectToAdd->pos.x / cellSizeWidth;
+	int cellY = objectToAdd->pos.y / cellSizeHeight;
 
 	if (cellX < 0)
 		cellX = 0;
-	else if (cellX * cellSize > mapWidth)
-		cellX = mapWidth / cellSize;
+	else if (cellX * cellSizeWidth > mapWidth)
+		cellX = mapWidth / cellSizeWidth;
 	
 	if (cellY < 0)
 		cellY = 0;
-	else if (cellY * cellSize > mapHeight)
-		cellY = mapHeight / cellSize;
+	else if (cellY * cellSizeHeight > mapHeight)
+		cellY = mapHeight / cellSizeHeight;
 
 	//Sắp xếp vị trí để shield luôn luôn hiển thị trước mọi thứ khác.
 	cells[cellY][cellX].push_front(objectToAdd);
@@ -384,19 +384,19 @@ void Grid::ActivateCells()
 	int nextRightX;
 	int nextLeftX;
 
-	nextTopY = cameraRECT.top / cellSize + 1;
+	nextTopY = cameraRECT.top / cellSizeHeight + 1;
 	if (nextTopY >= gridHeight)
 		nextTopY = gridHeight - 1;
 
-	nextBottomY = cameraRECT.bottom / cellSize - 1;
+	nextBottomY = cameraRECT.bottom / cellSizeHeight - 1;
 	if (nextBottomY < 0)
 		nextBottomY = 0;
 
-	nextLeftX = cameraRECT.left / cellSize - 1;
+	nextLeftX = cameraRECT.left / cellSizeWidth - 1;
 	if (nextLeftX < 0)
 		nextLeftX = 0;
 
-	nextRightX = cameraRECT.right / cellSize + 1;
+	nextRightX = cameraRECT.right / cellSizeWidth + 1;
 	if (nextRightX >= gridWidth)
 		nextRightX = gridWidth - 1;
 
@@ -682,8 +682,8 @@ std::list<Object*>::iterator Grid::MoveObjectAndIncrementIterator(int cellX, int
 		return (++it);
 
 	//Kiểm tra xem object sau khi di chuyển còn thuộc cell hiện tại hay không.
-	int nextCellX = object->pos.x / cellSize;
-	int nextCellY = object->pos.y / cellSize;
+	int nextCellX = object->pos.x / cellSizeWidth;
+	int nextCellY = object->pos.y / cellSizeHeight;
 	if (cellX == nextCellX && cellY == nextCellY)
 		return (++it);
 

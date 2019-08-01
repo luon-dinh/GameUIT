@@ -13,7 +13,8 @@
 //Phải gọi hàm ActivateCells() trước khi làm bất kỳ thứ gì khác.
 class Grid // lam singleton
 {
-	const int cellSize = 72;
+	const int cellSizeHeight = 72;
+	const int cellSizeWidth = 30;
 
 	//Số lượng enemy tối đa được thêm vào một Active Zone cùng lúc.
 	const int maxEnemyAtOnce = 2;
