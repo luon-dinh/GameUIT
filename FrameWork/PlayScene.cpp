@@ -199,19 +199,23 @@ void PlayScene::ProcessUpdates(double dt)
 	int playerWidth = player->getWidth();
 	int playerHeight = player->getHeight();
 
+	//Không cho player ra khỏi Camera.
+	D3DXVECTOR3 playerInCameraPos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(player->pos.x, player->pos.y,0));
+	RECT cameraRECT = Camera::getCameraInstance()->getCameraRECT();
+
 	//Nếu player ra ngoài map theo hướng bên trái thì ta chỉnh lại.
-	if (player->pos.x - playerWidth / 2 < 0)
-		player->pos.x = playerWidth / 2 + 1;
+	if (playerInCameraPos.x - playerWidth / 2 < 0)
+		player->pos.x = cameraRECT.left + playerWidth / 2 + 1;
 
 	//Player ra ngoài theo hướng bên phải.
-	else if (player->pos.x + playerWidth / 2 >= mapWidth)
-		player->pos.x = mapWidth - playerWidth / 2 - 1;
-
-	//Player ra ngoài theo hướng bên dưới.
-	else if (player->pos.y - playerHeight / 2 < 0)
-		player->pos.y = playerHeight / 2 + 1;
+	else if (playerInCameraPos.x + playerWidth / 2 >= SCREEN_WIDTH)
+		player->pos.x = cameraRECT.right - playerWidth / 2 - 1;
 
 	//Player ra ngoài theo hướng bên trên.
-	else if (player->pos.y + playerHeight / 2 >= mapHeight)
-		player->pos.y = mapHeight - playerHeight / 2 - 1;
+	else if (playerInCameraPos.y - playerHeight / 2 < 0)
+		player->pos.y = cameraRECT.top - playerHeight / 2 - 1;
+
+	//Player ra ngoài theo hướng bên dưới.
+	else if (playerInCameraPos.y + playerHeight / 2 >= SCREEN_HEIGHT)
+		player->pos.y = cameraRECT.bottom + playerHeight / 2 + 1;
 }

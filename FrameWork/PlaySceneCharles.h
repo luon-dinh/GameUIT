@@ -20,4 +20,6 @@ private:
 	const char * world01map = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map.txt";
 	const char * world01MapObject = (char*) ".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_object.txt";
 	const char * world01SpawnLocation = (char*)".\\..\\Resources\\Images\\Maps\\Charles\\charles_map_spawn.txt";
+
+	bool isCameraAlreadyLockedOnce = false;
 };
