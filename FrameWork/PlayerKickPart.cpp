@@ -45,11 +45,15 @@ BOOL PlayerKickPart::GetActive() {
 	auto player = Player::getInstance();
 
 	if (player->state == State::KICKING) {
-		this->SetActive(true);
+		this->isCollidable = true;
 		return true;
 	}
-	this->SetActive(false);
+	this->isCollidable = false;
 	return false;
+}
+
+int PlayerKickPart::GetCollisionDamage() {
+	return 2;
 }
 
 void PlayerKickPart::Update(float dt) {

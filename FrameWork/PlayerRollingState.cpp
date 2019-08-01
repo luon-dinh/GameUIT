@@ -17,6 +17,8 @@ void PlayerRollingState::InputHandler()
 {
 	Player* player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
+
+
 	// chuyển sang trạng thái nhảy
 	if (this->curRollTime >= this->MAX_ROLLING_TIME) {
 		// Phím ngồi đang được nhấn thì chuyển sang shield down

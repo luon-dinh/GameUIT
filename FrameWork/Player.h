@@ -58,6 +58,13 @@ private:
 	
 	int flipRenderFrame;
 	const int FLIP_RENDER_FRAME = 10;
+
+	const int MIN_TIME_JUMP_1 = 20;
+	const int MIN_TIME_JUMP_2 = 30;
+	const int MIN_TIME_ROLL = 40;
+	const int MAX_TIME_JUMP = 50;
+	const float ADDED_SPEED_1 = 0.09;
+	const float ADDED_SPEED_2 = 0.14;
 	
 public:
 
@@ -109,7 +116,7 @@ public:
 	bool IsNonAttackable()						 override;
 	bool IsImmortal()						     override;
 	BOOL IsReachMaxJump();
-
+	
 	void OnHeadOnSolidBox(Object* solid);
 	bool AcceptNoCollision(Object* object, CollisionSide side);
 
@@ -133,6 +140,7 @@ public:
 
 	void DeactivateObjectInGrid()override {};
 
+	void OnJumping(int frames);
 	void OnCollision(Object* object, collisionOut* collisionOut)		 override;
 	void OnNotCollision(Object* object)									 override;
 	bool OnRectCollided(Object* object, CollisionSide side)				 override;

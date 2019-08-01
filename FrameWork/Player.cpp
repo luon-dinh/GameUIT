@@ -581,17 +581,34 @@ float Player::getHeight()
 	return rect.top - rect.bottom;
 }
 
+void Player::OnJumping(int frames) {
+	if (frames < MIN_TIME_JUMP_1) {
+		// do nothing here
+		return;
+	}
+	else
+		if (frames  < MIN_TIME_JUMP_2) {
+			this->SetVy(this->vy + ADDED_SPEED_1);
+		}
+		else {
+			if (frames < MIN_TIME_ROLL) {
+				this->SetVy(this->vy + ADDED_SPEED_2);
+			}
+			else {
+				if (frames < MAX_TIME_JUMP) {
+					//chuyển sang trạng thái roll
+					this->ChangeState(State::ROLLING);
+				}
+			}
+		}
+}
+
 
 #pragma region Collison Handler Implementation
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	// không xét va chạm với shield
 	if (object->tag == Tag::SHIELD)
 		return;
-
-	if (object->tag == Tag::ITEM) {
-		this->LootItem((Item*)object);
-		return;
-	}
 
 	// gọi tới hàm va chạm của state
 	this->playerstate->OnCollision(object, collisionOut);
@@ -712,9 +729,13 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}		
 		case Type::ENEMY: {
-		this->OnCollisionWithEnemy(object);
-		return true;
+			this->OnCollisionWithEnemy(object);
+			return true;
 	}
+	}
+	if (object->tag == Tag::ITEM) {
+		this->LootItem((Item*)object);
+		return true;
 	}
 }
 void Player::OnFallingOffGround() {
@@ -791,7 +812,6 @@ bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 		}
 	}
 }
-
 void Player::OnCollisionWithEnemy(Object* enemy) {
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
 		this->pos.x -= 5;

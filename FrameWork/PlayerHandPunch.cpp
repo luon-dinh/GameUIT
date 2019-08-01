@@ -13,21 +13,28 @@ PlayerHandPunch::~PlayerHandPunch() {
 
 }
 
+int PlayerHandPunch::GetCollisionDamage() {
+	return 2;
+}
 
 void PlayerHandPunch::SetPositionToPlayer() {
 	auto player = Player::getInstance();
 
 	switch (player->GetMoveDirection()) {
-		case MoveDirection::LeftToRight: this->pos.x = player->pos.x + 19.5;
-		case MoveDirection::RightToLeft: this->pos.x = player->pos.x - 19.5;
+		case MoveDirection::LeftToRight: 
+			this->pos.x = player->pos.x + 11.5;
+			break;
+		case MoveDirection::RightToLeft: 
+			this->pos.x = player->pos.x - 11.5;
+			break;
 	}
 
 	if (player->state == State::STAND_PUNCH) {
-		this->pos.y = player->pos.y + 11;
+		this->pos.y = player->pos.y + 3;
 		return;
 	}
 	if (player->state == State::DUCKING_PUNCHING) {
-		this->pos.y = player->pos.y - 2;
+		this->pos.y = player->pos.y + 2;
 	}
 }
 PlayerHandPunch* PlayerHandPunch::getInstance() {
@@ -45,10 +52,10 @@ BOOL PlayerHandPunch::GetActive() {
 	auto player = Player::getInstance();
 
 	if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING) {
-		this->SetActive(true);
+		this->isCollidable = true;
 		return true;
 	}
-	this->SetActive(false);
+	this->isCollidable = false;
 	return false;
 }
 
@@ -72,10 +79,10 @@ BoundingBox PlayerHandPunch::getBoundingBox() {
 	
 
 	BoundingBox box;
-	box.left = this->pos.x / 2 - 5.5;
-	box.right = box.left + 11;
-	box.top = this->pos.y / 2 + 2;
-	box.bottom = box.top - 4;
+	box.left = this->pos.x + 4;
+	box.right = box.left + 15;
+	box.top = this->pos.y + 6;
+	box.bottom = box.top - 6;
 
 	return box;
 }
