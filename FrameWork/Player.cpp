@@ -227,6 +227,8 @@ int Player::GetDamage() {
 		case State::STAND_PUNCH: 
 		case State::DUCKING_PUNCHING:  
 		case State::KICKING:			SetDamage(2);break;
+		case State::BEATEN:
+		case State::FLYING_BEATEN:		SetDamage(0);break;
 		default:
 			SetDamage(1);
 	}
