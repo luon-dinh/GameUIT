@@ -45,6 +45,9 @@ void TextureManager::loadResources()
 
 	//texture dùng cho hp
 	textures->addTexture(Tag::HP_RENDER, (char*)".\\..\\Resources\\Images\\Item\\HP.png");
+
+	//texture dùng cho biển EXIT
+	textures->addTexture(Tag::EXITSIGN, (char*)".\\..\\Resources\\Images\\Item\\ExitSignal.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {
