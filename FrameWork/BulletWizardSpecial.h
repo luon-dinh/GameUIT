@@ -3,10 +3,14 @@
 
 class BulletWizardSpecial : public Bullet
 {
+	
 public:
+	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 0, 1);
+	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 1, 2);
+	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 2, 3);
 	BulletWizardSpecial()
 	{
-		this->animation = new Animation(Tag::BOSSWIZARDBULLET, 0, 3);
+		//this->animation->curframeindex = 2;
 		this->tag = Tag::BOSSWIZARDBULLET;
 	}
 	~BulletWizardSpecial()
@@ -15,12 +19,11 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (this->animation == animationExplode && animation->curframeindex == animation->toframe - 1)
+		if (animation->curframeindex == 2)
 			DeactivateObjectInGrid();
+		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
-		if (animation->curframeindex != animation->toframe - 1)
-			animation->Update(dt);
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override
@@ -30,7 +33,6 @@ public:
 		case Type::SOLIDBOX:
 		case Type::GROUND:
 			this->animation = animationExplode;
-			this->pos.x -= this->vx;
 			this->vx = this->vy = 0;
 			break;
 		default:
@@ -41,7 +43,6 @@ public:
 			if (object->tag == Tag::PLAYER)
 			{
 				this->animation = animationExplode;
-				this->pos.x -= this->vx;
 				this->vx = this->vy = 0;
 			}
 		}

@@ -20,13 +20,17 @@ private:
 	void AddPosX();
 	void AddPosY();
 public:
-	const float minMap = 15;
-	const float maxMap = 250;
-	const float flySpeedx1 = 0.8;
+	const float minMap = 20;
+	const float maxMap = 240;
+	const float flySpeedx1 = 1;
 	const float flySpeedx2 = 2.5;
 	const float flySpeedy = 2;
 	const float xRun = 100;
-	const float xPunch = 30;
+	const float maxXToFly1 = 90;
+	bool canShootOnAir;
+	float timeDelayShootOnAir;
+	float timeToShoot;
+	float delayShoot;
 	bool isCollide;
 	int hitTime;
 	float deltaY;

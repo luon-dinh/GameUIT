@@ -1,4 +1,4 @@
-#include"BossWizard.h"
+﻿#include"BossWizard.h"
 #include"Camera.h"
 
 BossWizard* BossWizard::instance = NULL;
@@ -16,8 +16,12 @@ BossWizard::BossWizard()
 	this->isCollide = false;
 	this->direction = Object::MoveDirection::LeftToRight;
 	this->flyMode = 1;
+	this->canShootOnAir = false;
+	this->timeDelayShootOnAir = 0;
 	this->tag = Tag::BOSSWIZARD;
 	this->type = Type::WIZARD;
+	this->timeToShoot = 1080;
+	this->delayShoot = 0;
 	this->timeNotRender = 0;
 	this->wizardState = wizardStates[State::FLYING];
 	this->curanimation = animations[State::FLYING];
@@ -76,13 +80,29 @@ void BossWizard::Update(float dt)
 	auto player = Player::getInstance();
 	if (this->state != State::FLYING)
 		this->curanimation->Update(dt);
-	this->wizardState->Update(dt);
+	//bay vào đầu hoặc cuối map
+	if (this->pos.x < minMap || this->pos.x > maxMap)
+	{
+		if (this->pos.x < minMap&&this->direction == MoveDirection::RightToLeft)
+		{
+			if (this->onAirState == OnAir::None&&this->state == State::FLYING)
+				this->onAirState = OnAir::Falling;
+			this->vx = 0;
+		}
+		if (this->pos.x > maxMap&&this->direction == MoveDirection::LeftToRight)
+		{
+			if (this->onAirState == OnAir::None&&this->state == State::FLYING)
+				this->onAirState = OnAir::Falling;
+			this->vx = 0;
+		}
+	}
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
 	if (isCollide)
 	{
 		timeNotRender += dt;
 	}
+	//bị bắn 2 phát thì bay
 	if (hitTime >= 2 && this->onAirState == OnAir::None)
 	{
 		flyTimes = rand() % 3 + 1;
@@ -92,32 +112,15 @@ void BossWizard::Update(float dt)
 		hitTime = 0;
 		return;
 	}
+	this->wizardState->Update(dt);
+	//player đang đứng trên thanh ground thì cười
 	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);
 		return;
 	}
-	if (this->pos.x < minMap|| this->pos.x > maxMap)
-	{
-		if (this->state == State::FLYING)
-		{
-			this->vx = 0;
-			this->onAirState = OnAir::Falling;
-			return;
-		}
-		if (this->pos.x < minMap&&this->direction == MoveDirection::RightToLeft)
-		{
-			this->vx = 0;
-			ChangeState(State::STANDING);
-			return;
-		}
-		if (this->pos.x > maxMap&&this->direction == MoveDirection::LeftToRight)
-		{
-			this->vx = 0;
-			ChangeState(State::STANDING);
-		}
-	}
+	
 	
 }
 
@@ -162,6 +165,7 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 	{
 	case Type::SOLIDBOX:
 	case Type::GROUND:
+		deltaX = deltaY = 0;
 		if(colOut->side==CollisionSide::bottom)
 		{
 			this->vy = 0;
@@ -173,18 +177,17 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			{
 				this->direction = MoveDirection::LeftToRight;
 			}
-			
-			/*if (this->flyMode != 1)
+			// nếu bay gần thì đấm rồi cuyển state khác
+			if (this->flyMode == 1)
 			{
-				ChangeState(State::STANDING);
+				ChangeState(State::STAND_PUNCH);
 			}
+			//bay xa thì chuyển state shoot
 			else
 			{
-				ChangeState(State::RUNNING);
-			}*/
-			ChangeState(State::RUNNING);
+				ChangeState(State::ATTACK);
+			}
 		}
-		deltaX = deltaY = 0;
 		break;
 	default:
 		break;
@@ -198,42 +201,28 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			//this->curanimation = animations[State::DEAD];
 			this->hitTime++;
 			this->isCollide = true;
+			return;
 		}
 	}
 	if (object->tag == Tag::PLAYER)
 	{
 		this->isCollide = true;
+		return;
 	}
 }
 
 void BossWizard::OnNotCollision(Object* object)
 {
-	/*if (this->state != State::FLYING)
-	{
-		this->onAirState = OnAir::Falling;
-		ChangeState(State::FLYING);
-	}*/
+	
 }
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
 	/*if (this->onAirState == OnAir::None)
 	{
-		switch (object->type)
-		{
-		case Type::GROUND:
-		case Type::SOLIDBOX:
-			this->vy = 0;
-			return true;
-		case Type::WATERRL:
-			DeactivateObjectInGrid();
-			return true;
-		default:
-			break;
-		}
-	}
-	return false;*/
-	return false;
+
+	}*/
+	return true;
 }
 
 
@@ -275,6 +264,8 @@ void BossWizard::ChangeState(State stateName)
 	case State::ATTACK:
 		this->vy = 0;
 		this->vx = 0;
+		this->timeToShoot = 1080;
+		this->delayShoot = 0;
 		this->onAirState = OnAir::None;
 		break;
 	case State::STAND_PUNCH:

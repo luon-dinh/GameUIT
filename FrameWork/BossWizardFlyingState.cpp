@@ -14,13 +14,13 @@ void BossWizardFlyingState::InputHandler()
 
 }
 
-void BossWizardFlyingState::Fly(int flyMode)
+void BossWizardFlyingState::Fly(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	auto player = Player::getInstance();
 	wizard->deltaY += abs(wizard->vy);
 	wizard->deltaX += abs(wizard->vx);
-	if (flyMode == 1)
+	if (wizard->flyMode == 1)
 	{
 		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
 			wizard->vx = wizard->flySpeedx1;
@@ -34,15 +34,15 @@ void BossWizardFlyingState::Fly(int flyMode)
 	case BossWizard::OnAir::Falling:
 		wizard->curanimation->curframeindex = 1;
 		wizard->vy = -wizard->flySpeedy;
-		if (flyMode != 1)
+		if (wizard->flyMode != 1)
 			wizard->vx = 0;
 		break;
 	case BossWizard::OnAir::Jumping:
-		if(flyMode!=1)
+		if(wizard->flyMode!=1)
 			wizard->vx = 0;
 		wizard->vy = wizard->flySpeedy;
 		wizard->curanimation->curframeindex = 0;
-		if (flyMode == 1&& wizard->deltaY >= maxFly1)
+		if (wizard->flyMode == 1&& wizard->deltaY >= maxFly1)
 		{
 			wizard->deltaY = 0;
 			wizard->vy = 0;
@@ -63,15 +63,25 @@ void BossWizardFlyingState::Fly(int flyMode)
 			wizard->vx = -wizard->flySpeedx2;
 		}
 		wizard->curanimation->curframeindex = 0;
-		if (abs(wizard->pos.x - player->pos.x) < 1)
+		if (wizard->canShootOnAir)
 		{
-			wizard->curanimation->curframeindex = 2;
+			wizard->timeDelayShootOnAir += dt;
+		}
+		if (wizard->timeDelayShootOnAir > 50)
+		{
+			auto scene = SceneManager::getInstance();
 			auto bullet = new BulletWizardSpecial();
+			bullet->vy = ENEMY_BULLET_SPEED * -3;
+			bullet->animation = bullet->animation3;
 			bullet->pos.x = wizard->pos.x;
 			bullet->pos.y = wizard->pos.y - wizard->height / 2;
-			bullet->vx = 0;
-			bullet->vy = -2.5;
-			SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
+			scene->AddObjectToCurrentScene(bullet);
+			wizard->timeDelayShootOnAir = 0;
+			wizard->canShootOnAir = false;
+		}
+		if (abs(wizard->pos.x - player->pos.x) < 1)
+		{
+			wizard->canShootOnAir = true;
 		}
 		/*if (wizard->deltaX>mapWidth-wizard->width/2)
 		{
@@ -91,5 +101,5 @@ void BossWizardFlyingState::Update(float dt)
 	{
 		wizard->SetOnAirState(BossWizard::OnAir::Falling);
 	}
-	Fly(wizard->flyMode);
+	Fly(dt);
 }

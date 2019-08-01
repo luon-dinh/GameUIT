@@ -2,7 +2,7 @@
 #include"SceneManager.h"
 BossWizardShootingState::BossWizardShootingState()
 {
-	timeToShoot = 0;
+	
 }
 BossWizardShootingState::~BossWizardShootingState()
 {
@@ -17,49 +17,112 @@ void BossWizardShootingState::InputHandler()
 void BossWizardShootingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
-	if (timeToShoot>=120*3)
+	if (wizard->timeToShoot>0)
 	{
-		auto scene = SceneManager::getInstance();
-		auto bullet = new BulletWizardNormal();
-		auto box = wizard->getBoundingBox();
-		bullet->direction = wizard->direction;
-		bullet->pos.y = box.top - 6;
-		bullet->vy = 0;
-		switch (bullet->direction)
+		if (wizard->delayShoot>=300)
 		{
-		case BossWizard::MoveDirection::LeftToRight:
-			bullet->vx = ENEMY_BULLET_SPEED*3;
-			bullet->pos.x = box.right;
-			break;
-		case BossWizard::MoveDirection::RightToLeft:
-			bullet->vx = -ENEMY_BULLET_SPEED*3;
-			bullet->pos.x = box.left;
-			break;
-		default:
-			break;
-		}
-		scene->AddObjectToCurrentScene(bullet);
-		auto player = Player::getInstance();
-		float deltaPlayer = abs(player->pos.x - wizard->pos.x);
-		if (deltaPlayer >= wizard->xRun)
-		{
-			wizard->ChangeState(State::RUNNING);
-		}
-		else
-		{
-			if (deltaPlayer < wizard->xPunch&&player->GetOnAirState()==BossWizard::OnAir::None)
+			if (wizard->timeToShoot < 100&& wizard->flyMode != 1)
 			{
-				wizard->ChangeState(State::STAND_PUNCH);
+				auto scene = SceneManager::getInstance();
+				auto bullet = new BulletWizardSpecial ();
+				auto box = wizard->getBoundingBox();
+				bullet->animation = bullet->animation1;
+				bullet->direction = wizard->direction;
+				bullet->pos.y = box.top - 10;
+				bullet->vy = 0;
+				switch (bullet->direction)
+				{
+				case BossWizard::MoveDirection::LeftToRight:
+					bullet->vx = ENEMY_BULLET_SPEED * 3;
+					bullet->pos.x = box.right;
+					break;
+				case BossWizard::MoveDirection::RightToLeft:
+					bullet->vx = -ENEMY_BULLET_SPEED * 3;
+					bullet->pos.x = box.left;
+					break;
+				default:
+					break;
+				}
+				scene->AddObjectToCurrentScene(bullet);
+				wizard->delayShoot = 0;
 			}
 			else
 			{
-				wizard->flyMode = 1;
-				wizard->ChangeState(State::FLYING);
+				auto scene = SceneManager::getInstance();
+				auto bullet = new BulletWizardNormal();
+				auto box = wizard->getBoundingBox();
+				bullet->animation = bullet->animation3;
+				bullet->direction = wizard->direction;
+				bullet->pos.y = box.top - 10;
+				bullet->vy = 0;
+				switch (bullet->direction)
+				{
+				case BossWizard::MoveDirection::LeftToRight:
+					bullet->vx = ENEMY_BULLET_SPEED * 2.5;
+					bullet->pos.x = box.right;
+					break;
+				case BossWizard::MoveDirection::RightToLeft:
+					bullet->vx = -ENEMY_BULLET_SPEED * 2.5;
+					bullet->pos.x = box.left;
+					break;
+				default:
+					break;
+				}
+				scene->AddObjectToCurrentScene(bullet);
+				wizard->delayShoot = 0;
 			}
 		}
+		else
+		{
+			wizard->delayShoot += dt;
+		}
+		wizard->timeToShoot -= dt;
 	}
 	else
 	{
-		timeToShoot += dt;
+		if (wizard->flyTimes > 0)
+		{
+			wizard->flyMode = rand() % 3 + 2;
+			wizard->ChangeState(State::FLYING);
+			wizard->flyTimes--;
+			wizard->hitTime = 0;
+			wizard->timeToShoot = 1080;
+			wizard->delayShoot = 0;
+			return;
+		}
+		auto player = Player::getInstance();
+		float deltaPlayer = abs(player->pos.x - wizard->pos.x);
+		if (deltaPlayer < wizard->maxXToFly1)
+		{
+			auto scene = SceneManager::getInstance();
+			auto bullet = new BulletWizardSpecial();
+			auto box = wizard->getBoundingBox();
+			bullet->animation = bullet->animation1;
+			bullet->direction = wizard->direction;
+			bullet->pos.y = box.top - 10;
+			bullet->vy = 0;
+			switch (bullet->direction)
+			{
+			case BossWizard::MoveDirection::LeftToRight:
+				bullet->vx = ENEMY_BULLET_SPEED * 3;
+				bullet->pos.x = box.right;
+				break;
+			case BossWizard::MoveDirection::RightToLeft:
+				bullet->vx = -ENEMY_BULLET_SPEED * 3;
+				bullet->pos.x = box.left;
+				break;
+			default:
+				break;
+			}
+			scene->AddObjectToCurrentScene(bullet);
+			wizard->delayShoot = 0;
+			wizard->flyMode = 1;
+			wizard->ChangeState(State::FLYING);
+		}
+		else
+		{
+			wizard->ChangeState(State::RUNNING);
+		}
+		wizard->timeToShoot = 1080;
 	}
 }

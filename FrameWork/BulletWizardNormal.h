@@ -3,10 +3,14 @@
 
 class BulletWizardNormal : public Bullet
 {
+	
 public:
+	
+	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 3, 4);
+	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 4, 5);
+	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 5, 6);
 	BulletWizardNormal()
 	{
-		this->animation = new Animation(Tag::BOSSWIZARDBULLET, 3, 6);
 		this->tag = Tag::BOSSWIZARDBULLET;
 	}
 	~BulletWizardNormal()
@@ -15,18 +19,11 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (this->animation == animationExplode && animation->curframeindex == animation->toframe - 1)
+		if (animation->curframeindex == 2)
 			DeactivateObjectInGrid();
-		if (this->direction == Player::MoveDirection::RightToLeft)
-			this->vx = ENEMY_BULLET_SPEED * -2.5;
-		else
-		{
-			this->vx = ENEMY_BULLET_SPEED*2.5;
-		}
+		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
-		if (animation->curframeindex != animation->toframe - 1)
-			animation->Update(dt);
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override
@@ -38,7 +35,6 @@ public:
 		case Type::SOLIDBOX:
 		case Type::GROUND:
 			this->animation = animationExplode;
-			this->pos.x -= this->vx;
 			this->vx = this->vy = 0;
 			break;
 		default:
@@ -49,7 +45,6 @@ public:
 			if (object->tag == Tag::PLAYER)
 			{
 				this->animation = animationExplode;
- 				this->pos.x -= this->vx;
 				this->vx = this->vy = 0;
 			}
 		}
