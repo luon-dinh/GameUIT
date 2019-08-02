@@ -21,7 +21,7 @@ public:
 	virtual void Update(double dt);
 	virtual void Draw();
 	virtual void TurnOnOffLight() {};
-	virtual bool getLightStatus() {};
+	virtual bool getLightStatus() { return true; };
 	virtual void setLightStatus(bool) {};
 	bool isDone() { return Done; }
 	MapName GetAndResetDestinationMap();
