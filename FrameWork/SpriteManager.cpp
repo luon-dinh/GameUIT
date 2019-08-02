@@ -203,6 +203,17 @@ void SpriteManager::LoadResources()
 
 	// cắt sprite cho biển EXIT
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 29));
+
+	//Cắt Sprite cho cục phóng lửa theo chiều dọc.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_VERTICAL_FIRE, 0, 0, 9, 6));
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_VERTICAL_FIRE, 0, 6, 9, 12));
+
+	//Cắt Sprite cho cục phóng lửa theo chiều ngang.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_HORIZONTAL_FIRE, 0, 0, 8, 8));
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_HORIZONTAL_FIRE, 0, 8, 8, 16));
+
+	//Cắt Sprite cho chính cục Moving Platform.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM, 0, 0, 16, 32));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)
