@@ -52,6 +52,9 @@ void TextureManager::loadResources()
 
 	//texture dùng cho biển EXIT
 	textures->addTexture(Tag::EXITSIGN, (char*)".\\..\\Resources\\Images\\Item\\ExitSignal.png");
+	
+	//texture dùng cho canon
+	textures->addTexture(Tag::CANON, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCanon.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

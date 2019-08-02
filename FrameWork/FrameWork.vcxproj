@@ -156,6 +156,7 @@
     <ClCompile Include="BulletWhiteFlyingRocketer.cpp" />
     <ClCompile Include="BulletWizardNormal.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Canon.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Container.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="BulletWizardNormal.h" />
     <ClInclude Include="BulletWizardSpecial.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Canon.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="Debug.h" />

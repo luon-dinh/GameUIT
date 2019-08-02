@@ -121,6 +121,9 @@
     <Filter Include="Objects\Bullet\BulletMini">
       <UniqueIdentifier>{8c659d62-5465-4018-acf9-e78efbf69c28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Canon">
+      <UniqueIdentifier>{b2d5ab8a-fd5e-4b47-8c32-8a36a7674df8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Objects\Enemy\BossMini">
       <UniqueIdentifier>{194b676d-797c-48fe-a53b-0ed33db702b2}</UniqueIdentifier>
     </Filter>
@@ -389,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="BulletMiniSpecial.h">
       <Filter>Objects\Bullet\BulletMini</Filter>
+    </ClCompile>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Canon</Filter>
     </ClCompile>
     <ClCompile Include="BossMini.cpp">
       <Filter>Objects\Enemy\BossMini</Filter>
@@ -691,6 +697,9 @@
     </ClInclude>
     <ClInclude Include="BulletMiniNormal.h">
       <Filter>Objects\Bullet\BulletMini</Filter>
+    </ClInclude>
+    <ClInclude Include="Canon.h">
+      <Filter>Objects\Canon</Filter>
     </ClInclude>
     <ClInclude Include="BossMini.h">
       <Filter>Objects\Enemy\BossMini</Filter>

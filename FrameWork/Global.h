@@ -180,7 +180,8 @@ enum Tag {
 	BOSSMINI,
 	BOSSMINIBULLET,
 	HP_RENDER,
-	PLAYER_PART
+	PLAYER_PART,
+	CANON
 };
 
 enum Type {
