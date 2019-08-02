@@ -183,6 +183,8 @@
     <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MovingPlatformCircle.cpp" />
+    <ClCompile Include="MovingPlatformCrossed.cpp" />
+    <ClCompile Include="MovingPlatformHorizontal.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PlatformFire.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -286,6 +288,8 @@
     <ClInclude Include="MapStaticObject.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MovingPlatformCircle.h" />
+    <ClInclude Include="MovingPlatformCrossed.h" />
+    <ClInclude Include="MovingPlatformHorizontal.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PlatformFire.h" />
     <ClInclude Include="Player.h" />

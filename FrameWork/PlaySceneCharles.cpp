@@ -7,6 +7,8 @@
 #include "RedRocketRobotTwoSidedNonLinear.h"
 #include "RedRocketRobotNonShooting.h"
 #include "MovingPlatformCircle.h"
+#include "MovingPlatformCrossed.h"
+#include "MovingPlatformHorizontal.h"
 #include "PlatformFire.h"
 #include "Camera.h"	
 #include "Solder.h"
@@ -34,7 +36,7 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
-	grid->Add(new MovingPlatform(100,80));
+	grid->Add(new MovingPlatformHorizontal(100,50));
 	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
 }
 
