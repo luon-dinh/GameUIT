@@ -27,7 +27,10 @@ public:
 			{
 				//Nếu đang không bị beaten thì mới chuyển trạng thái.
 				if (!isBeingBeaten)
+				{
+					health -= object->GetCollisionDamage();
 					ChangeState(State::BEATEN);
+				}
 			}
 		}
 		if (object->tag == Tag::STATICOBJECT)
