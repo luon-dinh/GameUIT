@@ -9,7 +9,7 @@ MovingPlatform::MovingPlatform(int posX, int posY)
 	fireLeft = new PlatformFire(PlatformFire::PlatformFireDirection::RIGHTTOLEFT, this->pos.x - platformWidth / 2 - 5, this->pos.y);
 	fireRight = new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, this->pos.x + platformWidth / 2 + 5, this->pos.y);
 
-	platformAnim = new Animation(Tag::MOVING_PLATFORM, 0, 1, 10000);
+	platformAnim = new Animation(Tag::MOVING_PLATFORM, 0, 1, 1000000);
 
 	this->pos.x = posX;
 	this->pos.y = posY;
@@ -78,7 +78,7 @@ void MovingPlatform::UpdatePlatformFirePosition()
 BoundingBox MovingPlatform::getBoundingBox()
 {
 	BoundingBox box;
-	box.bottom = this->pos.y - platformHeight / 2;
+	box.bottom = this->pos.y;
 	box.top = this->pos.y + platformHeight / 2;
 	box.left = this->pos.x - platformWidth / 2;
 	box.right = this->pos.x + platformWidth / 2;

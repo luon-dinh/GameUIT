@@ -422,6 +422,12 @@
     </ClCompile>
     <ClCompile Include="BossMini.cpp">
       <Filter>Objects\Enemy\BossMini</Filter>
+      </ClCompile>
+    <ClCompile Include="MovingPlatformCrossed.cpp">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatformHorizontal.cpp">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -736,6 +742,12 @@
     </ClInclude>
     <ClInclude Include="Equation.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatformCrossed.h">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatformHorizontal.h">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
