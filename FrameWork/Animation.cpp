@@ -43,6 +43,15 @@ void Animation::Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY, D3
 	}
 }
 
+void Animation::Render(D3DXVECTOR2 pos, float rotateRadian) {
+	if (sprites.size() == 0) {
+		return;
+	}
+	if (sprites[curframeindex] != NULL) {
+		sprites[curframeindex]->SetCustomRotateRadian(rotateRadian);
+		sprites[curframeindex]->Render(pos, TransformationMode::CustomRotate);
+	}
+}
 
 Animation::~Animation()
 {

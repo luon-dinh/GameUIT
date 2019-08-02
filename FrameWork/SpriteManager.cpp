@@ -197,6 +197,25 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 20, 4, 28, 11));//3
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 20, 27, 28));//4
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 36, 26, 44));//5
+	//cắt sprite cho boss mini
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 2, 10, 48, 38));//0
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 53, 8, 96, 38));//1
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 96, 8, 144, 34));//2
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 101, 42, 144, 74));//3
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 149, 0, 192, 38));//4
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 5, 140, 35));//5
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 50, 240, 74));//6
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 90, 240, 118));//7
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 245, 8, 288, 38));//8
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 240, 50, 288, 80));//9
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 301, 8,336, 32));//10
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,3, 384, 38));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,42 , 384, 74));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347, 87, 384, 121));//13\
+	// cắt sprite cho boss mini bullet
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 0, 14, 22));
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 25, 11, 41));
+
 
 	// cắt sprite cho HP
 	spriteManager->addSprite(new Sprite(Tag::HP_RENDER, 0, 0, 8, 8));
@@ -214,6 +233,15 @@ void SpriteManager::LoadResources()
 
 	//Cắt Sprite cho chính cục Moving Platform.
 	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM, 0, 0, 16, 32));
+	// cắt sprite cho canon
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 16, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 32, 16, 48));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 48, 16, 64));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 64, 16, 80));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 80, 16, 96));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 96, 16, 112));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 112, 16, 128));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

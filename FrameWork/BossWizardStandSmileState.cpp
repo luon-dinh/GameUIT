@@ -18,6 +18,6 @@ void BossWizardStandSmileState::Update(float dt)
 {
 	auto player = Player::getInstance();
 	auto wizard = BossWizard::getInstance();
-	if (player->GetOnAirState() != BossWizard::OnAir::None)
+	if (player->GetOnAirState() != BossWizard::OnAir::None||player->state==State::JUMPING)
 		wizard->ChangeState(State::ATTACK);
 }

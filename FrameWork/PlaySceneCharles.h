@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "PlayScene.h"
+#include "Canon.h"
 
 class PlaySceneCharles : public PlayScene
 {

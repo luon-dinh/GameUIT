@@ -43,12 +43,15 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::BOSSWIZARD, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizard.png");
 	textures->addTexture(Tag::BOSSWIZARDBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizardEnergyBullet.png");
 
+	// texture dùng cho boss mini
+	textures->addTexture(Tag::BOSSMINI, (char*)".\\..\\Resources\\Images\\Enermy\\BossMini.png");
+	textures->addTexture(Tag::BOSSMINIBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BossMiniBullet.png");
+
 	//texture dùng cho hp
 	textures->addTexture(Tag::HP_RENDER, (char*)".\\..\\Resources\\Images\\Item\\HP.png");
 
 	//texture dùng cho biển EXIT
 	textures->addTexture(Tag::EXITSIGN, (char*)".\\..\\Resources\\Images\\Item\\ExitSignal.png");
-
 	//texture dùng cho lửa phóng theo chiều dọc.
 	textures->addTexture(Tag::MOVING_PLATFORM_VERTICAL_FIRE, (char*)".\\..\\Resources\\Images\\Item\\JetEngineVertical.png");
 
@@ -57,6 +60,8 @@ void TextureManager::loadResources()
 
 	//texture dùng cho chính thằng moving platform.
 	textures->addTexture(Tag::MOVING_PLATFORM, (char*)".\\..\\Resources\\Images\\Item\\MovingPlatform.png");
+	//texture dùng cho canon
+	textures->addTexture(Tag::CANON, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCanon.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

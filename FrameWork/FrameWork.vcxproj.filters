@@ -118,8 +118,14 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Bullet\BulletMini">
+      <UniqueIdentifier>{8c659d62-5465-4018-acf9-e78efbf69c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Canon">
+      <UniqueIdentifier>{b2d5ab8a-fd5e-4b47-8c32-8a36a7674df8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Objects\Enemy\BossMini">
-      <UniqueIdentifier>{d9bb7f3c-d25c-418a-82dd-8387711bd046}</UniqueIdentifier>
+      <UniqueIdentifier>{194b676d-797c-48fe-a53b-0ed33db702b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects\Platform">
       <UniqueIdentifier>{d60be045-2f76-4369-abfa-31bce0508ab5}</UniqueIdentifier>
@@ -404,6 +410,18 @@
     </ClCompile>
     <ClCompile Include="MovingPlatformCircle.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
+	</ClCompile>
+    <ClCompile Include="BulletMiniSpecial.h">
+      <Filter>Objects\Bullet\BulletMini</Filter>
+    </ClCompile>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Canon</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClCompile>
+    <ClCompile Include="Equation.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -706,6 +724,18 @@
     </ClInclude>
     <ClInclude Include="MovingPlatformCircle.h">
       <Filter>Objects\Platform\MovingPlatform</Filter>
+	  </ClInclude>
+    <ClInclude Include="BulletMiniNormal.h">
+      <Filter>Objects\Bullet\BulletMini</Filter>
+    </ClInclude>
+    <ClInclude Include="Canon.h">
+      <Filter>Objects\Canon</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMini.h">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClInclude>
+    <ClInclude Include="Equation.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
