@@ -44,7 +44,7 @@ void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 
 	case TransformationMode::Rotate180Degree: _Rotate180Degree(&matrix);break;
 	case TransformationMode::Scale:			  _Scale(scaleRatio, &matrix);break;
 	}
-	_InnerRender(&matrix, pos);
+	_InnerRender(&matrix, pos, color);
 }
 
 void Sprite::Render(float scaleRatioX, float scaleRatioY, D3DXVECTOR2 pos, D3DCOLOR color) {

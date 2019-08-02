@@ -57,6 +57,7 @@ public:
 					return;
 				}
 				this->animation = animationExplode;
+				this->isCollidable=false;
 				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}
@@ -91,6 +92,7 @@ public:
 					return true;
 				}
 				this->animation = animationExplode;
+				this->isCollidable = false;
 				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}
