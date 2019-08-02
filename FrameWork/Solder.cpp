@@ -105,25 +105,25 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 			{
 				this->vx = -1;
 			}
-			this->health -= 2;
+			this->health -= shield->GetCollisionDamage(); //chưa có hàm getdamage của shield
 			if (this->health <= 0)
 			{
 				this->ChangeState(State::DEAD);
 			}
 			this->isCollidable = false;
-			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
+
 		}
 	}
-	if (object->tag == Tag::PLAYER)
-	{
-		auto player = Player::getInstance();
-		this->health -= player->GetCollisionDamage();
-		if (this->health <= 0)
-		{
-			this->ChangeState(State::DEAD);
-		}
-		this->isCollidable = false;
-	}
+	//if (object->tag == Tag::PLAYER)
+	//{
+	//	auto player = Player::getInstance();
+	//	this->health -= player->GetCollisionDamage();
+	//	if (this->health <= 0)
+	//	{
+	//		this->ChangeState(State::DEAD);
+	//	}
+	//	this->isCollidable = false;
+	//}
 }
 
 bool Solder::OnRectCollided(Object* object, CollisionSide side)
@@ -150,13 +150,13 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 			{
 				this->vx = -1;
 			}
-			this->health -= 2;
+			this->health -= shield->GetCollisionDamage(); //chưa có hàm getdamage của shield
 			if (this->health <= 0)
 			{
 				this->ChangeState(State::DEAD);
 			}
 			this->isCollidable = false;
-			//this->health -= shield->GetCollisionDamage(); chưa có hàm getdamage của shield
+			
 		}
 	}
 	if (object->tag == Tag::PLAYER)
