@@ -13,6 +13,8 @@ MovingPlatform::MovingPlatform(int posX, int posY)
 
 	this->pos.x = posX;
 	this->pos.y = posY;
+	this->type = Type::PLATFORM;
+	this->tag = Tag::STATICOBJECT;
 	this->vx = this->vy = 0;
 }
 
