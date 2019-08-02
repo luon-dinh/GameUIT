@@ -61,6 +61,7 @@ BOOL PlayerHandPunch::GetActive() {
 
 void PlayerHandPunch::Update(float dt) {
 	SetPositionToPlayer();
+	GetActive();
 }
 
 void PlayerHandPunch::Render() {

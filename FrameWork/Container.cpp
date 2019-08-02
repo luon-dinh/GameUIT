@@ -27,41 +27,41 @@ Container::~Container()
 void Container::Update(float dt)
 {
 	auto player = Player::getInstance();
-	if (Collision::getInstance()->IsCollide(this->getBoundingBox(), player->getBoundingBox()))
-	{
-		if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
-		{
-			auto scene = SceneManager::getInstance();
-			ticuframe = 500;
-			if (item != nullptr)
-			{
-				item->pos = this->pos;
-				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
-				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
-				if (scene->AddObjectToCurrentScene(item))
-				{
-					//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
-					if (!(item->itemtype == ItemType::EXIT) || player->CanGoNextScene())
-					{
-						item = nullptr;
-					}
-					//Nếu vẫn cần nó xuất hiện lần 2 thì ta phải thêm một cục mới.
-					else
-						item = new Item(item->itemtype);
-				}
-				return;
-			}
-			if (numberItems != 0)
-			{
-				Item* newItem = new Item(ItemType::STAR);
-				newItem->pos = this->pos;
-				//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
-				//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
-				if (scene->AddObjectToCurrentScene(newItem))
-					numberItems--;
-			}
-		}
-	}
+	//if (Collision::getInstance()->IsCollide(this->getBoundingBox(), player->getBoundingBox()))
+	//{
+	//	if (player->state == State::STAND_PUNCH || player->state == State::DUCKING_PUNCHING || player->state == State::KICKING)
+	//	{
+	//		auto scene = SceneManager::getInstance();
+	//		ticuframe = 500;
+	//		if (item != nullptr)
+	//		{
+	//			item->pos = this->pos;
+	//			//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+	//			//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+	//			if (scene->AddObjectToCurrentScene(item))
+	//			{
+	//				//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
+	//				if (!(item->itemtype == ItemType::EXIT) || player->CanGoNextScene())
+	//				{
+	//					item = nullptr;
+	//				}
+	//				//Nếu vẫn cần nó xuất hiện lần 2 thì ta phải thêm một cục mới.
+	//				else
+	//					item = new Item(item->itemtype);
+	//			}
+	//			return;
+	//		}
+	//		if (numberItems != 0)
+	//		{
+	//			Item* newItem = new Item(ItemType::STAR);
+	//			newItem->pos = this->pos;
+	//			//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+	//			//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+	//			if (scene->AddObjectToCurrentScene(newItem))
+	//				numberItems--;
+	//		}
+	//	}
+	//}
 	ticuframe -= dt;
 	if (ticuframe <= 0)
 	{
@@ -145,7 +145,49 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 
 bool Container::OnRectCollided(Object* object, CollisionSide side)
 {
-	return true;
+	Player* player = Player::getInstance();
+	Shield* shield = Shield::getInstance();
+	SceneManager* scene = SceneManager::getInstance();
+	switch (object->tag)
+	{
+	case Tag::PLAYER_PART:
+	{
+		animation->curframeindex = 1;
+		ticuframe = 500;
+		if (item != nullptr)
+		{
+			item->pos = this->pos;
+			//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+			//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+			if (scene->AddObjectToCurrentScene(item))
+			{
+				//Nếu không phải cục exit hoặc player có thể qua tiếp màn sau rồi thì không xuất cục đó nữa.
+				if (!(item->itemtype == ItemType::EXIT) || player->CanGoNextScene())
+				{
+					item = nullptr;
+				}
+				//Nếu vẫn cần nó xuất hiện lần 2 thì ta phải thêm một cục mới.
+				else
+					item = new Item(item->itemtype);
+			}
+			return true;
+		}
+		if (numberItems != 0)
+		{
+			Item* newItem = new Item(ItemType::STAR);
+			newItem->pos = this->pos;
+			//Nếu thêm item thành công thì mới xoá item ra khỏi sự quản lý của Container.
+			//Do có thể có trường hợp map đang chứa nhiều hơn 3 item sẽ không Add thêm được.
+			if (scene->AddObjectToCurrentScene(newItem))
+				numberItems--;
+		}
+		break;
+		return true;
+	}
+	default:
+		break;
+	}
+	return false;
 }
 
 
