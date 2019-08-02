@@ -127,6 +127,18 @@
     <Filter Include="Objects\Enemy\BossMini">
       <UniqueIdentifier>{194b676d-797c-48fe-a53b-0ed33db702b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Platform">
+      <UniqueIdentifier>{d60be045-2f76-4369-abfa-31bce0508ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Platform\MovingPlatform">
+      <UniqueIdentifier>{975b4193-68a5-46b6-927f-87a1b975da57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Platform\DisappearingPlatform">
+      <UniqueIdentifier>{9686f51e-5cb2-4dbe-975b-c00de80a54c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Platform\PlatformFire">
+      <UniqueIdentifier>{5c677fea-3b4d-4baf-bd62-475461638589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -390,14 +402,20 @@
     <ClCompile Include="PlayerKickPart.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformFire.cpp">
+      <Filter>Objects\Platform\PlatformFire</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatformCircle.cpp">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
+    </ClCompile>
     <ClCompile Include="BulletMiniSpecial.h">
       <Filter>Objects\Bullet\BulletMini</Filter>
     </ClCompile>
     <ClCompile Include="Canon.cpp">
       <Filter>Objects\Canon</Filter>
-    </ClCompile>
-    <ClCompile Include="BossMini.cpp">
-      <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
     <ClCompile Include="Equation.cpp">
       <Filter>Components</Filter>
@@ -694,6 +712,15 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotOneSidedJumping.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformFire.h">
+      <Filter>Objects\Platform\PlatformFire</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatformCircle.h">
+      <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClInclude>
     <ClInclude Include="BulletMiniNormal.h">
       <Filter>Objects\Bullet\BulletMini</Filter>

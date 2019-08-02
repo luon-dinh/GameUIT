@@ -52,7 +52,14 @@ void TextureManager::loadResources()
 
 	//texture dùng cho biển EXIT
 	textures->addTexture(Tag::EXITSIGN, (char*)".\\..\\Resources\\Images\\Item\\ExitSignal.png");
-	
+	//texture dùng cho lửa phóng theo chiều dọc.
+	textures->addTexture(Tag::MOVING_PLATFORM_VERTICAL_FIRE, (char*)".\\..\\Resources\\Images\\Item\\JetEngineVertical.png");
+
+	//texture dùng cho lửa phóng theo chiều ngang.
+	textures->addTexture(Tag::MOVING_PLATFORM_HORIZONTAL_FIRE, (char*)".\\..\\Resources\\Images\\Item\\JetEngineHorizontal.png");
+
+	//texture dùng cho chính thằng moving platform.
+	textures->addTexture(Tag::MOVING_PLATFORM, (char*)".\\..\\Resources\\Images\\Item\\MovingPlatform.png");
 	//texture dùng cho canon
 	textures->addTexture(Tag::CANON, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCanon.png");
 };

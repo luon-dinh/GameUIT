@@ -617,7 +617,10 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	// không xét va chạm với shield
 	if (object->tag == Tag::SHIELD)
 		return;
-
+	if (object->type == Type::PLATFORM  && collisionOut->side == CollisionSide::bottom)
+	{
+		OnStandingOnGround(object);
+	}
 	// gọi tới hàm va chạm của state
 	this->playerstate->OnCollision(object, collisionOut);
 }
@@ -674,6 +677,11 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
+	case Type::PLATFORM:
+	{
+		int a = 1;
+	}
+		
 		case Type::GROUND: {
 			if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
