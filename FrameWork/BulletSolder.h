@@ -57,12 +57,19 @@ public:
 					return;
 				}
 				this->animation = animationExplode;
+				this->isCollidable=false;
 				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}
 		}
 		
 	}
+	
+	int GetCollisionDamage()
+	{
+		return 1;
+	}
+
 	bool OnRectCollided(Object* object, CollisionSide side)override
 	{
 		auto player = Player::getInstance();
@@ -91,6 +98,7 @@ public:
 					return true;
 				}
 				this->animation = animationExplode;
+				this->isCollidable = false;
 				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}

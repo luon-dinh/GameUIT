@@ -41,6 +41,9 @@ public:
 
 	//Hàm dùng để lấy tình trạng đèn đóm của Scene hiện tại.
 	bool IsLightOn() { return currentScene->getLightStatus(); }
+
+	//Hàm dùng để cho qua màn tiếp theo.
+	void GoToNextScene();
 private:
 	static SceneManager * sceneManagerInstance;
 

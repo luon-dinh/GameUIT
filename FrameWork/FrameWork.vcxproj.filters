@@ -121,6 +121,9 @@
     <Filter Include="Objects\Canon">
       <UniqueIdentifier>{b2d5ab8a-fd5e-4b47-8c32-8a36a7674df8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy\BossMini">
+      <UniqueIdentifier>{d9bb7f3c-d25c-418a-82dd-8387711bd046}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -386,6 +389,9 @@
     </ClCompile>
     <ClCompile Include="Canon.cpp">
       <Filter>Objects\Canon</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -682,6 +688,12 @@
     </ClInclude>
     <ClInclude Include="Canon.h">
       <Filter>Objects\Canon</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMini.h">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMiniState.h">
+      <Filter>Objects\Enemy\BossMini</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

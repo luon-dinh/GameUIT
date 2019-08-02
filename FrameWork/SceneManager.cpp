@@ -157,6 +157,11 @@ void SceneManager::ChangeScene(MapName mapName)
 	}
 }
 
+void SceneManager::GoToNextScene()
+{
+	currentScene->GoToNextScene();
+}
+
 void SceneManager::Draw()
 {
 	currentScene->Draw();

@@ -28,13 +28,17 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		if (object->tag == this->tag)
-			return;
+	
+		auto player = Player::getInstance();
+		auto shield = Shield::getInstance();
+		float posToShhield = abs(this->pos.x - shield->pos.x);
+		float posToPlayer = abs(this->pos.x - player->pos.x);
 		switch (object->type)
 		{
 		case Type::SOLIDBOX:
 		case Type::GROUND:
 			this->animation = animationExplode;
+			this->pos.x += this->vx;
 			this->vx = this->vy = 0;
 			break;
 		default:
@@ -44,25 +48,64 @@ public:
 		{
 			if (object->tag == Tag::PLAYER)
 			{
+				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
+				{
+					this->vy = -abs(this->vx);
+					this->vx = 0;
+					this->isCollidable = false;
+					return;
+				}
 				this->animation = animationExplode;
+				this->isCollidable = false;
+				this->pos.x += this->vx;
 				this->vx = this->vy = 0;
 			}
 		}
-		switch (colOut->side)
+	}
+
+	bool OnRectCollided(Object* object, CollisionSide side)override
+	{
+		
+		auto player = Player::getInstance();
+		auto shield = Shield::getInstance();
+		float posToShhield = abs(this->pos.x - shield->pos.x);
+		float posToPlayer = abs(this->pos.x - player->pos.x);
+		switch (object->type)
 		{
-		case CollisionSide::top:
-		case CollisionSide::bottom:
-			this->pos.y += this->vy;
-			break;
-		case CollisionSide::left:
-		case CollisionSide::right:
-			this->pos.y += this->vx;
+		case Type::SOLIDBOX:
+		case Type::GROUND:
+			this->animation = animationExplode;
+			this->pos.x += this->vx;
+			this->vx = this->vy = 0;
 			break;
 		default:
 			break;
 		}
+		if (object->type == Type::NONE)
+		{
+			if (object->tag == Tag::PLAYER)
+			{
+				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
+				{
+					this->vy = -abs(this->vx);
+					this->vx = 0;
+					this->isCollidable = false;
+					return true;
+				}
+				this->animation = animationExplode;
+				this->isCollidable = false;
+				this->pos.x += this->vx;
+				this->vx = this->vy = 0;
+				return true;
+			}
+		}
+		return false;
 	}
 
+	int GetCollisionDamage()
+	{
+		return 2;
+	}
 
 	BoundingBox getBoundingBox()override
 	{

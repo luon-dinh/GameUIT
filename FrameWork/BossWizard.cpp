@@ -87,8 +87,8 @@ void BossWizard::Update(float dt)
 			this->currentAnimation->Update(dt);
 	}
 	auto player = Player::getInstance();
-	if (this->state != State::FLYING&&state!=State::DEAD)
-		this->currentanimation->Update(dt);
+	//if (this->state != State::FLYING&&state!=State::DEAD)
+	this->currentanimation->Update(dt);
 	//bay vào đầu hoặc cuối map
 	if (this->pos.x < minMap || this->pos.x > maxMap)
 	{
@@ -137,14 +137,25 @@ void BossWizard::Render()
 {
 	D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
 	
+	D3DCOLOR color;
+	if (SceneManager::getInstance()->IsLightOn()==true)
+	{
+		color = D3DCOLOR_XRGB(255, 255, 255);
+	}
+	else
+	{
+		color = D3DCOLOR_XRGB(0, 0, 0);
+		//return;
+	}
+
 	if (this->timeNotRender == 0)
 	{
 		if (this->direction == Player::MoveDirection::LeftToRight) {
 			// move from left to right
-			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal, color);
 		}
 		else {
-			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), color);
 		}
 	}
 	else
@@ -153,10 +164,10 @@ void BossWizard::Render()
 		{
 			if (this->direction == Player::MoveDirection::LeftToRight) {
 				// move from left to right
-				currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+				currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal, color);
 			}
 			else {
-				currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+				currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), color);
 			}
 		}
 		if (timeNotRender > 1000)

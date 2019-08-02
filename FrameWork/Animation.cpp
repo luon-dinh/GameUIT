@@ -1,45 +1,45 @@
 ﻿#include"Animation.h"
-void Animation::Render(float x, float y)
+void Animation::Render(float x, float y, D3DCOLOR color)
 {
 	if (sprites.size()==0)
 		return;
 	if (sprites[curframeindex] != NULL)
 	{
-		sprites[curframeindex]->Render(x, y);	
+		sprites[curframeindex]->Render(x, y, color);
 	}
 }
 
-void Animation::Render(D3DXVECTOR2 pos)
+void Animation::Render(D3DXVECTOR2 pos, D3DCOLOR color)
 {
-	Render(pos.x, pos.y);
+	Render(pos.x, pos.y, color);
 }
 
-void Animation::Render(D3DXVECTOR3 pos)
+void Animation::Render(D3DXVECTOR3 pos, D3DCOLOR color)
 {
-	Render(D3DXVECTOR2(pos.x,pos.y));
+	Render(D3DXVECTOR2(pos.x,pos.y), color);
 }
 
-void Animation::Render(float x, float y, int first, int last)
+void Animation::Render(float x, float y, int first, int last, D3DCOLOR color)
 {
 	//for(int i=0;)
 
 }
 
-void Animation::Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio) {
+void Animation::Render(D3DXVECTOR2 pos, TransformationMode transMode, D3DCOLOR color, float scaleRatio) {
 	if (sprites.size() == 0)
 		return;
 	if (sprites[curframeindex] != NULL)
 	{
-		sprites[curframeindex]->Render(transMode, scaleRatio, pos);
+		sprites[curframeindex]->Render(transMode, scaleRatio, pos, color);
 	}
 }
 
-void Animation::Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY) {
+void Animation::Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY, D3DCOLOR color) {
 	if (sprites.size() == 0)
 		return;
 	if (sprites[curframeindex] != NULL)
 	{
-		sprites[curframeindex]->Render(scaleRatioX, scaleRatioY, pos);
+		sprites[curframeindex]->Render(scaleRatioX, scaleRatioY, pos, color);
 	}
 }
 

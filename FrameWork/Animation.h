@@ -19,12 +19,13 @@ public:
 	Sprite* getSprite(int index);
 	void DelayCurrentFrame(float dt);
 	void Update(float dt);
-	void Render(D3DXVECTOR2 pos);
-	void Render(float x, float y);
-	void Render(D3DXVECTOR3 pos);
-	void Render(float x, float y, int first, int last);
-	void Render(D3DXVECTOR2 pos, TransformationMode transMode, float scaleRatio = 1.0f);
-	void Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY);
+
+	void Render(D3DXVECTOR2 pos, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+	void Render(float x, float y, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+	void Render(D3DXVECTOR3 pos, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+	void Render(float x, float y, int first, int last, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+	void Render(D3DXVECTOR2 pos, TransformationMode transMode, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255) , float scaleRatio = 1.0f);
+	void Render(D3DXVECTOR2 pos, float scaleRatioX, float scaleRatioY, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
 	void Render(D3DXVECTOR2 pos, float rotateRadian);
 	void ReplaceSprite(int index, Sprite* sprite);//thay đổi sprite bất kì trong sprites của naimation
 	int curframeindex;

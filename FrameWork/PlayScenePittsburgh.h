@@ -6,6 +6,7 @@ class PlayScenePittsburgh : public PlaySceneWithLight
 public:
 	PlayScenePittsburgh();
 	~PlayScenePittsburgh();
+	void GoToNextScene() override;
 	void Update(double dt) override; 
 	void ResetPlayerPosition() override;
 private:

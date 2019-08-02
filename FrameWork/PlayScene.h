@@ -29,6 +29,7 @@ public:
 	virtual void ResetPlayerPosition() {}; //Nhớ override hàm setPlayer lại cho từng PlayScene khác nhau.
 	void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
 	bool AddObjectToPlayScene(Object*); //Thêm một object vào PlayScene.
+	virtual void GoToNextScene() {};
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:

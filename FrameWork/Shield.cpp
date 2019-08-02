@@ -1,7 +1,7 @@
 
 #include"Camera.h"
 #include"Shield.h"
-
+#include"SceneManager.h"
 
 
 Shield * Shield::instance = NULL;
@@ -344,6 +344,13 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 	//			break;
 	//	}
 	//}
+	if (this->state == ShieldState::Attack)
+	{
+		if (object->type == Type::ONOFF)
+		{
+			SceneManager::getInstance()->TurnOnOffLight();
+		}
+	}
 }
 
 void Shield::ShieldBackToPlayer() {

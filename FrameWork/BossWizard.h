@@ -22,7 +22,7 @@ private:
 	void AddPosY();
 public:
 	const float minMap = 20;
-	const float maxMap = 240;
+	const float maxMap = 235;
 	const float flySpeedx1 = 1;
 	const float flySpeedx2 = 2.5;
 	const float flySpeedy = 2;
