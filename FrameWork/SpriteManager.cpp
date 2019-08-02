@@ -203,7 +203,7 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 96, 8, 144, 34));//2
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 101, 42, 144, 74));//3
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 149, 0, 192, 38));//4
-	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 5, 140, 35));//5
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 5, 240, 35));//5
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 50, 240, 74));//6
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 90, 240, 118));//7
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 245, 8, 288, 38));//8
@@ -211,7 +211,7 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 301, 8,336, 32));//10
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,3, 384, 38));//11
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,42 , 384, 74));//12
-	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347, 87, 384, 121));//13\
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347, 87, 384, 121));//13
 	// cắt sprite cho boss mini bullet
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 0, 14, 22));
 	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 25, 11, 41));

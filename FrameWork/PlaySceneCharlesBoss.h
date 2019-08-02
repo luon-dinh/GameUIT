@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include"BossWizard.h"
+#include"BossMini.h"
 
 class PlaySceneCharlesBoss : public PlaySceneWithLight
 {

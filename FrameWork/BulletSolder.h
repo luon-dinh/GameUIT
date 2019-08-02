@@ -22,7 +22,7 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (animation->curframeindex ==animationExplode->toframe-1&&animation==animationExplode)
+		if (animation->curframeindex ==animationExplode->toframe-1)
 			DeactivateObjectInGrid();
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
@@ -46,22 +46,6 @@ public:
 		default:
 			break;
 		}
-		if (object->type == Type::NONE)
-		{
-			if (object->tag == Tag::PLAYER)
-			{
-				if (player->hasShield&&shield->state==Shield::ShieldState::Defense&&player->direction!=this->direction && (posToShhield < posToPlayer))
-				{
-					this->vy = abs(this->vx);
-					this->vx = 0;
-					return;
-				}
-				this->animation = animationExplode;
-				this->isCollidable=false;
-				this->pos.x += this->vx;
-				this->vx = this->vy = 0;
-			}
-		}
 		
 	}
 	
@@ -81,27 +65,24 @@ public:
 		case Type::SOLIDBOX:
 		case Type::GROUND:
 			this->animation = animationExplode;
-			this->pos.x += this->vx;
 			this->vx = this->vy = 0;
 			break;
 		default:
 			break;
 		}
-		if (object->type == Type::NONE)
+		if (object->tag == Tag::PLAYER)
 		{
-			if (object->tag == Tag::PLAYER)
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
 			{
-				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction&&(posToShhield<posToPlayer))
-				{
-					this->vy = abs(this->vx);
-					this->vx = 0;
-					return true;
-				}
-				this->animation = animationExplode;
+				this->vy = abs(this->vx);
+				this->vx = 0;
 				this->isCollidable = false;
-				this->pos.x += this->vx;
-				this->vx = this->vy = 0;
+				return true;
 			}
+			this->animation = animationExplode;
+			this->isCollidable = false;
+			this->vx = this->vy = 0;
+			return true;
 		}
 		
 	}
