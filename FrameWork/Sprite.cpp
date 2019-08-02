@@ -36,6 +36,10 @@ void Sprite::_GetCenter2(D3DXVECTOR2* center) {
 	center->y = this->center.y;
 }
 
+void Sprite::SetCustomRotateRadian(float radian) {
+	this->customRotate = radian;
+}
+
 void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 pos, D3DCOLOR color) {
 	D3DXMATRIX matrix;
 	switch (transMode) {
@@ -43,6 +47,7 @@ void Sprite::Render(TransformationMode transMode, float scaleRatio, D3DXVECTOR2 
 	case TransformationMode::FlipVertical:    _FlipVertical(&matrix);break;
 	case TransformationMode::Rotate180Degree: _Rotate180Degree(&matrix);break;
 	case TransformationMode::Scale:			  _Scale(scaleRatio, &matrix);break;
+	case TransformationMode::CustomRotate:	  _Rotate(&matrix, this->customRotate);break;
 	}
 	_InnerRender(&matrix, pos);
 }
@@ -76,6 +81,12 @@ void Sprite::_Rotate180Degree(D3DXMATRIX* matrix) {
 	D3DXVECTOR2 center;
 	_GetCenter2(&center);
 	D3DXMatrixTransformation2D(matrix, &center, 0, &flip, &center, 3.14f, NULL);
+}
+
+void Sprite::_Rotate(D3DXMATRIX* matrix, float radian) {
+	D3DXVECTOR2 center;
+	_GetCenter2(&center);
+	D3DXMatrixTransformation2D(matrix, &center, 0, NULL, &center, radian, NULL);
 }
 
 void Sprite::_Scale(float ratio, D3DXMATRIX* matrix) {

@@ -203,6 +203,16 @@ void SpriteManager::LoadResources()
 
 	// cắt sprite cho biển EXIT
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 29));
+
+	// cắt sprite cho canon
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 16, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 32, 16, 48));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 48, 16, 64));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 64, 16, 80));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 80, 16, 96));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 96, 16, 112));
+	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 112, 16, 128));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

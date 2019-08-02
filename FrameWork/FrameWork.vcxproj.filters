@@ -118,6 +118,9 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Canon">
+      <UniqueIdentifier>{b2d5ab8a-fd5e-4b47-8c32-8a36a7674df8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -380,6 +383,9 @@
     </ClCompile>
     <ClCompile Include="PlayerKickPart.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Canon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -673,6 +679,9 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotOneSidedJumping.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="Canon.h">
+      <Filter>Objects\Canon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
