@@ -75,7 +75,12 @@ void MovingPlatform::UpdatePlatformFirePosition()
 	fireRight->SetFirePosition(this->pos.x + platformWidth / 2 + 5, this->pos.y);
 }
 
-//BoundingBox MovingPlatform::getBoundingBox()
-//{
-//
-//}
+BoundingBox MovingPlatform::getBoundingBox()
+{
+	BoundingBox box;
+	box.bottom = this->pos.y - platformHeight / 2;
+	box.top = this->pos.y + platformHeight / 2;
+	box.left = this->pos.x - platformWidth / 2;
+	box.right = this->pos.x + platformWidth / 2;
+	return box;
+}

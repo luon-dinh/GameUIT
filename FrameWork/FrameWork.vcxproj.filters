@@ -410,15 +410,12 @@
     </ClCompile>
     <ClCompile Include="MovingPlatformCircle.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="BulletMiniSpecial.h">
       <Filter>Objects\Bullet\BulletMini</Filter>
     </ClCompile>
     <ClCompile Include="Canon.cpp">
       <Filter>Objects\Canon</Filter>
-    </ClCompile>
-    <ClCompile Include="BossMini.cpp">
-      <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
     <ClCompile Include="Equation.cpp">
       <Filter>Components</Filter>
@@ -724,7 +721,7 @@
     </ClInclude>
     <ClInclude Include="MovingPlatformCircle.h">
       <Filter>Objects\Platform\MovingPlatform</Filter>
-	  </ClInclude>
+    </ClInclude>
     <ClInclude Include="BulletMiniNormal.h">
       <Filter>Objects\Bullet\BulletMini</Filter>
     </ClInclude>

@@ -24,5 +24,5 @@ public:
 	virtual void Render() override;
 	//Chỗ nào cần cách move khác chỉ cần override lại là xong.
 	virtual void MovePlatform() {};
-	/*BoundingBox getBoundingBox() override;*/
+	BoundingBox getBoundingBox() override;
 };
