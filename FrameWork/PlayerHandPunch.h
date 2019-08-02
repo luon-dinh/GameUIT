@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "Player.h"
 
-class PlayerHandPunch : Object, public GameObjectProperty {
+class PlayerHandPunch : public Object, public GameObjectProperty {
 private:
 	PlayerHandPunch();
 	~PlayerHandPunch();

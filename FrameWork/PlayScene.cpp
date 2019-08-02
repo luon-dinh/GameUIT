@@ -27,6 +27,7 @@ void PlayScene::AddPlayerElementsToGrid()
 	grid->Add(player);
 	shield->Update(0.1);
 	grid->Add(shield);
+	grid->Add(PlayerHandPunch::getInstance());
 }
 
 bool PlayScene::AddObjectToPlayScene(Object* object)
