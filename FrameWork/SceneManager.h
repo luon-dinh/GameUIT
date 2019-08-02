@@ -39,6 +39,8 @@ public:
 	//Hàm dùng để bật tắt đèn cho Scene hiện tại.
 	void TurnOnOffLight() { currentScene->TurnOnOffLight(); }
 
+	//Hàm dùng để lấy tình trạng đèn đóm của Scene hiện tại.
+	bool IsLightOn() { return currentScene->getLightStatus(); }
 private:
 	static SceneManager * sceneManagerInstance;
 

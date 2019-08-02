@@ -9,8 +9,8 @@ public:
 
 	//Hàm này dùng để vẽ một Scene lên màn hình.
 	virtual void Draw() override;
-	bool getLightStatus() { return isLightOn; }
-	void setLightStatus(bool _status)
+	bool getLightStatus() override { return isLightOn; }
+	void setLightStatus(bool _status) override
 	{
 		if (_status != isLightOn) //Nếu trạng thái hiện tại cần sự chuyển đổi thì ta chuyển đổi.
 			TurnOnOffLight();
