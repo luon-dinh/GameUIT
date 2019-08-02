@@ -21,6 +21,8 @@ public:
 	virtual void Update(double dt);
 	virtual void Draw();
 	virtual void TurnOnOffLight() {};
+	virtual bool getLightStatus() {};
+	virtual void setLightStatus(bool) {};
 	bool isDone() { return Done; }
 	MapName GetAndResetDestinationMap();
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
