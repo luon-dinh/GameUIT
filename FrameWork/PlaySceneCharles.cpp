@@ -105,14 +105,18 @@ void PlaySceneCharles::Update(double dt)
 	{
 		if (player->CanGoNextScene())
 		{
-			Done = true;
-			ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
+			GoToNextScene();
 		}
 	}
 
 	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_Q))
 	{
-		Done = true;
-		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
+		GoToNextScene();
 	}
+}
+
+void PlaySceneCharles::GoToNextScene()
+{
+	Done = true;
+	ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
 }

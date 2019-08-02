@@ -10,6 +10,8 @@ public:
 
 	void ResetPlayerPosition() override;
 
+	void GoToNextScene() override;
+
 	PlaySceneCharles();
 	~PlaySceneCharles();
 

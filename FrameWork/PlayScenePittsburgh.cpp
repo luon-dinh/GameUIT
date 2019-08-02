@@ -67,3 +67,9 @@ void PlayScenePittsburgh::Update(double dt)
 	}
 		
 }
+
+void PlayScenePittsburgh::GoToNextScene()
+{
+	//Xét từng trường hợp để đi đến map tiếp theo.
+
+}

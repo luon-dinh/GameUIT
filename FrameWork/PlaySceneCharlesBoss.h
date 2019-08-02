@@ -10,6 +10,7 @@ class PlaySceneCharlesBoss : public PlaySceneWithLight
 public:
 	PlaySceneCharlesBoss();
 	~PlaySceneCharlesBoss();
+	void GoToNextScene() override;
 	void Update(double dt);
 	void ResetPlayerPosition() override;
 private:

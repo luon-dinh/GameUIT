@@ -54,13 +54,17 @@ void PlaySceneCharlesBoss::Update(double dt)
 	//Test phím qua màn.
 	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_Q))
 	{
-		Done = true;
-		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+		GoToNextScene();
 	}
 	//Kiểm tra xem player đã đi đến đích chưa.
 	/*if (player->pos.x > SCREEN_WIDTH - 50)
 	{
-		Done = true;
-		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+		GoToNextScene();
 	}*/
+}
+
+void PlaySceneCharlesBoss::GoToNextScene()
+{
+	Done = true;
+	ReplaceToThisMap = MapName::PITTSBURGHDARK;
 }
