@@ -79,20 +79,23 @@ void PlaySceneCharles::Update(double dt)
 			Object* redRobot = new RedRocketRobotNonShooting(550, 90);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
-			isAddSoldier = true;
+			else
+				isAddSoldier = true;
 		}
 		else
 		{
 			Object* blueSoldier = new Solder(RunType::CANRUN, 250, 85);
 			if (!this->AddObjectToPlayScene(blueSoldier))
 				delete blueSoldier;
-			isAddSoldier = false;
+			else
+				isAddSoldier = false;
 		}
 		//Trường hợp thoát ra khỏi locking.
 		int blueSoldierBeaten = grid->GetBlueSoldierBeatenCounter();
 		int redRocketBeaten = grid->GetRedRocketRobotBeatenCounter();
 		if (blueSoldierBeaten > blueSoldierKillReq && redRocketBeaten > redRocketKillReq)
 		{
+			grid->StopEnemyBeatenCounter();
 			camera->UnlockCamera();
 		}
 	}
@@ -105,5 +108,11 @@ void PlaySceneCharles::Update(double dt)
 			Done = true;
 			ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
 		}
+	}
+
+	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_Q))
+	{
+		Done = true;
+		ReplaceToThisMap = MapName::CHARLESBOSSLIGHT;
 	}
 }
