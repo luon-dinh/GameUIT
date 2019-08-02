@@ -64,6 +64,12 @@ public:
 		}
 		
 	}
+	
+	int GetCollisionDamage()
+	{
+		return 1;
+	}
+
 	bool OnRectCollided(Object* object, CollisionSide side)override
 	{
 		auto player = Player::getInstance();

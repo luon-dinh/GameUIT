@@ -698,18 +698,13 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}
 		case Type::SOLIDBOX: {
+			BoundingBox box = this->getBoundingBox();
+			BoundingBox bound = object->getBoundingBox();
 			if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;
 				}
-				else {
-					this->SetVx(0);
-					// push thêm vài pixel để đẩy nhân vật rơi xuống
-					if (this->GetOnAirState() == OnAir::None) {
-						this->pos.x += 4;
-					}
-				}
-				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
+				else if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
 					this->smashRight = false;
 				}
 				else {
@@ -719,18 +714,20 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 						this->pos.x -= 4;
 					}
 				}
-				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround() && box.left != bound.right&&box.right != bound.left) {
 					this->TryStandOnGround(object);
 				}
 			}
 			else {
 				collisionOut colOut;
 				colOut.side = side;
+				BoundingBox box = this->getBoundingBox();
+				BoundingBox bound = object->getBoundingBox();
 				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
 					OnSmashSolidBox(object, side);
 				}
 
-				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()&& box.left != bound.right&&box.right != bound.left) {
 					this->TryStandOnGround(object);
 				}
 			}
@@ -781,7 +778,7 @@ bool Player::TryStandOnGround(Object* ground) {
 	return FALSE;
 }
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
-	KeyboardManager *keyboard = KeyboardManager::getInstance();
+	/*KeyboardManager *keyboard = KeyboardManager::getInstance();
 	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
 		this->SetVx(0);
 	this->collidedSolidBox = object;
@@ -796,6 +793,51 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	}
 	case CollisionSide::right: {
 		this->pos.x = bound.left - this->getWidth() / 2 + 4;
+		this->smashRight = true;
+		this->smashLeft = false;
+	}
+	}*/
+	KeyboardManager *keyboard = KeyboardManager::getInstance();
+	if ((side == CollisionSide::left && vx < 0) || (side == CollisionSide::right && vx > 0))
+		this->SetVx(0);
+	this->collidedSolidBox = object;
+	if (this->GetOnAirState() == OnAir::Jumping) {
+		this->vy = 0;
+		this->SetOnAirState(OnAir::Falling);
+	}
+	auto bound = object->getStaticObjectBoundingBox();
+	switch (side) {
+	case CollisionSide::left: {
+		this->pos.x = bound.right + this->getWidth() / 2 - 4;
+		if (keyboard->isKeyDown(PLAYER_MOVE_LEFT) && this->onAirState != OnAir::None)
+			this->pos.x = bound.right + this->getWidth() / 2;
+		else
+		{
+			if (this->onAirState == OnAir::None)
+				this->pos.x = bound.right + this->getWidth() / 2 + 4;
+			else
+			{
+				this->pos.x = bound.right + this->getWidth() / 2 + 2;
+			}
+		}
+
+		this->smashLeft = true;
+		this->smashRight = false;
+		break;
+	}
+	case CollisionSide::right: {
+		this->pos.x = bound.left - this->getWidth() / 2 + 4;
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT) && this->onAirState != OnAir::None)
+			this->pos.x = bound.left - this->getWidth() / 2;
+		else
+		{
+			if (this->onAirState == OnAir::None)
+				this->pos.x = bound.left - this->getWidth() / 2 - 4;
+			else
+			{
+				this->pos.x = bound.left - this->getWidth() / 2 - 2;
+			}
+		}
 		this->smashRight = true;
 		this->smashLeft = false;
 	}

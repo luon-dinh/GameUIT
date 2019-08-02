@@ -26,6 +26,11 @@ public:
 		this->pos.y += this->vy;
 	}
 
+	int GetCollisionDamage()
+	{
+		return 6;
+	}
+
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
 		switch (object->type)

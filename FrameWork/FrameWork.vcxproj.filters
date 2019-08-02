@@ -118,6 +118,9 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy\BossMini">
+      <UniqueIdentifier>{d9bb7f3c-d25c-418a-82dd-8387711bd046}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -380,6 +383,9 @@
     </ClCompile>
     <ClCompile Include="PlayerKickPart.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -673,6 +679,12 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotOneSidedJumping.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMini.h">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMiniState.h">
+      <Filter>Objects\Enemy\BossMini</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BossMini.cpp" />
     <ClCompile Include="BossWizard.cpp" />
     <ClCompile Include="BossWizardDeadState.cpp" />
     <ClCompile Include="BossWizardFlyingState.cpp" />
@@ -228,6 +229,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BossMini.h" />
+    <ClInclude Include="BossMiniState.h" />
     <ClInclude Include="BossWizard.h" />
     <ClInclude Include="BossWizardDeadState.h" />
     <ClInclude Include="BossWizardFlyingState.h" />
