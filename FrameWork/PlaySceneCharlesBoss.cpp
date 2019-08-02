@@ -51,6 +51,12 @@ void PlaySceneCharlesBoss::Update(double dt)
 	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_L))
 		TurnOnOffLight();
 
+	//Test phím qua màn.
+	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_Q))
+	{
+		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+	}
 	//Kiểm tra xem player đã đi đến đích chưa.
 	/*if (player->pos.x > SCREEN_WIDTH - 50)
 	{
