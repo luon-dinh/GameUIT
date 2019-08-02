@@ -43,6 +43,10 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::BOSSWIZARD, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizard.png");
 	textures->addTexture(Tag::BOSSWIZARDBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BossWizardEnergyBullet.png");
 
+	// texture dùng cho boss mini
+	textures->addTexture(Tag::BOSSMINI, (char*)".\\..\\Resources\\Images\\Enermy\\BossMini.png");
+	textures->addTexture(Tag::BOSSMINIBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\BossMiniBullet.png");
+
 	//texture dùng cho hp
 	textures->addTexture(Tag::HP_RENDER, (char*)".\\..\\Resources\\Images\\Item\\HP.png");
 

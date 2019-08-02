@@ -12,7 +12,7 @@
 
 class BossWizard :public Enemy {
 private:
-	std::unordered_map<State, Animation *>animations; //cac animation cua player
+	std::unordered_map<State, Animation *>animations; //cac animation cua boss
 	std::unordered_map<State, BossWizardState*> wizardStates;
 	static BossWizard* instance;
 
@@ -28,6 +28,8 @@ public:
 	const float flySpeedy = 2;
 	const float xRun = 100;
 	const float maxXToFly1 = 90;
+	const float maxTimeNotRender = 1000;
+	const float maxHelth = 20;
 	bool canShootOnAir;
 	float timeDelayShootOnAir;
 	float timeToShoot;
