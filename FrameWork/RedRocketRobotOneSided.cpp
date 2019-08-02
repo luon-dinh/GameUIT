@@ -317,7 +317,7 @@ bool RedRocketRobotOneSided::OnRectCollided(Object* object, CollisionSide colOut
 			}
 		}
 	}
-	else if (object->tag == Tag::PLAYER)
+	else if (object->tag == Tag::PLAYER || object->tag == Tag::PLAYER_PART)
 	{
 		if (!isBeingBeaten)
 		{

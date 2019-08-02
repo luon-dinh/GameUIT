@@ -38,6 +38,7 @@ void PlaySceneCharlesBoss::ResetPlayerPosition()
 	player->pos.y = SCREEN_HEIGHT - 10;
 	player->ChangeState(State::JUMPING);
 	player->SetOnAirState(Player::OnAir::Falling);
+	player->ResetGameProperty();
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();
 }
