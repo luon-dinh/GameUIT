@@ -48,7 +48,9 @@ void Door::SetAnimOnLightStatus()
 
 BoundingBox Door::getBoundingBox()
 {
-	BoundingBox box;
+	BoundingBox box = Object::getBoundingBox();
+	box.left += 5;
+	box.right -= 5;
 	box.vx = box.vy = 0;
 	return box;
 }
