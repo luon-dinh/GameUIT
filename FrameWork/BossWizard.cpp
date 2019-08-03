@@ -12,16 +12,17 @@ BossWizard::BossWizard()
 	this->pos.y = 120;
 	this->vx = 0;
 	this->vy = 0;
-	this->health = 20;
+	this->health = maxHelth;
 	this->deltaX = this->deltaY = 0;
 	this->hitTime = 0;
 	this->isCollide = false;
+	this->timePunch = 0;
 	this->direction = Object::MoveDirection::LeftToRight;
-	this->flyMode = 1;
+	this->flyMode = 0;
 	this->canShootOnAir = false;
 	this->timeDelayShootOnAir = 0;
 	this->tag = Tag::BOSSWIZARD;
-	this->type = Type::WIZARD;
+	this->type = Type::ENEMY;
 	this->timeToShoot = 1080;
 	this->delayShoot = 0;
 	this->timeNotRender = 0;
@@ -38,6 +39,10 @@ BossWizard::~BossWizard()
 
 float BossWizard::getHeight()
 {
+	auto sprite = currentanimation->getSprite(currentanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return height;
 }
 
@@ -57,6 +62,10 @@ float BossWizard::getPosToRight()
 
 float BossWizard::getWidth()
 {
+	auto sprite = currentanimation->getSprite(currentanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return width;
 }
 
@@ -81,11 +90,16 @@ void BossWizard::Update(float dt)
 {
 	if (state == State::DEAD)
 	{
-		if (this->currentanimation->curframeindex = this->currentanimation->curframeindex - 1 && this->timeNotRender > 900)
+		if (this->currentanimation->curframeindex = this->currentanimation->toframe - 1 && this->timeNotRender > 900)
+		{
 			DeactivateObjectInGrid();
+			SceneManager::getInstance()->GoToNextScene();
+		}
 		if (this->onAirState != OnAir::None&&this->state != State::FLYING)
 			this->currentAnimation->Update(dt);
 	}
+	if (health <= maxHelth/2)
+		this->turnOffLight = true;
 	auto player = Player::getInstance();
 	//if (this->state != State::FLYING&&state!=State::DEAD)
 	this->currentanimation->Update(dt);
@@ -107,7 +121,7 @@ void BossWizard::Update(float dt)
 	}
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
-	if (isCollide)
+	if (!isCollidable)
 	{
 		timeNotRender += dt;
 	}
@@ -170,10 +184,10 @@ void BossWizard::Render()
 				currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), color);
 			}
 		}
-		if (timeNotRender > 1000)
+		if (timeNotRender > maxTimeNotRender)
 		{
 			timeNotRender = 0;
-			isCollide = false;
+			isCollidable = true;
 		}
 	}
 }
@@ -181,16 +195,17 @@ void BossWizard::Render()
 
 void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 {
+	auto player = Player::getInstance();
+	this->SetStandingGround(object);
 	switch (object->type)
 	{
 	case Type::SOLIDBOX:
-	case Type::GROUND:
-		deltaX = deltaY = 0;
 		if(colOut->side==CollisionSide::bottom)
 		{
+			deltaX = deltaY = 0;
 			this->vy = 0;
 			this->vx = 0;
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2;
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 			if (this->direction == MoveDirection::LeftToRight)
 				this->direction = MoveDirection::RightToLeft;
 			else
@@ -198,7 +213,7 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 				this->direction = MoveDirection::LeftToRight;
 			}
 			// nếu bay gần thì đấm rồi cuyển state khác
-			if (this->flyMode == 1)
+			if (this->flyMode == 1&&(abs(player->pos.x-this->pos.x)<30)&&(abs(player->pos.y-this->pos.y)<30))
 			{
 				ChangeState(State::STAND_PUNCH);
 			}
@@ -209,34 +224,21 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			}
 		}
 		break;
+	case Type::GROUND:
+		if (colOut->side == CollisionSide::bottom)
+		{
+			deltaX = deltaY = 0;
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
+			this->direction = BossWizard::MoveDirection::LeftToRight;
+			this->vy = 0;
+			this->vx = 0;
+			ChangeState(State::STANDING);
+		}
+		break;
 	default:
 		break;
 	}
-	if (object->tag == Tag::SHIELD)
-	{
-		auto shield = Shield::getInstance();
-		if (shield->state == Shield::ShieldState::Attack)
-		{
-			//render khong render
-			//this->currentanimation = animations[State::DEAD];
-			this->health--;
-			if (this->health <= 0)
-			{
-				//isDead = true;
-				ChangeState(State::DEAD);
-			}
-			if (health == 10)
-				this->turnOffLight = true;
-			this->hitTime++;
-			this->isCollide = true;
-			return;
-		}
-	}
-	if (object->tag == Tag::PLAYER)
-	{
-		this->isCollide = true;
-		return;
-	}
+	
 }
 
 void BossWizard::OnNotCollision(Object* object)
@@ -246,19 +248,42 @@ void BossWizard::OnNotCollision(Object* object)
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
-	if (object->type == Type::GROUND&&side==CollisionSide::bottom&&this->turnOffLight)
-	{
-		this->direction = BossWizard::MoveDirection::LeftToRight;
-		this->vy = 0;
-		ChangeState(State::STAND_PUNCH);
-	}
-	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight)
+	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
 	{
 		// đổi map 
 		SceneManager::getInstance()->TurnOnOffLight();
+		this->flyMode = 1;
+		ChangeState(State::FLYING);
 		this->turnOffLight = false;
 	}
-	return true;
+	if (object->tag == Tag::SHIELD)
+	{
+		auto shield = Shield::getInstance();
+		if (shield->state == Shield::ShieldState::Attack)
+		{
+			//render khong render
+			//this->currentanimation = animations[State::DEAD];
+			this->health -= shield->GetCollisionDamage();
+			if (this->health <= 0)
+			{
+				//isDead = true;
+				ChangeState(State::DEAD);
+			}
+
+			this->hitTime++;
+			//this->isCollide = true;
+			this->isCollidable = false;
+			return false;
+		}
+	}
+	if (object->tag == Tag::PLAYER)
+	{
+		this->health -= Player::getInstance()->GetDamage();
+		this->isCollidable = false;
+		this->hitTime++;
+		return true;
+	}
+	return false;
 }
 
 
@@ -277,14 +302,11 @@ void BossWizard::ChangeState(State stateName)
 		this->direction = MoveDirection::LeftToRight;
 	}
 	float posy1 = this->getPosToBottom();
-	float posx1 = this->getPosToRight();
 	this->state = stateName;
 	this->wizardState = wizardStates[stateName];
 	currentanimation = animations[stateName];
 	float posy2 = this->getPosToBottom();
-	float posx2 = this->getPosToRight();
 	this->pos.y =this->pos.y+ (posy2 - posy1);
-	this->pos.x = this->pos.x + (posx2 - posx1);
 	switch (stateName)
 	{
 	case State::STANDING:
@@ -325,7 +347,6 @@ void BossWizard::ChangeState(State stateName)
 	default:
 		break;
 	}
-	currentanimation->curframeindex = 0;
 	this->deltaX = this->deltaY = 0;
 }
 

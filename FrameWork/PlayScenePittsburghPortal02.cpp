@@ -48,3 +48,12 @@ void PlayScenePittsburghPortal02::ResetPlayerPosition()
 	//Update lại camera sau khi set.
 	UpdateCameraWithPlayerPos();
 }
+
+void PlayScenePittsburghPortal02::GoToNextScene()
+{
+	//Xét tình trạng đèn hiện tại để chuyển cho phù hợp.
+	if (isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHLIGHT;
+	else if (!isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+}

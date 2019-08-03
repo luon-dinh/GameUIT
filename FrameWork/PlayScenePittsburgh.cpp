@@ -59,17 +59,34 @@ void PlayScenePittsburgh::Update(double dt)
 	else if (kbInstance->getKeyPressedOnce(DIK_K) && !isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
-	//Kiểm tra xem player đã đi đến đích chưa.
-	if (player->pos.x >= world->getMapWidth() - 50)
-	{
-		Done = true;
-		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
-	}
+	////Kiểm tra xem player đã đi đến đích chưa.
+	//if (player->pos.x >= world->getMapWidth() - 50)
+	//{
+	//	Done = true;
+	//	ReplaceToThisMap = MapName::PITTSBURGHBOSS;
+	//}
 		
 }
 
 void PlayScenePittsburgh::GoToNextScene()
 {
 	//Xét từng trường hợp để đi đến map tiếp theo.
-
+	//Nếu player đang ở vị trí portal thứ 1.
+	if (player->pos.x < 600 && player->pos.x > 550 && player->pos.y > 765 && player->pos.y < 820)
+	{
+		//Xét xem đèn sáng hay tối để replace cho phù hợp.
+		if (isLightOn)
+			ReplaceToThisMap = MapName::PITTSBURGHPORTAL1LIGHT;
+		else
+			ReplaceToThisMap = MapName::PITTSBURGHPORTAL1DARK;
+	}
+	//Nếu player đang ở vị trí portal thứ 2.
+	else if (player->pos.x > 815 && player->pos.x < 850 && player->pos.y > 285 && player->pos.y < 340)
+	{
+		//Xét xem đèn đang sáng hay tối để replace cho phù hợp.
+		if (isLightOn)
+			ReplaceToThisMap = MapName::PITTSBURGHPORTAL2LIGHT;
+		else
+			ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
+	}
 }

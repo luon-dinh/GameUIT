@@ -28,7 +28,6 @@ void PlayerSittingState::InputHandler() {
 				player->SetOnAirState(Player::OnAir::Falling);
 			}
 			player->ChangeState(State::JUMPING);
-			
 			return;
 		} 
 	}

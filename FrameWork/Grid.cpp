@@ -75,8 +75,7 @@ Grid::~Grid()
 			{
 				Player* testPlayer = dynamic_cast<Player*> (object);
 				Shield* testShield = dynamic_cast<Shield*> (object);
-
-				//Chỉ xoá khi không phải là player và shield.
+				//Chỉ xoá khi không phải là player, shield và bộ phận của player.
 				if (testPlayer != nullptr && testShield != nullptr)
 					delete object;
 			}
@@ -814,7 +813,7 @@ void Grid::RenderActivatedCells()
 				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
-				//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+				
 			}
 			////Vẽ debug các object tĩnh.
 			//for (auto object : cellsOfStaticObjects[i][j])
@@ -826,7 +825,9 @@ void Grid::RenderActivatedCells()
 	//Vẽ theo thứ tự.
 	for (auto object : orderOfRenders)
 	{
+		//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 		object->Render();
+		
 	}
 	//DrawDebugObject();
 }

@@ -182,9 +182,9 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 110, 12, 151, 41));//fall shooted 7
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 129, 60, 156, 93)); //die 8
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 136, 112, 156, 148)); //9
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 203, 39));//shoot 10
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 203, 91));//11
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 203, 143));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 208, 39));//shoot 10
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 208, 91));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 208, 143));//12
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 12, 260, 41));//fly 13
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 64, 260, 93));//14
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 119, 260, 145));//15
@@ -197,6 +197,25 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 20, 4, 28, 11));//3
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 20, 27, 28));//4
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARDBULLET, 21, 36, 26, 44));//5
+	//cắt sprite cho boss mini
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 2, 10, 48, 38));//0
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 53, 8, 96, 38));//1
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 96, 8, 144, 34));//2
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 101, 42, 144, 74));//3
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 149, 0, 192, 38));//4
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 5, 240, 35));//5
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 50, 240, 74));//6
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 201, 90, 240, 118));//7
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 245, 8, 288, 38));//8
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 240, 50, 288, 80));//9
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 301, 8,336, 32));//10
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,3, 384, 38));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347,42 , 384, 74));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINI, 347, 87, 384, 121));//13
+	// cắt sprite cho boss mini bullet
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 0, 14, 22));
+	spriteManager->addSprite(new Sprite(Tag::BOSSMINIBULLET, 0, 25, 11, 41));
+
 
 	// cắt sprite cho HP
 	spriteManager->addSprite(new Sprite(Tag::HP_RENDER, 0, 0, 8, 8));
@@ -204,6 +223,16 @@ void SpriteManager::LoadResources()
 	// cắt sprite cho biển EXIT
 	spriteManager->addSprite(new Sprite(Tag::EXITSIGN, 0, 0, 16, 29));
 
+	//Cắt Sprite cho cục phóng lửa theo chiều dọc.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_VERTICAL_FIRE, 0, 0, 9, 6));
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_VERTICAL_FIRE, 0, 6, 9, 12));
+
+	//Cắt Sprite cho cục phóng lửa theo chiều ngang.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_HORIZONTAL_FIRE, 0, 0, 8, 8));
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM_HORIZONTAL_FIRE, 0, 8, 8, 16));
+
+	//Cắt Sprite cho chính cục Moving Platform.
+	spriteManager->addSprite(new Sprite(Tag::MOVING_PLATFORM, 0, 0, 16, 32));
 	// cắt sprite cho canon
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 0, 16, 16));
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 16, 16, 32));
