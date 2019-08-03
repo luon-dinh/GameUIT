@@ -8,6 +8,7 @@ public:
 	~PlayScenePittsburghPortal01();
 	void Update(double dt) override;
 	void ResetPlayerPosition() override;
+	void GoToNextScene() override;
 private:
 	//Đường dẫn.
 	const char * pbPortal01LightPNG = (char*)".\\..\\Resources\\Images\\Maps\\PittsburghPortal01\\pittsburgh_portal01_light.png";

@@ -45,12 +45,13 @@ void MovingPlatform::Update(float dt)
 		fireLeft->Update(dt);
 	}
 	//Platform đang di chuyển theo hướng đi lên.
-	if (this->vy > 0)
+	if (this->vy != 0)
 	{
 		fireDownLeft->Update(dt);
 		fireDownRight->Update(dt);
 	}
 	MovePlatform();
+	UpdatePlatformFirePosition();
 }
 
 void MovingPlatform::Render()
@@ -60,7 +61,7 @@ void MovingPlatform::Render()
 		fireRight->Render();
 	else if (this->vx > 0)
 		fireLeft->Render();
-	if (this->vy > 0)
+	if (this->vy != 0)
 	{
 		fireDownLeft->Render();
 		fireDownRight->Render();
@@ -71,10 +72,10 @@ void MovingPlatform::Render()
 
 void MovingPlatform::UpdatePlatformFirePosition()
 {
-	fireDownLeft->SetFirePosition(this->pos.x - platformWidth / 5, this->pos.y - platformHeight / 2 - 5);
-	fireDownRight->SetFirePosition(this->pos.x + platformWidth / 5, this->pos.y - platformHeight / 2 - 5);
-	fireLeft->SetFirePosition(this->pos.x - platformWidth / 2 - 5, this->pos.y);
-	fireRight->SetFirePosition(this->pos.x + platformWidth / 2 + 5, this->pos.y);
+	fireDownLeft->SetFirePosition(this->pos.x - platformWidth / 5 - 1, this->pos.y - platformHeight / 2 - 5);
+	fireDownRight->SetFirePosition(this->pos.x + platformWidth / 5 + 2, this->pos.y - platformHeight / 2 - 5);
+	fireLeft->SetFirePosition(this->pos.x - platformWidth / 2 - 4, this->pos.y);
+	fireRight->SetFirePosition(this->pos.x + platformWidth / 2 + 4, this->pos.y);
 }
 
 BoundingBox MovingPlatform::getBoundingBox()
