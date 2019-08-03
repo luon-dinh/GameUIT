@@ -54,3 +54,24 @@ void Shockwave::Render()
 		waveAnim->Render(viewPort);
 	}
 }
+
+BoundingBox Shockwave::getBoundingBox()
+{
+	BoundingBox box;
+	box.vx = box.vy = 0;
+	if (isShockwaveActivated)
+	{
+		box.top = this->pos.y + shockwaveHeight / 2;
+		box.bottom = this->pos.y - shockwaveHeight / 2;
+		box.left = this->pos.x - shockwaveWidth / 2;
+		box.right = this->pos.x + shockwaveWidth / 2;
+	}
+	else
+	{
+		box.top = -1;
+		box.left = -1;
+		box.right = -1;
+		box.bottom = -1;
+	}
+	return box;
+}

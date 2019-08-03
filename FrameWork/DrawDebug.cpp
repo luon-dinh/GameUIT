@@ -17,9 +17,9 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 	int curX = objTopLeftX;
 	int curY = objTopLeftY;
 	//Vẽ từ dưới lên, từ trái qua phải.
-	while (curY >= objMostBottom)
+	while (curY - tileSize >= objMostBottom)
 	{
-		while (curX < objMostRight)
+		while (curX + tileSize < objMostRight)
 		{
 			D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(curX + tileSize / 2, curY - tileSize / 2, 0));
 			debugSprite->Render(viewPort);
@@ -29,6 +29,28 @@ void DrawDebug::DrawBoundingBox(BoundingBox objectBox, Tag colorTag)
 		curX = objTopLeftX;
 		//curY -= 1;
 	}
+	//Tô viền phải và viền dưới.
+	curY = objMostBottom + tileSize;
+	curX = objTopLeftX;
+	while (curX + tileSize < objMostRight)
+	{
+		D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(curX + tileSize / 2, curY - tileSize / 2, 0));
+		debugSprite->Render(viewPort);
+		curX += tileSize;
+	}
+	curX = objMostRight - tileSize;
+	curY = objTopLeftY;
+	while (curY - tileSize >= objMostBottom)
+	{
+		D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(curX + tileSize / 2, curY - tileSize / 2, 0));
+		debugSprite->Render(viewPort);
+		curY -= tileSize;
+	}
+	//Tô nốt cục phải cùng dưới.
+	curX = objMostRight - tileSize;
+	curY = objMostBottom + tileSize;
+	D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(curX + tileSize / 2, curY - tileSize / 2, 0));
+	debugSprite->Render(viewPort);
 	delete debugSprite;
 	//D3DXVECTOR3 viewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(midX, midY, 0));
 	//debugSprite->Render(objMostRight - objTopLeftX, objTopLeftY - objMostBottom, D3DXVECTOR2(viewPort.x, viewPort.y));

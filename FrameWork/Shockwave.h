@@ -11,6 +11,9 @@ class Shockwave : public Object
 	//Thời gian tắt điện.
 	const int timeDisabled = 1000;
 
+	const int shockwaveHeight = 48;
+	const int shockwaveWidth = 16;
+
 	Animation* waveAnim;
 	Delay* enableDelay;
 	Delay* disableDelay;
@@ -21,4 +24,5 @@ public:
 	~Shockwave();
 	void Update(float dt) override;
 	void Render() override;
+	BoundingBox getBoundingBox() override;
 };

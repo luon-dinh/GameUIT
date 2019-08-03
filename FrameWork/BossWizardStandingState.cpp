@@ -1,4 +1,4 @@
-#include"BossWizardStandingState.h"
+﻿#include"BossWizardStandingState.h"
 
 BossWizardStandingState::BossWizardStandingState()
 {
@@ -21,10 +21,11 @@ void BossWizardStandingState::Update(float dt)
 	auto player = Player::getInstance();
 	if (timeStand < maxTimeStand)
 	{
-		timeStand += dt;
+		timeStand += wizard->defaultDT;
 	}
 	else
 	{
+		timeStand = 0;
 		float deltaPlayer = abs(player->pos.x - wizard->pos.x);
 
 		if (deltaPlayer > 0)
@@ -33,7 +34,8 @@ void BossWizardStandingState::Update(float dt)
 		{
 			wizard->direction = BossWizard::MoveDirection::LeftToRight;
 		}
-		if (wizard->flyMode != 1)
+		//đang đứng gần onoff thì punch
+		if (wizard->flyMode != 1&&wizard->GetStandingGround()->type==Type::GROUND)
 		{
 			//wizard->flyMode = 1;
 			wizard->direction = BossWizard::MoveDirection::LeftToRight;
@@ -42,14 +44,14 @@ void BossWizardStandingState::Update(float dt)
 		}
 		else
 		{
-			if (wizard->flyTimes > 0)
+			//wizard->ChangeState(State::RUNNING);
+			if (wizard->countBullet <= 3)
+				wizard->ChangeState(State::ATTACK);
+			else
 			{
-				wizard->flyMode = rand() % 3 + 2;
-				wizard->ChangeState(State::FLYING);
-				wizard->flyTimes--;
-				return;
+				wizard->countBullet = 0;
+				wizard->ChangeState(State::RUNNING);
 			}
-			wizard->ChangeState(State::RUNNING);
 		}
 
 	}

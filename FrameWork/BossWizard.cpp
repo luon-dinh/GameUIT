@@ -15,6 +15,7 @@ BossWizard::BossWizard()
 	this->health = maxHelth;
 	this->deltaX = this->deltaY = 0;
 	this->hitTime = 0;
+	this->countBullet = 0;
 	this->isCollide = false;
 	this->timePunch = 0;
 	this->direction = Object::MoveDirection::LeftToRight;
@@ -23,7 +24,6 @@ BossWizard::BossWizard()
 	this->timeDelayShootOnAir = 0;
 	this->tag = Tag::BOSSWIZARD;
 	this->type = Type::ENEMY;
-	this->timeToShoot = 1080;
 	this->delayShoot = 0;
 	this->timeNotRender = 0;
 	this->wizardState = wizardStates[State::FLYING];
@@ -88,6 +88,7 @@ BoundingBox BossWizard::getBoundingBox()
 
 void BossWizard::Update(float dt)
 {
+	//update riêng cho state dead
 	if (state == State::DEAD)
 	{
 		if (this->currentanimation->curframeindex = this->currentanimation->toframe - 1 && this->timeNotRender > 900)
@@ -98,11 +99,13 @@ void BossWizard::Update(float dt)
 		if (this->onAirState != OnAir::None&&this->state != State::FLYING)
 			this->currentAnimation->Update(dt);
 	}
+
+	//nửa máu thì có thể tắt đèn
 	if (health <= maxHelth/2)
 		this->turnOffLight = true;
 	auto player = Player::getInstance();
-	//if (this->state != State::FLYING&&state!=State::DEAD)
 	this->currentanimation->Update(dt);
+
 	//bay vào đầu hoặc cuối map
 	if (this->pos.x < minMap || this->pos.x > maxMap)
 	{
@@ -125,19 +128,12 @@ void BossWizard::Update(float dt)
 	{
 		timeNotRender += dt;
 	}
+
 	//bị bắn 2 phát thì bay
-	if (hitTime >= 2 && this->onAirState == OnAir::None)
-	{
-		flyTimes = rand() % 3 + 1;
-		flyMode = rand() % 3 + 2;
-		ChangeState(State::FLYING);
-		flyTimes--;
-		hitTime = 0;
-		return;
-	}
 	this->wizardState->Update(dt);
+
 	//player đang đứng trên thanh ground thì cười
-	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None&&this->state!=State::FLYING)
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->state!=State::FLYING &&this->GetStandingGround()->type!=Type::GROUND)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);
@@ -206,21 +202,11 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			this->vy = 0;
 			this->vx = 0;
 			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
-			if (this->direction == MoveDirection::LeftToRight)
-				this->direction = MoveDirection::RightToLeft;
+			if(this->flyMode!=1)
+				ChangeState(State::STANDING);
 			else
 			{
-				this->direction = MoveDirection::LeftToRight;
-			}
-			// nếu bay gần thì đấm rồi cuyển state khác
-			if (this->flyMode == 1&&(abs(player->pos.x-this->pos.x)<30)&&(abs(player->pos.y-this->pos.y)<30))
-			{
-				ChangeState(State::STAND_PUNCH);
-			}
-			//bay xa thì chuyển state shoot
-			else
-			{
-				ChangeState(State::ATTACK);
+				ChangeState(State::RUNNING);
 			}
 		}
 		break;
@@ -269,9 +255,11 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 				//isDead = true;
 				ChangeState(State::DEAD);
 			}
-
 			this->hitTime++;
-			//this->isCollide = true;
+			if (this->hitTime >= 2)
+			{
+				this->flyTimes = rand() % 3 + 1;
+			}
 			this->isCollidable = false;
 			return false;
 		}
@@ -281,6 +269,10 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 		this->health -= Player::getInstance()->GetDamage();
 		this->isCollidable = false;
 		this->hitTime++;
+		if (this->hitTime >= 2)
+		{
+			this->flyTimes = rand() % 3 + 1;
+		}
 		return true;
 	}
 	return false;
@@ -315,6 +307,7 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::None;
 		break;
 	case State::FLYING:
+		this->canShootOnAir = true;
 		this->vy = flySpeedy;
 		this->deltaX = this->deltaY = 0;
 		this->onAirState = OnAir::Jumping;
@@ -322,7 +315,6 @@ void BossWizard::ChangeState(State stateName)
 	case State::ATTACK:
 		this->vy = 0;
 		this->vx = 0;
-		this->timeToShoot = 1080;
 		this->delayShoot = 0;
 		this->onAirState = OnAir::None;
 		break;

@@ -459,6 +459,9 @@
     <ClCompile Include="EletricBat.cpp">
       <Filter>Objects\Enemy\EvilBat</Filter>
     </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
