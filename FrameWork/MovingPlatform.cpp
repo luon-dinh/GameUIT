@@ -83,7 +83,7 @@ BoundingBox MovingPlatform::getBoundingBox()
 	BoundingBox box;
 	box.vx = this->vx;
 	box.vy = this->vy;
-	box.bottom = this->pos.y;
+	box.bottom = this->pos.y - platformHeight/2;
 	box.top = this->pos.y + platformHeight / 2;
 	box.left = this->pos.x - platformWidth / 2;
 	box.right = this->pos.x + platformWidth / 2;

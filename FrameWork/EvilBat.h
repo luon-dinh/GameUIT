@@ -63,6 +63,6 @@ public:
 	void Render() override;
 	int GetCollisionDamage() override;
 	int GetDamage() override;
-	void UpdateGameProperty() override;
+	void UpdateGameProperty() override {};
 	void ResetGameProperty() override;
 };

@@ -151,6 +151,9 @@
     <Filter Include="Objects\Door">
       <UniqueIdentifier>{f14d2d07-0305-45dc-9258-f3e3f8b8ec83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Wave">
+      <UniqueIdentifier>{b41bfd64-35c2-40a3-9ccb-7b9814e17278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -438,9 +441,6 @@
     <ClCompile Include="Equation.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="BossMini.cpp">
-      <Filter>Objects\Enemy\BossMini</Filter>
-    </ClCompile>
     <ClCompile Include="MovingPlatformCrossed.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClCompile>
@@ -455,6 +455,9 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>Objects\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="Shockwave.cpp">
+      <Filter>Objects\Wave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -790,6 +793,9 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Objects\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="Shockwave.h">
+      <Filter>Objects\Wave</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

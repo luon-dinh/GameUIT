@@ -57,8 +57,8 @@ private:
 	void InnerRender();
 	
 	int flipRenderFrame;
+	bool isGroundVelocityApplied;
 	const int FLIP_RENDER_FRAME = 10;
-
 	const int MIN_TIME_JUMP_1 = 20;
 	const int MIN_TIME_JUMP_2 = 30;
 	const int MIN_TIME_ROLL = 40;

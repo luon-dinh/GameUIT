@@ -263,6 +263,14 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 0, 48, 38));	//	Fly state
 	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 38, 48, 76));
 	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT,48, 0, 64, 38));	// Explode
+
+	//Cắt sprite cho electric shockwave.
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 0, 48, 16));
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 16, 48, 32));
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 32, 48, 48));
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 48, 48, 64));
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 64, 48, 80));
+	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 80, 48, 96));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

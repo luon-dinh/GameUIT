@@ -47,7 +47,8 @@ class DisappearingPlatform : public Object
 	bool isPlatformActivated = false;
 	//Biến dùng để xác định xem trạng thái hiện tại là gì (splitting hay joining).
 	bool isSplitting = false;
-	//Dùng biến isCollidable để xác định xem platform hiện tại có hitbox hay không.
+	//Dùng biến isFlashing để xác định xem platform hiện tại có hitbox hay không.
+	bool isFlashing = false;
 public:
 	DisappearingPlatform(int _posX, int _posY);
 	~DisappearingPlatform();

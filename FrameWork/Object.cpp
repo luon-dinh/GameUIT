@@ -66,7 +66,7 @@ void Object::SetMoveDirection(MoveDirection moveDir) {
 	this->vx *= -1;
 }
 
-void Object::SetVx(float vx) {
+void Object::SetVx( float vx) {
 	this->vx = vx;
 	if (vx == 0)
 		return;
@@ -138,7 +138,7 @@ bool Object::StandOnCurrentGround() {
 	if (ground == NULL)
 		return FALSE;
 
-	auto groundBox = ground->getStaticObjectBoundingBox();
+	auto groundBox = ground->getBoundingBox();
 	auto objectBox = this->getBoundingBox();
 
 	if (Collision::getInstance()->IsCollide(objectBox, groundBox)) {
@@ -172,9 +172,7 @@ void Object::SetStandingGround(Object* ground) {
 		this->currentGround = NULL;
 		return;
 	}
-	if (ground->type == Type::GROUND || ground->type == Type::SOLIDBOX) {
-		this->currentGround = ground;
-	}
+	this->currentGround = ground;
 }
 
 
@@ -188,7 +186,7 @@ void Object::OnFallingOffGround() {
 	}
 }
 void Object::OnStandingOnGround(Object* ground) {
-	this->SetStandingGround(ground);
+ 	this->SetStandingGround(ground);
 	this->ChangeState(State::STANDING);
 	this->pos.y = ground->getBoundingBox().top + this->getHeight() / 2 - 2;
 }
