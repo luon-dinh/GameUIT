@@ -243,6 +243,16 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 96, 16, 112));
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 112, 16, 128));
 
+	//Cắt sprite cho cửa.
+	spriteManager->addSprite(new Sprite(Tag::DOOR_DARK, 0, 0, 48, 32));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_DARK, 0, 32, 48, 64));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_DARK, 0, 64, 48, 96));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_DARK, 0, 96, 48, 128));
+
+	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 0, 48, 32));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 32, 48, 64));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 64, 48, 96));
+	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 96, 48, 128));
 	// cắt sprite cho evil bat
 	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 16, 38));	// Fake container state
 	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 16, 76));

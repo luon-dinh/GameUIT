@@ -25,7 +25,7 @@ public:
 	}
 
 	//Hàm dùng để lấy Scene hiện tại.
-	Scene* getCurrentScene();
+	PlayScene* getCurrentScene();
 
 	//Hàm dùng để thêm một object vào Scene.
 	bool AddObjectToCurrentScene(Object* object);

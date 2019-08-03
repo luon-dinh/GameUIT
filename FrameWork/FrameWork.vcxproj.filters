@@ -148,6 +148,9 @@
     <Filter Include="Objects\Platform\MovingPlatform\PlatformFire">
       <UniqueIdentifier>{5c677fea-3b4d-4baf-bd62-475461638589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Door">
+      <UniqueIdentifier>{f14d2d07-0305-45dc-9258-f3e3f8b8ec83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -449,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="DisappearingPlatform.cpp">
       <Filter>Objects\Platform\DisappearingPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Objects\Door</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +787,9 @@
     </ClInclude>
     <ClInclude Include="DisappearingPlatform.h">
       <Filter>Objects\Platform\DisappearingPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Objects\Door</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

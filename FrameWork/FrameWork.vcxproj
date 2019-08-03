@@ -161,6 +161,7 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Delay.cpp" />
     <ClCompile Include="DisappearingPlatform.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Delay.h" />
     <ClInclude Include="DisappearingPlatform.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="Enemy.h" />
