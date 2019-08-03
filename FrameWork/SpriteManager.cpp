@@ -182,9 +182,9 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 110, 12, 151, 41));//fall shooted 7
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 129, 60, 156, 93)); //die 8
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 136, 112, 156, 148)); //9
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 203, 39));//shoot 10
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 203, 91));//11
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 203, 143));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 208, 39));//shoot 10
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 208, 91));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 208, 143));//12
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 12, 260, 41));//fly 13
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 64, 260, 93));//14
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 119, 260, 145));//15

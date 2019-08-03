@@ -19,7 +19,7 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (animation->curframeindex == 2)
+		if (animation->curframeindex == this->animationExplode->toframe-1)
 			DeactivateObjectInGrid();
 		animation->Update(dt);
 		this->pos.x += this->vx;

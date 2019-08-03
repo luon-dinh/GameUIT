@@ -41,7 +41,7 @@ public:
 	bool OnRectCollided(Object* object, CollisionSide side);
 	BoundingBox getBoundingBox();
 	Animation* currentAnimation;
-	static BossMini* getInStance();
+	static BossMini* getInstance();
 	State state;
 	BossMini();
 	~BossMini();

@@ -31,12 +31,18 @@ public:
 	const float maxTimeNotRender = 1000;
 	const float maxHelth = 20;
 	const float bulletSpeed = 2;
+	const float maxTimeToShoot = 1080;
+	const float maxTimeToPunch = 500;
+	const float defaultDT = 50;
+	const float shoot1 = 30;
+	const float shoot2 = 80;
 	bool canShootOnAir;
 	float timeDelayShootOnAir;
 	float timeToShoot;
 	float delayShoot;
 	bool isCollide;
 	int hitTime;
+	float timePunch;
 	float deltaY;
 	float deltaX;
 	float getWidth();
