@@ -9,6 +9,7 @@
 #include "MovingPlatformCircle.h"
 #include "MovingPlatformCrossed.h"
 #include "MovingPlatformHorizontal.h"
+#include "DisappearingPlatform.h"
 #include "PlatformFire.h"
 #include "Camera.h"	
 #include "Solder.h"
@@ -36,7 +37,8 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
-	grid->Add(new MovingPlatformCrossed(120,150));
+	grid->Add(new MovingPlatformCrossed(120,80));
+	grid->Add(new DisappearingPlatform(120, 120));
 	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
 }
 

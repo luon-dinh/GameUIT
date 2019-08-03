@@ -24,5 +24,7 @@ public:
 	virtual void Render() override;
 	//Chỗ nào cần cách move khác chỉ cần override lại là xong.
 	virtual void MovePlatform() {};
+	//Cấm không cho Grid xoá platform.
+	void DeactivateObjectInGrid() override {};
 	BoundingBox getBoundingBox() override;
 };
