@@ -19,10 +19,10 @@ void BossWizardRunningState::Update(float dt)
 	auto wizard = BossWizard::getInstance();
 	auto player = Player::getInstance();
 	if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
-		wizard->vx = 2 * ENEMY_SPEED;
+		wizard->vx = wizard->bulletSpeed;
 	else
 	{
-		wizard->vx = -2 * ENEMY_SPEED;
+		wizard->vx = -wizard->bulletSpeed;
 	}
 	float deltaPlayer = abs(player->pos.x - wizard->pos.x);
 	wizard->deltaX += abs(wizard->vx);

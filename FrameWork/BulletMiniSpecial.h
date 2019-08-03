@@ -18,7 +18,10 @@ public:
 	{
 
 	}
-
+	void setCollidale(bool collide)
+	{
+		this->isCollidable = collide;
+	}
 	void Update(float dt)override {
 		if (animation->curframeindex == animationExplode->toframe-1)
 			DeactivateObjectInGrid();
@@ -34,12 +37,29 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-
+		
 	}
 
 	bool OnRectCollided(Object* object, CollisionSide side)override
 	{
-		return true;
+		switch (object->type)
+		{
+		case Type::GROUND:
+		case Type::SOLIDBOX:
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			this->isCollidable = false;
+			return false;
+		default:
+			break;
+		}
+		if (object->tag == Tag::PLAYER)
+		{
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			this->isCollidable = false;
+			return true;
+		}
 	}
 
 	BoundingBox getBoundingBox()override

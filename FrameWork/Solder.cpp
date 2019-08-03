@@ -111,7 +111,6 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 				this->ChangeState(State::DEAD);
 			}
 			this->isCollidable = false;
-
 		}
 	}
 	//if (object->tag == Tag::PLAYER)
@@ -136,8 +135,20 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
+		break;
 	default:
 		break;
+	}
+	if (object->tag == Tag::PLAYER)
+	{
+		auto player = Player::getInstance();
+		this->health -= player->GetCollisionDamage();
+		if (this->health <= 0)
+		{
+			this->ChangeState(State::DEAD);
+		}
+		this->isCollidable = false;
+		return true;
 	}
 	if (object->tag == Tag::SHIELD)
 	{
@@ -158,16 +169,6 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 			this->isCollidable = false;
 			
 		}
-	}
-	if (object->tag == Tag::PLAYER)
-	{
-		auto player = Player::getInstance();
-		this->health -= player->GetCollisionDamage();
-		if (this->health <= 0)
-		{
-			this->ChangeState(State::DEAD);
-		}
-		this->isCollidable = false;
 	}
 	return false;
 }

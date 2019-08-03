@@ -420,6 +420,9 @@
     <ClCompile Include="Equation.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
+      </ClCompile>
     <ClCompile Include="MovingPlatformCrossed.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClCompile>
