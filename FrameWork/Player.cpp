@@ -308,6 +308,7 @@ void Player::ChangeState(State stateName) {
 			return;
 		}
 		this->SetOnAirState(OnAir::Jumping);
+		this->SetStandingGround(NULL);
 		break;
 	}
 	case State::DASHING: {
@@ -408,6 +409,11 @@ BOOL Player::IsReachMaxJump() {
 
 bool Player::IsFootStepOn() {
 	return this->currentGround->type == Type::GROUND || this->currentGround->type == Type::SOLIDBOX;
+}
+
+bool Player::IsOnPlatform() {
+	auto ground = this->GetStandingGround();
+	return ground != NULL && ground->type == Type::PLATFORM;
 }
 
 
@@ -520,6 +526,12 @@ void Player::UpdatePosition() {
 		AddPosX();
 	}
 	AddPosY();
+
+	if (this->IsOnPlatform()) {
+		auto platform = this->GetStandingGround();
+		this->vx += platform->vx;
+		this->vy += platform->vy;
+	}
 }
 
 void Player::SetMoveDirection(MoveDirection moveDir) {
@@ -615,15 +627,12 @@ void Player::OnCollision(Object* object, collisionOut* collisionOut) {
 	// không xét va chạm với shield
 	if (object->tag == Tag::SHIELD)
 		return;
-	if (object->type == Type::PLATFORM  && collisionOut->side == CollisionSide::bottom)
-	{
-		OnStandingOnGround(object);
-	}
 	// gọi tới hàm va chạm của state
 	this->playerstate->OnCollision(object, collisionOut);
 }
 void Player::OnNotCollision(Object* object) {
 	switch (object->type) {
+	case Type::PLATFORM:
 	case Type::GROUND: {
 		// nếu đang ở trạng thái rơi xuống nước thì bỏ qua va chạm với ground
 		if (this->GetOnAirState() == OnAir::DropToWater) {
@@ -675,11 +684,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
-	case Type::PLATFORM:
-	{
-		int a = 1;
-	}
-		
+		case Type::PLATFORM:
 		case Type::GROUND: {
 			if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;

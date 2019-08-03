@@ -71,7 +71,7 @@ void PlayerRunningState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 
 	// collide with ground
-	if (object->type == Type::GROUND) { 
+	if (object->type == Type::GROUND || object->type == Type::PLATFORM) { 
 		if (side == CollisionSide::bottom)
 		{
 			player->OnStandingOnGround(object);

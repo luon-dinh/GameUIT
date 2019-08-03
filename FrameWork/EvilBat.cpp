@@ -8,7 +8,7 @@ EvilBat::EvilBat(D3DXVECTOR2 position) {
 
 	this->isFlyDown = true;
 	this->moveFlag = this->preMoveFlag = 0;		// Not moving flag
-	this->curentMoveHandler = &this->StopMoving;
+	//this->curentMoveHandler = &this->StopMoving;
 
 	LoadAllAnimations();
 	this->activeAnimation = false;
@@ -119,25 +119,25 @@ void EvilBat::UpdatePosition() {
 
 
 void EvilBat::CallMove() {
-	if (this->moveFlag == 0) {
-		this->curentMoveHandler = &StopMoving;
-		return;
-	}
-	// di chuyển dọc
-	if (this->moveFlag == 1) {
-		this->curentMoveHandler = &Move1;
-		return;
-	}
-	// di chuyển ngang
-	if (this->moveFlag == 2) {
-		this->curentMoveHandler = &Move1;
-		return;
-	}
-	// di chuyển tròn
-	if (this->moveFlag == 3) {
-		this->curentMoveHandler = &Move1;
-		return;
-	}
+	//if (this->moveFlag == 0) {
+	//	this->curentMoveHandler = &StopMoving;
+	//	return;
+	//}
+	//// di chuyển dọc
+	//if (this->moveFlag == 1) {
+	//	this->curentMoveHandler = &Move1;
+	//	return;
+	//}
+	//// di chuyển ngang
+	//if (this->moveFlag == 2) {
+	//	this->curentMoveHandler = &Move1;
+	//	return;
+	//}
+	//// di chuyển tròn
+	//if (this->moveFlag == 3) {
+	//	this->curentMoveHandler = &Move1;
+	//	return;
+	//}
 }
 
 void EvilBat::StopMoving() {

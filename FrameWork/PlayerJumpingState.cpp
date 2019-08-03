@@ -48,7 +48,7 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 	auto side = collision->side;
 
 	// va chạm với ground
-	if (object->type == Type::GROUND) { 
+	if (object->type == Type::GROUND || object->type == Type::PLATFORM) { 
 		if (side == CollisionSide::bottom ) {
 			player->OnStandingOnGround(object);
 			DebugOut(L"\nState Now: ");

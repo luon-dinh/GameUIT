@@ -61,7 +61,7 @@ void PlayerRollingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::GROUND) {
+	if (object->type == Type::GROUND || object->type == Type::PLATFORM) {
 		// chạm nền dưới
 		if (side == CollisionSide::bottom) {
 			player->OnStandingOnGround(object);
