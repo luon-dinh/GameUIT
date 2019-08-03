@@ -133,7 +133,7 @@ void BossWizard::Update(float dt)
 	this->wizardState->Update(dt);
 
 	//player đang đứng trên thanh ground thì cười
-	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->onAirState == OnAir::None&&this->state!=State::FLYING)
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->state!=State::FLYING &&this->GetStandingGround()->type!=Type::GROUND)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);

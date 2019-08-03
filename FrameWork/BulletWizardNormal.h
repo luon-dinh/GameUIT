@@ -9,6 +9,12 @@ public:
 	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 3, 4);
 	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 4, 5);
 	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 5, 6);
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletWizardNormal()
 	{
 		this->tag = Tag::BOSSWIZARDBULLET;
@@ -19,8 +25,6 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (animation->curframeindex == this->animationExplode->toframe-1)
-			DeactivateObjectInGrid();
 		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
@@ -33,17 +37,6 @@ public:
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
-		switch (object->type)
-		{
-		case Type::SOLIDBOX:
-		case Type::GROUND:
-			this->animation = animationExplode;
-			this->pos.x += this->vx;
-			this->vx = this->vy = 0;
-			break;
-		default:
-			break;
-		}
 		if (object->type == Type::NONE)
 		{
 			if (object->tag == Tag::PLAYER)
@@ -55,10 +48,7 @@ public:
 					this->isCollidable = false;
 					return;
 				}
-				this->animation = animationExplode;
 				this->isCollidable = false;
-				this->pos.x += this->vx;
-				this->vx = this->vy = 0;
 			}
 		}
 	}
@@ -70,34 +60,17 @@ public:
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
-		switch (object->type)
+		if (object->tag == Tag::PLAYER)
 		{
-		case Type::SOLIDBOX:
-		case Type::GROUND:
-			this->animation = animationExplode;
-			this->pos.x += this->vx;
-			this->vx = this->vy = 0;
-			break;
-		default:
-			break;
-		}
-		if (object->type == Type::NONE)
-		{
-			if (object->tag == Tag::PLAYER)
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
 			{
-				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
-				{
-					this->vy = -abs(this->vx);
-					this->vx = 0;
-					this->isCollidable = false;
-					return true;
-				}
-				this->animation = animationExplode;
+				this->vy = -abs(this->vx);
+				this->vx = 0;
 				this->isCollidable = false;
-				this->pos.x += this->vx;
-				this->vx = this->vy = 0;
 				return true;
 			}
+			this->isCollidable = false;
+			return true;
 		}
 		return false;
 	}

@@ -10,6 +10,12 @@ public:
 	bool isOnBossMini;
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletMiniSpecial(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
 	{
 		this->tag = Tag::BOSSMINIBULLET;

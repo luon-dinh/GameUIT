@@ -8,6 +8,12 @@ public:
 	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 0, 1);
 	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 1, 2);
 	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 2, 3);
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletWizardSpecial()
 	{
 		//this->animation->curframeindex = 2;
@@ -19,8 +25,6 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (animation->curframeindex == this->animationExplode->toframe-1)
-			DeactivateObjectInGrid();
 		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
@@ -33,37 +37,21 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		switch (object->type)
+		if (object->tag == Tag::PLAYER)
 		{
-		case Type::SOLIDBOX:
-		case Type::GROUND:
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			break;
-		default:
-			break;
+			this->isCollidable = false;
+			return;
 		}
-		if (object->type == Type::NONE)
+	}
+
+	bool OnRectCollided(Object* object, CollisionSide side)
+	{
+		if (object->tag == Tag::PLAYER)
 		{
-			if (object->tag == Tag::PLAYER)
-			{
-				this->animation = animationExplode;
-				this->vx = this->vy = 0;
-			}
+			this->isCollidable = false;
+			return true;
 		}
-		switch (colOut->side)
-		{
-		case CollisionSide::top:
-		case CollisionSide::bottom:
-			this->pos.y += this->vy;
-			break;
-		case CollisionSide::left:
-		case CollisionSide::right:
-			this->pos.y += this->vx;
-			break;
-		default:
-			break;
-		}
+		return false;
 	}
 
 	BoundingBox getBoundingBox()override

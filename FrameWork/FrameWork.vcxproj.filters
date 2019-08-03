@@ -459,6 +459,9 @@
     <ClCompile Include="Shockwave.cpp">
       <Filter>Objects\Wave</Filter>
     </ClCompile>
+    <ClCompile Include="BossMini.cpp">
+      <Filter>Objects\Enemy\BossMini</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">

@@ -5,6 +5,12 @@
 #include"Shield.h"
 class BulletSolder:public Bullet {
 public:
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletSolder(MoveDirection direction)
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);

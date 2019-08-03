@@ -3,8 +3,8 @@
 #include "GameMap.h"
 #include "Camera.h"
 #include "Player.h"
-#include"BossMini.h"
 #include"BossWizard.h"
+#include"BossMini.h"
 
 class PlaySceneCharlesBoss : public PlaySceneWithLight
 {

@@ -6,6 +6,12 @@ class BulletMiniNormal : public Bullet
 
 public:
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 1, 2);
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletMiniNormal()
 	{
 		this->tag = Tag::BOSSMINIBULLET;
