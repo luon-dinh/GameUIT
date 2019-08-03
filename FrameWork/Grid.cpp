@@ -826,7 +826,7 @@ void Grid::RenderActivatedCells()
 	//Vẽ theo thứ tự.
 	for (auto object : orderOfRenders)
 	{
-		DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
+		//DrawDebug::DrawBoundingBox(object->getBoundingBox(), Tag::TESTMAPOBJECTRED);
 		object->Render();
 		
 	}

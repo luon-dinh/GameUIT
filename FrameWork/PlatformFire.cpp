@@ -46,4 +46,8 @@ void PlatformFire::Render()
 		currentAnim->Render(viewPortPos2, TransformationMode::FlipHorizontal);
 	else
 		currentAnim->Render(viewPortPos2);
+	//if (fireDirection == PlatformFireDirection::LEFTTORIGHT)
+	//	currentAnim->Render(viewPort, TransformationMode::FlipHorizontal);
+	//else
+	//	currentAnim->Render(viewPort);
 }

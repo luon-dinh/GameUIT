@@ -48,3 +48,12 @@ void PlayScenePittsburghPortal01::Update(double dt)
 	else if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_O) && !isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHDARK;
 }
+
+void PlayScenePittsburghPortal01::GoToNextScene()
+{
+	//Xét tình trạng đèn hiện tại để chuyển cho phù hợp.
+	if (isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHLIGHT;
+	else if (!isLightOn)
+		ReplaceToThisMap = MapName::PITTSBURGHDARK;
+}
