@@ -72,6 +72,9 @@ void TextureManager::loadResources()
 	//texture dùng cho cửa.
 	textures->addTexture(Tag::DOOR_DARK, (char*)".\\..\\Resources\\Images\\Item\\door_dark.png");
 	textures->addTexture(Tag::DOOR_LIGHT, (char*)".\\..\\Resources\\Images\\Item\\door_light.png");
+
+	//texture dùng cho shockwave.
+	textures->addTexture(Tag::ELECTRIC_SHOCKWAVE, (char*)".\\..\\Resources\\Images\\Item\\ElectricShockwaveBarrier.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

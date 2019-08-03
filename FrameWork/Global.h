@@ -189,7 +189,7 @@ enum Tag {
 	SPLIT_BRICK,
 	DOOR_DARK,
 	DOOR_LIGHT,
-	CANON
+	ELECTRIC_SHOCKWAVE
 };
 
 enum Type {
@@ -208,7 +208,8 @@ enum Type {
 	ITEMCONTAINERTYPE,
 	ENEMY,
 	BULLETTYPE,
-	PLATFORM
+	PLATFORM,
+	SHOCKWAVE
 	//cac loai dan
 };
 
