@@ -51,6 +51,9 @@ void TextureManager::loadResources()
 	
 	//texture dùng cho canon
 	textures->addTexture(Tag::CANON, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCanon.png");
+	
+	//texture dùng cho dơi
+	textures->addTexture(Tag::EVIL_BAT, (char*)".\\..\\Resources\\Images\\Enermy\\Bat_Transform.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

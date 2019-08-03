@@ -213,6 +213,17 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 80, 16, 96));
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 96, 16, 112));
 	spriteManager->addSprite(new Sprite(Tag::CANON, 0, 112, 16, 128));
+
+	// cắt sprite cho evil bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 16, 38));	// Fake container state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 16, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 76, 16, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16, 0, 32, 38)); // Nail on ground
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,38, 32, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,76, 32, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 0, 48, 38));	//	Fly state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 38, 48, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT,48, 0, 64, 38));	// Explode
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

@@ -139,7 +139,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="BossMini.cpp" />
     <ClCompile Include="BossWizard.cpp" />
     <ClCompile Include="BossWizardDeadState.cpp" />
     <ClCompile Include="BossWizardFlyingState.cpp" />
@@ -162,6 +161,7 @@
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EvilBat.cpp" />
     <ClCompile Include="ExitSignal.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMap.cpp" />
@@ -230,8 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="BossMini.h" />
-    <ClInclude Include="BossMiniState.h" />
     <ClInclude Include="BossWizard.h" />
     <ClInclude Include="BossWizardDeadState.h" />
     <ClInclude Include="BossWizardFlyingState.h" />
@@ -325,6 +323,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="EvilBat.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="WhiteFlyingRobot.h" />

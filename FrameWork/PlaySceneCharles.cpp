@@ -8,6 +8,7 @@
 #include "RedRocketRobotNonShooting.h"
 #include "Camera.h"	
 #include "Solder.h"
+#include "EvilBat.h"
 
 PlaySceneCharles::PlaySceneCharles()
 {
@@ -32,6 +33,8 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
+	EvilBat* bat = new EvilBat(D3DXVECTOR2(100, 100));
+	grid->Add(bat);
 }
 
 PlaySceneCharles::~PlaySceneCharles()

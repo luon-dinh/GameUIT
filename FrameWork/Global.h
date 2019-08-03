@@ -179,7 +179,8 @@ enum Tag {
 	BOSSWIZARDBULLET,
 	HP_RENDER,
 	PLAYER_PART,
-	CANON
+	CANON,
+	EVIL_BAT
 };
 
 enum Type {

@@ -118,11 +118,11 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Canon">
-      <UniqueIdentifier>{b2d5ab8a-fd5e-4b47-8c32-8a36a7674df8}</UniqueIdentifier>
+    <Filter Include="Objects\Enemy\Canon">
+      <UniqueIdentifier>{1fd835ec-70c8-4dd1-97ab-9d74517403c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Enemy\BossMini">
-      <UniqueIdentifier>{d9bb7f3c-d25c-418a-82dd-8387711bd046}</UniqueIdentifier>
+    <Filter Include="Objects\Enemy\EvilBat">
+      <UniqueIdentifier>{ca5f9fb3-b1e8-42ed-bb0e-9a94ee8acaad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -387,11 +387,11 @@
     <ClCompile Include="PlayerKickPart.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClCompile>
-    <ClCompile Include="Canon.cpp">
-      <Filter>Objects\Canon</Filter>
+    <ClCompile Include="EvilBat.cpp">
+      <Filter>Objects\Enemy\EvilBat</Filter>
     </ClCompile>
-    <ClCompile Include="BossMini.cpp">
-      <Filter>Objects\Enemy\BossMini</Filter>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Enemy\Canon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -686,14 +686,11 @@
     <ClInclude Include="RedRocketRobotOneSidedJumping.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
     </ClInclude>
+    <ClInclude Include="EvilBat.h">
+      <Filter>Objects\Enemy\EvilBat</Filter>
+    </ClInclude>
     <ClInclude Include="Canon.h">
-      <Filter>Objects\Canon</Filter>
-    </ClInclude>
-    <ClInclude Include="BossMini.h">
-      <Filter>Objects\Enemy\BossMini</Filter>
-    </ClInclude>
-    <ClInclude Include="BossMiniState.h">
-      <Filter>Objects\Enemy\BossMini</Filter>
+      <Filter>Objects\Enemy\Canon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
