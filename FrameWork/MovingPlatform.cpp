@@ -81,6 +81,8 @@ void MovingPlatform::UpdatePlatformFirePosition()
 BoundingBox MovingPlatform::getBoundingBox()
 {
 	BoundingBox box;
+	box.vx = this->vx;
+	box.vy = this->vy;
 	box.bottom = this->pos.y;
 	box.top = this->pos.y + platformHeight / 2;
 	box.left = this->pos.x - platformWidth / 2;
