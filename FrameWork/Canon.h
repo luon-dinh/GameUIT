@@ -30,6 +30,7 @@ public:
 	};
 	Canon();
 	Canon(RotateDirection direction);
+	Canon(RotateDirection direction, D3DXVECTOR2 position);
 	~Canon();
 
 	int GetCollisionDamage() override;

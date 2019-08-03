@@ -118,9 +118,6 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Enemy\Canon">
-      <UniqueIdentifier>{1fd835ec-70c8-4dd1-97ab-9d74517403c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Enemy\EvilBat">
       <UniqueIdentifier>{ca5f9fb3-b1e8-42ed-bb0e-9a94ee8acaad}</UniqueIdentifier>
     </Filter>
@@ -420,9 +417,6 @@
     <ClCompile Include="EvilBat.cpp">
       <Filter>Objects\Enemy\EvilBat</Filter>
     </ClCompile>
-    <ClCompile Include="Canon.cpp">
-      <Filter>Objects\Enemy\Canon</Filter>
-    </ClCompile>
     <ClCompile Include="MovingPlatform.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClCompile>
@@ -458,6 +452,12 @@
     </ClCompile>
     <ClCompile Include="Shockwave.cpp">
       <Filter>Objects\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Canon</Filter>
+    </ClCompile>
+    <ClCompile Include="EletricBat.cpp">
+      <Filter>Objects\Enemy\EvilBat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -755,9 +755,6 @@
     <ClInclude Include="EvilBat.h">
       <Filter>Objects\Enemy\EvilBat</Filter>
     </ClInclude>
-    <ClInclude Include="Canon.h">
-      <Filter>Objects\Enemy\Canon</Filter>
-    </ClInclude>
     <ClInclude Include="MovingPlatform.h">
       <Filter>Objects\Platform\MovingPlatform</Filter>
     </ClInclude>
@@ -796,6 +793,12 @@
     </ClInclude>
     <ClInclude Include="Shockwave.h">
       <Filter>Objects\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="Canon.h">
+      <Filter>Objects\Canon</Filter>
+    </ClInclude>
+    <ClInclude Include="EletricBat.h">
+      <Filter>Objects\Enemy\EvilBat</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

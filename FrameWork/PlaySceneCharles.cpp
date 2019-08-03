@@ -45,6 +45,7 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new Door(80, 80));
 	grid->Add(new Door(80, 80));
 	grid->Add(new Shockwave(120, 80));
+	grid->Add(new EvilBat(D3DXVECTOR2(100, 200)));
 	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
 }
 

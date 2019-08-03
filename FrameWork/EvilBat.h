@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Enemy.h"
-
+#include <unordered_map>
+using namespace std;
 
 class EvilBat : public Enemy, public GameObjectProperty {
 protected:
@@ -11,14 +12,15 @@ protected:
 		Dead
 	};
 
-	Animation* fakeContainerAnim;
-	Animation* belowGroundAnim;
-	Animation* flyAnim;
+	unordered_map<BatState, Animation*> animations;
+
 	D3DXVECTOR2 initialPos;
 	
+	int movingDelayFrame;
 	bool activeAnimation;
-	bool moveFlag;
-	bool preMoveFlag;
+	bool activeFly;
+	int moveFlag;
+	int preMoveFlag;
 	bool isFlyDown;
 	int leftX;
 	int rightX;
@@ -26,7 +28,7 @@ protected:
 	int turnAroundCount;
 	BatState state;
 
-	void LoadAllAnimations();
+	virtual void LoadAllAnimations();
 	void UpdatePosition();
 	void ChangeState(BatState state);
 
@@ -36,9 +38,7 @@ protected:
 	void Move3();
 	void StopMoving();
 
-	void(EvilBat::*curentMoveHandler)();
-
-	void SetMoveFlag(bool value);
+	void SetMoveFlag(int value);
 	bool IsMoveFlagChanged();
 
 
@@ -46,6 +46,7 @@ protected:
 	const int Y_MOVING_LENGTH = 50;
 	const int TURN_AROUND_POINT_DENTA = 50;
 	const int TURN_AROUND_COUNT = 4;
+	const int MOVING_DELAY_FRAME = 60;
 
 public:
 	EvilBat(D3DXVECTOR2 position);
