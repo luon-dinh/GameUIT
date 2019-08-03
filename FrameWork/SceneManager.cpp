@@ -167,7 +167,7 @@ void SceneManager::Draw()
 	currentScene->Draw();
 }
 
-Scene* SceneManager::getCurrentScene()
+PlayScene* SceneManager::getCurrentScene()
 {
 	return currentScene;
 }
