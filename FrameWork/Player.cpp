@@ -164,6 +164,12 @@ void Player::Update(float dt)
 
 	UpdatePosition();
 
+	if (this->IsOnPlatform()) {
+		auto platform = this->GetStandingGround();
+		this->pos.x += platform->vx;
+		this->pos.y += platform->vy;
+	}
+
 	// Update animation
 	this->curanimation->Update(dt);
 
@@ -527,11 +533,7 @@ void Player::UpdatePosition() {
 	}
 	AddPosY();
 
-	if (this->IsOnPlatform()) {
-		auto platform = this->GetStandingGround();
-		this->vx += platform->vx;
-		this->vy += platform->vy;
-	}
+
 }
 
 void Player::SetMoveDirection(MoveDirection moveDir) {
@@ -635,7 +637,7 @@ void Player::OnNotCollision(Object* object) {
 	case Type::PLATFORM:
 	case Type::GROUND: {
 		// nếu đang ở trạng thái rơi xuống nước thì bỏ qua va chạm với ground
-		if (this->GetOnAirState() == OnAir::DropToWater) {
+ 		if (this->GetOnAirState() == OnAir::DropToWater) {
 			return;
 		}
 		//Trong trường hợp đã rơi khỏi ground hiện tại
@@ -686,7 +688,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	switch (object->type) {
 		case Type::PLATFORM:
 		case Type::GROUND: {
-			if (this->GetOnAirState() == OnAir::DropToWater)
+  			if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
 			if (this->GetOnAirState() == OnAir::Falling) {
 				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
@@ -775,10 +777,11 @@ void Player::OnFallingOffGround() {
 		this->ChangeState(State::JUMPING);
 		this->vy -= 0.9;
 		this->SetStandingGround(NULL);
+		this->isGroundVelocityApplied = false;
 	} 
 }
 bool Player::TryStandOnGround(Object* ground) {
-	if (ground->type != Type::GROUND && ground->type != Type::SOLIDBOX)
+	if (ground->type != Type::GROUND && ground->type != Type::SOLIDBOX && ground->type != Type::PLATFORM)
 		return FALSE;
 
 	auto groundBox = ground->getStaticObjectBoundingBox();
