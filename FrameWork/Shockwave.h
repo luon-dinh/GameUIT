@@ -21,4 +21,5 @@ public:
 	~Shockwave();
 	void Update(float dt) override;
 	void Render() override;
+	BoundingBox getBoundingBox() override;
 };

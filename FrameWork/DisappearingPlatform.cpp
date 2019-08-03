@@ -107,7 +107,7 @@ BoundingBox DisappearingPlatform::getBoundingBox()
 	BoundingBox box;
 	box.vx = box.vy = 0;
 	box.top = this->pos.y + platformHeight;
-	box.bottom = this->pos.y;
+	box.bottom = this->pos.y - platformHeight;
 	box.left = this->pos.y - platformWidth;
 	box.right = this->pos.y + platformWidth;
 	return box;
