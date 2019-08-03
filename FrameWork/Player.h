@@ -116,6 +116,7 @@ public:
 	bool IsNonAttackable()						 override;
 	bool IsImmortal()						     override;
 	BOOL IsReachMaxJump();
+	bool IsOnPlatform();
 	
 	void OnHeadOnSolidBox(Object* solid);
 	bool AcceptNoCollision(Object* object, CollisionSide side);

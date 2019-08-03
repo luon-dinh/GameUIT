@@ -54,18 +54,12 @@ void PlayerKickingState::OnCollision(Object* object, collisionOut* collision) {
 	auto player = Player::getInstance();
 	auto side = collision->side;
 
-	if (object->type == Type::GROUND) {
-		// chạm vào ground trên đầu
-		if (side == CollisionSide::top) {
-			//player->SetVy(0);
-		}
-		else {
-			// chạm nền dưới
-			if (side == CollisionSide::bottom ) {
-				player->OnStandingOnGround(object);
-				DebugOut(L"\nState Now:\n");
-				PrintDebugNumber(player->state);
-			}
+	if (object->type == Type::GROUND || object->type == Type::PLATFORM) {
+		// chạm nền dưới
+		if (side == CollisionSide::bottom ) {
+			player->OnStandingOnGround(object);
+			DebugOut(L"\nState Now:\n");
+			PrintDebugNumber(player->state);
 		}
 	}
 	if (object->type == Type::WATERRL) {
