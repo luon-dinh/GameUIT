@@ -11,7 +11,6 @@ EvilBat::EvilBat(D3DXVECTOR2 position) {
 	this->moveFlag = this->preMoveFlag = 0;		// Not moving flag
 
 	LoadAllAnimations();
-	this->activeAnimation = false;
 	this->ResetGameProperty();
 
 	ChangeState(EvilBat::BatState::OnNeck);
@@ -30,7 +29,7 @@ bool EvilBat::IsMoveFlagChanged() {
 }
 
 void EvilBat::LoadAllAnimations() {
-	this->animations[BatState::Dead] = new Animation(Tag::ENEMYEXPLODE, 0, 3);
+	this->animations[BatState::Dead] = new Animation(Tag::ENEMYEXPLODE, 0, 3, 120);
 	this->animations[BatState::OnNeck] = new Animation(Tag::EVIL_BAT, 4, 7);
 	this->animations[BatState::BelowGround] = new Animation(Tag::EVIL_BAT, 7, 10);
 	this->animations[BatState::Fly] = new Animation(Tag::EVIL_BAT, 0, 2);	
@@ -46,20 +45,47 @@ void EvilBat::SetYHeight(int yHeight) {
 }
 
 void EvilBat::Update(float dt) {
-	CallMove();
-	this->UpdatePosition();
-	// Nếu có animation thì update animation
-	if (this->activeAnimation) {
-		this->currentAnimation->Update(dt);
-		if (this->state == BatState::BelowGround || this->state == BatState::OnNeck) {
-			if (this->currentAnimation->curframeindex == 2) {
-				this->ChangeState(BatState::Fly);
+	if (!this->isCollidable && this->state != BatState::Dead) {
+		if (++this->incollidableFrameCount > INCOLLIDABLE_FRAME) {
+			this->incollidableFrameCount = 0;
+			this->isCollidable = true;
+		}
+	}
+	else {
+		switch (this->state) {
+			case BatState::Dead: Explode();break;
+			case BatState::Fly: CallMove();break;
+			case BatState::OnNeck: {
+				if (this->IsWakenUpBy(Player::getInstance())) {
+					if (this->activeAnimation == false) {
+						this->activeAnimation = true;
+						break;
+					}
+					else {
+						if (this->currentAnimation->curframeindex == 2) {
+							PrepareToFly();
+						}
+					}
+				}
+				break;
 			}
 		}
 	}
+	// cập nhật animation
+	if (this->activeAnimation) {
+		this->currentAnimation->Update(dt);
+	}
+	// cập nhật vị trí
+	UpdatePosition();
 }
 
-void EvilBat::Render() {
+void EvilBat::Explode() {
+	if (this->currentAnimation->curframeindex == 2) {
+		this->DeactivateObjectInGrid();
+	}
+}
+
+void EvilBat::InnerRender() {
 	if (!isDead)
 	{
 		D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos));
@@ -67,8 +93,20 @@ void EvilBat::Render() {
 	}
 }
 
+void EvilBat::Render() {
+	if (this->isCollidable && this->state != BatState::Dead) {
+		InnerRender();
+		return;
+	}	
+	// thời gian flip đã tới
+	if (++this->flipFrameCount > FLIP_RENDER_FRAME) {
+		this->flipFrameCount = 0;
+		InnerRender();
+	}
+}
 void EvilBat::ChangeState(BatState state) {
 	this->currentAnimation = this->animations[state];
+	this->state = state;
 	switch (state) {
 	case BatState::BelowGround: {
 		this->activeAnimation = false;
@@ -77,8 +115,8 @@ void EvilBat::ChangeState(BatState state) {
 	}
 	case BatState::Dead: {
 		this->activeAnimation = true;
-		this->currentAnimation = explodeAnim;
 		this->isCollidable = false;
+		this->vx = this->vy = 0;
 		break;
 	}
 	case BatState::OnNeck: {
@@ -99,16 +137,19 @@ void EvilBat::OnCollision(Object* object, collisionOut* colOut) {
 
 }
 bool EvilBat::OnRectCollided(Object* object, CollisionSide side) {
+	if (!this->isCollidable) {
+		return false;
+	}
 	switch (object->tag) {
 		case Tag::PLAYER:
 		case Tag::SHIELD: {
-			if (this->state == BatState::OnNeck || this->state == BatState::BelowGround) {
-				this->activeAnimation = true;
+			if (this->state == BatState::OnNeck) {
+				this->isCollidable = false;
+				this->isWakenUp = true;
 			}
 			GameObjectProperty::health--;
 			if (this->IsDead()) {
 				this->ChangeState(BatState::Dead);
-				this->isCollidable = false;
 			}
 			return true;
 		}
@@ -123,6 +164,7 @@ void EvilBat::UpdatePosition() {
 
 
 void EvilBat::CallMove() {
+	// không di chuyển
 	if (this->moveFlag == 0) {
 		StopMoving();
 		if (!this->activeFly)
@@ -130,6 +172,16 @@ void EvilBat::CallMove() {
 		this->movingDelayFrame++;
 		if (this->movingDelayFrame > this->MOVING_DELAY_FRAME) {
 			this->movingDelayFrame = 0;
+			this->SetMoveFlag(1);
+		}
+		return;
+	}
+	// chuẩn bị bay
+	if (this->moveFlag == 5) {
+		// nếu thời gian chuẩn bị bay đã hết
+		if (++this->prepareFlyCount > PREPARE_TO_FLY_FRAME) {
+			this->prepareFlyCount = 0;
+			// chuyển sang trạng thái bay
 			this->SetMoveFlag(1);
 		}
 		return;
@@ -151,9 +203,19 @@ void EvilBat::CallMove() {
 	}
 }
 
+void EvilBat::PrepareToFly() {
+	this->ChangeState(BatState::Fly);
+	this->vx = this->vy = 0;
+}
+
 void EvilBat::StopMoving() {
 	this->vx = this->vy = 0;
 }
+
+bool EvilBat::IsWakenUpBy(Object* object) {
+	return this->isWakenUp;
+}
+
 
 void EvilBat::Move1() {
 
