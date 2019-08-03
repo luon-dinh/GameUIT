@@ -18,8 +18,12 @@ void BossWizardFlyingState::Fly(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	auto player = Player::getInstance();
+
+	//cập nhật đội dời khi bay
 	wizard->deltaY += abs(wizard->vy);
 	wizard->deltaX += abs(wizard->vx);
+
+	//nếu fly mode1  thì cập nhật vx theo hướng
 	if (wizard->flyMode == 1)
 	{
 		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
@@ -29,6 +33,11 @@ void BossWizardFlyingState::Fly(float dt)
 			wizard->vx = -wizard->flySpeedx1;
 		}
 	}
+	else
+	{
+		wizard->hitTime = 0;
+	}
+	//cập nhật theo từng trạng thái khi bay
 	switch (wizard->GetOnAirState())
 	{
 	case BossWizard::OnAir::Falling:
@@ -57,6 +66,7 @@ void BossWizardFlyingState::Fly(float dt)
 		break;
 	case BossWizard::OnAir::None:
 		wizard->currentanimation->curframeindex = 2;
+		// nếu nó có thể tắt đèn thì rớt xuống tắt đèn
 		if (wizard->turnOffLight)
 		{
 			if (abs(wizard->pos.x - 70) < 5 && SceneManager::getInstance()->IsLightOn())
@@ -66,12 +76,9 @@ void BossWizardFlyingState::Fly(float dt)
 			}
 
 		}
-		if (wizard->canShootOnAir)
+		if (abs(player->pos.x-wizard->pos.x)<5 && wizard->canShootOnAir)
 		{
-			wizard->timeDelayShootOnAir += wizard->defaultDT;
-		}
-		if (wizard->timeDelayShootOnAir > 40)
-		{
+			//bắn xuống rồi return
 			auto scene = SceneManager::getInstance();
 			auto bullet = new BulletWizardSpecial();
 			bullet->vx = 0;
@@ -85,14 +92,14 @@ void BossWizardFlyingState::Fly(float dt)
 			}
 			bullet->pos.y = wizard->pos.y - wizard->height / 2;
 			scene->AddObjectToCurrentScene(bullet);
-			wizard->timeDelayShootOnAir = 0;
 			wizard->canShootOnAir = false;
 			return;
 		}
+		//cập nhật speed của boss theo direction
 		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
 		{
 			wizard->vx = wizard->flySpeedx2;
-			if (abs(wizard->pos.x + wizard->width/2 - player->pos.x) < 1.5)
+			if ((wizard->pos.x + wizard->width/2 - player->pos.x) < 1.5)
 			{
 				wizard->canShootOnAir = true;
 			}
@@ -114,7 +121,8 @@ void BossWizardFlyingState::Fly(float dt)
 void BossWizardFlyingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
-	if ((wizard->pos.x < 15 || wizard->pos.x>240)&&wizard->deltaX>=5)
+	// nếu xuống min hoặc max map thì rớt
+	if ((wizard->pos.x < wizard->minMap || wizard->pos.x>wizard->maxMap)&&wizard->deltaX>=5)
 	{
 		wizard->SetOnAirState(BossWizard::OnAir::Falling);
 	}

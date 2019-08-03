@@ -1,4 +1,4 @@
-#include"BossWizardRunningState.h"
+﻿#include"BossWizardRunningState.h"
 
 BossWizardRunningState::BossWizardRunningState()
 {
@@ -26,6 +26,8 @@ void BossWizardRunningState::Update(float dt)
 	}
 	float deltaPlayer = abs(player->pos.x - wizard->pos.x);
 	wizard->deltaX += abs(wizard->vx);
+
+	//nếu chạy hết maxX thì bắn
 	if (wizard->deltaX >= maxX)
 	{
 		wizard->vx = 0;
