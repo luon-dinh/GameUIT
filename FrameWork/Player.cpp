@@ -734,12 +734,13 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			else {
 				collisionOut colOut;
 				colOut.side = side;
-				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
-					OnCollisionWithSolidBox(object, &colOut);
+				OnCollisionWithSolidBox(object, &colOut);
+				/*if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
+					
 				}
 				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
 					this->TryStandOnGround(object);
-				}
+				}*/
 			}
 			return false;
 		}
