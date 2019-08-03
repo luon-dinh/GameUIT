@@ -59,7 +59,7 @@ void BossWizardFlyingState::Fly(float dt)
 		wizard->currentanimation->curframeindex = 2;
 		if (wizard->turnOffLight)
 		{
-			if (abs(wizard->pos.x - 70) < 5)
+			if (abs(wizard->pos.x - 70) < 5 && SceneManager::getInstance()->IsLightOn())
 			{
 				wizard->SetOnAirState(BossWizard::OnAir::Falling);
 				return;
@@ -68,7 +68,7 @@ void BossWizardFlyingState::Fly(float dt)
 		}
 		if (wizard->canShootOnAir)
 		{
-			wizard->timeDelayShootOnAir += dt;
+			wizard->timeDelayShootOnAir += wizard->defaultDT;
 		}
 		if (wizard->timeDelayShootOnAir > 40)
 		{

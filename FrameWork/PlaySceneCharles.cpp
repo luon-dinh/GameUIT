@@ -14,6 +14,7 @@
 #include "Door.h"
 #include "Camera.h"	
 #include "Solder.h"
+#include "EvilBat.h"
 
 PlaySceneCharles::PlaySceneCharles()
 {

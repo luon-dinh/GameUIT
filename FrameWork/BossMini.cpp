@@ -34,7 +34,7 @@ BossMini::BossMini()
 }
 
 
-BossMini* BossMini::getInStance()
+BossMini* BossMini::getInstance()
 {
 	if (!instance)
 		instance = new BossMini();
@@ -77,11 +77,20 @@ BoundingBox BossMini::getBoundingBox()
 
 float BossMini::getHeight()
 {
+	auto sprite = currentAnimation->getSprite(currentAnimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return height;
+
 }
 
 float BossMini::getWidth()
 {
+	auto sprite = currentAnimation->getSprite(currentAnimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return width;
 }
 

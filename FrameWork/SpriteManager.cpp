@@ -182,9 +182,9 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 110, 12, 151, 41));//fall shooted 7
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 129, 60, 156, 93)); //die 8
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 136, 112, 156, 148)); //9
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 203, 39));//shoot 10
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 203, 91));//11
-	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 203, 143));//12
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 15, 208, 39));//shoot 10
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 53, 208, 91));//11
+	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 164, 111, 208, 143));//12
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 12, 260, 41));//fly 13
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 64, 260, 93));//14
 	spriteManager->addSprite(new Sprite(Tag::BOSSWIZARD, 209, 119, 260, 145));//15
@@ -253,6 +253,16 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 32, 48, 64));
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 64, 48, 96));
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 96, 48, 128));
+	// cắt sprite cho evil bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 16, 38));	// Fake container state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 16, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 76, 16, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16, 0, 32, 38)); // Nail on ground
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,38, 32, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,76, 32, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 0, 48, 38));	//	Fly state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 38, 48, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT,48, 0, 64, 38));	// Explode
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

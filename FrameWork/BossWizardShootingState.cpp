@@ -17,6 +17,9 @@ void BossWizardShootingState::InputHandler()
 void BossWizardShootingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
+	auto player = Player::getInstance();
+
+
 	//thời gian shoot 3 viên
 	if (wizard->timeToShoot>0)
 	{
@@ -31,7 +34,7 @@ void BossWizardShootingState::Update(float dt)
 				auto box = wizard->getBoundingBox();
 				bullet->animation = bullet->animation1;
 				bullet->direction = wizard->direction;
-				bullet->pos.y = box.top - 10;
+				bullet->pos.y = wizard->pos.y + 10;
 				bullet->vy = 0;
 				switch (bullet->direction)
 				{
@@ -56,8 +59,8 @@ void BossWizardShootingState::Update(float dt)
 				auto box = wizard->getBoundingBox();
 				bullet->animation = bullet->animation3;
 				bullet->direction = wizard->direction;
-				bullet->pos.y = box.top - 10;
-				bullet->vy = 0;
+				bullet->pos.y = wizard->pos.y + 10;
+				
 				switch (bullet->direction)
 				{
 				case BossWizard::MoveDirection::LeftToRight:
@@ -71,18 +74,35 @@ void BossWizardShootingState::Update(float dt)
 				default:
 					break;
 				}
+				float delta = abs(wizard->pos.y - player->pos.y);
+				if (delta < wizard->shoot1)
+					bullet->vy = 0;
+				else
+				{
+					if (delta < wizard->shoot2)
+					{
+						bullet->vy = abs(bullet->vx) * 1 / 3;
+						bullet->animation = bullet->animation2;
+					}
+					else
+					{
+						bullet->vy = abs(bullet->vx) * 2 / 3;
+						bullet->animation = bullet->animation1;
+					}
+				}
 				scene->AddObjectToCurrentScene(bullet);
 				wizard->delayShoot = 0;
 			}
 		}
 		else
 		{
-			wizard->delayShoot += dt;
+			wizard->delayShoot += wizard->defaultDT;
 		}
-		wizard->timeToShoot -= dt;
+		wizard->timeToShoot -= wizard->defaultDT;
 	}
 	else
 	{
+		wizard->timeToShoot = wizard->maxTimeToShoot;
 		if (wizard->flyTimes > 0)
 		{
 			wizard->flyMode = rand() % 3 + 2;
@@ -103,7 +123,7 @@ void BossWizardShootingState::Update(float dt)
 			auto box = wizard->getBoundingBox();
 			bullet->animation = bullet->animation1;
 			bullet->direction = wizard->direction;
-			bullet->pos.y = box.top - 10;
+			bullet->pos.y = wizard->pos.y + 10;
 			bullet->vy = 0;
 			switch (bullet->direction)
 			{
@@ -127,6 +147,5 @@ void BossWizardShootingState::Update(float dt)
 		{
 			wizard->ChangeState(State::RUNNING);
 		}
-		wizard->timeToShoot = 1080;
 	}
 }

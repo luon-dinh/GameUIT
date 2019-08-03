@@ -62,6 +62,9 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::MOVING_PLATFORM, (char*)".\\..\\Resources\\Images\\Item\\MovingPlatform.png");
 	//texture dùng cho canon
 	textures->addTexture(Tag::CANON, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCanon.png");
+	
+	//texture dùng cho dơi
+	textures->addTexture(Tag::EVIL_BAT, (char*)".\\..\\Resources\\Images\\Enermy\\Bat_Transform.png");
 
 	//texture dùng cho thằng disappearing platform.
 	textures->addTexture(Tag::SPLIT_BRICK, (char*)".\\..\\Resources\\Images\\Item\\SplitBrick.png");

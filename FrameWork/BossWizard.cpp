@@ -16,8 +16,9 @@ BossWizard::BossWizard()
 	this->deltaX = this->deltaY = 0;
 	this->hitTime = 0;
 	this->isCollide = false;
+	this->timePunch = 0;
 	this->direction = Object::MoveDirection::LeftToRight;
-	this->flyMode = 1;
+	this->flyMode = 0;
 	this->canShootOnAir = false;
 	this->timeDelayShootOnAir = 0;
 	this->tag = Tag::BOSSWIZARD;
@@ -38,6 +39,10 @@ BossWizard::~BossWizard()
 
 float BossWizard::getHeight()
 {
+	auto sprite = currentanimation->getSprite(currentanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return height;
 }
 
@@ -57,6 +62,10 @@ float BossWizard::getPosToRight()
 
 float BossWizard::getWidth()
 {
+	auto sprite = currentanimation->getSprite(currentanimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	width = rect.right - rect.left;
+	height = rect.top - rect.bottom;
 	return width;
 }
 
@@ -81,12 +90,15 @@ void BossWizard::Update(float dt)
 {
 	if (state == State::DEAD)
 	{
-		if (this->currentanimation->curframeindex = this->currentanimation->curframeindex - 1 && this->timeNotRender > 900)
+		if (this->currentanimation->curframeindex = this->currentanimation->toframe - 1 && this->timeNotRender > 900)
+		{
 			DeactivateObjectInGrid();
+			SceneManager::getInstance()->GoToNextScene();
+		}
 		if (this->onAirState != OnAir::None&&this->state != State::FLYING)
 			this->currentAnimation->Update(dt);
 	}
-	if (health <= 10)
+	if (health <= maxHelth/2)
 		this->turnOffLight = true;
 	auto player = Player::getInstance();
 	//if (this->state != State::FLYING&&state!=State::DEAD)
@@ -183,6 +195,8 @@ void BossWizard::Render()
 
 void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 {
+	auto player = Player::getInstance();
+	this->SetStandingGround(object);
 	switch (object->type)
 	{
 	case Type::SOLIDBOX:
@@ -191,7 +205,7 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			deltaX = deltaY = 0;
 			this->vy = 0;
 			this->vx = 0;
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2;
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 			if (this->direction == MoveDirection::LeftToRight)
 				this->direction = MoveDirection::RightToLeft;
 			else
@@ -199,7 +213,7 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 				this->direction = MoveDirection::LeftToRight;
 			}
 			// nếu bay gần thì đấm rồi cuyển state khác
-			if (this->flyMode == 1)
+			if (this->flyMode == 1&&(abs(player->pos.x-this->pos.x)<30)&&(abs(player->pos.y-this->pos.y)<30))
 			{
 				ChangeState(State::STAND_PUNCH);
 			}
@@ -214,11 +228,11 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 		if (colOut->side == CollisionSide::bottom)
 		{
 			deltaX = deltaY = 0;
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2;
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 			this->direction = BossWizard::MoveDirection::LeftToRight;
 			this->vy = 0;
 			this->vx = 0;
-			ChangeState(State::STAND_PUNCH);
+			ChangeState(State::STANDING);
 		}
 		break;
 	default:
@@ -238,6 +252,8 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 	{
 		// đổi map 
 		SceneManager::getInstance()->TurnOnOffLight();
+		this->flyMode = 1;
+		ChangeState(State::FLYING);
 		this->turnOffLight = false;
 	}
 	if (object->tag == Tag::SHIELD)
@@ -286,14 +302,11 @@ void BossWizard::ChangeState(State stateName)
 		this->direction = MoveDirection::LeftToRight;
 	}
 	float posy1 = this->getPosToBottom();
-	float posx1 = this->getPosToRight();
 	this->state = stateName;
 	this->wizardState = wizardStates[stateName];
 	currentanimation = animations[stateName];
 	float posy2 = this->getPosToBottom();
-	float posx2 = this->getPosToRight();
 	this->pos.y =this->pos.y+ (posy2 - posy1);
-	this->pos.x = this->pos.x + (posx2 - posx1);
 	switch (stateName)
 	{
 	case State::STANDING:
@@ -334,7 +347,6 @@ void BossWizard::ChangeState(State stateName)
 	default:
 		break;
 	}
-	currentanimation->curframeindex = 0;
 	this->deltaX = this->deltaY = 0;
 }
 

@@ -118,6 +118,12 @@
     <Filter Include="Components\Grid">
       <UniqueIdentifier>{7c3456bc-7f2e-42a3-9699-7fd5a9921c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy\Canon">
+      <UniqueIdentifier>{1fd835ec-70c8-4dd1-97ab-9d74517403c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Enemy\EvilBat">
+      <UniqueIdentifier>{ca5f9fb3-b1e8-42ed-bb0e-9a94ee8acaad}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Objects\Bullet\BulletMini">
       <UniqueIdentifier>{8c659d62-5465-4018-acf9-e78efbf69c28}</UniqueIdentifier>
     </Filter>
@@ -407,6 +413,12 @@
     </ClCompile>
     <ClCompile Include="PlayerKickPart.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClCompile>
+    <ClCompile Include="EvilBat.cpp">
+      <Filter>Objects\Enemy\EvilBat</Filter>
+    </ClCompile>
+    <ClCompile Include="Canon.cpp">
+      <Filter>Objects\Enemy\Canon</Filter>
     </ClCompile>
     <ClCompile Include="MovingPlatform.cpp">
       <Filter>Objects\Platform\MovingPlatform</Filter>
@@ -736,6 +748,12 @@
     </ClInclude>
     <ClInclude Include="RedRocketRobotOneSidedJumping.h">
       <Filter>Objects\Enemy\RedRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="EvilBat.h">
+      <Filter>Objects\Enemy\EvilBat</Filter>
+    </ClInclude>
+    <ClInclude Include="Canon.h">
+      <Filter>Objects\Enemy\Canon</Filter>
     </ClInclude>
     <ClInclude Include="MovingPlatform.h">
       <Filter>Objects\Platform\MovingPlatform</Filter>
