@@ -42,7 +42,6 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			this->isCollidable = false;
 			return false;
 		default:
 			break;
@@ -51,7 +50,6 @@ public:
 		{
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			this->isCollidable = false;
 			return true;
 		}
 	}

@@ -711,39 +711,40 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			if (this->collidedSolidBox == object) {
 				if (side != CollisionSide::left || this->direction != MoveDirection::RightToLeft) {
 					this->smashLeft = false;
-					if (this->vx == 0 && this->state != State::STANDING) {
-						this->SetVx(PLAYER_NORMAL_SPEED);
-						return true;
-					}
-				}
-				else if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
-					this->smashRight = false;
-					if (this->vx == 0 && this->state != State::STANDING) {
-						this->SetVx(-PLAYER_NORMAL_SPEED);
-						return true;
-					}
 				}
 				else {
 					this->SetVx(0);
 					// push thêm vài pixel để đẩy nhân vật rơi xuống
-					return true;
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x += 4;
+					}
 				}
-				if (side == CollisionSide::bottom && !this->StandOnCurrentGround() && box.left != bound.right&&box.right != bound.left) {
+				if (side != CollisionSide::right || this->direction != MoveDirection::LeftToRight) {
+					this->smashRight = false;
+				}
+				else {
+					this->SetVx(0);
+					// push thêm vài pixel để đẩy nhân vật rơi xuống
+					if (this->GetOnAirState() == OnAir::None) {
+						this->pos.x -= 4;
+					}
+				}
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
 					this->TryStandOnGround(object);
 				}
 			}
 			else {
 				collisionOut colOut;
 				colOut.side = side;
-				BoundingBox box = this->getBoundingBox();
-				BoundingBox bound = object->getBoundingBox();
-				if (side == CollisionSide::left || side == CollisionSide::right) {
-					OnCollisionWithSolidBox(object,&colOut);
-					return true;
+				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
+					OnSmashSolidBox(object, side);
+				}
+				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
+					this->TryStandOnGround(object);
 				}
 			}
 			return false;
-		}		
+		}
 		case Type::ENEMY: {
 			if (this->IsImmortal() || this->IsNonAttackable())
 				return false;
