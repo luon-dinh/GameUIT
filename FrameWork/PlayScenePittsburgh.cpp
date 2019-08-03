@@ -59,12 +59,12 @@ void PlayScenePittsburgh::Update(double dt)
 	else if (kbInstance->getKeyPressedOnce(DIK_K) && !isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
-	//Kiểm tra xem player đã đi đến đích chưa.
-	if (player->pos.x >= world->getMapWidth() - 50)
-	{
-		Done = true;
-		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
-	}
+	////Kiểm tra xem player đã đi đến đích chưa.
+	//if (player->pos.x >= world->getMapWidth() - 50)
+	//{
+	//	Done = true;
+	//	ReplaceToThisMap = MapName::PITTSBURGHBOSS;
+	//}
 		
 }
 

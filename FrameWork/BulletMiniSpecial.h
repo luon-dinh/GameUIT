@@ -1,11 +1,13 @@
 #pragma once
 #include "Bullet.h"
 #include"Equation.h"
-
+#include"Shield.h"
 class BulletMiniSpecial : public Bullet
 {
 
 public:
+	bool isBeaten;
+	bool isOnBossMini;
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
 	BulletMiniSpecial(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
@@ -13,6 +15,9 @@ public:
 		this->tag = Tag::BOSSMINIBULLET;
 		this->animation = anim;
 		parapol = new Equation(pos1, pos2);
+		this->isOnBossMini = false;
+		this->isBeaten = false;
+		this->vx = this->vy = 0;
 	}
 	~BulletMiniSpecial()
 	{
@@ -23,8 +28,10 @@ public:
 		this->isCollidable = collide;
 	}
 	void Update(float dt)override {
-		if (animation->curframeindex == animationExplode->toframe-1)
+		if (animation->curframeindex == animationExplode->toframe - 1)
+		{
 			DeactivateObjectInGrid();
+		}
 		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y = parapol->GetYFromX(this->pos.x);
@@ -35,12 +42,12 @@ public:
 		return 6;
 	}
 
-	void OnCollision(Object* object, collisionOut* colOut)override
+	void OnCollision(Object* object, collisionOut* colOut)
 	{
 		
 	}
 
-	bool OnRectCollided(Object* object, CollisionSide side)override
+	bool OnRectCollided(Object* object, CollisionSide side)
 	{
 		switch (object->type)
 		{
@@ -48,7 +55,6 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			this->isCollidable = false;
 			return false;
 		default:
 			break;
@@ -57,8 +63,15 @@ public:
 		{
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			this->isCollidable = false;
 			return true;
+		}
+		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state==Shield::ShieldState::Attack)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return false;
 		}
 	}
 
