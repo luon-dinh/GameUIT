@@ -308,8 +308,6 @@ void Player::ChangeState(State stateName) {
 			return;
 		}
 		this->SetOnAirState(OnAir::Jumping);
-		this->collidedSolidBox = NULL;
-		this->currentGround = NULL;
 		break;
 	}
 	case State::DASHING: {
@@ -737,7 +735,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				collisionOut colOut;
 				colOut.side = side;
 				if ((side == CollisionSide::left && this->vx < 0) || (side == CollisionSide::right && this->vx > 0)) {
-					OnSmashSolidBox(object, side);
+					OnCollisionWithSolidBox(object, &colOut);
 				}
 				if (side == CollisionSide::bottom && !this->StandOnCurrentGround()) {
 					this->TryStandOnGround(object);

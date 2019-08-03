@@ -415,7 +415,6 @@ void BossMini::ChangeState(State stateName)
 		this->vx = this->vy = 0;
 		break;
 	}
-
 }
 
 void BossMini::OnCollision(Object* object, collisionOut* colOut)
@@ -456,8 +455,6 @@ bool BossMini::OnRectCollided(Object* object, CollisionSide side)
 		if (side == CollisionSide::bottom)
 		{
 			this->vy = 0;
-			this->onAirState = OnAir::None;
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2-4;
 		}
 		break;
 	default:

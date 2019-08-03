@@ -36,6 +36,8 @@ void PlayerRunningState::InputHandler()
 				player->ChangeState(State::STAND_PUNCH);
 			}
 		}
+		if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT))
+			player->ChangeState(State::STANDING);
 		return;
 	}
 
@@ -55,6 +57,8 @@ void PlayerRunningState::InputHandler()
 				player->ChangeState(State::STAND_PUNCH);
 			}
 		}
+		if (keyboard->isKeyDown(PLAYER_MOVE_LEFT))
+			player->ChangeState(State::STANDING);
 		return;
 	}
 
