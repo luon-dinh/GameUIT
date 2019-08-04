@@ -339,7 +339,7 @@ void Player::ChangeState(State stateName) {
 	case State::DASHING: {
 		// dash khi có shield thì shield k render, ngược lại nghĩa là shield đang ở trạng thái attack
 		if (this->hasShield)
-			shield->SetShieldState(Shield::ShieldState::NotRender);
+			shield->SetShieldState(Shield::ShieldState::Transparent);
 		if (this->direction == MoveDirection::LeftToRight) {
 			SetVx(PLAYER_DASH_SPEED);
 		}
@@ -583,32 +583,37 @@ void Player::SetOnAirState(OnAir onAirState) {
 	Object::SetOnAirState(onAirState);
 
 	switch (this->onAirState) {
-	case OnAir::None: {
-		this->accelerator.y = 0;
-		this->vy = 0;
-		return;
-	}
-	case OnAir::Jumping: {
-		this->accelerator.y = -GROUND_GRAVITY;
-		this->vy = PLAYER_JUMP_SPEED;
-		return;
-	}
-	case OnAir::DropToWater: {
-		this->vy = -2;
-		return;
-	}
-	case OnAir::Falling: {
-		this->accelerator.y = -GROUND_GRAVITY;
-		return;
-	}
-	case OnAir::JumpFromWater: {
-		this->vy = 5;
-		this->accelerator.y = -0.2;
-		return;
-	}
-	case OnAir::HangOnTheRope: {
-		this->vy = this->vx = 0;
-		this->SetAccelerate(D3DXVECTOR2(0, 0));
+		case OnAir::None: {
+			this->accelerator.y = 0;
+			this->vy = 0;
+			return;
+		}
+		case OnAir::Jumping: {
+			this->accelerator.y = -GROUND_GRAVITY;
+			this->vy = PLAYER_JUMP_SPEED;
+			return;
+		}
+		case OnAir::DropToWater: {
+			this->vy = -2;
+			return;
+		}
+		case OnAir::Falling: {
+			this->accelerator.y = -GROUND_GRAVITY;
+			return;
+		}
+		case OnAir::JumpFromWater: {
+			this->vy = 5;
+			this->accelerator.y = -0.2;
+			return;
+		}
+		case OnAir::HangOnTheRope: {
+			this->vy = this->vx = 0;
+			this->SetAccelerate(D3DXVECTOR2(0, 0));
+			return;
+		}
+		case OnAir::FloatAboveWater: {
+		this->vx = this->vy = 0;
+		this->accelerator = D3DXVECTOR2(0, 0);
 		return;
 	}
 	}
@@ -974,6 +979,10 @@ void Player::OnShockedElectric(Object* object) {
 	this->SetVx(0);
 	this->ChangeState(State::SHOCKING);
 	this->BeingAttacked(object->GetCollisionDamage());
+}
+void Player::OnShieldFloatOnWater(Object* object) {
+	this->SetOnAirState(Object::OnAir::FloatAboveWater);
+	this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 + 8;
 }
 #pragma endregion
 
