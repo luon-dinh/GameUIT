@@ -32,7 +32,7 @@ void BossWizardShootingState::Update(float dt)
 			auto box = wizard->getBoundingBox();
 			bullet->animation = bullet->animation1;
 			bullet->direction = wizard->direction;
-			bullet->pos.y = wizard->pos.y + 10;
+			bullet->pos.y = wizard->pos.y + 15;
 			bullet->vy = 0;
 			switch (bullet->direction)
 			{
@@ -72,7 +72,7 @@ void BossWizardShootingState::Update(float dt)
 				auto box = wizard->getBoundingBox();
 				bullet->animation = bullet->animation1;
 				bullet->direction = wizard->direction;
-				bullet->pos.y = wizard->pos.y + 10;
+				bullet->pos.y = wizard->pos.y + 15;
 				bullet->vy = 0;
 				switch (bullet->direction)
 				{
@@ -104,7 +104,7 @@ void BossWizardShootingState::Update(float dt)
 			auto box = wizard->getBoundingBox();
 			bullet->animation = bullet->animation3;
 			bullet->direction = wizard->direction;
-			bullet->pos.y = wizard->pos.y + 10;
+			bullet->pos.y = wizard->pos.y + 15;
 
 			switch (bullet->direction)
 			{
@@ -120,11 +120,11 @@ void BossWizardShootingState::Update(float dt)
 				break;
 			}
 			float delta = abs(wizard->pos.y - player->pos.y);
-			if (delta < wizard->shoot1)
+			if (delta < shoot1)
 				bullet->vy = 0;
 			else
 			{
-				if (delta < wizard->shoot2)
+				if (delta < shoot2)
 				{
 					bullet->vy = abs(bullet->vx) * 1 / 3;
 					bullet->animation = bullet->animation2;

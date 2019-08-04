@@ -51,22 +51,6 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)
 	{
-		switch (object->type)
-		{
-		case Type::GROUND:
-		case Type::SOLIDBOX:
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return ;
-		default:
-			break;
-		}
-		if (object->tag == Tag::PLAYER)
-		{
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return;
-		}
 		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
 		{
 			if (this->isOnBossMini)

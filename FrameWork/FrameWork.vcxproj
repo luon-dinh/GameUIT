@@ -141,6 +141,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BossMini.cpp" />
     <ClCompile Include="BossWizard.cpp" />
+    <ClCompile Include="BossWizardBeatenState.cpp" />
     <ClCompile Include="BossWizardDeadState.cpp" />
     <ClCompile Include="BossWizardFlyingState.cpp" />
     <ClCompile Include="BossWizardPunchingState.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BossMini.h" />
     <ClInclude Include="BossWizard.h" />
+    <ClInclude Include="BossWizardBeatenState.h" />
     <ClInclude Include="BossWizardDeadState.h" />
     <ClInclude Include="BossWizardFlyingState.h" />
     <ClInclude Include="BossWizardPunchingState.h" />

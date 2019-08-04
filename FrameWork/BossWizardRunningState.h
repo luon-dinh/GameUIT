@@ -4,7 +4,7 @@
 class BossWizardRunningState :public BossWizardState {
 public:
 	const float runningSpeed = 2.5;
-	float maxX = 45;
+	const float maxX = 45;
 	void Update(float dt) override;
 	void InputHandler() override;
 	BossWizardRunningState();

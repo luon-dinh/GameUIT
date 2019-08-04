@@ -7,6 +7,8 @@
 #include"BossWizardPunchingState.h"
 #include"BossWizardStandSmileState.h"
 #include"BossWizardDeadState.h"
+#include"BossWizardBeatenState.h"
+
 #include"BulletWizardNormal.h"
 #include"BulletWizardSpecial.h"
 #include"Equation.h"
@@ -22,27 +24,20 @@ private:
 	void AddPosX();
 	void AddPosY();
 public:
-	const float minMap = 20;
-	const float maxMap = 235;
+	const float minMap = 0;
+	const float maxMap = 256;
 	const float flySpeedx1 = 1;
 	const float flySpeedx2 = 2.5;
 	const float flySpeedy = 2;
 	const float maxFlyy1 = 30;
-	const float xRun = 100;
 	const float maxXToFly1 = 80;
 	const float maxTimeNotRender = 1000;
-	const float maxHelth = 40;
+	const float maxHelth = 30;
 	const float bulletSpeed = 2.7;
-	const float maxTimeToPunch = 1000;
 	const float defaultDT = 50;
-	const float shoot1 = 30;
-	const float shoot2 = 80;
 	bool canShootOnAir;
-	float timeDelayShootOnAir;
-	float delayShoot;
 	bool isCollide;
 	int hitTime;
-	float timePunch;
 	float deltaY;
 	float deltaX;
 	int flyMode;
