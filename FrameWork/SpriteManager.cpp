@@ -271,6 +271,18 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 48, 48, 64));
 	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 64, 48, 80));
 	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 80, 48, 96));
+
+	//Cắt sprite cho Caro Down.
+	spriteManager->addSprite(new Sprite(Tag::CARO_DOWN, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::CARO_DOWN, 0, 16, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::CARO_DOWN, 0, 32, 16, 48));
+	spriteManager->addSprite(new Sprite(Tag::CARO_DOWN, 0, 48, 16, 64));
+
+	//Cắt sprite cho Caro Up.
+	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 16, 16, 32));
+	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 32, 16, 48));
+	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 48, 16, 64));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

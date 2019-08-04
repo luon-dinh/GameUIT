@@ -75,6 +75,10 @@ void TextureManager::loadResources()
 
 	//texture dùng cho shockwave.
 	textures->addTexture(Tag::ELECTRIC_SHOCKWAVE, (char*)".\\..\\Resources\\Images\\Item\\ElectricShockwaveBarrier.png");
+
+	//texture dùng cho map cuối.
+	textures->addTexture(Tag::CARO_UP, (char*)".\\..\\Resources\\Images\\Maps\\PittsburghBoss\\CaroUp.png");
+	textures->addTexture(Tag::CARO_DOWN, (char*)".\\..\\Resources\\Images\\Maps\\PittsburghBoss\\CaroDown.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

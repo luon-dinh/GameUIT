@@ -20,7 +20,6 @@ TileMap::~TileMap()
 
 TileMap::TileMap(const char * tileSetFile,const char * tileMapFile, Tag tag)
 {
-
 	//Đọc tileMapFile từ file txt và lưu vào ma trận map.
 	std::ifstream inFile;
 	inFile.open(tileMapFile);
@@ -73,7 +72,7 @@ TileMap::TileMap(const char * tileSetFile,const char * tileMapFile, Tag tag)
 		}
 	}
 
-	//Ta tạo TileSet.
+	//Ta tạo TileSet chỉ khi map có tile.
 	tileSet = new TileSet(tileSetFile, numOfTileType, tag);
 
 	//Sau khi xong thì thông tin map đã được load đầy đủ.
