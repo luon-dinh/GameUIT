@@ -838,7 +838,7 @@
     </ClInclude>
     <ClInclude Include="PlayerHandOnRope.h">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
-   <ClInclude>
+   </ClInclude>
     <ClInclude Include="MapPittsburghBoss.h">
       <Filter>GameMap\TileMap\MapPittsburghBoss</Filter>
     </ClInclude>
