@@ -19,6 +19,8 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::ITEM, (char*)".\\..\\Resources\\Images\\Item\\Items.png");
 	//texture dung cho CONTAINER
 	textures->addTexture(Tag::ITEMCONTAINER, (char*)".\\..\\Resources\\Images\\Item\\Container.png");
+	//texture dùng cho CONTAINER trong MAPPITTSBURGH.
+	textures->addTexture(Tag::ITEMCONTAINERMAP2, (char*)".\\..\\Resources\\Images\\Item\\Container2.png");
 	//texture dùng cho blue soldier
 	textures->addTexture(Tag::BLUESOLDIER, (char*)".\\..\\Resources\\Images\\Enermy\\BlueSoldier.png");
 	textures->addTexture(Tag::BLUESOLDERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\SoldierBullet.png");

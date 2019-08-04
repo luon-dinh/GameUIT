@@ -83,6 +83,7 @@ public:
 	static int DOOR;
 	static int SPIKE;
 	static int ITEMLOOTER;
+	static int ITEMLOOTERMAP2;
 	static int BLUESOLDIER;
 	static int REDROCKET;
 };
@@ -157,6 +158,7 @@ enum Tag {
 	SEWER,
 	EXITSIGN,
 	ITEMCONTAINER,
+	ITEMCONTAINERMAP2,
 	BLUESOLDIER,
 	STATICOBJECT,
 	BLUESOLDERBULLET,

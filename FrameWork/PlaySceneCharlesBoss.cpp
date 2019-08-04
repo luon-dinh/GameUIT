@@ -1,4 +1,5 @@
 ﻿#include "PlaySceneCharlesBoss.h"
+#include "Door.h"
 
 
 PlaySceneCharlesBoss::PlaySceneCharlesBoss()

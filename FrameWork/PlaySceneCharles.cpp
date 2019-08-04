@@ -6,6 +6,7 @@
 #include "RedRocketRobotTwoSided.h"
 #include "RedRocketRobotTwoSidedNonLinear.h"
 #include "RedRocketRobotNonShooting.h"
+#include "WhiteRocketRobotNonShooting.h"
 #include "MovingPlatformCircle.h"
 #include "MovingPlatformCrossed.h"
 #include "MovingPlatformHorizontal.h"
@@ -98,7 +99,7 @@ void PlaySceneCharles::Update(double dt)
 		//Thêm vào con robot đỏ bên phải.
 		if (!isAddSoldier)
 		{
-			Object* redRobot = new RedRocketRobotNonShooting(550, 90);
+			WhiteRocketRobotNonShooting* redRobot = new WhiteRocketRobotNonShooting(550, 90);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
 			else
