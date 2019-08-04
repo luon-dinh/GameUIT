@@ -186,7 +186,7 @@ void Player::Update(float dt)
 	if (this->IsOnPlatform()) {
 		auto platform = this->GetStandingGround();
 		this->pos.x += platform->vx;
-		this->pos.y += platform->vy;
+		this->pos.y = platform->getBoundingBox().top + this->getHeight() / 2 - 2;
 	}
 
 	// Update animation

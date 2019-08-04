@@ -9,7 +9,6 @@ private:
 	void LoadAllAnimations();
 public:
 	const float maxHelth = 20;
-	const int maxTimeStateDelay = 1000;
 	const float maxDelatXRun = 150;
 	const float minMap = 0;
 	const float maxMap = 256;
@@ -20,6 +19,8 @@ public:
 	const float deltaToThrow = 50;
 	const float defaultDT = 30;
 	const float maxTimeNotCollidable = 1500;
+	const float maxTimeStateDelay = 1000;
+	const float maxTimeAttack = 2000;
 	float timeNotCollideable;
 	int countTimesBeaten;
 	const int maxTimesBeaten=3;

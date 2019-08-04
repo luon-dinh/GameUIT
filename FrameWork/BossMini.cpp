@@ -50,7 +50,7 @@ void BossMini::LoadAllAnimations()
 {
 	animations[State::FALLING] = new Animation(Tag::BOSSMINI, 0, 1);
 	animations[State::STANDING] = new Animation(Tag::BOSSMINI, 1, 2);
-	animations[State::ATTACKING_FLY] = new Animation(Tag::BOSSMINI, 2, 4, maxTimeStateDelay/2);
+	animations[State::ATTACKING_FLY] = new Animation(Tag::BOSSMINI, 2, 4, maxTimeAttack/2);
 	animations[State::ATTACK] = new Animation(Tag::BOSSMINI, 4, 5, maxTimeStateDelay);
 	animations[State::RUNNING] = new Animation(Tag::BOSSMINI, 5, 8);
 	animations[State::BEATEN] = new Animation(Tag::BOSSMINI, 8, 10);
@@ -240,7 +240,7 @@ void BossMini::Update(float dt)
 				pos2.x = this->pos.x + deltaToThrow;
 			}
 		}
-		if (timeCurrentState < maxTimeStateDelay)
+		if (timeCurrentState < maxTimeAttack)
 		{
 			if (canNewBullet)// tạo bullet
 			{
@@ -272,7 +272,7 @@ void BossMini::Update(float dt)
 				return;
 			}
 			//nếu đến thời điểm ném, cho bullet bay
-			if (timeCurrentState < maxTimeStateDelay / 3*2 && timeCurrentState + defaultDT >maxTimeStateDelay /3* 2)
+			if (timeCurrentState < maxTimeAttack / 3*2 && timeCurrentState + defaultDT >maxTimeAttack /3* 2)
 			{
 				if (this->direction == MoveDirection::RightToLeft)
 				{

@@ -51,6 +51,14 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)
 	{
+		if (object->tag == Tag::PLAYER_PART)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return;
+		}
 		switch (object->type)
 		{
 		case Type::GROUND:
@@ -62,14 +70,6 @@ public:
 			break;
 		}
 		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
-		{
-			if (this->isOnBossMini)
-				this->isBeaten = true;
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return;
-		}
-		if (object->tag == Tag::PLAYER_PART)
 		{
 			if (this->isOnBossMini)
 				this->isBeaten = true;
@@ -91,6 +91,14 @@ public:
 		default:
 			break;
 		}
+		if (object->tag == Tag::PLAYER_PART)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return false;
+		}
 		if (object->tag == Tag::PLAYER)
 		{
 			this->animation = animationExplode;
@@ -105,14 +113,7 @@ public:
 			this->vx = this->vy = 0;
 			return false;
 		}
-		if (object->tag == Tag::PLAYER_PART)
-		{
-			if (this->isOnBossMini)
-				this->isBeaten = true;
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return false;
-		}
+	
 	}
 
 	BoundingBox getBoundingBox()override

@@ -399,7 +399,10 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 					}
 				}
 			}
-
+			else if(objectIDPerPosition[i][j] == ObjectID::GREENSOLDIER)
+			{
+				newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
+			}
 			if (newObject == nullptr)
 				continue;
 			newObject->pos.x = j;

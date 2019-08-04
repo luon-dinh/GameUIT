@@ -1,4 +1,4 @@
-#include"SoundManager.h"
+﻿#include"SoundManager.h"
 
 SoundManager* SoundManager::instance = NULL;
 CSoundManager* SoundManager::manager = new CSoundManager();
@@ -17,9 +17,28 @@ void SoundManager::Create(HWND hwnd)
 
 void SoundManager::loadResources()
 {
-	manager->Create(&sounds[Map], (char*)".\\..\\Resources\\Sounds\\Map.wav");
-	manager->Create(&sounds[Boss1], (char*)".\\..\\Resources\\Sounds\\Boss1.wav");
-	manager->Create(&sounds[Boss2], (char*)".\\..\\Resources\\Sounds\\Boss2.wav");
+	manager->Create(&sounds[action_theme], (char*)".\\..\\Resources\\Sounds\\action_theme.wav");
+	manager->Create(&sounds[boss_gragas_theme], (char*)".\\..\\Resources\\Sounds\\boss_gargras_theme.wav");
+	manager->Create(&sounds[boss_wizard_theme], (char*)".\\..\\Resources\\Sounds\\boss_wizard_theme.wav");
+	manager->Create(&sounds[door_open], (char*)".\\..\\Resources\\Sounds\\door.wav");
+	manager->Create(&sounds[item_exit_orb], (char*)".\\..\\Resources\\Sounds\\itme_exit_orb.wav");
+	manager->Create(&sounds[item_holder], (char*)".\\..\\Resources\\Sounds\\itme_holder.wav");
+	manager->Create(&sounds[item_hp], (char*)".\\..\\Resources\\Sounds\\itme_hp.wav");
+	manager->Create(&sounds[item_normal], (char*)".\\..\\Resources\\Sounds\\itme_normal.wav");
+	manager->Create(&sounds[main_theme], (char*)".\\..\\Resources\\Sounds\\main_them.wav");
+	manager->Create(&sounds[object_explode], (char*)".\\..\\Resources\\Sounds\\object_explode.wav");
+	manager->Create(&sounds[player_dash], (char*)".\\..\\Resources\\Sounds\\player_dash.wav");
+	manager->Create(&sounds[player_dead], (char*)".\\..\\Resources\\Sounds\\player_dead.wav");
+	manager->Create(&sounds[player_diving], (char*)".\\..\\Resources\\Sounds\\player_diving.wav");
+	manager->Create(&sounds[player_punch_kick], (char*)".\\..\\Resources\\Sounds\\player_punch_kick.wav");
+	manager->Create(&sounds[player_rolling], (char*)".\\..\\Resources\\Sounds\\player_rolling.wav");
+	manager->Create(&sounds[player_stand], (char*)".\\..\\Resources\\Sounds\\player_stand.wav");
+	manager->Create(&sounds[shield_attack], (char*)".\\..\\Resources\\Sounds\\shield_attack.wav");
+	manager->Create(&sounds[shield_collision], (char*)".\\..\\Resources\\Sounds\\shield_collision.wav");
+	manager->Create(&sounds[wizard_fire], (char*)".\\..\\Resources\\Sounds\\wizard_fire.wav");
+	manager->Create(&sounds[wizard_flying], (char*)".\\..\\Resources\\Sounds\\wizard_flying.wav");
+	manager->Create(&sounds[wizard_lazer], (char*)".\\..\\Resources\\Sounds\\wizard_laze.wav");
+
 }
 
 void SoundManager::play(SoundName soundName, bool loop)
