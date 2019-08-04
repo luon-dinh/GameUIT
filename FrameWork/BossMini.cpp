@@ -213,12 +213,12 @@ void BossMini::Update(float dt)
 		this->onAirState = OnAir::None;
 		D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y - 10);
 		D3DXVECTOR2 pos2;
-		pos2.y = this->pos.y + this->getHeight() / 2 + 30;
+		pos2.y = this->pos.y + this->getHeight();
 		float delta = this->pos.x - player->pos.x;
 		if (abs(delta) < deltaToThrow)
 		{
 			pos2.x = (player->pos.x + this->pos.x) / 2;
-			pos2.y = this->pos.y + this->getHeight() / 2 + 10;
+			pos2.y = this->pos.y + this->getHeight() / 2;
 		}
 		else
 		{
@@ -449,7 +449,8 @@ void BossMini::OnCollision(Object* object, collisionOut* colOut)
 		if (shield->state == Shield::ShieldState::Attack&&this->state == State::DASHING)
 		{
 			this->countTimesBeaten++;
-			this->isCollidable = false;
+			if(this->onAirState!=OnAir::Falling)
+				this->isCollidable = false;
 			return;
 		}
 	}
@@ -475,7 +476,8 @@ bool BossMini::OnRectCollided(Object* object, CollisionSide side)
 		if (shield->state == Shield::ShieldState::Attack&&this->state==State::DASHING)
 		{
 			this->countTimesBeaten++;
-			this->isCollidable = false;
+			if(this->onAirState!=OnAir::Falling)
+				this->isCollidable = false;
 			return false;
 		}
 	}

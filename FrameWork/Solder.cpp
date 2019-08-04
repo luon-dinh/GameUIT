@@ -226,7 +226,7 @@ void Solder::Update(float dt)
 	switch (this->stateName)
 	{
 	case State::DUCKING:
-		if (timeCurrentState >= BLUE_SOLDER_DUCKING_TIME)
+		if (timeCurrentState >= duckingTime)
 		{
 			ChangeState(State::STANDING);
 		}
@@ -237,11 +237,11 @@ void Solder::Update(float dt)
 
 		break;
 	case State::STANDING:
-		if (timeCurrentState < BLUE_SOLDER_STANDING_TIME)
+		if (timeCurrentState < standingTime)
 		{
 			if (runType !=RunType::SPECIAL)
 			{
-				if (timeCurrentState + dt >= BLUE_SOLDER_STANDING_TIME / 2 && timeCurrentState < BLUE_SOLDER_STANDING_TIME / 2)
+				if (timeCurrentState + dt >= standingTime / 2 && timeCurrentState < standingTime / 2)
 				{
 					auto scene = SceneManager::getInstance();
 						
@@ -253,13 +253,13 @@ void Solder::Update(float dt)
 					if (runType == RunType::THREESHOOTER)
 					{
 						auto bullet1 = new BulletSolder(this->direction);
-						bullet1->vy = -0.5;
+						bullet1->vy = -this->bulletSpeedy;
 						bullet1->existTime = 0;
 						bullet1->pos.y = this->getBoundingBox().top - 4;
 						bullet1->pos.x = this->pos.x;
 						scene->AddObjectToCurrentScene(bullet1);
 						auto bullet2 = new BulletSolder(this->direction);
-						bullet2->vy = 0.5;
+						bullet2->vy = this->bulletSpeedy;
 						bullet2->existTime = 0;
 						bullet2->pos.y = this->getBoundingBox().top - 4;
 						bullet2->pos.x = this->pos.x;
@@ -293,7 +293,7 @@ void Solder::Update(float dt)
 				}
 			}
 		}
-		if (timeCurrentState > BLUE_SOLDER_RUNNING_TIME)
+		if (timeCurrentState > runningTime)
 		{
 			if (runType == RunType::CANRUN)
 				ChangeState(State::STANDING);
