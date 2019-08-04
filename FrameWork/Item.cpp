@@ -36,6 +36,7 @@ Item::Item(ItemType itemtype)
 		animation = new Animation(Tag::ITEM, 9,11);
 		break;
 	}
+	isCollidable = false;
 }
 Item::~Item()
 {
@@ -46,12 +47,19 @@ void Item::Update(float dt)
 {
 	countFrame++;
 
-	if (countFrame<20)
+	if (countFrame < 20)
+	{
 		this->vy = ITEM_SPEED;
+		isCollidable = false;
+	}
 	else
 	{
-		if(this->vy!=0)
+		if (this->vy != 0)
+		{
 			this->vy = -ITEM_SPEED;
+			isCollidable = true;
+		}
+			
 	}
 
 	this->pos.y += this->vy;
