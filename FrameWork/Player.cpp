@@ -114,10 +114,10 @@ BoundingBox Player::getBoundingBox()
 		{
 		case MoveDirection::LeftToRight:
 			box.left = this->pos.x - this->width / 2; 
-			box.right = this->pos.x + 6;
+			box.right = this->pos.x;
 			break;
 		case MoveDirection::RightToLeft:
-			box.left = this->pos.x - 6;
+			box.left = this->pos.x;
 			box.right = this->pos.x + this->width / 2;
 			break;
 		default:
@@ -131,10 +131,10 @@ BoundingBox Player::getBoundingBox()
 		{
 		case MoveDirection::LeftToRight:
 			box.left = this->pos.x - this->width / 2;
-			box.right = this->pos.x  -4;
+			box.right = this->pos.x ;
 			break;
 		case MoveDirection::RightToLeft:
-			box.left = this->pos.x-4;
+			box.left = this->pos.x;
 			box.right = this->pos.x + this->width / 2;
 			break;
 		default:

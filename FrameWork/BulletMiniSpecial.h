@@ -57,7 +57,7 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			return false;
+			return ;
 		default:
 			break;
 		}
