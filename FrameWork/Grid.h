@@ -11,6 +11,12 @@
 #include "MovingPlatformCircle.h"
 #include "MovingPlatformCrossed.h"
 #include "MovingPlatformHorizontal.h"
+#include "GreenSolder.h"
+#include "WhiteFlyingRobot.h"
+#include "WhiteRockerter.h"
+#include "Canon.h"
+#include "EvilBat.h"
+#include "EletricBat.h"
 #include "Debug.h"
 #include "DrawDebug.h"
 
