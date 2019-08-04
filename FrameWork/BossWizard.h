@@ -27,8 +27,8 @@ public:
 	const float minMap = 0;
 	const float maxMap = 256;
 	const float flySpeedx1 = 1;
-	const float flySpeedx2 = 2.5;
-	const float flySpeedy = 2;
+	const float flySpeedx2 = 3;
+	const float flySpeedy = 2.5;
 	const float maxFlyy1 = 30;
 	const float maxXToFly1 = 80;
 	const float maxTimeNotRender = 1000;

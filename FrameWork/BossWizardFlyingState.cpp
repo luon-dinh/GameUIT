@@ -121,7 +121,7 @@ void BossWizardFlyingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	// nếu xuống min hoặc max map thì rớt
-	if ((wizard->pos.x < wizard->minMap+wizard->getWidth() || wizard->pos.x>wizard->maxMap-wizard->getWidth())&&wizard->deltaX>2)
+	if ((wizard->pos.x < wizard->minMap+wizard->getWidth()/2 || wizard->pos.x>wizard->maxMap-wizard->getWidth()/2)&&wizard->deltaX>2)
 	{
 		if (wizard->flyMode == 1)
 		{

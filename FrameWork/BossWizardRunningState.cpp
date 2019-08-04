@@ -18,9 +18,9 @@ void BossWizardRunningState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	auto player = Player::getInstance();
-	if (wizard->pos.x < wizard->minMap || wizard->pos.x > wizard->maxMap)
+	if (wizard->pos.x < wizard->minMap + wizard->getWidth()/2 || wizard->pos.x > wizard->maxMap- wizard->getWidth() / 2)
 	{
-		if (wizard->pos.x < wizard->minMap)
+		if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2)
 		{
 			wizard->direction = BossWizard::MoveDirection::LeftToRight;
 		}
