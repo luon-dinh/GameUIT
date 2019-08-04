@@ -88,6 +88,12 @@ public:
 	static int REDROCKET;
 	static int DISAPPEARING_PLATFORM;
 	static int MOVING_PLATFORM;
+	static int GREENSOLDIER;
+	static int WHITEFLYINGROBOT;
+	static int WHITEROCKRTER;
+	static int CANNON;
+	static int EVIL_BAT;
+	static int ELECTRIC_BAT;
 };
 
 //Đây là class chứa trọng số vẽ.
