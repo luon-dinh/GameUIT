@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Object.h"
+#include "MapStaticObject.h"
 #include "Delay.h"
 
 
@@ -10,7 +10,7 @@ Trạng thái 2 : Đã được kích hoạt (được player đụng vào) và 
 Trạng thái 3 : Splitting. Lúc này isPlatformActivated = true, isCollidable = false và isSplitting = true.
 Trạng thái 4 : Joining phase 1. Lúc này isPlatformActivated = true, isCollidable = false và isSplitting = false.
 */
-class DisappearingPlatform : public Object
+class DisappearingPlatform : public MapStaticObject
 {
 	//Khoảng thời gian delay để nó mở ra lần 1.
 	const int firstTimeSplitDelayTime = 500;

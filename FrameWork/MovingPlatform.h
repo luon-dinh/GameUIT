@@ -1,7 +1,8 @@
 ﻿#pragma once
+#include "MapStaticObject.h"
 #include "PlatformFire.h"
 
-class MovingPlatform : public Object
+class MovingPlatform : public MapStaticObject
 {
 	//Kích thước của platform.
 	const int platformWidth = 32;
