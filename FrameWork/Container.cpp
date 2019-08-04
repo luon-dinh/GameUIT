@@ -6,14 +6,17 @@
 #include "SceneManager.h"
 #include<cstdlib>
 
-Container::Container(ItemType type)
+Container::Container(ItemType type, bool containerOfMap2)
 {
 	ItemManager* itemManager = ItemManager::getInstance();
 	this->tag = Tag::ITEMCONTAINER;
 	this->type = Type::ITEMCONTAINERTYPE;
 	this->vx = this->vy = 0;
 	numberItems = 0;
-	animation = new Animation(this->tag,0,2);
+	if (containerOfMap2)
+		animation = new Animation(Tag::ITEMCONTAINERMAP2, 0, 2);
+	else
+		animation = new Animation(this->tag,0,2);
 	numberItems = 15;
 	item = new Item(type);
 }

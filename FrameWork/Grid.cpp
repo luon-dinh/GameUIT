@@ -291,6 +291,8 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		//Còn lại để tự Spawn.
 		if (objectID == ObjectID::ITEMLOOTER)
 			object = new Container((ItemType)objectSpecialID);
+		else if (objectID == ObjectID::ITEMLOOTERMAP2)
+			object = new Container((ItemType)objectSpecialID, true);
 		if (object == nullptr)
 			continue;
 
@@ -344,6 +346,11 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			//Spawn (tạo mới) object dựa vào ID đã load sẵn.
 			Object* newObject = nullptr;
 			if (objectIDPerPosition[i][j] == ObjectID::ITEMLOOTER)
+			{
+				//ItemLooter không được sinh lần 2.
+				//newObject = new Container(); //Tạo mới object dựa vào ID.
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::ITEMLOOTERMAP2)
 			{
 				//ItemLooter không được sinh lần 2.
 				//newObject = new Container(); //Tạo mới object dựa vào ID.

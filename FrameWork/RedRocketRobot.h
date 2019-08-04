@@ -80,7 +80,7 @@ protected:
 	//Biến cho biết trong trạng thái hiện tại robot đã tấn công hay chưa.
 	bool isAttacked = false;
 
-	void LoadAllAnimation();
+	virtual void LoadAllAnimation();
 public:
 	RedRocketRobot(int posX, int posY);
 	~RedRocketRobot();

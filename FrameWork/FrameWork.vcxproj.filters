@@ -157,6 +157,9 @@
     <Filter Include="Scene\PlayScene\PlayScenePittsburghBoss">
       <UniqueIdentifier>{ffee9628-c461-4039-8b7a-5a82e5000df1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Enemy\WhiteRocketRobot">
+      <UniqueIdentifier>{558787e0-5ab5-43d4-a8ab-12aa88532e03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -838,6 +841,9 @@
     </ClInclude>
     <ClInclude Include="PlayScenePittsburghBoss.h">
       <Filter>Scene\PlayScene\PlayScenePittsburghBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteRocketRobotNonShooting.h">
+      <Filter>Objects\Enemy\WhiteRocketRobot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

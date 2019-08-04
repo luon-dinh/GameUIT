@@ -22,6 +22,7 @@ int ObjectID::SPIKE = 7;
 int ObjectID::ITEMLOOTER = 8;
 int ObjectID::BLUESOLDIER = 9;
 int ObjectID::REDROCKET = 10;
+int ObjectID::ITEMLOOTERMAP2 = 11;
 
 //Định nghĩa trọng số render của các loại object khác nhau.
 int RenderWeightOfObjects::BULLET_RENDER_WEIGHT = 3;

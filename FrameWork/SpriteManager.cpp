@@ -116,6 +116,9 @@ void SpriteManager::LoadResources()
 	// cắt sprite cho container
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 0, 16, 16));
 	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINER, 0, 16, 16, 32));
+	// cắt sprite cho container của map 2.
+	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINERMAP2, 0, 0, 16, 16));
+	spriteManager->addSprite(new Sprite(Tag::ITEMCONTAINERMAP2, 0, 16, 16, 32));
 	//cắt sprite cho blue soldier
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 0, 43, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 0, 24, 43, 48));

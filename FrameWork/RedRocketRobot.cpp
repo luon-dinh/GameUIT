@@ -4,7 +4,7 @@ RedRocketRobot::RedRocketRobot(int posX, int posY)
 {
 	this->tag = Tag::REDROCKERTER;
 	player = Player::getInstance();
-	LoadAllAnimation();
+	this->LoadAllAnimation();
 	//Gán giá trị.
 	this->pos.x = posX;
 	this->pos.y = posY;
