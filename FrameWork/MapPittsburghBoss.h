@@ -4,12 +4,13 @@
 class MapPittsburghBoss : public TileMap
 {
 private:
-	const int CARO_UP_ANIM = 0;
-	const int CARO_DOWN_ANIM = 1;
+	const int CARO_DOWN_ANIM = 0;
+	const int CARO_UP_ANIM = 1;
+	
 	Animation * caroUpAnim;
 	Animation * caroDownAnim;
 
-	const int delayCaroAnimation = 100;
+	const int delayCaroAnimation = 15;
 public:
 	MapPittsburghBoss(const char * imgPath, const char * txtPath);
 	~MapPittsburghBoss();
