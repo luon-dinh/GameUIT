@@ -62,7 +62,7 @@ BoundingBox PlayerHandPunch::getBoundingBox() {
 	box.right = box.left + 9;
 	box.top = this->pos.y + 3;
 	box.bottom = box.top - 6;
-
+	box.vx = box.vy = 0;
 	return box;
 }
 

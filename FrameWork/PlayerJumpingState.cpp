@@ -1,5 +1,6 @@
 ﻿#include "PlayerJumpingState.h"
 #include"Debug.h"
+#include "SceneManager.h"
 
 
 void PlayerJumpingState::InputHandler() {
@@ -71,13 +72,15 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		return;
 	}
 
-	// chạm dây đu
 	if (object->type == Type::ROPE) {
-		if (player->pos.x >= object->getBoundingBox().left&&player->pos.x <= object->getBoundingBox().right)
-			player->OnClimbingTheRope(object);
+		PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
+		SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
+		return;
 	}
 
 	if (object->type == Type::BULLETTYPE) {
 		player->OnCollisionWithEnemy(object);
+		return;
 	}
+
  }

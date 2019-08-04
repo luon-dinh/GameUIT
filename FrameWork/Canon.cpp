@@ -94,10 +94,16 @@ void Canon::Fire() {
 bool Canon::OnRectCollided(Object* object, CollisionSide side) {
 	switch (object->tag) {
 		case Tag::PLAYER_PART:
-		case Tag::SHIELD: 
 			if (this->IsRotate())
 				return false;
 			// khi va chạm shield thì rotate
+			OnStartRotate();
+			return true;
+		case Tag::SHIELD: 
+			auto shield = Shield::getInstance();
+			if (shield->state != Shield::ShieldState::Attack) {
+				return false;
+			}
 			OnStartRotate();
 			return true;
 		}

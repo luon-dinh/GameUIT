@@ -822,7 +822,7 @@ void Grid::RenderActivatedCells()
 			//}
 		}
 	}
-	//Vẽ theo thứ tự.
+	////Vẽ theo thứ tự.
 	for (auto object : orderOfRenders)
 	{
 		object->Render();

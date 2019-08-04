@@ -468,6 +468,9 @@
     <ClCompile Include="GreenSolder.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerHandOnRope.cpp">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -814,6 +817,9 @@
     </ClInclude>
     <ClInclude Include="PlayerShockingState.h">
       <Filter>Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHandOnRope.h">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

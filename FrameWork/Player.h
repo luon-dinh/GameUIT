@@ -68,7 +68,7 @@ private:
 	const float ADDED_SPEED_2 = 0.14;
 	
 public:
-
+	bool detectRopeCollision;
 	bool shieldActive;
 	BOOL hasShield;
 	bool canDash = true;

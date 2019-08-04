@@ -2,7 +2,7 @@
 #include "PlayerState.h"
 #include "Player.h"
 #include "Global.h"
-
+#include "PlayerHandOnRope.h"
 
 class PlayerJumpingState : public PlayerState{
 private:
