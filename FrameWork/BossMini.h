@@ -23,7 +23,7 @@ public:
 	float timeNotCollideable;
 	int countTimesBeaten;
 	const int maxTimesBeaten=3;
-	const int maxTimesBeaten2=3;
+	const int maxTimesBeaten2=10;
 	int countBullet;
 	float timeCurrentState;
 	float deltaX;
