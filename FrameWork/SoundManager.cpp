@@ -17,12 +17,43 @@ void SoundManager::Create(HWND hwnd)
 
 void SoundManager::loadResources()
 {
-	manager->Create(&sounds[1], (char*)".\\..\\Resources\\Sounds\\pong_jump_a.wav");
-	manager->Create(&sounds[2], (char*)".\\..\\Resources\\Sounds\\pong_jump_b.wav");
+	manager->Create(&sounds[Map], (char*)".\\..\\Resources\\Sounds\\Map.wav");
+	manager->Create(&sounds[Boss1], (char*)".\\..\\Resources\\Sounds\\Boss1.wav");
+	manager->Create(&sounds[Boss2], (char*)".\\..\\Resources\\Sounds\\Boss2.wav");
 }
 
-void SoundManager::play(int index)
+void SoundManager::play(SoundName soundName, bool loop)
 {
-	sounds[index]->Play();
+	if (loop)
+	{
+		sounds[soundName]->Play(0, 0, DSBPLAY_LOOPING);
+	}
+	else
+	{
+		sounds[soundName]->Stop();
+		sounds[soundName]->Reset();
+		sounds[soundName]->Play(0, 0, 0);
+	}
+}
+void SoundManager::stop(SoundName soundName)
+{
+	sounds[soundName]->Stop();
+}
+
+void SoundManager::stopAll()
+{
+	for (auto sound : sounds)
+	{
+		sound.second->Stop();
+	}
+}
+
+void SoundManager::ReleaseAll()
+{
+	for (auto sound : sounds)
+	{
+		sound.second->~CSound();
+	}
+	sounds.clear();
 }
 

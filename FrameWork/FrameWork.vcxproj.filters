@@ -465,6 +465,9 @@
     <ClCompile Include="PlayerShockingState.cpp">
       <Filter>Objects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GreenSolder.cpp">
+      <Filter>Objects\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -799,6 +802,9 @@
     </ClInclude>
     <ClInclude Include="Shockwave.h">
       <Filter>Objects\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenSolder.h">
+      <Filter>Objects\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Canon.h">
       <Filter>Objects\Canon</Filter>

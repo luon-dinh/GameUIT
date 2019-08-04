@@ -24,16 +24,10 @@ void BossWizardFlyingState::Fly(float dt)
 	wizard->deltaX += abs(wizard->vx);
 
 	//nếu fly mode1  thì cập nhật vx theo hướng
-	if (wizard->flyMode == 1)
-	{
-		if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
-			wizard->vx = wizard->flySpeedx1;
-		else
-		{
-			wizard->vx = -wizard->flySpeedx1;
-		}
-	}
-	else
+
+
+	
+	if(wizard->flyMode!=1)
 	{
 		wizard->hitTime = 0;
 	}
@@ -66,6 +60,11 @@ void BossWizardFlyingState::Fly(float dt)
 		break;
 	case BossWizard::OnAir::None:
 		wizard->currentanimation->curframeindex = 2;
+		if (wizard->flyMode == 2&&wizard->deltaX>maxFlyx2)
+		{
+			wizard->SetOnAirState(BossWizard::OnAir::Falling);
+			return;
+		}
 		// nếu nó có thể tắt đèn thì rớt xuống tắt đèn
 		if (wizard->turnOffLight)
 		{
@@ -82,7 +81,7 @@ void BossWizardFlyingState::Fly(float dt)
 			auto scene = SceneManager::getInstance();
 			auto bullet = new BulletWizardSpecial();
 			bullet->vx = 0;
-			bullet->vy = ENEMY_BULLET_SPEED * -3;
+			bullet->vy = -wizard->bulletSpeed;
 			bullet->animation = bullet->animation3;
 			if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
 				bullet->pos.x = wizard->pos.x + wizard->width / 2;

@@ -9,6 +9,7 @@
 #include"BossWizardDeadState.h"
 #include"BulletWizardNormal.h"
 #include"BulletWizardSpecial.h"
+#include"Equation.h"
 
 class BossWizard :public Enemy {
 private:
@@ -26,11 +27,12 @@ public:
 	const float flySpeedx1 = 1;
 	const float flySpeedx2 = 2.5;
 	const float flySpeedy = 2;
+	const float maxFlyy1 = 30;
 	const float xRun = 100;
-	const float maxXToFly1 = 90;
+	const float maxXToFly1 = 80;
 	const float maxTimeNotRender = 1000;
-	const float maxHelth = 20;
-	const float bulletSpeed = 2;
+	const float maxHelth = 40;
+	const float bulletSpeed = 2.7;
 	const float maxTimeToPunch = 1000;
 	const float defaultDT = 50;
 	const float shoot1 = 30;
@@ -48,11 +50,14 @@ public:
 	float timeNotRender;
 	bool turnOffLight;
 	int countBullet;
+	bool canNewParapol = true;
+	bool isMode1;
 
 	State state;
 	Type type;
 	Animation * currentanimation;
 	BossWizardState * wizardState;
+	Equation* parapol;
 
 	float getWidth();
 	float getHeight();

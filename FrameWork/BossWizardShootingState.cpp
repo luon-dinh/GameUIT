@@ -37,11 +37,11 @@ void BossWizardShootingState::Update(float dt)
 			switch (bullet->direction)
 			{
 			case BossWizard::MoveDirection::LeftToRight:
-				bullet->vx = ENEMY_BULLET_SPEED * 3;
+				bullet->vx = wizard->bulletSpeed;
 				bullet->pos.x = box.right;
 				break;
 			case BossWizard::MoveDirection::RightToLeft:
-				bullet->vx = -ENEMY_BULLET_SPEED * 3;
+				bullet->vx = -wizard->bulletSpeed;
 				bullet->pos.x = box.left;
 				break;
 			default:
@@ -58,7 +58,7 @@ void BossWizardShootingState::Update(float dt)
 			if (wizard->flyTimes > 0)
 			{
 				wizard->flyTimes--;
-				wizard->flyMode = rand() % 3 + 2;
+				wizard->flyMode = (rand() % 3) + 2;
 				wizard->ChangeState(State::FLYING);
 				wizard->hitTime = 0;
 				return;
@@ -77,11 +77,11 @@ void BossWizardShootingState::Update(float dt)
 				switch (bullet->direction)
 				{
 				case BossWizard::MoveDirection::LeftToRight:
-					bullet->vx = ENEMY_BULLET_SPEED * 3;
+					bullet->vx = wizard->bulletSpeed;
 					bullet->pos.x = box.right;
 					break;
 				case BossWizard::MoveDirection::RightToLeft:
-					bullet->vx = -ENEMY_BULLET_SPEED * 3;
+					bullet->vx = -wizard->bulletSpeed;
 					bullet->pos.x = box.left;
 					break;
 				default:
@@ -109,11 +109,11 @@ void BossWizardShootingState::Update(float dt)
 			switch (bullet->direction)
 			{
 			case BossWizard::MoveDirection::LeftToRight:
-				bullet->vx = ENEMY_BULLET_SPEED * 2.5;
+				bullet->vx = wizard->bulletSpeed;
 				bullet->pos.x = box.right;
 				break;
 			case BossWizard::MoveDirection::RightToLeft:
-				bullet->vx = -ENEMY_BULLET_SPEED * 2.5;
+				bullet->vx = -wizard->bulletSpeed;
 				bullet->pos.x = box.left;
 				break;
 			default:

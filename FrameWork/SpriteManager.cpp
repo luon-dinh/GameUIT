@@ -93,6 +93,8 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 905, 12,943, 41));//die on air!=none 39
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 917, 72, 945, 102));//40
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 922, 136, 945, 162));//41
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1068, 14, 1113, 46));//shocking 42
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1068, 74, 1113, 106));//43
 
 	//Cắt sprite cho từng trạng thái của shield
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
@@ -121,6 +123,13 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 43, 0, 86, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 102, 0, 129, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 140, 0, 172, 24));
+	//cắt sprite cho green solder
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 0, 43, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 24, 43, 48));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 48, 43, 72));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 43, 0, 86, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 102, 0, 129, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 140, 0, 172, 24));
 	//cắt sprite cho bullet explode
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 0, 28, 30));
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 30, 28, 60));

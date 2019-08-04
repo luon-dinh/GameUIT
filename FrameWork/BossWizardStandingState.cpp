@@ -34,13 +34,28 @@ void BossWizardStandingState::Update(float dt)
 		{
 			wizard->direction = BossWizard::MoveDirection::LeftToRight;
 		}
+		if (wizard->isMode1)
+		{
+			wizard->ChangeState(State::RUNNING);
+			wizard->isMode1 = false;
+			return;
+		}
 		//đang đứng gần onoff thì punch
 		if (wizard->flyMode != 1&&wizard->GetStandingGround()->type==Type::GROUND)
 		{
 			//wizard->flyMode = 1;
-			wizard->direction = BossWizard::MoveDirection::LeftToRight;
-			wizard->ChangeState(State::STAND_PUNCH);
-			return;
+			if (wizard->turnOffLight)
+			{
+				wizard->direction = BossWizard::MoveDirection::LeftToRight;
+				wizard->ChangeState(State::STAND_PUNCH);
+				return;
+			}
+			else
+			{
+				wizard->flyMode = 1;
+				wizard->ChangeState(State::FLYING);
+				return;
+			}
 		}
 		else
 		{

@@ -15,7 +15,6 @@
 #include "Shockwave.h"
 #include "Camera.h"	
 #include "Solder.h"
-#include "EletricBat.h"
 
 PlaySceneCharles::PlaySceneCharles()
 {
@@ -29,6 +28,8 @@ PlaySceneCharles::PlaySceneCharles()
 
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
+
+	grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
 	//grid->Add(new WhiteFlyingRobot(200, 180));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
