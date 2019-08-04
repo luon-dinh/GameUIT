@@ -6,7 +6,7 @@ class MovingPlatformHorizontal : public MovingPlatform
 	const int travelRoadLength = 100;
 
 	//Tốc độ mà nó đi theo phương ngang.
-	const int travelSpeed = 1;
+	const int travelSpeed = 2;
 
 	//Vị trí bắt đầu lúc nào cũng là nằm bên trái.
 	int initX;

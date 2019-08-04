@@ -86,6 +86,8 @@ public:
 	static int ITEMLOOTERMAP2;
 	static int BLUESOLDIER;
 	static int REDROCKET;
+	static int DISAPPEARING_PLATFORM;
+	static int MOVING_PLATFORM;
 };
 
 //Đây là class chứa trọng số vẽ.
@@ -120,6 +122,13 @@ enum RedRocketRobotType
 	TWOSIDED = 1,
 	TWOSIDEDNONLINEAR = 2,
 	ONESIDEDJUMPING = 3
+};
+
+enum MovingPlatformType
+{
+	CIRCLE = 0,
+	CROSSED = 1,
+	HORIZONTAL = 2
 };
 
 enum ItemType {

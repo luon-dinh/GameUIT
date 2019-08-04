@@ -293,6 +293,23 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 			object = new Container((ItemType)objectSpecialID);
 		else if (objectID == ObjectID::ITEMLOOTERMAP2)
 			object = new Container((ItemType)objectSpecialID, true);
+		else if (objectID == ObjectID::DISAPPEARING_PLATFORM)
+			object = new DisappearingPlatform(midX, midY);
+		else if (objectID == ObjectID::MOVING_PLATFORM)
+		{
+			switch (objectSpecialID)
+			{
+			case MovingPlatformType::CIRCLE:
+				object = new MovingPlatformCircle(midX, midY);
+				break;
+			case MovingPlatformType::CROSSED:
+				object = new MovingPlatformCrossed(midX, midY);
+				break;
+			case MovingPlatformType::HORIZONTAL:
+				object = new MovingPlatformHorizontal(midX, midY);
+				break;
+			}
+		}
 		if (object == nullptr)
 			continue;
 
@@ -813,11 +830,6 @@ void Grid::RenderActivatedCells()
 				//Nếu object không được activated thì ta không thực hiện render.
 				if (!object->GetActivatedInGridStatus())
 					continue;
-				MapStaticObject* itemLooter = dynamic_cast<MapStaticObject*> (object);
-				if (itemLooter != nullptr)
-				{
-					int a = 10;
-				}
 				//Thêm object vào set chuẩn bị vẽ.
 				orderOfRenders.insert(object);
 				

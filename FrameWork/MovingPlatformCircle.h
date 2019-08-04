@@ -14,7 +14,7 @@ class MovingPlatformCircle : public MovingPlatform
 	int delayTick = 0;
 
 	//Góc hiện tại của platform.
-	double currentDegree = 0;
+	double currentDegree = 270;
 
 public:
 	MovingPlatformCircle(int posX, int posY);
