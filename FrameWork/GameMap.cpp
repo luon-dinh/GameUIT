@@ -26,6 +26,8 @@ GameMap::GameMap(const char * _imgPath, const char * _txtPath, const char * _map
 		tMap = new MapPittsburghPortal02(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL2LIGHT);
 	else if (map == MapName::PITTSBURGHPORTAL2DARK)
 		tMap = new MapPittsburghPortal02(imgPath, txtPath, Tag::MAPPITTSBURGHPORTAL2DARK);
+	else if (map == MapName::PITTSBURGHBOSS)
+		tMap = new MapPittsburghBoss(imgPath, txtPath);
 
 	camera = Camera::getCameraInstance();
 

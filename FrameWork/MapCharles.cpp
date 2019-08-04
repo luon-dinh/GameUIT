@@ -31,7 +31,7 @@ void MapCharles::Update(double dt)
 void MapCharles::Draw(Camera* camera)
 {
 	//StartRow, EndRow, StartCol, EndCol lúc nào cũng phải bao srcRECT 1 tile.
-//Quét theo chiều từ dưới lên, từ trái qua phải.
+	//Quét theo chiều từ dưới lên, từ trái qua phải.
 
 	RECT srcRECT = camera->getCameraRECT();
 

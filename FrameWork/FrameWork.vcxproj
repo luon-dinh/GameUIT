@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -187,6 +187,7 @@
     <ClCompile Include="MapCharles.cpp" />
     <ClCompile Include="MapCharlesBoss.cpp" />
     <ClCompile Include="MapPittsburgh.cpp" />
+    <ClCompile Include="MapPittsburghBoss.cpp" />
     <ClCompile Include="MapPittsburghPortal01.cpp" />
     <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="PlaySceneCharles.cpp" />
     <ClCompile Include="PlaySceneCharlesBoss.cpp" />
     <ClCompile Include="PlayScenePittsburgh.cpp" />
+    <ClCompile Include="PlayScenePittsburghBoss.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal01.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal02.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
@@ -299,6 +301,7 @@
     <ClInclude Include="MapCharles.h" />
     <ClInclude Include="MapCharlesBoss.h" />
     <ClInclude Include="MapPittsburgh.h" />
+    <ClInclude Include="MapPittsburghBoss.h" />
     <ClInclude Include="MapPittsburghPortal01.h" />
     <ClInclude Include="MapPittsburghPortal02.h" />
     <ClInclude Include="MapStaticObject.h" />
@@ -335,6 +338,7 @@
     <ClInclude Include="PlaySceneCharles.h" />
     <ClInclude Include="PlaySceneCharlesBoss.h" />
     <ClInclude Include="PlayScenePittsburgh.h" />
+    <ClInclude Include="PlayScenePittsburghBoss.h" />
     <ClInclude Include="PlayScenePittsburghPortal01.h" />
     <ClInclude Include="PlayScenePittsburghPortal02.h" />
     <ClInclude Include="PlaySceneWithLight.h" />
