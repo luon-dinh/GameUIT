@@ -93,6 +93,8 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 905, 12,943, 41));//die on air!=none 39
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 917, 72, 945, 102));//40
 	spriteManager->addSprite(new Sprite(Tag::PLAYER, 922, 136, 945, 162));//41
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1068, 14, 1113, 46));//shocking 42
+	spriteManager->addSprite(new Sprite(Tag::PLAYER, 1068, 74, 1113, 106));//43
 
 	//Cắt sprite cho từng trạng thái của shield
 	spriteManager->addSprite(new Sprite(Tag::SHIELD, 0, 8, 16, 15));
@@ -121,6 +123,13 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 43, 0, 86, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 102, 0, 129, 24));
 	spriteManager->addSprite(new Sprite(Tag::BLUESOLDIER, 140, 0, 172, 24));
+	//cắt sprite cho green solder
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 0, 43, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 24, 43, 48));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 0, 48, 43, 72));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 43, 0, 86, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 102, 0, 129, 24));
+	spriteManager->addSprite(new Sprite(Tag::GREENSOLDIER, 140, 0, 172, 24));
 	//cắt sprite cho bullet explode
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 0, 28, 30));
 	spriteManager->addSprite(new Sprite(Tag::BULLETEXPLODE, 0, 30, 28, 60));
@@ -254,15 +263,16 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 64, 48, 96));
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 96, 48, 128));
 	// cắt sprite cho evil bat
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 16, 38));	// Fake container state
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 16, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 76, 16, 114));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16, 0, 32, 38)); // Nail on ground
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,38, 32, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,76, 32, 114));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 0, 48, 38));	//	Fly state
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 38, 48, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT,48, 0, 64, 38));	// Explode
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 23, 38));	// Bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 23, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 23, 0, 46, 38)); // eletric bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 23,38, 46, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 0, 69, 38));	//	egg state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 38, 69, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 76, 69, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 0, 92, 38));	// Explode
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 38, 92, 76));	
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 76, 92, 114));	
 
 	//Cắt sprite cho electric shockwave.
 	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 0, 48, 16));

@@ -5,6 +5,12 @@
 #include"Shield.h"
 class BulletSolder:public Bullet {
 public:
+	float bulletSpeedx = 2;
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletSolder(MoveDirection direction)
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
@@ -14,10 +20,10 @@ public:
 		this->existTime = 0;
 		this->direction = direction;
 		if (this->direction == MoveDirection::RightToLeft)
-			this->vx = ENEMY_BULLET_SPEED * -2;
+			this->vx = -bulletSpeedx;
 		else
 		{
-			this->vx = ENEMY_BULLET_SPEED * 2;
+			this->vx = bulletSpeedx;
 		}
 	}
 	void Update(float dt) override

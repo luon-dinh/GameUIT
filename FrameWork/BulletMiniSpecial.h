@@ -10,6 +10,12 @@ public:
 	bool isOnBossMini;
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
+
+	bool CanGetThroughShield() override
+	{
+		return true;
+	}
+
 	BulletMiniSpecial(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
 	{
 		this->tag = Tag::BOSSMINIBULLET;
@@ -33,6 +39,7 @@ public:
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
+		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
 		this->pos.x += this->vx;
 		this->pos.y = parapol->GetYFromX(this->pos.x);
 	}
@@ -44,7 +51,14 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)
 	{
-		
+		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return;
+		}
 	}
 
 	bool OnRectCollided(Object* object, CollisionSide side)

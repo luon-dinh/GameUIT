@@ -23,6 +23,8 @@ void TextureManager::loadResources()
 	textures->addTexture(Tag::BLUESOLDIER, (char*)".\\..\\Resources\\Images\\Enermy\\BlueSoldier.png");
 	textures->addTexture(Tag::BLUESOLDERBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\SoldierBullet.png");
 	//textures->addTexture(Tag::MAP1, ".\\..\\Resources\\Images\\map1.png");
+	//texture dùng cho green solder
+	textures->addTexture(Tag::GREENSOLDIER, (char*)".\\..\\Resources\\Images\\Enermy\\GreenSoldier.png");
 
 	//add texture dùng cho bullet explode
 	textures->addTexture(Tag::BULLETEXPLODE, (char*)".\\..\\Resources\\Images\\Enermy\\BulletExplode.png");

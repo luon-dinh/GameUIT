@@ -1,6 +1,7 @@
 ﻿#include"Player.h"
 #include"Camera.h"
 #include"Debug.h"
+#include "SceneManager.h"
 
 Player* Player::instance = NULL;
 
@@ -114,10 +115,10 @@ BoundingBox Player::getBoundingBox()
 		{
 		case MoveDirection::LeftToRight:
 			box.left = this->pos.x - this->width / 2; 
-			box.right = this->pos.x + 6;
+			box.right = this->pos.x;
 			break;
 		case MoveDirection::RightToLeft:
-			box.left = this->pos.x - 6;
+			box.left = this->pos.x;
 			box.right = this->pos.x + this->width / 2;
 			break;
 		default:
@@ -131,10 +132,10 @@ BoundingBox Player::getBoundingBox()
 		{
 		case MoveDirection::LeftToRight:
 			box.left = this->pos.x - this->width / 2;
-			box.right = this->pos.x  -4;
+			box.right = this->pos.x ;
 			break;
 		case MoveDirection::RightToLeft:
-			box.left = this->pos.x-4;
+			box.left = this->pos.x;
 			box.right = this->pos.x + this->width / 2;
 			break;
 		default:
@@ -354,6 +355,8 @@ void Player::ChangeState(State stateName) {
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::Transparent);
 		}
+		PlayerKickPart* kickPart = new PlayerKickPart();
+		SceneManager::getInstance()->AddObjectToCurrentScene(kickPart);
 		break;
 	}
 	case State::SHIELD_DOWN: {
@@ -367,11 +370,13 @@ void Player::ChangeState(State stateName) {
 	}
 	case State::STAND_PUNCH: {
 		SetVx(0);
-		PlayerHandPunch::getInstance()->SetPositionToPlayer();
+		PlayerHandPunch* handPunch = new PlayerHandPunch();
+		SceneManager::getInstance()->AddObjectToCurrentScene(handPunch);
 		break;
 	}
 	case State::DUCKING_PUNCHING: {
-		PlayerHandPunch::getInstance()->SetPositionToPlayer();
+		PlayerHandPunch* handPunch = new PlayerHandPunch();
+		SceneManager::getInstance()->AddObjectToCurrentScene(handPunch);
 		return;
 	}
 	case State::DUCKING: {
@@ -752,15 +757,25 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return false;
 		}
 		case Type::ENEMY: {
+			auto enemyCast = (Enemy*)object;
+			// ở trạng thái không thể tấn công
 			if (this->IsImmortal() || this->IsNonAttackable())
 				return false;
+			// ở trạng thái DASHING
 			if (this->state == State::DASHING)
 				return false;
+			// ở trạng thái shield down và chạm là bottom
 			if (this->state == State::SHIELD_DOWN && side == CollisionSide::bottom)
 				return false;
-			this->OnCollisionWithEnemy(object);
+			// enemy gây sát thương kiểu shock điện
+			if (enemyCast->GetDamageEffect() == Enemy::DamageEffect::Eletric) {
+				//this->OnShockedElectric(enemyCast);
+			}
+			else {
+				this->OnCollisionWithEnemy(object);
+			}
 			return true;
-	}
+		}
 	}
 	if (object->tag == Tag::ITEM) {
 		this->LootItem((Item*)object);
@@ -919,6 +934,17 @@ void Player::OnCollisionWithBullet(Bullet* bullet) {
 		this->ChangeState(State::FLYING_BEATEN);
 	}
 	this->BeingAttacked(bullet->GetBulletDamage());
+}
+void Player::OnShockedElectric(Object* object) {
+	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
+		this->pos.x -= 5;
+	}
+	else {
+		this->pos.x += 5;
+	}
+	this->SetVx(0);
+	this->ChangeState(State::SHOCKING);
+	this->BeingAttacked(object->GetCollisionDamage());
 }
 #pragma endregion
 

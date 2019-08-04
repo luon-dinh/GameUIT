@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D1C38621-3F5E-447C-BEBD-DF4B2B13E908}</ProjectGuid>
     <RootNamespace>FrameWork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -139,7 +139,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BossMini.cpp" />
     <ClCompile Include="BossWizard.cpp" />
+    <ClCompile Include="BossWizardBeatenState.cpp" />
     <ClCompile Include="BossWizardDeadState.cpp" />
     <ClCompile Include="BossWizardFlyingState.cpp" />
     <ClCompile Include="BossWizardPunchingState.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="EletricBat.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EvilBat.cpp" />
     <ClCompile Include="Equation.cpp" />
@@ -173,6 +176,7 @@
     <ClCompile Include="GameObjectProperty.cpp" />
     <ClCompile Include="GamePlayerProperty.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="GreenSolder.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GroundCollision.cpp" />
     <ClCompile Include="HealthPoint.cpp" />
@@ -209,6 +213,7 @@
     <ClCompile Include="PlayerShieldAttackState.cpp" />
     <ClCompile Include="PlayerShieldDownState.cpp" />
     <ClCompile Include="PlayerShieldUpState.cpp" />
+    <ClCompile Include="PlayerShockingState.cpp" />
     <ClCompile Include="PlayerSittingState.cpp" />
     <ClCompile Include="PlayerStandingState.cpp" />
     <ClCompile Include="PlayerStandPunchState.cpp" />
@@ -243,6 +248,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BossMini.h" />
     <ClInclude Include="BossWizard.h" />
+    <ClInclude Include="BossWizardBeatenState.h" />
     <ClInclude Include="BossWizardDeadState.h" />
     <ClInclude Include="BossWizardFlyingState.h" />
     <ClInclude Include="BossWizardPunchingState.h" />
@@ -274,6 +280,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
+    <ClInclude Include="EletricBat.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Equation.h" />
     <ClInclude Include="ExitSignal.h" />
@@ -282,6 +289,7 @@
     <ClInclude Include="GameObjectProperty.h" />
     <ClInclude Include="GamePlayerProperty.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="GreenSolder.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GroundCollision.h" />
     <ClInclude Include="HealthPoint.h" />
@@ -318,6 +326,7 @@
     <ClInclude Include="PlayerShieldAttackState.h" />
     <ClInclude Include="PlayerShieldDownState.h" />
     <ClInclude Include="PlayerShieldUpState.h" />
+    <ClInclude Include="PlayerShockingState.h" />
     <ClInclude Include="PlayerSittingState.h" />
     <ClInclude Include="PlayerStandingState.h" />
     <ClInclude Include="PlayerStandPunchState.h" />

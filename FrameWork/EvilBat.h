@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Enemy.h"
-
+#include <unordered_map>
+#include "Player.h"
+using namespace std;
 
 class EvilBat : public Enemy, public GameObjectProperty {
 protected:
@@ -11,41 +13,55 @@ protected:
 		Dead
 	};
 
-	Animation* fakeContainerAnim;
-	Animation* belowGroundAnim;
-	Animation* flyAnim;
+	unordered_map<BatState, Animation*> animations;
+
 	D3DXVECTOR2 initialPos;
 	
+	int movingDelayFrame;
 	bool activeAnimation;
-	bool moveFlag;
-	bool preMoveFlag;
+	bool activeFly;
+	bool isWakenUp;
+	int moveFlag;
+	int preMoveFlag;
 	bool isFlyDown;
 	int leftX;
 	int rightX;
 	int edgeY;
+
 	int turnAroundCount;
+	int prepareFlyCount;
+	int flipFrameCount;
+	int incollidableFrameCount;
+	int explodeFrameCount;
 	BatState state;
 
-	void LoadAllAnimations();
+	virtual void LoadAllAnimations();
 	void UpdatePosition();
 	void ChangeState(BatState state);
 
 	void CallMove();
+	void PrepareToFly();
 	void Move1();
 	void Move2();
 	void Move3();
-	void StopMoving();
+	virtual void StopMoving();
+	void Explode();
+	virtual bool IsWakenUpBy(Object* object);
 
-	void(EvilBat::*curentMoveHandler)();
-
-	void SetMoveFlag(bool value);
+	void SetMoveFlag(int value);
 	bool IsMoveFlagChanged();
 
+	virtual bool IsFlyAgain();
 
+	void InnerRender();
 
 	const int Y_MOVING_LENGTH = 50;
 	const int TURN_AROUND_POINT_DENTA = 50;
 	const int TURN_AROUND_COUNT = 4;
+	const int MOVING_DELAY_FRAME = 60;
+	const int PREPARE_TO_FLY_FRAME = 50;
+	const int FLIP_RENDER_FRAME = 5;
+	const int INCOLLIDABLE_FRAME = 90;
 
 public:
 	EvilBat(D3DXVECTOR2 position);
@@ -61,6 +77,7 @@ public:
 	bool OnRectCollided(Object* object, CollisionSide side) override;
 	void Update(float dt) override;
 	void Render() override;
+	void FlipRender();
 	int GetCollisionDamage() override;
 	int GetDamage() override;
 	void UpdateGameProperty() override {};

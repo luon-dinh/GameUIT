@@ -3,15 +3,16 @@
 
 Canon::Canon() : Canon(RotateDirection::Left) {}
 
-Canon::Canon(RotateDirection direction) {
+Canon::Canon(RotateDirection direction) : Canon(direction, D3DXVECTOR2(0,0)) {}
+
+Canon::Canon(RotateDirection direction, D3DXVECTOR2 position) {
 	this->tag = Tag::CANON;
 	this->type = Type::ENEMY;
 	this->currentAnimation = new Animation(Tag::CANON, 0, 7, 10);
 	this->isDead = false;
 	this->SetVelocity(D3DXVECTOR2(0, 0));
 	this->curFrameRotate = this->curFrameFire = 0;
-	this->pos.x = 100;
-	this->pos.y = 66;
+	this->pos = position;
 
 	this->SetCanonDirection(direction);
 }
@@ -92,13 +93,14 @@ void Canon::Fire() {
 
 bool Canon::OnRectCollided(Object* object, CollisionSide side) {
 	switch (object->tag) {
-	case Tag::SHIELD: 
-		if (this->IsRotate())
-			return false;
-		// khi va chạm shield thì rotate
-		OnStartRotate();
-		return true;
-	}
+		case Tag::PLAYER_PART:
+		case Tag::SHIELD: 
+			if (this->IsRotate())
+				return false;
+			// khi va chạm shield thì rotate
+			OnStartRotate();
+			return true;
+		}
 	return false;
 }
 

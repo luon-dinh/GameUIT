@@ -5,6 +5,7 @@ Enemy::Enemy()
 	explodeAnim = new Animation(Tag::ENEMYEXPLODE, 0, 3, delaySpriteExplode);
 	this->tag = Tag::ENERMY;
 	this->type = Type::ENEMY;
+	this->damageEffect = DamageEffect::Normal;
 }
 
 Enemy::~Enemy() {
@@ -40,4 +41,8 @@ void Enemy::Render()
 void Enemy::Respawn()
 {
 	isDead = false;
+}
+
+Enemy::DamageEffect Enemy::GetDamageEffect() {
+	return this->damageEffect;
 }
