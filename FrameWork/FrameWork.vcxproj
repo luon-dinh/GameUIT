@@ -165,6 +165,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawDebug.cpp" />
     <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="EletricBat.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EvilBat.cpp" />
     <ClCompile Include="Equation.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="DrawDebug.h" />
     <ClInclude Include="dsutil.h" />
+    <ClInclude Include="EletricBat.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Equation.h" />
     <ClInclude Include="ExitSignal.h" />

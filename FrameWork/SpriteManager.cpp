@@ -263,15 +263,16 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 64, 48, 96));
 	spriteManager->addSprite(new Sprite(Tag::DOOR_LIGHT, 0, 96, 48, 128));
 	// cắt sprite cho evil bat
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 16, 38));	// Fake container state
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 16, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 76, 16, 114));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16, 0, 32, 38)); // Nail on ground
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,38, 32, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 16,76, 32, 114));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 0, 48, 38));	//	Fly state
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 32, 38, 48, 76));
-	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT,48, 0, 64, 38));	// Explode
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 0, 23, 38));	// Bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 0, 38, 23, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 23, 0, 46, 38)); // eletric bat
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 23,38, 46, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 0, 69, 38));	//	egg state
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 38, 69, 76));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 46, 76, 69, 114));
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 0, 92, 38));	// Explode
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 38, 92, 76));	
+	spriteManager->addSprite(new Sprite(Tag::EVIL_BAT, 69, 76, 92, 114));	
 
 	//Cắt sprite cho electric shockwave.
 	spriteManager->addSprite(new Sprite(Tag::ELECTRIC_SHOCKWAVE, 0, 0, 48, 16));
