@@ -477,6 +477,9 @@
     <ClCompile Include="GreenSolder.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerHandOnRope.cpp">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
+   </ClCompile>
     <ClCompile Include="BossWizardBeatenState.cpp">
       <Filter>Objects\Enemy\BossWizard</Filter>
     </ClCompile>
@@ -836,6 +839,9 @@
     <ClInclude Include="PlayerShockingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerHandOnRope.h">
+      <Filter>Objects\Player\PlayerDistinctParts</Filter>
+   </ClInclude>
     <ClInclude Include="MapPittsburghBoss.h">
       <Filter>GameMap\TileMap\MapPittsburghBoss</Filter>
     </ClInclude>

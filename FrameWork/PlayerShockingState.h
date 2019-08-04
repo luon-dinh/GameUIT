@@ -4,6 +4,9 @@
 #include "Global.h"
 
 class PlayerShockingState : public PlayerState {
+private:
+	const int SHOCKING_FRAME = 30;
+	int curShockFrame;
 public:
 	PlayerShockingState();
 	~PlayerShockingState();

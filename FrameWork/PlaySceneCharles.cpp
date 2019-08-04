@@ -16,6 +16,9 @@
 #include "Shockwave.h"
 #include "Camera.h"	
 #include "Solder.h"
+#include "EletricBat.h"
+#include "GreenSolder.h"
+#include "Canon.h"
 #include"GreenSolder.h"
 
 PlaySceneCharles::PlaySceneCharles()
@@ -48,6 +51,7 @@ PlaySceneCharles::PlaySceneCharles()
 	////grid->Add(new Door(80, 80));
 	//grid->Add(new Door(80, 80));
 	//grid->Add(new Shockwave(120, 80));
+	grid->Add(new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(200, 66)));
 	//grid->Add(new EvilBat(D3DXVECTOR2(100, 200)));
 
 	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));

@@ -23,7 +23,7 @@ Player::Player() : GamePlayerProperty()
 	this->curanimation = animations[this->state];
 	this->prevState = NULL;
 	this->collisionAffect = TRUE;
-
+	this->detectRopeCollision = false;
 	this->SetMoveProperty(MoveProperties::StoppedBySolidBox);
 
 	this->flipRenderFrame = 0;
@@ -55,11 +55,10 @@ void Player::LoadAllAnimations() {
 	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
 	animations[FLOATING] = new Animation(PLAYER, 28, 37);
 	animations[DIVING] = new Animation(PLAYER, 37, 39);
-	animations[CLIMBING] = new Animation(PLAYER, 23, 26);
 	animations[BEATEN] = new Animation(PLAYER, 26, 27);
-	// dùng tạm animation của BEATEN 
 	animations[FLYING_BEATEN] = new Animation(PLAYER, 39, 40);
 	animations[DEAD] = new Animation(PLAYER, 27, 28);
+	animations[SHOCKING] = new Animation(PLAYER, 42, 44);
 }
 
 void Player::LoadAllStates() {
@@ -81,6 +80,7 @@ void Player::LoadAllStates() {
 	this->playerStates[State::BEATEN] = new PlayerBeatenState();
 	this->playerStates[State::FLYING_BEATEN] = new PlayerFlyingBeatenState();
 	this->playerStates[State::DEAD] = new PlayerDyingState();
+	this->playerStates[State::SHOCKING] = new PlayerShockingState();
 }
 
 
@@ -109,6 +109,8 @@ BoundingBox Player::getBoundingBox()
 	box.vy = this->vy;
 	box.top = this->pos.y + height / 2;
 	box.left = this->pos.x - width / 2;
+	box.bottom = this->pos.y - height / 2;
+	box.right = this->pos.x + width / 2;
 	if (this->state == State::DUCKING_PUNCHING)
 	{
 		switch (this->direction)
@@ -143,9 +145,25 @@ BoundingBox Player::getBoundingBox()
 		}
 		return box;
 	}
+	if (this->state == State::KICKING)
+	{
+		switch (this->direction)
+		{
+		case MoveDirection::LeftToRight:
+			box.right = this->pos.x - 4;
+			box.left = this->pos.x - 20;
+			break;
+		case MoveDirection::RightToLeft:
+			box.left = this->pos.x + 4;
+			box.right = this->pos.x + 20;
+			break;
+		default:
+			break;
+		}
+		
+		return box;
+	}
 
-	box.bottom = this->pos.y - height / 2;
-	box.right = this->pos.x + width / 2;
 	return box;
 }
 
@@ -409,6 +427,11 @@ void Player::ChangeState(State stateName) {
 		this->SetActive(false);
 		shield->SetShieldState(Shield::ShieldState::NotRender);
 		this->SetToNonAttackableState(300);
+		return;
+	}
+	case State::SHOCKING: {
+		shield->SetShieldState(Shield::ShieldState::NotRender);
+		this->SetToNonAttackableState();
 		return;
 	}
 	}
@@ -769,12 +792,18 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				return false;
 			// enemy gây sát thương kiểu shock điện
 			if (enemyCast->GetDamageEffect() == Enemy::DamageEffect::Eletric) {
-				//this->OnShockedElectric(enemyCast);
+				this->OnShockedElectric(enemyCast);
 			}
 			else {
 				this->OnCollisionWithEnemy(object);
 			}
 			return true;
+		}
+		case Type::ROPE: {
+			//if (this->GetOnAirState() == Player::OnAir::Falling) {
+			//	PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
+			//	SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
+			//}
 		}
 	}
 	if (object->tag == Tag::ITEM) {
@@ -882,7 +911,7 @@ void Player::OnHeadOnSolidBox(Object* solid) {
 }
 void Player::OnClimbingTheRope(Object* rope) {
 	this->ChangeState(State::CLIMBING);
-	this->pos.y = rope->getStaticObjectBoundingBox().bottom + 4 - this->getHeight() / 2;
+	this->pos.y = rope->getBoundingBox().top - this->getHeight() / 2 - 2;
 }
 bool Player::AcceptNoCollision(Object* object, CollisionSide side) {
 	auto objBox = object->getStaticObjectBoundingBox();
