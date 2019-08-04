@@ -1,10 +1,12 @@
 ﻿#include "PlayScenePittsburghBoss.h"
+#include"BossMini.h"
 
 PlayScenePittsburghBoss::PlayScenePittsburghBoss()
 {
 	world = new GameMap(pittsburghBossPNG, pittsburghBossTXT, nullptr, MapName::PITTSBURGHBOSS);
 	world->SetCamera(camera);
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), pittsburghBossSpawn, pittsburghBossMapObject);
+	grid->Add(BossMini::getInstance());
 }
 
 PlayScenePittsburghBoss::~PlayScenePittsburghBoss()
