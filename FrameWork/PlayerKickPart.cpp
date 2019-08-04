@@ -1,12 +1,14 @@
 ﻿#include "PlayerKickPart.h"
 
 
-PlayerKickPart* PlayerKickPart::instance = NULL;
 
 PlayerKickPart::PlayerKickPart() {
-	this->SetDamage(2);
-	this->SetHealth(1000);
 	this->tag = Tag::PLAYER_PART;
+
+	this->isCollidable = true;
+	this->existInOneFrame = false;
+
+	this->SetPositionToPlayer();
 }
 
 PlayerKickPart::~PlayerKickPart() {
@@ -18,46 +20,25 @@ void PlayerKickPart::SetPositionToPlayer() {
 	auto player = Player::getInstance();
 
 	switch (player->GetMoveDirection()) {
-	case MoveDirection::LeftToRight: this->pos.x = player->pos.x + 19.5;break;
-	case MoveDirection::RightToLeft: this->pos.x = player->pos.x - 19.5;break;
+		case MoveDirection::LeftToRight: this->pos.x = player->pos.x + 14.5;break;
+		case MoveDirection::RightToLeft: this->pos.x = player->pos.x - 14.5;break;
 	}
-
-	if (player->state == State::STAND_PUNCH) {
-		this->pos.y = player->pos.y + 11;
-		return;
-	}
-	if (player->state == State::DUCKING_PUNCHING) {
-		this->pos.y = player->pos.y - 2;
-	}
-}
-PlayerKickPart* PlayerKickPart::getInstance() {
-	if (instance == NULL) {
-		instance = new PlayerKickPart();
-	}
-	return instance;
-}
-
-void PlayerKickPart::releaseInstance() {
-	delete instance;
-}
-
-BOOL PlayerKickPart::GetActive() {
-	auto player = Player::getInstance();
-
-	if (player->state == State::KICKING) {
-		this->isCollidable = true;
-		return true;
-	}
-	this->isCollidable = false;
-	return false;
+	this->pos.y = player->pos.y - 1;
 }
 
 int PlayerKickPart::GetCollisionDamage() {
-	return 2;
+	return KICK_DAMAGE;
 }
 
 void PlayerKickPart::Update(float dt) {
-	SetPositionToPlayer();
+	// chỉ cho phép object này tồn tại trong 1 frame
+	if (!this->existInOneFrame) {
+		this->existInOneFrame = this->isCollidable = true;
+	}
+	else {
+		this->existInOneFrame = this->isCollidable = false;
+		this->DeactivateObjectInGrid();
+	}
 }
 
 void PlayerKickPart::Render() {
@@ -65,10 +46,10 @@ void PlayerKickPart::Render() {
 }
 BoundingBox PlayerKickPart::getBoundingBox() {
 	BoundingBox box;
-	box.left = this->pos.x / 2 - 5.5;
+	box.left = this->pos.x - 5.5;
 	box.right = box.left + 11;
-	box.top = this->pos.y / 2 + 2;
-	box.bottom = box.top - 4;
+	box.top = this->pos.y + 3;
+	box.bottom = box.top - 6;
 
 	return box;
 }
@@ -77,6 +58,5 @@ void PlayerKickPart::OnCollision(Object* object, collisionOut* colOut) {
 }
 
 bool PlayerKickPart::OnRectCollided(Object* object, CollisionSide side) {
-	int a = 1;
 	return false;
 }

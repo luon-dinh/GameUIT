@@ -462,6 +462,9 @@
     <ClCompile Include="BossMini.cpp">
       <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShockingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -802,6 +805,9 @@
     </ClInclude>
     <ClInclude Include="EletricBat.h">
       <Filter>Objects\Enemy\EvilBat</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShockingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

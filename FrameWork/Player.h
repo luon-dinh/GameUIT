@@ -19,20 +19,21 @@
 #include "PlayerClimbingState.h"
 #include "PlayerBeatenState.h"
 #include "PlayerFlyingBeatenState.h"
+#include "PlayerShockingState.h"
 #include "PlayerDyingState.h"
-#include "Object.h"
 #include "Collision.h"
 #include "GroundCollision.h"
 #include "SolidBoxCollision.h"
 #include "GamePlayerProperty.h"
 #include "HealthPoint.h"
-#include "Bullet.h"
 #include "BulletGreenCannon.h"
 #include "BulletRedRocket.h"
 #include "BulletRedRocketLinear.h"
 #include "BulletRedRocketNonLinear.h"
 #include "PlayerHandPunch.h"
 #include "PlayerKickPart.h"
+#include "Enemy.h"
+
 
 
 class Player :public Object, public GamePlayerProperty
@@ -151,6 +152,7 @@ public:
 
 	void OnCollisionWithEnemy(Object* enemy);
 	void OnCollisionWithBullet(Bullet* bullet);
+	void OnShockedElectric(Object* object);
 
 #pragma endregion
 
