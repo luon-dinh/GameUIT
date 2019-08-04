@@ -276,7 +276,21 @@ void Shield::Update(float dt)
 			this->pos.x = player->pos.x;
 			return;
 		}
-
+		if (player->state == State::DASHING) {
+			this->pos.y = player->pos.y;
+			switch (direction)
+			{
+			case Object::LeftToRight:
+				this->pos.x = player->getBoundingBox().right;
+				break;
+			case Object::RightToLeft:
+				this->pos.x = player->getBoundingBox().left;
+				break;
+			default:
+				break;
+			}
+			return;
+		}
 		if (this->state == ShieldState::NotRender) {
 			this->pos = player->pos;
 		}

@@ -153,6 +153,7 @@ public:
 	void OnCollisionWithEnemy(Object* enemy);
 	void OnCollisionWithBullet(Bullet* bullet);
 	void OnShockedElectric(Object* object);
+	void OnShieldFloatOnWater(Object* object);
 
 #pragma endregion
 

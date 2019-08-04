@@ -6,10 +6,10 @@
 class BulletSolder:public Bullet {
 public:
 	float bulletSpeedx = 2;
-	bool CanGetThroughShield() override
+	/*bool CanGetThroughShield() override
 	{
 		return true;
-	}
+	}*/
 
 	BulletSolder(MoveDirection direction)
 	{

@@ -8,7 +8,7 @@ Canon::Canon(RotateDirection direction) : Canon(direction, D3DXVECTOR2(0,0)) {}
 Canon::Canon(RotateDirection direction, D3DXVECTOR2 position) {
 	this->tag = Tag::CANON;
 	this->type = Type::ENEMY;
-	this->currentAnimation = new Animation(Tag::CANON, 0, 7, 10);
+	this->currentAnimation = new Animation(Tag::CANON, 0, 8, 10);
 	this->isDead = false;
 	this->SetVelocity(D3DXVECTOR2(0, 0));
 	this->curFrameRotate = this->curFrameFire = 0;
@@ -41,8 +41,11 @@ bool Canon::IsRotate() {
 }
 
 void Canon::Rotate() {
+	/*
+	
+	*/
 	this->curFrameRotate++;
-	if (this->curFrameRotate > FRAME_PER_ROTATE) {
+	if (this->curFrameRotate == FRAME_PER_ROTATE) {
 		this->curFrameRotate = 0;
 		this->isRotate = false;
 		this->isCollidable = true;

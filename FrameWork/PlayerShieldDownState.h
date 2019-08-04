@@ -4,6 +4,11 @@
 
 class PlayerShieldDownState : public PlayerState
 {
+private:
+	bool isPushDown;
+
+	int curPushFrameCount;
+	const int PUSH_FRAME = 10;
 public:
 	void InputHandler();
 	void Update(float dt);

@@ -11,10 +11,10 @@ public:
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
 
-	bool CanGetThroughShield() override
+	/*bool CanGetThroughShield() override
 	{
 		return true;
-	}
+	}*/
 
 	BulletMiniSpecial(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
 	{
@@ -41,14 +41,7 @@ public:
 		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
-		if (this->vy < -4)
-		{
-			this->vy = -4;
-			this->pos.y += this->vy;
-		}
-		else { 
-			this->pos.y = parapol->GetYFromX(this->pos.x); 
-		}
+		this->pos.y = parapol->GetYFromX(this->pos.x); 
 	}
 
 	int GetCollisionDamage()override

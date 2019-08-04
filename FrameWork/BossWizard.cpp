@@ -128,15 +128,7 @@ void BossWizard::Update(float dt)
 	{
 		this->pos.x += this->vx;
 		this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx)-this->parapol->GetYFromX(this->pos.x));
-		if (this->vy < -5)
-		{
-			this->vy = -5;
-			this->pos.y += -5;
-		}
-		else
-		{
-			this->pos.y = this->parapol->GetYFromX(this->pos.x);
-		}
+		this->pos.y = this->parapol->GetYFromX(this->pos.x);
 	}
 	else
 	{
@@ -261,11 +253,11 @@ void BossWizard::OnNotCollision(Object* object)
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
-	if (object->type == Type::GROUND || object->type == Type::SOLIDBOX)
+	/*if (object->type == Type::GROUND || object->type == Type::SOLIDBOX)
 	{
 		if (side == CollisionSide::bottom&&this->state != State::FLYING)
 			this->vy = 0;
-	}
+	}*/
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
 	{
 		// đổi map 
