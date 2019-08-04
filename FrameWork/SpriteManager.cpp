@@ -181,6 +181,8 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 0, 28, 36, 55));
 	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 0, 73, 27));
 	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 37, 28, 73, 55));
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 74, 0, 111, 27));
+	spriteManager->addSprite(new Sprite(Tag::WHITEFLYINGROBOT, 74, 28, 111, 55));
 
 
 	////Cắt sprite cho boss wizard.

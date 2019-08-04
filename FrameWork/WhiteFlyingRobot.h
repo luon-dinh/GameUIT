@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "BulletWhiteFlyingRocketer.h"
 #include "Enemy.h"
+#include "Delay.h"
 
 class WhiteFlyingRobot : public Enemy
 {
@@ -15,6 +16,8 @@ private:
 	const int delayFlyingSprite = 120;
 	//Delay xoay vòng vòng khi rớt xuống đất.
 	const int delayFallingAnim = 60;
+	//Delay cho sprite khi bắn.
+	const int delayAttackingAnim = 200;
 
 	//Tốc độ tối đa theo 2 trục X,Y.
 	//Dựa vào tốc độ tối đa mà ta cũng có thể xác định quỹ đạo bay.
@@ -37,6 +40,9 @@ private:
 	//Thời gian đã qua của việc chớp chớp.
 	int currentBeatenTick = 0;
 
+	//Thời gian delay.
+	Delay* attackDelay;
+
 	//Một map để lưu trữ từng animation tương ứng với state.
 	std::unordered_map<State, Animation*> stateAnim;
 
@@ -52,6 +58,7 @@ public:
 	void Render() override;
 
 	void EnemyAliveUpdate(double dt) override;
+	void EnemyAttackingUpdate(double dt);
 	void EnemyBeatenUpdate(double dt) override;
 	void EnemyDeadUpdate(double dt) override;
 

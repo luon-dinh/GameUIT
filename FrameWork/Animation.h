@@ -10,12 +10,13 @@ public:
 	int toframe;
 	int  tiperframe;
 	int ticurframe;
+	bool loop;
 	std::vector<Sprite*>sprites;
 	Tag tag;
 	~Animation();
 	Animation() {};
 	Animation(Tag tag, int idex);
-	Animation(Tag tag, int first, int last, int tipeframe=TIME_PER_FRAME);
+	Animation(Tag tag, int first, int last, int tipeframe=TIME_PER_FRAME, bool _loop = true);
 	Sprite* getSprite(int index);
 	void DelayCurrentFrame(float dt);
 	void Update(float dt);
