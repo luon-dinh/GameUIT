@@ -11,8 +11,8 @@ public:
 	const float maxHelth = 20;
 	const int maxTimeStateDelay = 1000;
 	const float maxDelatXRun = 150;
-	const float minMap = 20;
-	const float maxMap = 235;
+	const float minMap = 0;
+	const float maxMap = 256;
 	const float mapWidth=256;
 	const int maxBullet=3;
 	const float speed = 2;

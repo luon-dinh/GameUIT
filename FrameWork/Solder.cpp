@@ -94,35 +94,27 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 	default:
 		break;
 	}
-	if (object->tag == Tag::SHIELD)
-	{
-		auto shield = Shield::getInstance();
-		if (shield->state == Shield::ShieldState::Attack)
-		{
-			if (shield->direction == MoveDirection::LeftToRight)
-				this->vx = 1;
-			else
-			{
-				this->vx = -1;
-			}
-			this->health -= shield->GetCollisionDamage(); //chưa có hàm getdamage của shield
-			if (this->health <= 0)
-			{
-				this->ChangeState(State::DEAD);
-			}
-			this->isCollidable = false;
-		}
-	}
-	//if (object->tag == Tag::PLAYER)
+	//if (object->tag == Tag::SHIELD)
 	//{
-	//	auto player = Player::getInstance();
-	//	this->health -= player->GetCollisionDamage();
-	//	if (this->health <= 0)
+	//	auto shield = Shield::getInstance();
+	//	if (shield->state == Shield::ShieldState::Attack)
 	//	{
-	//		this->ChangeState(State::DEAD);
+	//		if (shield->direction == MoveDirection::LeftToRight)
+	//			this->vx = 1;
+	//		else
+	//		{
+	//			this->vx = -1;
+	//		}
+	//		this->health -= shield->GetCollisionDamage(); //chưa có hàm getdamage của shield
+	//		if (this->health <= 0)
+	//		{
+	//			this->ChangeState(State::DEAD);
+	//		}
+	//		this->isCollidable = false;
 	//	}
-	//	this->isCollidable = false;
 	//}
+	
+	
 }
 
 bool Solder::OnRectCollided(Object* object, CollisionSide side)
@@ -169,6 +161,15 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 			this->isCollidable = false;
 			
 		}
+	}
+	if (object->tag == Tag::PLAYER_PART)
+	{
+		this->health -= object->GetCollisionDamage();
+		if (this->health <= 0)
+		{
+			ChangeState(State::DEAD);
+		}
+		this->isCollidable = false;
 	}
 	return false;
 }

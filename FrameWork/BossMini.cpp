@@ -172,7 +172,7 @@ void BossMini::Update(float dt)
 		this->onAirState = OnAir::None;
 		if (timeCurrentState < maxTimeStateDelay)// nếu chưa hết thời gian của state
 		{
-			if (timeCurrentState < maxTimeStateDelay / 2 && timeCurrentState + defaultDT >= maxTimeStateDelay / 2) //nếu đang ở giữa thời gian của state thì bắn đạn
+			if (timeCurrentState < maxTimeStateDelay / 2 && timeCurrentState + defaultDT > maxTimeStateDelay / 2) //nếu đang ở giữa thời gian của state thì bắn đạn
 			{
 				auto bullet = new BulletMiniNormal();
 				bullet->direction = this->direction;
@@ -211,9 +211,9 @@ void BossMini::Update(float dt)
 	case State::ATTACKING_FLY://ném thùng
 	{
 		this->onAirState = OnAir::None;
-		D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y - 10);
+		D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y + this->getHeight() / 2);
 		D3DXVECTOR2 pos2;
-		pos2.y = this->pos.y + this->getHeight();
+		pos2.y = this->pos.y + this->getHeight()/2;
 		float delta = this->pos.x - player->pos.x;
 		if (abs(delta) < deltaToThrow)
 		{
@@ -239,8 +239,8 @@ void BossMini::Update(float dt)
 				this->defaultBullet->vy = 0;
 				this->defaultBullet->pos.x = this->pos.x;
 				this->defaultBullet->direction = this->direction;
-				//this->defaultBullet->pos.y = this->pos.y + this->getHeight() / 2;
-				this->defaultBullet->pos.y = this->pos.y-10;
+				this->defaultBullet->pos.y = this->pos.y + this->getHeight() / 2;
+				//this->defaultBullet->pos.y = this->pos.y-10;
 				this->defaultBullet->vx = 0;
 				this->defaultBullet->isOnBossMini = true;
 				SceneManager::getInstance()->AddObjectToCurrentScene(this->defaultBullet);
@@ -263,7 +263,7 @@ void BossMini::Update(float dt)
 				return;
 			}
 			//nếu đến thời điểm ném, cho bullet bay
-			if (timeCurrentState < maxTimeStateDelay / 2 && timeCurrentState + defaultDT >maxTimeStateDelay / 2)
+			if (timeCurrentState < maxTimeStateDelay / 3*2 && timeCurrentState + defaultDT >maxTimeStateDelay /3* 2)
 			{
 				if (this->direction == MoveDirection::RightToLeft)
 				{
@@ -314,11 +314,11 @@ void BossMini::Update(float dt)
 			return;
 		}
 		timeCurrentState += defaultDT;
-		if (this->pos.x < minMap&&this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
+		if (this->pos.x < minMap+this->getWidth()/2&&this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
 		{
 			this->direction = MoveDirection::LeftToRight;
 		}
-		if (this->pos.x > maxMap&&this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
+		if (this->pos.x > maxMap-this->getWidth()/2&&this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
 		{
 			this->direction = MoveDirection::RightToLeft;
 		}

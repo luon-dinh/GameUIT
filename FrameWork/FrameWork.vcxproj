@@ -141,6 +141,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BossMini.cpp" />
     <ClCompile Include="BossWizard.cpp" />
+    <ClCompile Include="BossWizardBeatenState.cpp" />
     <ClCompile Include="BossWizardDeadState.cpp" />
     <ClCompile Include="BossWizardFlyingState.cpp" />
     <ClCompile Include="BossWizardPunchingState.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="MapCharles.cpp" />
     <ClCompile Include="MapCharlesBoss.cpp" />
     <ClCompile Include="MapPittsburgh.cpp" />
+    <ClCompile Include="MapPittsburghBoss.cpp" />
     <ClCompile Include="MapPittsburghPortal01.cpp" />
     <ClCompile Include="MapPittsburghPortal02.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
@@ -222,6 +224,7 @@
     <ClCompile Include="PlaySceneCharles.cpp" />
     <ClCompile Include="PlaySceneCharlesBoss.cpp" />
     <ClCompile Include="PlayScenePittsburgh.cpp" />
+    <ClCompile Include="PlayScenePittsburghBoss.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal01.cpp" />
     <ClCompile Include="PlayScenePittsburghPortal02.cpp" />
     <ClCompile Include="PlaySceneWithLight.cpp" />
@@ -248,6 +251,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BossMini.h" />
     <ClInclude Include="BossWizard.h" />
+    <ClInclude Include="BossWizardBeatenState.h" />
     <ClInclude Include="BossWizardDeadState.h" />
     <ClInclude Include="BossWizardFlyingState.h" />
     <ClInclude Include="BossWizardPunchingState.h" />
@@ -298,6 +302,7 @@
     <ClInclude Include="MapCharles.h" />
     <ClInclude Include="MapCharlesBoss.h" />
     <ClInclude Include="MapPittsburgh.h" />
+    <ClInclude Include="MapPittsburghBoss.h" />
     <ClInclude Include="MapPittsburghPortal01.h" />
     <ClInclude Include="MapPittsburghPortal02.h" />
     <ClInclude Include="MapStaticObject.h" />
@@ -335,6 +340,7 @@
     <ClInclude Include="PlaySceneCharles.h" />
     <ClInclude Include="PlaySceneCharlesBoss.h" />
     <ClInclude Include="PlayScenePittsburgh.h" />
+    <ClInclude Include="PlayScenePittsburghBoss.h" />
     <ClInclude Include="PlayScenePittsburghPortal01.h" />
     <ClInclude Include="PlayScenePittsburghPortal02.h" />
     <ClInclude Include="PlaySceneWithLight.h" />

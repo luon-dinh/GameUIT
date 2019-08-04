@@ -187,7 +187,9 @@ enum Tag {
 	DOOR_DARK,
 	DOOR_LIGHT,
 	ELECTRIC_SHOCKWAVE,
-	CANON
+	CANON,
+	CARO_UP,
+	CARO_DOWN
 };
 
 enum Type {

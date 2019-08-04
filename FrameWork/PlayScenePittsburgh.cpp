@@ -48,6 +48,13 @@ void PlayScenePittsburgh::Update(double dt)
 	if (kbInstance->getKeyPressedOnce(DIK_L))
 		TurnOnOffLight();
 
+	//Test phím qua màn.
+	if (KeyboardManager::getInstance()->getKeyPressedOnce(DIK_Q))
+	{
+		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
+	}
+
 	//Test phím chuyển màn.
 	if (kbInstance->getKeyPressedOnce(DIK_O) && isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL1LIGHT;
@@ -59,12 +66,8 @@ void PlayScenePittsburgh::Update(double dt)
 	else if (kbInstance->getKeyPressedOnce(DIK_K) && !isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
-	////Kiểm tra xem player đã đi đến đích chưa.
-	//if (player->pos.x >= world->getMapWidth() - 50)
-	//{
-	//	Done = true;
-	//	ReplaceToThisMap = MapName::PITTSBURGHBOSS;
-	//}
+	//Kiểm tra xem player đã đi đến đích chưa.
+	GoToNextScene();
 		
 }
 
@@ -88,5 +91,10 @@ void PlayScenePittsburgh::GoToNextScene()
 			ReplaceToThisMap = MapName::PITTSBURGHPORTAL2LIGHT;
 		else
 			ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
+	}
+	else if (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT)
+	{
+		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
 	}
 }

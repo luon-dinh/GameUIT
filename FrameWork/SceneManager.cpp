@@ -9,6 +9,7 @@ SceneManager::SceneManager()
 	pittsburgh = new PlayScenePittsburgh();
 	pittsburghPortal01 = new PlayScenePittsburghPortal01();
 	pittsburghPortal02 = new PlayScenePittsburghPortal02();
+	pittsburghBoss = new PlayScenePittsburghBoss();
 	currentScene = nullptr;
 	ReplaceScene(MapName::CHARLES);
 }
@@ -28,6 +29,8 @@ SceneManager::~SceneManager()
 		delete pittsburghPortal01;
 	if (pittsburghPortal02 != nullptr)
 		delete pittsburghPortal02;
+	if (pittsburghBoss != nullptr)
+		delete pittsburghBoss;
 }
 
 bool SceneManager::AddObjectToCurrentScene(Object *object)
@@ -98,6 +101,10 @@ PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
 	{
 		pittsburghPortal02->setLightStatus(false);
 		nextScene = pittsburghPortal02;
+	}
+	else if (mapName == MapName::PITTSBURGHBOSS)
+	{
+		nextScene = pittsburghBoss;
 	}
 
 	return nextScene;

@@ -18,6 +18,7 @@
 #include "EletricBat.h"
 #include "GreenSolder.h"
 #include "Canon.h"
+#include"GreenSolder.h"
 
 PlaySceneCharles::PlaySceneCharles()
 {
@@ -32,7 +33,7 @@ PlaySceneCharles::PlaySceneCharles()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01SpawnLocation, world01MapObject);
 
-	grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));
+	/*grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));*/
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
 	//grid->Add(new WhiteFlyingRobot(200, 180));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
@@ -50,6 +51,8 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new Door(80, 80));
 	//grid->Add(new Shockwave(120, 80));
 	grid->Add(new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(200, 66)));
+	//grid->Add(new EvilBat(D3DXVECTOR2(100, 200)));
+
 	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
 }
 

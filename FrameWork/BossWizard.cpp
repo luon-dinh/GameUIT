@@ -17,15 +17,12 @@ BossWizard::BossWizard()
 	this->hitTime = 0;
 	this->countBullet = 0;
 	this->isCollide = false;
-	this->timePunch = 0;
 	this->direction = Object::MoveDirection::LeftToRight;
 	this->flyMode = 0;
 	this->isMode1 = false;
 	this->canShootOnAir = false;
-	this->timeDelayShootOnAir = 0;
 	this->tag = Tag::BOSSWIZARD;
 	this->type = Type::ENEMY;
-	this->delayShoot = 0;
 	this->timeNotRender = 0;
 	this->wizardState = wizardStates[State::FLYING];
 	this->currentanimation = animations[State::FLYING];
@@ -89,17 +86,6 @@ BoundingBox BossWizard::getBoundingBox()
 
 void BossWizard::Update(float dt)
 {
-	//update riêng cho state dead
-	if (state == State::DEAD)
-	{
-		if (this->currentanimation->curframeindex = this->currentanimation->toframe - 1 && this->timeNotRender > 900)
-		{
-			DeactivateObjectInGrid();
-			SceneManager::getInstance()->GoToNextScene();
-		}
-		if (this->onAirState != OnAir::None&&this->state != State::FLYING)
-			this->currentAnimation->Update(dt);
-	}
 
 	//nửa máu thì có thể tắt đèn
 	if (health <= maxHelth/2)
@@ -140,9 +126,17 @@ void BossWizard::Update(float dt)
 
 	if (flyMode==1 && this->state == State::FLYING)
 	{
-		this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx)-this->parapol->GetYFromX(this->pos.x));
 		this->pos.x += this->vx;
-		this->pos.y = this->parapol->GetYFromX(this->pos.x);
+		this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx)-this->parapol->GetYFromX(this->pos.x));
+		if (this->vy < -5)
+		{
+			this->vy = -5;
+			this->pos.y += -5;
+		}
+		else
+		{
+			this->pos.y = this->parapol->GetYFromX(this->pos.x);
+		}
 	}
 	else
 	{
@@ -159,7 +153,7 @@ void BossWizard::Update(float dt)
 	//bị bắn 2 phát thì bay
 
 	//player đang đứng trên thanh ground thì cười
-	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->state!=State::FLYING &&this->GetStandingGround()->type!=Type::GROUND)
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->state!=State::FLYING &&this->GetStandingGround()->type==Type::SOLIDBOX&&this->onAirState==OnAir::None)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);
@@ -227,22 +221,31 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 			deltaX = deltaY = 0;
 			this->vy = 0;
 			this->vx = 0;
-			
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 			if (this->flyMode == 1)
 				this->isMode1 = true;
-			ChangeState(State::STANDING);
+			if (this->state == State::BEATEN&&this->health <= 0)
+				ChangeState(State::DEAD);
+			else
+			{
+				ChangeState(State::STANDING);
+			}
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 		}
 		break;
 	case Type::GROUND:
 		if (colOut->side == CollisionSide::bottom)
 		{
 			deltaX = deltaY = 0;
-			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 			this->direction = BossWizard::MoveDirection::LeftToRight;
 			this->vy = 0;
 			this->vx = 0;
-			ChangeState(State::STANDING);
+			if (this->state == State::BEATEN&&this->health <= 0)
+				ChangeState(State::DEAD);
+			else
+			{
+				ChangeState(State::STANDING);
+			}
+			this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 4;
 		}
 		break;
 	default:
@@ -258,6 +261,11 @@ void BossWizard::OnNotCollision(Object* object)
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
+	if (object->type == Type::GROUND || object->type == Type::SOLIDBOX)
+	{
+		if (side == CollisionSide::bottom&&this->state != State::FLYING)
+			this->vy = 0;
+	}
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
 	{
 		// đổi map 
@@ -274,32 +282,58 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 			//render khong render
 			//this->currentanimation = animations[State::DEAD];
 			this->health -= shield->GetCollisionDamage();
-			if (this->health <= 0)
+			this->isCollidable = false;
+			if (this->health <= 0&&this->onAirState==OnAir::None&&this->state!=State::FLYING)
 			{
 				//isDead = true;
 				ChangeState(State::DEAD);
+			}
+			else if (this->state == State::FLYING)
+			{
+				ChangeState(State::BEATEN);
 			}
 			this->hitTime++;
 			if (this->hitTime >= 2)
 			{
 				this->flyTimes = rand() % 3 + 1;
 			}
-			if(this->onAirState!=OnAir::Falling)
-				this->isCollidable = false;
 			return false;
 		}
 	}
 	if (object->tag == Tag::PLAYER)
 	{
 		this->health -= Player::getInstance()->GetDamage();
-		if (this->onAirState != OnAir::Falling)
-			this->isCollidable = false;
+		this->isCollidable = false;
+		if (this->health <= 0 && this->onAirState == OnAir::None&&this->state != State::FLYING)
+		{
+			//isDead = true;
+			ChangeState(State::DEAD);
+		}
+		else if(this->state == State::FLYING)
+		{
+			ChangeState(State::BEATEN);
+		}
 		this->hitTime++;
 		if (this->hitTime >= 2)
 		{
 			this->flyTimes = rand() % 3 + 1;
 		}
 		return true;
+	}
+	if (object->tag == Tag::PLAYER_PART)
+	{
+		this->health -= object->GetCollisionDamage();
+		this->isCollidable = false;
+		if (this->health <= 0 && this->onAirState == OnAir::None&&this->state != State::FLYING)
+		{
+			//isDead = true;
+			ChangeState(State::DEAD);
+		}
+		else if (this->state == State::FLYING)
+		{
+			ChangeState(State::BEATEN);
+		}
+		this->hitTime++;
 	}
 	return false;
 }
@@ -341,7 +375,6 @@ void BossWizard::ChangeState(State stateName)
 	case State::ATTACK:
 		this->vy = 0;
 		this->vx = 0;
-		this->delayShoot = 0;
 		this->onAirState = OnAir::None;
 		break;
 	case State::STAND_PUNCH:
@@ -361,7 +394,12 @@ void BossWizard::ChangeState(State stateName)
 	case State::DEAD:
 		this->onAirState = OnAir::None;
 		this->vx = this->vy = 0;
+		this->isCollidable = false;
 		break;
+	case State::BEATEN:
+		this->onAirState = OnAir::Falling;
+		this->vx = 0;
+		this->vy = -this->flySpeedy;
 	default:
 		break;
 	}
@@ -373,11 +411,11 @@ void BossWizard::LoadAllAnimations()
 	animations[State::STANDING] = new Animation(Tag::BOSSWIZARD, 0, 1);
 	animations[State::STAND_SMILE] = new Animation(Tag::BOSSWIZARD, 0, 3, 120/3);
 	animations[State::RUNNING] = new Animation(Tag::BOSSWIZARD, 3, 7);
-	animations[State::FALLING] = new Animation(Tag::BOSSWIZARD, 7,8);
-	animations[State::DEAD] = new Animation(Tag::BOSSWIZARD, 7, 10);
+	animations[State::DEAD] = new Animation(Tag::BOSSWIZARD, 8, 10);
 	animations[State::ATTACK] = new Animation(Tag::BOSSWIZARD, 10, 13);
 	animations[State::FLYING] = new Animation(Tag::BOSSWIZARD, 13, 16);
 	animations[State::STAND_PUNCH] = new Animation(Tag::BOSSWIZARD, 16, 18);
+	animations[State::BEATEN] = new Animation(Tag::BOSSWIZARD, 7, 8);
 }
 
 void BossWizard::LoadAllStates()
@@ -389,6 +427,7 @@ void BossWizard::LoadAllStates()
 	wizardStates[State::STAND_PUNCH] = new BossWizardPunchingState();
 	wizardStates[State::STAND_SMILE] = new BossWizardStandSmileState();
 	wizardStates[State::DEAD] = new BossWizardDeadState();
+	wizardStates[State::BEATEN] = new BossWizardBeatenState();
 }
 
 void BossWizard::AddPosX()

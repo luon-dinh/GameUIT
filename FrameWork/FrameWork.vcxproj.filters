@@ -151,6 +151,12 @@
     <Filter Include="Objects\Wave">
       <UniqueIdentifier>{b41bfd64-35c2-40a3-9ccb-7b9814e17278}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMap\TileMap\MapPittsburghBoss">
+      <UniqueIdentifier>{74bf4b36-6abb-4a91-a417-ffbeef95f314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene\PlayScenePittsburghBoss">
+      <UniqueIdentifier>{ffee9628-c461-4039-8b7a-5a82e5000df1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -470,6 +476,15 @@
     </ClCompile>
     <ClCompile Include="PlayerHandOnRope.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
+   </ClCompile>
+    <ClCompile Include="BossWizardBeatenState.cpp">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPittsburghBoss.cpp">
+      <Filter>GameMap\TileMap\MapPittsburghBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScenePittsburghBoss.cpp">
+      <Filter>Scene\PlayScene\PlayScenePittsburghBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -815,11 +830,20 @@
     <ClInclude Include="EletricBat.h">
       <Filter>Objects\Enemy\EvilBat</Filter>
     </ClInclude>
+    <ClInclude Include="BossWizardBeatenState.h">
+      <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerShockingState.h">
       <Filter>Objects\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHandOnRope.h">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
+   <ClInclude>
+    <ClInclude Include="MapPittsburghBoss.h">
+      <Filter>GameMap\TileMap\MapPittsburghBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScenePittsburghBoss.h">
+      <Filter>Scene\PlayScene\PlayScenePittsburghBoss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,8 +21,8 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn, world01BossMapObject);
 	//Thêm player và shield vào Grid.
-	//grid->Add(BossWizard::getInstance());
-	grid->Add(BossMini::getInstance());
+	grid->Add(BossWizard::getInstance());
+	//grid->Add(BossMini::getInstance());
 }
 
 PlaySceneCharlesBoss::~PlaySceneCharlesBoss()

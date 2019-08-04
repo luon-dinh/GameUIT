@@ -7,6 +7,7 @@
 #include "PlayScenePittsburgh.h"
 #include "PlayScenePittsburghPortal01.h"
 #include "PlayScenePittsburghPortal02.h"
+#include "PlayScenePittsburghBoss.h"
 
 class SceneManager
 {
@@ -52,8 +53,8 @@ private:
 	PlayScenePittsburgh* pittsburgh;
 	PlayScenePittsburghPortal01* pittsburghPortal01;
 	PlayScenePittsburghPortal02* pittsburghPortal02;
+	PlayScenePittsburghBoss* pittsburghBoss;
 
-	PlayScene* pittsburghBoss;
 	PlayScene* currentScene;
 
 	//Lưu lại trạng thái của player trước khi chuyển màn để sau đó chuyển màn lại có thể để player ở vị trí chính xác.

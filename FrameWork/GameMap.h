@@ -5,6 +5,7 @@
 #include "MapPittsburgh.h"
 #include "MapPittsburghPortal01.h"
 #include "MapPittsburghPortal02.h"
+#include "MapPittsburghBoss.h"
 #include "Sprite.h"
 #include "KeyboardManager.h"
 #include <d3d9.h>

@@ -39,9 +39,16 @@ public:
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
-		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
 		this->pos.x += this->vx;
-		this->pos.y = parapol->GetYFromX(this->pos.x);
+		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
+		if (this->vy < -4)
+		{
+			this->vy = -4;
+			this->pos.y += this->vy;
+		}
+		else { 
+			this->pos.y = parapol->GetYFromX(this->pos.x); 
+		}
 	}
 
 	int GetCollisionDamage()override
@@ -57,17 +64,19 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			return ;
+			return;
 		default:
 			break;
 		}
-		if (object->tag == Tag::PLAYER)
+		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
 		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
 			return;
 		}
-		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
+		if (object->tag == Tag::PLAYER_PART)
 		{
 			if (this->isOnBossMini)
 				this->isBeaten = true;
@@ -96,6 +105,14 @@ public:
 			return true;
 		}
 		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state==Shield::ShieldState::Attack)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return false;
+		}
+		if (object->tag == Tag::PLAYER_PART)
 		{
 			if (this->isOnBossMini)
 				this->isBeaten = true;
