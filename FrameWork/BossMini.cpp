@@ -213,15 +213,24 @@ void BossMini::Update(float dt)
 		this->onAirState = OnAir::None;
 		D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y + this->getHeight() / 2);
 		D3DXVECTOR2 pos2;
-		pos2.y = this->pos.y + this->getHeight()/2;
+		
 		float delta = this->pos.x - player->pos.x;
 		if (abs(delta) < deltaToThrow)
 		{
-			pos2.x = (player->pos.x + this->pos.x) / 2;
-			pos2.y = this->pos.y + this->getHeight() / 2;
+			if (this->direction == MoveDirection::RightToLeft)
+			{
+				pos2.x = this->pos.x - abs(delta) / 2;
+			}
+			else
+			{
+				pos2.x = this->pos.x + abs(delta) / 2;
+			}
+			pos2.y = this->pos.y + this->getHeight() / 2 + 3;
 		}
 		else
 		{
+			//pos2.y = this->pos.y + this->getHeight() - 10;
+			pos2.y = this->pos.y + this->getHeight() / 2 ;	
 			if (this->direction == MoveDirection::RightToLeft)
 			{
 				pos2.x = this->pos.x - deltaToThrow;
@@ -267,13 +276,13 @@ void BossMini::Update(float dt)
 			{
 				if (this->direction == MoveDirection::RightToLeft)
 				{
-					this->defaultBullet->vx = -bulletSpeed;
+					this->defaultBullet->vx = -bulletSpeed/2;
 					this->defaultBullet->direction = MoveDirection::RightToLeft;
 				}
 				else
 				{
 					this->defaultBullet->direction = MoveDirection::LeftToRight;
-					this->defaultBullet->vx = bulletSpeed;
+					this->defaultBullet->vx = bulletSpeed/2;
 				}
 				this->defaultBullet->isOnBossMini = false;
 			}

@@ -17,7 +17,7 @@ public:
 	const int maxBullet=3;
 	const float speed = 2;
 	const float bulletSpeed = 3;
-	const float deltaToThrow = 60;
+	const float deltaToThrow = 50;
 	const float defaultDT = 30;
 	const float maxTimeNotCollidable = 1500;
 	float timeNotCollideable;
