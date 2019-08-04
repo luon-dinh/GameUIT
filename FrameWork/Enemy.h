@@ -11,10 +11,15 @@ protected:
 	//Thời gian delay giữa hai lần chớp chớp.
 	const int delayBeatenSprite = 50;
 public:
+	enum DamageEffect {
+		Normal,
+		Eletric
+	};
 	Enemy();
 	~Enemy();
 	float speed;
 	bool isDead;
+	DamageEffect damageEffect;
 
 	//Máu của quái.
 	//Phải set lại trong constructor của từng quái khác nhau.
@@ -41,4 +46,6 @@ public:
 	{
 		return RenderWeightOfObjects::ENEMY_RENDER_WEIGHT;
 	}
+
+	virtual DamageEffect GetDamageEffect();
 };

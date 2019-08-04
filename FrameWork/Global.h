@@ -236,6 +236,7 @@ enum State {
 	CLIMBING,
 	STAND_SMILE,
 	ATTACK,
+	SHOCKING
 };
 
 enum MapName

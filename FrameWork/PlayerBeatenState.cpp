@@ -22,7 +22,13 @@ void PlayerBeatenState::Update(float dt) {
 	this->currentFrame++;
 	if (this->currentFrame > ANIMATION_FRAME) {
 		this->currentFrame = 0;
-		player->ChangeState(State::STANDING);
+		if (player->GetPreviousState()->state == State::FLOATING) {
+			player->ChangeState(State::FLOATING);
+		}
+		else {
+			player->ChangeState(State::STANDING);
+		}
+		
 	}
 }
 

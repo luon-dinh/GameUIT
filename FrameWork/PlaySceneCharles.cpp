@@ -15,8 +15,6 @@
 #include "Shockwave.h"
 #include "Camera.h"	
 #include "Solder.h"
-#include "EvilBat.h"
-#include"GreenSolder.h"
 
 PlaySceneCharles::PlaySceneCharles()
 {

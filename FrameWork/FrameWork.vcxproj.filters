@@ -462,6 +462,9 @@
     <ClCompile Include="BossMini.cpp">
       <Filter>Objects\Enemy\BossMini</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShockingState.cpp">
+      <Filter>Objects\Player</Filter>
+    </ClCompile>
     <ClCompile Include="GreenSolder.cpp">
       <Filter>Objects\Enemy</Filter>
     </ClCompile>
@@ -814,6 +817,9 @@
     </ClInclude>
     <ClInclude Include="BossWizardBeatenState.h">
       <Filter>Objects\Enemy\BossWizard</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShockingState.h">
+      <Filter>Objects\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
