@@ -16,4 +16,11 @@ private:
 	const char * world02TileDarkPNG = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_dark.png";
 	const char * world02MapObject = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_map_object.txt";
 	const char * world02Spawn = (char*)".\\..\\Resources\\Images\\Maps\\Pittsburgh\\pittsburgh_map_spawn.txt";
+
+	const int blueSoldierKillReq = 3;
+	const int redRocketKillReq = 3;
+
+	bool isCameraAlreadyLockedOnce = false;
+
+	bool isAddSoldier = false;
 };

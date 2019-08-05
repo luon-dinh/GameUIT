@@ -1,4 +1,6 @@
 ﻿#include "PlayScenePittsburgh.h"
+#include "WhiteRocketRobotNonShooting.h"
+#include "GreenSolder.h"
 
 PlayScenePittsburgh::PlayScenePittsburgh()
 {
@@ -68,6 +70,50 @@ void PlayScenePittsburgh::Update(double dt)
 	else if (kbInstance->getKeyPressedOnce(DIK_K) && !isLightOn)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
+
+	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
+	if (!isCameraAlreadyLockedOnce)
+	{
+		//Xét nếu player nằm trong vùng lock thì lock camera lại.
+		auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ((valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
+		if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
+		{
+			camera->LockCamera();
+			isCameraAlreadyLockedOnce = true;
+			this->KillAllEnemyInActiveCells();
+			grid->StartEnemyBeatenCounter();
+		}
+	}
+
+	//Xét nếu đang bị khoá camera thì ta sẽ spawn liên tục cho đến khi giết đủ số lượng enemy.
+	if (camera->GetCameraLockState())
+	{
+		//Thêm vào con robot đỏ bên phải.
+		if (!isAddSoldier)
+		{
+			WhiteRocketRobotNonShooting* redRobot = new WhiteRocketRobotNonShooting(550, 70);
+			if (!this->AddObjectToPlayScene(redRobot))
+				delete redRobot;
+			else
+				isAddSoldier = true;
+		}
+		else
+		{
+			Object* blueSoldier = new GreenSolder(RunType::CANRUN, 250, 65);
+			if (!this->AddObjectToPlayScene(blueSoldier))
+				delete blueSoldier;
+			else
+				isAddSoldier = false;
+		}
+		//Trường hợp thoát ra khỏi locking.
+		int blueSoldierBeaten = grid->GetBlueSoldierBeatenCounter();
+		int redRocketBeaten = grid->GetRedRocketRobotBeatenCounter();
+		if (blueSoldierBeaten > blueSoldierKillReq && redRocketBeaten > redRocketKillReq)
+		{
+			grid->StopEnemyBeatenCounter();
+			camera->UnlockCamera();
+		}
+	}
 	//Kiểm tra xem player đã đi đến đích chưa.
 	if (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT)
 	{

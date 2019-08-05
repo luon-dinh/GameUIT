@@ -783,9 +783,9 @@ void Grid::UpdateActivatedCells(double dt)
 					//Xét có cần đếm số enemy đã chết không.
 					if (isCountingEnemyBeaten)
 					{
-						if ((*it)->tag == Tag::BLUESOLDIER)
+						if ((*it)->tag == Tag::BLUESOLDIER || (*it)->tag == Tag::GREENSOLDIER)
 							++blueSoldierBeatenCounter;
-						else if ((*it)->tag == Tag::REDROCKERTER)
+						else if ((*it)->tag == Tag::REDROCKERTER || (*it)->tag == Tag::WHITEROCKERTER)
 							++redRocketBeatenCounter;
 					}
 					DeleteObjectAndDecreaseCounter(*it);

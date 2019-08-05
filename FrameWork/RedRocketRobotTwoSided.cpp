@@ -268,7 +268,7 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
  	else if (object->tag == Tag::STATICOBJECT)
 	{
 		//Chỉ chuyển sang trạng thái standing khi đang rơi.
-		if (object->type == Type::GROUND  && colOut->side == CollisionSide::bottom)
+		if ( (object->type == Type::GROUND || object->type == Type::SOLIDBOX)  && colOut->side == CollisionSide::bottom)
 		{
 			if (robotState == State::FALLING)
 			{

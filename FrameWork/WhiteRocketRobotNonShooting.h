@@ -13,6 +13,7 @@ class WhiteRocketRobotNonShooting : public RedRocketRobotNonShooting
 			crouching = new Animation(Tag::WHITEROCKERTER, 3, 4);
 		if (shocking != nullptr)
 			shocking = new Animation(Tag::WHITEROCKERTER, 4, 5);
+		currentAnimation = walking;
 	}
 public:
 	WhiteRocketRobotNonShooting(int posX, int posY) : RedRocketRobotNonShooting(posX, posY) 
