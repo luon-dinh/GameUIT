@@ -338,7 +338,7 @@ void BossMini::Update(float dt)
 	case State::DASHING:// state điên
 	{
 		this->onAirState = OnAir::None;
-		if (this->countTimesBeaten >= maxTimesBeaten2)
+		if (this->health <=0)
 		{
 			ChangeState(State::DEAD);
 			return;
@@ -354,13 +354,13 @@ void BossMini::Update(float dt)
 		}
 		// cập nhật vận tốc theo direction
 		if (this->direction == MoveDirection::LeftToRight)
-			this->vx = speed * 1.5;
+			this->vx = speed * 1.2;
 		else
 		{
-			this->vx = -speed * 1.5;
+			this->vx = -speed * 1.2;
 		}
 		// hết time delay thì bắn
-		if (timeCurrentState > maxTimeStateDelay)
+		if (timeCurrentState > maxtimeDashStateDelay)
 		{
 			timeCurrentState = 0;
 			auto bullet = new BulletMiniNormal();
@@ -479,9 +479,9 @@ void BossMini::OnCollision(Object* object, collisionOut* colOut)
 		auto shield = Shield::getInstance();
 		if (shield->state == Shield::ShieldState::Attack&&this->state == State::DASHING)
 		{
-			this->countTimesBeaten++;
-			if(this->onAirState!=OnAir::Falling)
-				this->isCollidable = false;
+			//this->countTimesBeaten++;
+			this->health -= shield->GetCollisionDamage();
+			this->isCollidable = false;
 			return;
 		}
 	}
@@ -506,15 +506,16 @@ bool BossMini::OnRectCollided(Object* object, CollisionSide side)
 		auto shield = Shield::getInstance();
 		if (shield->state == Shield::ShieldState::Attack&&this->state==State::DASHING)
 		{
-			this->countTimesBeaten++;
-			if(this->onAirState!=OnAir::Falling)
-				this->isCollidable = false;
+			//this->countTimesBeaten++;
+			this->health -= shield->GetCollisionDamage();
+			this->isCollidable = false;
 			return false;
 		}
 	}
 	if (object->tag == Tag::PLAYER&&this->state==State::DASHING)
 	{
 		auto player = Player::getInstance();
+		this->health -= object->GetCollisionDamage();
 		player->ChangeState(State::SHOCKING);
 	}
 	return false;
