@@ -86,7 +86,7 @@ void Solder::OnCollision(Object* object, collisionOut* colOut) {
 	case Type::SOLIDBOX:
 		this->vy = 0;
 		this->onAirState = OnAir::None;
-		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2;
+		this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 2;
 		break;
 	case Type::WATERRL:
 		DeactivateObjectInGrid();
@@ -195,6 +195,7 @@ void Solder::Update(float dt)
 	{
 		if (this->currentAnimation == explodeAnim && this->currentAnimation->curframeindex == this->currentAnimation->toframe - 1)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 		}
 	}

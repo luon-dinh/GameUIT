@@ -109,6 +109,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 	{
 		if (shield->state == Shield::ShieldState::Attack)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_holder);
 			animation->curframeindex = 1;
 			ticuframe = 500;
 			if (item != nullptr)
@@ -155,6 +156,7 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 	{
 	case Tag::PLAYER_PART:
 	{
+		SoundManager::getinstance()->play(SoundManager::SoundName::item_holder);
 		animation->curframeindex = 1;
 		ticuframe = 500;
 		if (item != nullptr)

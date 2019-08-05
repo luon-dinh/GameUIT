@@ -34,8 +34,9 @@ public:
 		this->isCollidable = collide;
 	}
 	void Update(float dt)override {
-		if (animation->curframeindex == animationExplode->toframe - 1)
+		if (animation->curframeindex == animationExplode->toframe-1)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
@@ -65,17 +66,9 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			return;
+			break;
 		default:
 			break;
-		}
-		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
-		{
-			if (this->isOnBossMini)
-				this->isBeaten = true;
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return;
 		}
 	}
 
@@ -99,12 +92,12 @@ public:
 			this->vx = this->vy = 0;
 			return false;
 		}
-		if (object->tag == Tag::PLAYER)
+		/*if (object->tag == Tag::PLAYER)
 		{
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
 			return true;
-		}
+		}*/
 		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state==Shield::ShieldState::Attack)
 		{
 			if (this->isOnBossMini)

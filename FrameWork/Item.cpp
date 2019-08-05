@@ -1,5 +1,6 @@
 ﻿#include"Item.h"
 #include"Camera.h"
+#include"SoundManager.h"
 Item::Item(ItemType itemtype)
 {
 	this->tag = ITEM;
@@ -148,6 +149,20 @@ bool Item::OnRectCollided(Object* object, CollisionSide side)
 		break;
 	}
 	if (object->tag == Tag::PLAYER)
+	{
+		switch (this->itemtype)
+		{
+		case ItemType::EXIT:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_exit_orb);
+			break;
+		case ItemType::HP:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_hp);
+			break;
+		default:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_normal);
+			break;
+		}
 		DeactivateObjectInGrid();
+	}
 	return true;
 }

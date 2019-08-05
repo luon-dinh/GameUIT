@@ -8,6 +8,7 @@
 #include "Shield.h"
 #include "Global.h"
 #include "DrawDebug.h"
+#include"SoundManager.h"
 
 //Các PlayScene khác nhau sẽ có nhiều đoạn code có thể dùng chung được.
 //Ý tưởng ở đây của việc kế thừa là những đoạn code dùng chung sẽ được gom lại ở lớp cha PlayScene này.

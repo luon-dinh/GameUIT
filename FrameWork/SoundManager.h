@@ -35,10 +35,11 @@ public:
 		wizard_lazer// đạn special
 	};
 	std::unordered_map<SoundName, CSound *> sounds;
+
 	static SoundManager* getinstance();
 	void Create(HWND hwnd);
 	void loadResources();
-	void play(SoundName soundName, bool loop);
+	void play(SoundName soundName, bool loop=false);
 	void stop(SoundName soundName);
 	void stopAll();
 	void ReleaseAll();
