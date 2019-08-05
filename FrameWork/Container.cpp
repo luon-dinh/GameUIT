@@ -132,7 +132,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 				}
 				return;
 			}
-			if (numberItems != 0)
+			else if (numberItems != 0)
 			{
 				Item* newItem = new Item(ItemType::STAR);
 				newItem->pos = this->pos;
@@ -179,7 +179,7 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 			}
 			return true;
 		}
-		if (numberItems != 0)
+		else if (numberItems != 0)
 		{
 			Item* newItem = new Item(ItemType::STAR);
 			newItem->pos = this->pos;
