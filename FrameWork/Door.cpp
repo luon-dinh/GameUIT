@@ -6,6 +6,7 @@ Door::Door(int posX, int posY)
 	this->pos.x = posX;
 	this->pos.y = posY;
 	this->vx = this->vy = 0;
+	this->tag = Tag::DOOR_DARK;
 	delayDoorOpen = new Delay(openDoorTime);
 	LoadAllAnim();
 }
