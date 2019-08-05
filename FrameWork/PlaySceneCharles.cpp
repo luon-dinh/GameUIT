@@ -45,7 +45,7 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
-	grid->Add(new MovingPlatformCircle(150,100));
+	grid->Add(new MovingPlatformCrossed(150,100));
 	grid->Add(new DisappearingPlatform(120, 120));
 	////grid->Add(new Door(80, 80));
 	//grid->Add(new Door(80, 80));
@@ -98,7 +98,7 @@ void PlaySceneCharles::Update(double dt)
 		//Thêm vào con robot đỏ bên phải.
 		if (!isAddSoldier)
 		{
-			WhiteRocketRobotNonShooting* redRobot = new WhiteRocketRobotNonShooting(550, 90);
+			RedRocketRobotNonShooting* redRobot = new RedRocketRobotNonShooting(550, 90);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
 			else
