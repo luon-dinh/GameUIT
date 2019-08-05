@@ -32,7 +32,7 @@ public:
 
 	int GetCollisionDamage()
 	{
-		return 6;
+		return 3;
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override

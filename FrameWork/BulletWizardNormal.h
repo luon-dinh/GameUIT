@@ -104,7 +104,7 @@ public:
 
 	int GetCollisionDamage()
 	{
-		return 2;
+		return 5;
 	}
 
 	BoundingBox getBoundingBox()override

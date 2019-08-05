@@ -17,6 +17,7 @@ void PlayerKickingState::InputHandler()
 {
 	Player* player = Player::getInstance();
 	auto keyboard = KeyboardManager::getInstance();
+	auto shield = Shield::getInstance();
 	int timePressedJump = 0;
 
 	if (player->GetOnAirState() == Player::OnAir::Jumping && !keyboard->getKeyPressedOnce(PLAYER_JUMP, timePressedJump) && timePressedJump > 0) {
@@ -37,11 +38,13 @@ void PlayerKickingState::InputHandler()
 	//  Đổi hướng qua trái
 	if (keyboard->isKeyDown(PLAYER_MOVE_LEFT)) {
 		player->SetMoveDirection(Player::MoveDirection::RightToLeft);
+		shield->SetMoveDirection(Player::MoveDirection::LeftToRight);
 	}
 
 	// Đổi hướng qua phải
 	if (keyboard->isKeyDown(PLAYER_MOVE_RIGHT)) {
 		player->SetMoveDirection(Player::MoveDirection::LeftToRight);
+		shield->SetMoveDirection(Player::MoveDirection::RightToLeft);
 	}
 
 	this->curKickTime++;
