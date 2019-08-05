@@ -23,6 +23,6 @@ void MovingPlatformCircle::MovePlatform()
 		currentDegree -= 360;
 	this->vx = cos(currentDegree * PI / 180) * platformMoveSpeedMax;
 	this->vy = -sin(currentDegree * PI / 180) * platformMoveSpeedMax;
-	this->pos.x += vx;
-	this->pos.y += vy;
+	this->pos.x += this->vx;
+	this->pos.y += this->vy;
 }
