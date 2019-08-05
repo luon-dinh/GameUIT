@@ -114,6 +114,12 @@ struct PlayerInfo
 	float playerX;
 	float playerY;
 };
+
+struct CameraInfo
+{
+	float topLeftX;
+	float topLeftY;
+};
 //dung cho enemy
 enum RunType {
 	THREESHOOTER = 0,
