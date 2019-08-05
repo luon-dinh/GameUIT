@@ -78,6 +78,7 @@ public:
 			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
 			{
 				this->vy = abs(this->vx);
+				this->isCollidable = false;
 				this->vx = 0;
 				return true;
 			}

@@ -96,7 +96,12 @@ float BossMini::getWidth()
 
 int BossMini::GetCollisionDamage()
 {
-	return 4;
+	if(this->state==State::DASHING)
+		return 4;
+	else
+	{
+		return 0;
+	}
 }
 
 void BossMini::Update(float dt)
@@ -506,6 +511,11 @@ bool BossMini::OnRectCollided(Object* object, CollisionSide side)
 				this->isCollidable = false;
 			return false;
 		}
+	}
+	if (object->tag == Tag::PLAYER&&this->state==State::DASHING)
+	{
+		auto player = Player::getInstance();
+		player->ChangeState(State::SHOCKING);
 	}
 	return false;
 	//if()
