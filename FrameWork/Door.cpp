@@ -62,8 +62,8 @@ void Door::SetAnimOnLightStatus()
 BoundingBox Door::getBoundingBox()
 {
 	BoundingBox box = Object::getBoundingBox();
-	box.left = this->pos.x - doorWidth / 2;
-	box.right = this->pos.x + doorWidth / 2;
+	box.left = this->pos.x - 5;
+	box.right = this->pos.x + 5;
 	box.top = this->pos.y + doorHeight / 2;
 	box.bottom = this->pos.y - doorHeight / 2;
 	box.vx = box.vy = 0;
