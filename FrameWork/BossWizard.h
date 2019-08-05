@@ -32,7 +32,7 @@ public:
 	const float maxFlyy1 = 30;
 	const float maxXToFly1 = 80;
 	const float maxTimeNotRender = 1000;
-	const float maxHelth = 30;
+	const float maxHelth = 40;
 	const float bulletSpeed = 2.7;
 	const float defaultDT = 50;
 	bool canShootOnAir;

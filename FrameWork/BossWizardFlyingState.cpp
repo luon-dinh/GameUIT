@@ -116,16 +116,28 @@ void BossWizardFlyingState::Fly(float dt)
 	default:
 		break;
 	}
+	if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 || wizard->pos.x > wizard->maxMap - wizard->getWidth() / 2&& wizard->deltaX>50)
+	{
+		if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 && wizard->direction == BossWizard::MoveDirection::RightToLeft)
+		{
+			wizard->pos.x = wizard->getWidth() / 2;
+			wizard->flyMode = 3;
+			wizard->SetOnAirState(BossWizard::OnAir::Falling);
+			wizard->ChangeState(State::FLYING);
+		}
+		else if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
+		{
+			wizard->pos.x = wizard->maxMap - wizard->getWidth() / 2;
+			wizard->flyMode = 3;
+			wizard->SetOnAirState(BossWizard::OnAir::Falling);
+			wizard->ChangeState(State::FLYING);
+		}
+	}
 }
 
 void BossWizardFlyingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	// nếu xuống min hoặc max map thì rớt
-	if ((wizard->pos.x < wizard->minMap+wizard->getWidth()/2 +2 || wizard->pos.x>wizard->maxMap-wizard->getWidth()/2 - 2)&&wizard->deltaX>10)
-	{
-		wizard->flyMode = 3;
-		wizard->SetOnAirState(BossWizard::OnAir::Falling);
-	}
 	Fly(dt);
 }
