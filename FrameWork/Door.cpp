@@ -40,6 +40,7 @@ void Door::Update(float dt)
 	{
 		isDoorActivated = false;
 		currentAnim->curframeindex = 0;
+		Player::getInstance()->UnlockInput();
 		SceneManager::getInstance()->GoToNextScene();
 	}
 }
@@ -74,6 +75,7 @@ bool Door::OnRectCollided(Object* object, CollisionSide colSide)
 	if (object->tag == Tag::PLAYER && KeyboardManager::getInstance()->getKeyPressedOnce(DIK_UP))
 	{
 		isDoorActivated = true;
+		Player::getInstance()->LockInput();
 		return true;
 	}
 	return false;
