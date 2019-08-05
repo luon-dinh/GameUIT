@@ -59,6 +59,7 @@ private:
 	
 	int flipRenderFrame;
 	bool isGroundVelocityApplied;
+	bool isLockInput;
 	const int FLIP_RENDER_FRAME = 10;
 	const int MIN_TIME_JUMP_1 = 20;
 	const int MIN_TIME_JUMP_2 = 30;
@@ -131,7 +132,9 @@ public:
 
 	bool IsFootStepOn();
 	int GetCollisionDamage() override;
-
+	void LockInput();
+	void UnlockInput();
+	bool IsLockInput();
 
 
 
@@ -156,6 +159,7 @@ public:
 	void OnShockedElectric(Object* object);
 	void OnShieldFloatOnWater(Object* object);
 	void OnBeingCarried(Object* object);
+	void OnCollisionWithDoor();
 
 #pragma endregion
 
