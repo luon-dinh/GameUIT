@@ -53,7 +53,8 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(200, 66)));
 	//grid->Add(new EvilBat(D3DXVECTOR2(100, 200)));
 
-	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
+	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100))
+	//SoundManager::getinstance()->play(SoundManager::SoundName::action_theme, true);
 }
 
 PlaySceneCharles::~PlaySceneCharles()

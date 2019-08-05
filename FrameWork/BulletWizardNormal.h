@@ -29,8 +29,12 @@ public:
 		animation->Update(dt);
 		if (parapol != NULL)
 		{
+			this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+			if (vy < -3)
+				this->vx *= 0.9;
 			this->pos.x += this->vx;
-			this->pos.y = parapol->GetYFromX(this->pos.x);
+
+			this->pos.y = this->parapol->GetYFromX(this->pos.x);
 		}
 		else
 		{

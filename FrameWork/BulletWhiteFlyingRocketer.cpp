@@ -93,7 +93,10 @@ void BulletWhiteFlyingRocketer::Update(float dt)
 	if (isExploded)
 	{
 		if (curDelayTime > delayDisappear)
+		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
+		}
 		return;
 	}
 

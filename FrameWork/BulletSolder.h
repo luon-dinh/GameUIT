@@ -28,11 +28,6 @@ public:
 	}
 	void Update(float dt) override
 	{
-		if (animation->curframeindex == animationExplode->toframe - 1)
-		{
-			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
-			DeactivateObjectInGrid();
-		}
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
 		animation->Update(dt);
@@ -48,9 +43,8 @@ public:
 		{
 		case Type::SOLIDBOX:
 		case Type::GROUND:
-			this->animation = animationExplode;
-			this->pos.x += this->vx;
-			this->vx = this->vy = 0;
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+			DeactivateObjectInGrid();
 			break;
 		default:
 			break;
@@ -73,8 +67,8 @@ public:
 		{
 		case Type::SOLIDBOX:
 		case Type::GROUND:
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+			DeactivateObjectInGrid();
 			break;
 		default:
 			break;
@@ -85,12 +79,10 @@ public:
 			{
 				this->vy = abs(this->vx);
 				this->vx = 0;
-				this->isCollidable = false;
 				return true;
 			}
-			this->animation = animationExplode;
-			this->isCollidable = false;
-			this->vx = this->vy = 0;
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+			DeactivateObjectInGrid();
 			return true;
 		}
 		

@@ -40,14 +40,27 @@ public:
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
+		/*this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+		if (vy < -3)
+			this->vx *= 0.9;
 		this->pos.x += this->vx;
-		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
-		this->pos.y = parapol->GetYFromX(this->pos.x); 
+
+		this->pos.y = this->parapol->GetYFromX(this->pos.x);*/
+		if (parapol != NULL)
+		{
+			this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+			if (vy < -3)
+				this->vx *= 0.9;
+			this->pos.x += this->vx;
+
+			this->pos.y = this->parapol->GetYFromX(this->pos.x);
+
+		}
 	}
 
 	int GetCollisionDamage()override
 	{
-		return 6;
+		return 1;
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)
@@ -80,7 +93,7 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			return false;
+			break;
 		default:
 			break;
 		}

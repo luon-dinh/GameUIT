@@ -40,6 +40,7 @@ bool SceneManager::AddObjectToCurrentScene(Object *object)
 
 void SceneManager::Update(double dt)
 {
+
 	MapName nextMap = currentScene->GetAndResetDestinationMap();
 	bool isCurrentSceneDone = currentScene->isDone();
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
@@ -119,10 +120,21 @@ void SceneManager::ReplaceScene(MapName mapName)
 	if (currentScene != nullptr)
 		delete currentScene;
 	currentScene = nextScene;
+	SoundManager::getinstance()->stopAll();
+	if (currentScene == charles)
+		SoundManager::getinstance()->play(SoundManager::SoundName::main_theme, true);
+	if (currentScene == charlesBoss)
+		SoundManager::getinstance()->play(SoundManager::SoundName::boss_wizard_theme, true);
+	if (currentScene == pittsburgh)
+		SoundManager::getinstance()->play(SoundManager::SoundName::main_theme, true);
+	if (currentScene == pittsburghBoss)
+		SoundManager::getinstance()->play(SoundManager::SoundName::boss_gragas_theme, true);
+
 	currentScene->ResetPlayerPosition(); //Từng Scene sẽ có cách khởi tạo player ở những vị trí khác nhau. Vì vậy ta phải reset theo từng scene.
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 	//Khi replace scene thì ta cũng add luôn các phần tử liên quan đến player vào grid.
 	currentScene->AddPlayerElementsToGrid();
+	
 }
 
 //ChangeScene sẽ đổi Scene, nhưng sẽ giữ Scene trước đó (không delete) và trạng thái của player khi đang ở Scene đó.
