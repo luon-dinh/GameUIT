@@ -46,10 +46,10 @@ void PlayerKickPart::Render() {
 }
 BoundingBox PlayerKickPart::getBoundingBox() {
 	BoundingBox box;
-	box.left = this->pos.x - 5.5;
-	box.right = box.left + 11;
-	box.top = this->pos.y + 3;
-	box.bottom = box.top - 6;
+	box.left = this->pos.x - 7;
+	box.right = box.left + 14;
+	box.top = this->pos.y + 5;
+	box.bottom = box.top - 10;
 	box.vx = box.vy = 0;
 
 	return box;
