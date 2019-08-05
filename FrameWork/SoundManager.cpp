@@ -78,3 +78,7 @@ void SoundManager::ReleaseAll()
 	sounds.clear();
 }
 
+bool SoundManager::isPlaying(SoundName soundName)
+{
+	return sounds[soundName]->IsSoundPlaying();
+}

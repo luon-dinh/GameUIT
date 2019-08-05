@@ -41,6 +41,7 @@ public:
 	void loadResources();
 	void play(SoundName soundName, bool loop=false);
 	void stop(SoundName soundName);
+	bool isPlaying(SoundName soundName);
 	void stopAll();
 	void ReleaseAll();
 };
