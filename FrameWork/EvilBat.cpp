@@ -121,6 +121,7 @@ void EvilBat::ChangeState(BatState state) {
 			this->activeAnimation = true;
 			this->isCollidable = false;
 			this->vx = this->vy = 0;
+			GameObjectProperty::health = 0;
 			break;
 		}
 		case BatState::OnNeck: {
@@ -146,18 +147,20 @@ bool EvilBat::OnRectCollided(Object* object, CollisionSide side) {
 	if (!this->isCollidable) {
 		return false;
 	}
+	if (object->type == Type::SPIKE) {
+		this->ChangeState(BatState::Dead);
+	}
 	switch (object->tag) {
 		case Tag::PLAYER:
-		case Tag::SHIELD: {
-			if (this->state == BatState::OnNeck) {
-				this->isCollidable = false;
-				this->isWakenUp = true;
-			}
-			GameObjectProperty::health--;
-			if (this->IsDead()) {
-				this->ChangeState(BatState::Dead);
-			}
+			OnBeaten(object);
 			return true;
+		case Tag::SHIELD: {
+			auto shield = Shield::getInstance();
+			// chỉ xét va chạm với shield khi shield đang attack
+			if (shield->state == Shield::ShieldState::Attack) {
+				OnBeaten(object);
+				return true;
+			}
 		}
 	}
 	return false;
@@ -250,10 +253,10 @@ void EvilBat::Move1() {
 	this->vx = 0;
 	// đi xuống
 	if (this->isFlyDown)
-		this->vy = -2;
+		this->vy = -1.1;
 	else
 		// đi lên
-		this->vy = 2;
+		this->vy = 1.1;
 }
 
 void EvilBat::Move2() {
@@ -307,6 +310,17 @@ void EvilBat::Move3() {
 		if ((this->vx > 0 && this->pos.x > this->leftX) || (this->vx < 0 && this->pos.x < this->rightX)) {
 			SetMoveFlag(2);
 		}
+	}
+}
+
+void EvilBat::OnBeaten(Object* object) {
+	if (this->state == BatState::OnNeck) {
+		this->isCollidable = false;
+		this->isWakenUp = true;
+	}
+	GameObjectProperty::health--;
+	if (this->IsDead()) {
+		this->ChangeState(BatState::Dead);
 	}
 }
 

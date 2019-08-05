@@ -134,7 +134,6 @@ public:
 	int GetCollisionDamage() override;
 	void LockInput();
 	void UnlockInput();
-	bool IsLockInput();
 
 
 

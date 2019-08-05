@@ -186,7 +186,7 @@ void Player::Update(float dt)
 	UpdatePosition();
 
 	if (this->IsOnPlatform()) {
-		auto platform = this->GetStandingGround();
+    	auto platform = this->GetStandingGround();
 		this->pos.x += platform->vx;
 		this->pos.y = platform->getBoundingBox().top + this->getHeight() / 2 - 2;
 	}
@@ -717,31 +717,12 @@ void Player::OnNotCollision(Object* object) {
 }
 bool Player::OnRectCollided(Object* object, CollisionSide side) {
 
-	//if (this->state == State::DASHING && (side == CollisionSide::left || side == CollisionSide::right))
-	//{
-	//	// collide with ground
-	//	this->ChangeState(State::STANDING);
-	//	switch (side)
-	//	{
-	//	case CollisionSide::left:
-	//		this->ChangeState(State::STANDING);
-	//		this->pos.x = object->getBoundingBox().right + this->getWidth() / 2 + 4;
-	//		break;
-	//	case CollisionSide::right:
-	//		this->pos.x = object->getBoundingBox().left - this->getWidth() / 2 - 4;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	return true;
-	//}
-	//SoundManager::getinstance()->play(SoundManager::SoundName::stage2, false);
 	auto box = this->getBoundingBox();
 	auto bound = object->getBoundingBox();
 	switch (object->type) {
 		case Type::PLATFORM:
 		case Type::GROUND: {
-         		if (this->GetOnAirState() == OnAir::DropToWater)
+         	if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
 			if (this->GetOnAirState() == OnAir::Falling) {
 				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
