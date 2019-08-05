@@ -54,9 +54,10 @@ protected:
 	virtual bool IsFlyAgain();
 
 	void InnerRender();
+	void OnBeaten(Object* object);
 
 	const int Y_MOVING_LENGTH = 50;
-	const int TURN_AROUND_POINT_DENTA = 50;
+	const int TURN_AROUND_POINT_DENTA = 35;
 	const int TURN_AROUND_COUNT = 4;
 	const int MOVING_DELAY_FRAME = 60;
 	const int PREPARE_TO_FLY_FRAME = 50;
