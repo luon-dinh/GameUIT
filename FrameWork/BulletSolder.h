@@ -39,16 +39,20 @@ public:
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
-		switch (object->type)
+		if (object->tag == Tag::PLAYER)
 		{
-		case Type::SOLIDBOX:
-		case Type::GROUND:
-			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
+			{
+				this->vy = abs(this->vx);
+				this->isCollidable = false;
+				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+				this->vx = 0;
+				return;
+			}
 			DeactivateObjectInGrid();
-			break;
-		default:
-			break;
+			return;
 		}
+
 		
 	}
 	
@@ -63,16 +67,6 @@ public:
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
-		switch (object->type)
-		{
-		case Type::SOLIDBOX:
-		case Type::GROUND:
-			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
-			DeactivateObjectInGrid();
-			break;
-		default:
-			break;
-		}
 		if (object->tag == Tag::PLAYER)
 		{
 			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
@@ -82,7 +76,6 @@ public:
 				this->vx = 0;
 				return true;
 			}
-			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 			return true;
 		}

@@ -358,7 +358,7 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 	//			break;
 	//	}
 	//}
-	if(object->type==Type::BULLETTYPE||((object->type==Type::SOLIDBOX||object->type==Type::GROUND)&&this->state==State::SHIELD_DOWN))
+	if(((object->type==Type::SOLIDBOX||object->type==Type::GROUND)&&this->state==State::SHIELD_DOWN))
 		SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 	else if (object->type == Type::ONOFF)
 	{

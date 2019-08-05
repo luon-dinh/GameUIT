@@ -64,6 +64,7 @@ public:
 			
 			}
 		}*/
+	
 	}
 
 	bool OnRectCollided(Object* object, CollisionSide side)override
@@ -76,6 +77,7 @@ public:
 		if (object->tag == Tag::PLAYER)
 		{
 			this->isCollidable = false;
+			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
 			{
 				D3DXVECTOR2 pos1;
