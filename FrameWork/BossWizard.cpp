@@ -88,7 +88,7 @@ void BossWizard::Update(float dt)
 {
 
 	//nửa máu thì có thể tắt đèn
-	if (health <= maxHelth/2)
+	if (health <= 10)
 		this->turnOffLight = true;
 	else
 	{
@@ -126,17 +126,12 @@ void BossWizard::Update(float dt)
 
 	if (flyMode==1 && this->state == State::FLYING)
 	{
+		this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+		if (vy < -3)
+			this->vx *= 0.9;
 		this->pos.x += this->vx;
-		this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx)-this->parapol->GetYFromX(this->pos.x));
-		if (this->vy < -5)
-		{
-			this->vy = -5;
-			this->pos.y += -5;
-		}
-		else
-		{
-			this->pos.y = this->parapol->GetYFromX(this->pos.x);
-		}
+		
+		this->pos.y = this->parapol->GetYFromX(this->pos.x);
 	}
 	else
 	{
@@ -178,17 +173,7 @@ void BossWizard::Render()
 		//return;
 	}
 
-	if (this->timeNotRender == 0)
-	{
-		if (this->direction == Player::MoveDirection::LeftToRight) {
-			// move from left to right
-			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal, color);
-		}
-		else {
-			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), color);
-		}
-	}
-	else
+	if (this->timeNotRender > 0||this->height<10)
 	{
 		if ((int)timeNotRender % 2 == 0)
 		{
@@ -204,6 +189,17 @@ void BossWizard::Render()
 		{
 			timeNotRender = 0;
 			isCollidable = true;
+		}
+		
+	}
+	else
+	{
+		if (this->direction == Player::MoveDirection::LeftToRight) {
+			// move from left to right
+			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal, color);
+		}
+		else {
+			currentanimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), color);
 		}
 	}
 }
@@ -256,14 +252,15 @@ void BossWizard::OnCollision(Object* object, collisionOut* colOut)
 
 void BossWizard::OnNotCollision(Object* object)
 {
-	
+	/*if (this->state != State::FLYING)
+		this->vy -= 0.3;*/
 }
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
 	if (object->type == Type::GROUND || object->type == Type::SOLIDBOX)
 	{
-		if (side == CollisionSide::bottom&&this->state != State::FLYING)
+		if (this->state != State::FLYING && this->state!=State::BEATEN)
 			this->vy = 0;
 	}
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
@@ -288,7 +285,7 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 				//isDead = true;
 				ChangeState(State::DEAD);
 			}
-			else if (this->state == State::FLYING)
+			else if (this->state == State::FLYING && this->deltaY>4)
 			{
 				ChangeState(State::BEATEN);
 			}
@@ -309,7 +306,7 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 			//isDead = true;
 			ChangeState(State::DEAD);
 		}
-		else if(this->state == State::FLYING)
+		else if(this->state == State::FLYING && this->deltaY > 4)
 		{
 			ChangeState(State::BEATEN);
 		}
@@ -329,7 +326,7 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 			//isDead = true;
 			ChangeState(State::DEAD);
 		}
-		else if (this->state == State::FLYING)
+		else if (this->state == State::FLYING && this->deltaY > 4)
 		{
 			ChangeState(State::BEATEN);
 		}
@@ -367,6 +364,7 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::None;
 		break;
 	case State::FLYING:
+		SoundManager::getinstance()->play(SoundManager::wizard_flying);
 		this->canShootOnAir = true;
 		this->vy = flySpeedy;
 		this->deltaX = this->deltaY = 0;
@@ -383,6 +381,8 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::None;
 		break;
 	case State::STAND_SMILE:
+		SoundManager::getinstance()->stop(SoundManager::SoundName::wizard_lazer);
+		SoundManager::getinstance()->stop(SoundManager::SoundName::wizard_fire);
 		this->vy = 0;
 		this->vx = 0;
 		this->onAirState = OnAir::None;
@@ -400,6 +400,7 @@ void BossWizard::ChangeState(State stateName)
 		this->onAirState = OnAir::Falling;
 		this->vx = 0;
 		this->vy = -this->flySpeedy;
+		break;
 	default:
 		break;
 	}

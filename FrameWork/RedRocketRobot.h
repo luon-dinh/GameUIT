@@ -42,6 +42,12 @@ protected:
 	//Thời gian shocking khi chết.
 	const int deadShockingTime = 300;
 
+	//Thời gian đứng bắn.
+	const int standShootingAnimDelay = 200;
+
+	//Thời gian ngồi bắn.
+	const int crouchShootingAnimDelay = 200;
+
 	//Thời gian của trạng thái hiện tại.
 	int currentStateTime = 0;
 
@@ -68,6 +74,8 @@ protected:
 	Animation* standing;
 	Animation* crouching;
 	Animation* shocking;
+	Animation* standShooting;
+	Animation* crouchShooting;
 
 	RedRocketRobotType robotType;
 	Player * player;

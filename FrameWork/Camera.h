@@ -67,6 +67,22 @@ public:
 	//Cài đặt vị trí cho Camera.
 	void SetPosition(float x, float y);
 
+	//Cài đặt vị trí cho Camera dựa vào CameraInfo.
+	void SetPosition(CameraInfo camInfo)
+	{
+		this->topLeftX = camInfo.topLeftX;
+		this->topLeftY = camInfo.topLeftY;
+	}
+
+	//Lấy vị trí hiện tại của Camera.
+	CameraInfo GetCurrentCameraPosition()
+	{
+		CameraInfo camInfo;
+		camInfo.topLeftX = this->topLeftX;
+		camInfo.topLeftY = this->topLeftY;
+		return camInfo;
+	}
+
 	//Cài đặt vị trí tương lai cho Camera (camera sẽ di chuyển trong khoảng thời gian timeDelay đến vị trí tương lai đã set).
 	void SetPositionWithDelay(float x, float y);
 

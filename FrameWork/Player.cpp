@@ -301,6 +301,8 @@ void Player::ChangeState(State stateName) {
 	// thay đổi riêng biệt cho từng loại state
 	switch (stateName) {
 	case State::STANDING: {
+		if(this->onAirState ==OnAir::Falling)
+			SoundManager::getinstance()->play(SoundManager::SoundName::player_stand);
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::Defense);
 		}
@@ -337,6 +339,7 @@ void Player::ChangeState(State stateName) {
 		break;
 	}
 	case State::DASHING: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_dash);
 		// dash khi có shield thì shield k render, ngược lại nghĩa là shield đang ở trạng thái attack
 		if (this->hasShield)
 			shield->SetShieldState(Shield::ShieldState::Transparent);
@@ -349,6 +352,7 @@ void Player::ChangeState(State stateName) {
 		break;
 	}
 	case State::DIVING: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_diving);
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::NotRender);
 		}
@@ -363,6 +367,7 @@ void Player::ChangeState(State stateName) {
 		break;
 	}
 	case State::ROLLING: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_rolling);
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::NotRender);
 		}
@@ -370,6 +375,7 @@ void Player::ChangeState(State stateName) {
 		break;
 	}
 	case State::KICKING: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_punch_kick);
 		if (this->hasShield) {
 			shield->SetShieldState(Shield::ShieldState::Transparent);
 		}
@@ -382,17 +388,20 @@ void Player::ChangeState(State stateName) {
 		break;
 	}
 	case State::SHIELD_ATTACK: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::shield_attack);
 		SetVx(0);
 		shield->SetShieldState(Shield::ShieldState::Transparent);
 		break;
 	}
 	case State::STAND_PUNCH: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_punch_kick);
 		SetVx(0);
 		PlayerHandPunch* handPunch = new PlayerHandPunch();
 		SceneManager::getInstance()->AddObjectToCurrentScene(handPunch);
 		break;
 	}
 	case State::DUCKING_PUNCHING: {
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_punch_kick);
 		PlayerHandPunch* handPunch = new PlayerHandPunch();
 		SceneManager::getInstance()->AddObjectToCurrentScene(handPunch);
 		return;
@@ -424,6 +433,7 @@ void Player::ChangeState(State stateName) {
 		return;
 	}
 	case State::DEAD: {
+		//SoundManager::getinstance()->play(SoundManager::SoundName::player_dead); chờ nào dead thật thì play
 		this->SetActive(false);
 		shield->SetShieldState(Shield::ShieldState::NotRender);
 		this->SetToNonAttackableState(300);

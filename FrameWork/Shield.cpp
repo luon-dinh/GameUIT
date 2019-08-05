@@ -358,6 +358,7 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 	//			break;
 	//	}
 	//}
+	SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 	if (this->state == ShieldState::Attack)
 	{
 		if (object->type == Type::ONOFF)

@@ -90,6 +90,7 @@ void BossWizardFlyingState::Fly(float dt)
 				bullet->pos.x = wizard->pos.x - wizard->width / 2;
 			}
 			bullet->pos.y = wizard->pos.y - wizard->height / 2;
+			SoundManager::getinstance()->play(SoundManager::SoundName::wizard_fire);
 			scene->AddObjectToCurrentScene(bullet);
 			wizard->canShootOnAir = false;
 			return;
@@ -121,12 +122,9 @@ void BossWizardFlyingState::Update(float dt)
 {
 	auto wizard = BossWizard::getInstance();
 	// nếu xuống min hoặc max map thì rớt
-	if ((wizard->pos.x < wizard->minMap+wizard->getWidth()/2 || wizard->pos.x>wizard->maxMap-wizard->getWidth()/2)&&wizard->deltaX>2)
+	if ((wizard->pos.x < wizard->minMap+wizard->getWidth()/2 +2 || wizard->pos.x>wizard->maxMap-wizard->getWidth()/2 - 2)&&wizard->deltaX>10)
 	{
-		if (wizard->flyMode == 1)
-		{
-			wizard->flyMode == 3;
-		}
+		wizard->flyMode = 3;
 		wizard->SetOnAirState(BossWizard::OnAir::Falling);
 	}
 	Fly(dt);

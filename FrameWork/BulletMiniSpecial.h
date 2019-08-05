@@ -11,10 +11,10 @@ public:
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
 
-	bool CanGetThroughShield() override
+	/*bool CanGetThroughShield() override
 	{
 		return true;
-	}
+	}*/
 
 	BulletMiniSpecial(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
 	{
@@ -34,48 +34,37 @@ public:
 		this->isCollidable = collide;
 	}
 	void Update(float dt)override {
-		if (animation->curframeindex == animationExplode->toframe - 1)
+		if (animation->curframeindex == animationExplode->toframe-1)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
+		/*this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+		if (vy < -3)
+			this->vx *= 0.9;
 		this->pos.x += this->vx;
-		this->vy = parapol->GetYFromX(this->pos.x+this->vx) - parapol->GetYFromX(this->pos.x);
-		if (this->vy < -4)
+
+		this->pos.y = this->parapol->GetYFromX(this->pos.x);*/
+		if (parapol != NULL)
 		{
-			this->vy = -4;
-			this->pos.y += this->vy;
-		}
-		else { 
-			this->pos.y = parapol->GetYFromX(this->pos.x); 
+			this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
+			if (vy < -3)
+				this->vx *= 0.9;
+			this->pos.x += this->vx;
+
+			this->pos.y = this->parapol->GetYFromX(this->pos.x);
+
 		}
 	}
 
 	int GetCollisionDamage()override
 	{
-		return 6;
+		return 1;
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)
 	{
-		switch (object->type)
-		{
-		case Type::GROUND:
-		case Type::SOLIDBOX:
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return;
-		default:
-			break;
-		}
-		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state == Shield::ShieldState::Attack)
-		{
-			if (this->isOnBossMini)
-				this->isBeaten = true;
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return;
-		}
 		if (object->tag == Tag::PLAYER_PART)
 		{
 			if (this->isOnBossMini)
@@ -83,6 +72,16 @@ public:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
 			return;
+		}
+		switch (object->type)
+		{
+		case Type::GROUND:
+		case Type::SOLIDBOX:
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -94,23 +93,9 @@ public:
 		case Type::SOLIDBOX:
 			this->animation = animationExplode;
 			this->vx = this->vy = 0;
-			return false;
+			break;
 		default:
 			break;
-		}
-		if (object->tag == Tag::PLAYER)
-		{
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return true;
-		}
-		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state==Shield::ShieldState::Attack)
-		{
-			if (this->isOnBossMini)
-				this->isBeaten = true;
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return false;
 		}
 		if (object->tag == Tag::PLAYER_PART)
 		{
@@ -120,6 +105,21 @@ public:
 			this->vx = this->vy = 0;
 			return false;
 		}
+		/*if (object->tag == Tag::PLAYER)
+		{
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return true;
+		}*/
+		if (object->tag == Tag::SHIELD&&Shield::getInstance()->state==Shield::ShieldState::Attack)
+		{
+			if (this->isOnBossMini)
+				this->isBeaten = true;
+			this->animation = animationExplode;
+			this->vx = this->vy = 0;
+			return false;
+		}
+	
 	}
 
 	BoundingBox getBoundingBox()override

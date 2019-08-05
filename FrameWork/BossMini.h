@@ -9,7 +9,6 @@ private:
 	void LoadAllAnimations();
 public:
 	const float maxHelth = 20;
-	const int maxTimeStateDelay = 1000;
 	const float maxDelatXRun = 150;
 	const float minMap = 0;
 	const float maxMap = 256;
@@ -20,17 +19,19 @@ public:
 	const float deltaToThrow = 60;
 	const float defaultDT = 30;
 	const float maxTimeNotCollidable = 1500;
+	const float maxTimeStateDelay = 1000;
+	const float maxTimeAttack = 2000;
 	float timeNotCollideable;
 	int countTimesBeaten;
 	const int maxTimesBeaten=3;
-	const int maxTimesBeaten2=3;
+	const int maxTimesBeaten2=10;
 	int countBullet;
 	float timeCurrentState;
 	float deltaX;
 	bool canNewBullet;//
 	BulletMiniSpecial* defaultBullet;
 
-
+	int GetCollisionDamage()override;
 	float getPosToBottom();
 	float getWidth();
 	float getHeight();

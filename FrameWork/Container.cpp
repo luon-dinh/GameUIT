@@ -77,7 +77,9 @@ void Container::Render()
 {
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,this->pos.y,0));
 	//animation->Render(this->pos);
-	animation->getSprite(animation->curframeindex)->Render(pos);
+	//Xét không render nếu như đang tắt điện ở màn 2.
+	if (SceneManager::getInstance()->IsLightOn())
+		animation->getSprite(animation->curframeindex)->Render(pos);
 }
 
 BoundingBox Container::getBoundingBox()
@@ -109,6 +111,7 @@ void Container::OnCollision(Object* object, collisionOut* colOut)
 	{
 		if (shield->state == Shield::ShieldState::Attack)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_holder);
 			animation->curframeindex = 1;
 			ticuframe = 500;
 			if (item != nullptr)
@@ -155,6 +158,7 @@ bool Container::OnRectCollided(Object* object, CollisionSide side)
 	{
 	case Tag::PLAYER_PART:
 	{
+		SoundManager::getinstance()->play(SoundManager::SoundName::item_holder);
 		animation->curframeindex = 1;
 		ticuframe = 500;
 		if (item != nullptr)

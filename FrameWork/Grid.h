@@ -7,9 +7,13 @@
 #include "Player.h"
 #include "Container.h"
 #include "Solder.h"
+#include "DisappearingPlatform.h"
+#include "MovingPlatformCircle.h"
+#include "MovingPlatformCrossed.h"
+#include "MovingPlatformHorizontal.h"
 #include "Debug.h"
 #include "DrawDebug.h"
-
+#include"GreenSolder.h"
 //Phải gọi hàm ActivateCells() trước khi làm bất kỳ thứ gì khác.
 class Grid // lam singleton
 {

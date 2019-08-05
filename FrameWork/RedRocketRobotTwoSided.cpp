@@ -103,9 +103,24 @@ void RedRocketRobotTwoSided::EnemyAttackingUpdate(double dt)
 	//Đủ thời gian chờ thì ta bắn luôn.
 	if (!isAttacked && currentStateTime > attackingDelay)
 	{
-		currentFiringTick = 0;
-		isAttacked = true;
-		Fire();
+		if (robotState == State::STANDING)
+			currentAnimation = standShooting;
+		else
+			currentAnimation = crouchShooting;
+		if (currentAnimation->curframeindex == currentAnimation->toframe - 1)
+		{
+			currentFiringTick = 0;
+			isAttacked = true;
+			Fire();
+		}
+	}
+	else
+	{
+		currentAnimation->curframeindex = 0;
+		if (robotState == State::STANDING)
+			currentAnimation = standing;
+		else
+			currentAnimation = crouching;
 	}
 }
 
@@ -134,6 +149,7 @@ void RedRocketRobotTwoSided::EnemyDeadUpdate(double dt)
 	{
 		if (currentStateTime > explodeTime)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 			return;
 		}

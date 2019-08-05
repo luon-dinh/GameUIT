@@ -23,6 +23,14 @@ int ObjectID::ITEMLOOTER = 8;
 int ObjectID::BLUESOLDIER = 9;
 int ObjectID::REDROCKET = 10;
 int ObjectID::ITEMLOOTERMAP2 = 11;
+int ObjectID::DISAPPEARING_PLATFORM = 12;
+int ObjectID::MOVING_PLATFORM = 13;
+int ObjectID::GREENSOLDIER = 14;
+int ObjectID::WHITEFLYINGROBOT = 15;
+int ObjectID::WHITEROCKRTER = 16;
+int ObjectID::CANNON = 17;
+int ObjectID::EVIL_BAT = 18;
+int ObjectID::ELECTRIC_BAT = 19;
 
 //Định nghĩa trọng số render của các loại object khác nhau.
 int RenderWeightOfObjects::BULLET_RENDER_WEIGHT = 3;

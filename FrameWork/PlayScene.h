@@ -8,6 +8,7 @@
 #include "Shield.h"
 #include "Global.h"
 #include "DrawDebug.h"
+#include"SoundManager.h"
 
 //Các PlayScene khác nhau sẽ có nhiều đoạn code có thể dùng chung được.
 //Ý tưởng ở đây của việc kế thừa là những đoạn code dùng chung sẽ được gom lại ở lớp cha PlayScene này.
@@ -30,6 +31,7 @@ public:
 	void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
 	bool AddObjectToPlayScene(Object*); //Thêm một object vào PlayScene.
 	virtual void GoToNextScene() {};
+	virtual void UpdateCameraWithPlayerPos(double dt = 0);
 	PlayScene(); //Khởi tạo player và camera.
 	~PlayScene();
 protected:
@@ -37,7 +39,7 @@ protected:
 	bool Done = false; //Biến dùng để xét xem cảnh hiện tại đã hoàn thành chưa (phục vụ cho mục đích xoá khỏi bộ nhớ).
 	MapName ReplaceToThisMap = MapName::NOMAP; //Biến dùng để báo cho Scene Manager chuyển cảnh sang map mới.
 	virtual void ProcessUpdates(double dt);
-	virtual void UpdateCameraWithPlayerPos(double dt = 0);
+	
 	virtual void CollisionProcess(double dt);
 	virtual void EnvironmentUpdate(double dt);
 	virtual void DrawDebugBoxForPlayer();

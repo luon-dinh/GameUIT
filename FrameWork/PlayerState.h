@@ -2,6 +2,7 @@
 #include"Collision.h"
 #include"Object.h"
 #include "Global.h"
+#include"SoundManager.h"
 
 class PlayerState {
 protected:

@@ -8,7 +8,6 @@ WhiteFlyingRobot::WhiteFlyingRobot(int posX, int posY)
 	this->direction = MoveDirection::LeftToRight;
 	LoadAllAnimation();
 	player = Player::getInstance();
-	LoadAllAnimation();
 	robotState = State::FLYING;
 	currentAnimation = stateAnim[robotState];
 	this->pos.x = posX;
@@ -32,6 +31,7 @@ void WhiteFlyingRobot::EnemyDeadUpdate(double dt)
 	{
 		if (currentStateTime > explodeTime)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 			return;
 		}
@@ -63,7 +63,7 @@ void WhiteFlyingRobot::EnemyAliveUpdate(double dt)
 	//Quái chỉ bắn khi ở góc 0 độ và góc 90 độ.
 	if (inRange(0, currentDegree) || inRange(90, currentDegree))
 	{
-		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletWhiteFlyingRocketer(this->direction, this->pos.x, this->pos.y));
+		ChangeState(State::ATTACK);
 	}
 
 	//Cập nhật lại tốc độ bay hiện tại dựa vào góc.
@@ -82,6 +82,23 @@ void WhiteFlyingRobot::EnemyAliveUpdate(double dt)
 	this->currentAnimation->Update(dt);
 }
 
+void WhiteFlyingRobot::EnemyAttackingUpdate(double dt)
+{
+	if (currentStateTime > delayAttackingAnim * 2)
+	{
+		int bulletX = (this->direction == MoveDirection::LeftToRight) ? (this->pos.x + 7) : (this->pos.x - 7);
+		int bulletY = this->pos.y;
+		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletWhiteFlyingRocketer(this->direction, bulletX, bulletY));
+		ChangeState(State::FLYING);
+	}
+	//Cập nhật lại phương hướng (hướng trái hay phải) của enemy.
+	if (player->pos.x > this->pos.x)
+		this->direction = MoveDirection::LeftToRight;
+	else
+		this->direction = MoveDirection::RightToLeft;
+	currentAnimation->Update(dt);
+}
+
 void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 {
 	//Nếu đã hết thời gian beaten  thì ta quay lại trạng thái bay bình thường.
@@ -89,6 +106,7 @@ void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 	{
 		ChangeState(State::FLYING);
 		isCollidable = true;
+		return;
 	}		
 	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
 	isCollidable = false;
@@ -101,6 +119,9 @@ void WhiteFlyingRobot::Update(float dt)
 	//Xét từng state.
 	if (robotState == State::FLYING)
 		EnemyAliveUpdate(dt);
+
+	else if (robotState == State::ATTACK)
+		EnemyAttackingUpdate(dt);
 
 	else if (robotState == State::BEATEN)
 		EnemyBeatenUpdate(dt);
@@ -136,10 +157,13 @@ void WhiteFlyingRobot::LoadAllAnimation()
 	//Load animation tương ứng với trạng thái.
 	Animation* flyingAnim = new Animation(Tag::WHITEFLYINGROBOT, 0, 2, delayFlyingSprite);
 	Animation* fallingAnim = new Animation(Tag::WHITEFLYINGROBOT, 2, 4, delayFallingAnim);
+	Animation* attackingAnim = new Animation(Tag::WHITEFLYINGROBOT, 4, 6, delayAttackingAnim);
 	std::pair<State, Animation*> flyingPair(State::FLYING, flyingAnim);
 	std::pair<State, Animation*> spinningPair(State::FALLING, fallingAnim);
+	std::pair<State, Animation*> attackingPair(State::ATTACK, attackingAnim);
 	stateAnim.insert(flyingPair);
 	stateAnim.insert(spinningPair);
+	stateAnim.insert(attackingPair);
 }
 
 void WhiteFlyingRobot::ChangeState(State state)
@@ -149,12 +173,16 @@ void WhiteFlyingRobot::ChangeState(State state)
 	{
 	case State::FLYING:
 	case State::BEATEN:
+		currentAnimation = stateAnim[State::FLYING];
 		break;
 	case State::FALLING:
 		currentAnimation = stateAnim[State::FALLING];
 		break;
 	case State::DEAD:
 		currentAnimation = explodeAnim;
+		break;
+	case State::ATTACK:
+		currentAnimation = stateAnim[State::ATTACK];
 		break;
 	}
 	robotState = state;
@@ -170,7 +198,7 @@ void WhiteFlyingRobot::OnCollision(Object* object, collisionOut* colout)
 		{
 			//Nếu không đang trong trạng thái beaten mới trừ máu.
 			if (robotState != State::BEATEN)
-				--health;
+				health -= object->GetCollisionDamage();
 			if (health <= 0)
 				ChangeState(State::FALLING);
 			else
@@ -184,6 +212,21 @@ void WhiteFlyingRobot::OnCollision(Object* object, collisionOut* colout)
 
 bool WhiteFlyingRobot::OnRectCollided(Object* object, CollisionSide side)
 {
+	if (object->tag == Tag::PLAYER || object->tag == Tag::PLAYER_PART)
+	{
+		if (robotState != State::BEATEN)
+		{
+			health -= object->GetCollisionDamage();
+			if (health <= 0)
+				ChangeState(State::FALLING);
+			else
+				ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::STATICOBJECT)
+	{
+		return false;
+	}
 	return true;
 }
 

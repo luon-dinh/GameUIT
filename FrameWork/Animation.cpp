@@ -55,10 +55,6 @@ void Animation::Render(D3DXVECTOR2 pos, float rotateRadian) {
 
 Animation::~Animation()
 {
-	for (auto s : sprites) 
-	{
-		s = nullptr;
-	}
 	sprites.clear();
 }
 
@@ -66,6 +62,10 @@ void Animation::Update(float dt)
 {
 	if (this == NULL)
 		return;
+	if (!loop && (curframeindex == toframe))
+	{
+		return;
+	}
 	if (ticurframe > tiperframe)
 	{
 		ticurframe = 0;
@@ -94,15 +94,15 @@ Animation::Animation(Tag tag, int index)
 	tiperframe = TIME_PER_FRAME;
 }
 
-Animation::Animation(Tag tag, int first, int last, int timeperframe)
+Animation::Animation(Tag tag, int first, int last, int timeperframe, bool _loop)
 {
 	this->tag = tag;
+	loop = _loop;
 	sprites = SpriteManager::getInstance()->getSprites(tag, first, last);
 	toframe = sprites.size();
 	curframeindex = 0;
 	tiperframe = timeperframe;
 }
-
 
 int Animation::getWidth()
 {

@@ -60,6 +60,9 @@ private:
 	//Lưu lại trạng thái của player trước khi chuyển màn để sau đó chuyển màn lại có thể để player ở vị trí chính xác.
 	std::unordered_map<PlayScene*, PlayerInfo> playerSavedStatesWithPlayScene;
 
+	//Lưu lại trạng thái của camera trước khi chuyển màn để sau đó chuyển màn lại có thể đặt camera ở vị trí chính xác.
+	std::unordered_map<PlayScene*, CameraInfo> cameraSavedStatesWithPlayScene;
+
 	SceneManager();
 	~SceneManager();
 

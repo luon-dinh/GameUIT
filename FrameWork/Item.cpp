@@ -1,5 +1,6 @@
 ﻿#include"Item.h"
 #include"Camera.h"
+#include"SoundManager.h"
 Item::Item(ItemType itemtype)
 {
 	this->tag = ITEM;
@@ -36,6 +37,7 @@ Item::Item(ItemType itemtype)
 		animation = new Animation(Tag::ITEM, 9,11);
 		break;
 	}
+	isCollidable = false;
 }
 Item::~Item()
 {
@@ -46,12 +48,19 @@ void Item::Update(float dt)
 {
 	countFrame++;
 
-	if (countFrame<20)
+	if (countFrame < 20)
+	{
 		this->vy = ITEM_SPEED;
+		isCollidable = false;
+	}
 	else
 	{
-		if(this->vy!=0)
+		if (this->vy != 0)
+		{
 			this->vy = -ITEM_SPEED;
+			isCollidable = true;
+		}
+			
 	}
 
 	this->pos.y += this->vy;
@@ -140,6 +149,20 @@ bool Item::OnRectCollided(Object* object, CollisionSide side)
 		break;
 	}
 	if (object->tag == Tag::PLAYER)
+	{
+		switch (this->itemtype)
+		{
+		case ItemType::EXIT:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_exit_orb);
+			break;
+		case ItemType::HP:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_hp);
+			break;
+		default:
+			SoundManager::getinstance()->play(SoundManager::SoundName::item_normal);
+			break;
+		}
 		DeactivateObjectInGrid();
+	}
 	return true;
 }

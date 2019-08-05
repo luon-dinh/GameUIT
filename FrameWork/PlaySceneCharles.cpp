@@ -16,7 +16,6 @@
 #include "Shockwave.h"
 #include "Camera.h"	
 #include "Solder.h"
-#include "EletricBat.h"
 #include "GreenSolder.h"
 #include "Canon.h"
 #include"GreenSolder.h"
@@ -36,7 +35,7 @@ PlaySceneCharles::PlaySceneCharles()
 
 	/*grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));*/
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
-	//grid->Add(new WhiteFlyingRobot(200, 180));
+	grid->Add(new WhiteFlyingRobot(200, 180));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
 	//soldier->pos.x = 1500;
 	//soldier->pos.y = 180;
@@ -46,15 +45,16 @@ PlaySceneCharles::PlaySceneCharles()
 	//grid->Add(new RedRocketRobotTwoSided(1600, 51));
 	//grid->Add(new RedRocketRobotTwoSidedNonLinear(1500,90));
 	//grid->Add(new RedRocketRobotNonShooting(1800, 51));
-	grid->Add(new MovingPlatformCircle(120,200));
-	//grid->Add(new DisappearingPlatform(120, 120));
+	grid->Add(new MovingPlatformCircle(150,100));
+	grid->Add(new DisappearingPlatform(120, 120));
 	////grid->Add(new Door(80, 80));
 	//grid->Add(new Door(80, 80));
 	//grid->Add(new Shockwave(120, 80));
-	grid->Add(new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(200, 66)));
+	//grid->Add(new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(200, 66)));
 	//grid->Add(new EvilBat(D3DXVECTOR2(100, 200)));
 
-	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100));
+	//grid->Add(new PlatformFire(PlatformFire::PlatformFireDirection::LEFTTORIGHT, 50, 100))
+	//SoundManager::getinstance()->play(SoundManager::SoundName::action_theme, true);
 }
 
 PlaySceneCharles::~PlaySceneCharles()
@@ -78,7 +78,6 @@ void PlaySceneCharles::ResetPlayerPosition()
 void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
-
 	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
 	if (!isCameraAlreadyLockedOnce)
 	{

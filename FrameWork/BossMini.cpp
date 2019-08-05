@@ -50,7 +50,7 @@ void BossMini::LoadAllAnimations()
 {
 	animations[State::FALLING] = new Animation(Tag::BOSSMINI, 0, 1);
 	animations[State::STANDING] = new Animation(Tag::BOSSMINI, 1, 2);
-	animations[State::ATTACKING_FLY] = new Animation(Tag::BOSSMINI, 2, 4, maxTimeStateDelay/2);
+	animations[State::ATTACKING_FLY] = new Animation(Tag::BOSSMINI, 2, 4, maxTimeAttack/2);
 	animations[State::ATTACK] = new Animation(Tag::BOSSMINI, 4, 5, maxTimeStateDelay);
 	animations[State::RUNNING] = new Animation(Tag::BOSSMINI, 5, 8);
 	animations[State::BEATEN] = new Animation(Tag::BOSSMINI, 8, 10);
@@ -94,11 +94,19 @@ float BossMini::getWidth()
 	return width;
 }
 
+int BossMini::GetCollisionDamage()
+{
+	return 4;
+}
+
 void BossMini::Update(float dt)
 {
 	//nếu hết animation explode
 	if (this->currentAnimation == this->explodeAnim&&this->currentAnimation->curframeindex == this->explodeAnim->toframe - 1)
+	{
 		DeactivateObjectInGrid();
+		SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+	}
 	//nếu bị đánh 3 lần thì chuyển state điên
 	//nếu không collidedable thì cập nhật thời gian và set lại
 	if (!this->isCollidable)
@@ -150,11 +158,11 @@ void BossMini::Update(float dt)
 		{
 			deltaX += abs(this->vx);
 		}
-		if (this->pos.x < minMap&&this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
+		if (this->pos.x < minMap + this->getWidth() / 2 && this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
 		{
 			this->direction = MoveDirection::LeftToRight;
 		}
-		if (this->pos.x > maxMap&&this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
+		if (this->pos.x > maxMap - this->getWidth() / 2 && this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
 		{
 			this->direction = MoveDirection::RightToLeft;
 		}
@@ -177,7 +185,7 @@ void BossMini::Update(float dt)
 				auto bullet = new BulletMiniNormal();
 				bullet->direction = this->direction;
 				bullet->vy = 0;
-				bullet->pos.y = this->pos.y + 10;
+				bullet->pos.y = this->pos.y+this->getHeight()/2 - 5;
 				if (this->direction == MoveDirection::LeftToRight)
 				{
 					bullet->vx = bulletSpeed;
@@ -211,30 +219,47 @@ void BossMini::Update(float dt)
 	case State::ATTACKING_FLY://ném thùng
 	{
 		this->onAirState = OnAir::None;
-		D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y + this->getHeight() / 2);
-		D3DXVECTOR2 pos2;
-		pos2.y = this->pos.y + this->getHeight()/2;
-		float delta = this->pos.x - player->pos.x;
-		if (abs(delta) < deltaToThrow)
-		{
-			pos2.x = (player->pos.x + this->pos.x) / 2;
-			pos2.y = this->pos.y + this->getHeight() / 2;
-		}
+		
+		
+		if (timeCurrentState < maxTimeAttack * 2 / 3)
+			currentAnimation->curframeindex = 0;
 		else
 		{
-			if (this->direction == MoveDirection::RightToLeft)
-			{
-				pos2.x = this->pos.x - deltaToThrow;
-			}
-			else
-			{
-				pos2.x = this->pos.x + deltaToThrow;
-			}
+			currentAnimation->curframeindex = 1;
 		}
-		if (timeCurrentState < maxTimeStateDelay)
+		
+		if (timeCurrentState < maxTimeAttack)
 		{
 			if (canNewBullet)// tạo bullet
 			{
+				D3DXVECTOR2 pos1 = D3DXVECTOR2(this->pos.x, this->pos.y + this->getHeight() / 2);
+				D3DXVECTOR2 pos2;
+				float delta = this->pos.x - player->pos.x;
+				if (abs(delta) < deltaToThrow)
+				{
+					if (this->direction == MoveDirection::RightToLeft)
+					{
+						pos2.x = this->pos.x - abs(delta) / 2;
+					}
+					else
+					{
+						pos2.x = this->pos.x + abs(delta) / 2;
+					}
+					pos2.y = this->pos.y + this->getHeight() / 2 + 4;
+				}
+				else
+				{
+					//pos2.y = this->pos.y + this->getHeight() - 10;
+					pos2.y = this->pos.y + this->getHeight() / 2;
+					if (this->direction == MoveDirection::RightToLeft)
+					{
+						pos2.x = this->pos.x - deltaToThrow;
+					}
+					else
+					{
+						pos2.x = this->pos.x + deltaToThrow;
+					}
+				}
 				this->defaultBullet = new BulletMiniSpecial(pos1, pos2);
 				this->defaultBullet->vy = 0;
 				this->defaultBullet->pos.x = this->pos.x;
@@ -263,17 +288,17 @@ void BossMini::Update(float dt)
 				return;
 			}
 			//nếu đến thời điểm ném, cho bullet bay
-			if (timeCurrentState < maxTimeStateDelay / 3*2 && timeCurrentState + defaultDT >maxTimeStateDelay /3* 2)
+			if (timeCurrentState < maxTimeAttack * 2/3 && timeCurrentState + defaultDT >maxTimeAttack * 2/3)
 			{
 				if (this->direction == MoveDirection::RightToLeft)
 				{
-					this->defaultBullet->vx = -bulletSpeed;
+					this->defaultBullet->vx = -bulletSpeed/2;
 					this->defaultBullet->direction = MoveDirection::RightToLeft;
 				}
 				else
 				{
 					this->defaultBullet->direction = MoveDirection::LeftToRight;
-					this->defaultBullet->vx = bulletSpeed;
+					this->defaultBullet->vx = bulletSpeed/2;
 				}
 				this->defaultBullet->isOnBossMini = false;
 			}
@@ -368,7 +393,8 @@ void BossMini::Update(float dt)
 	}
 	this->pos.x += this->vx;
 	this->pos.y += this->vy;
-	currentAnimation->Update(dt);
+	if(state!=State::ATTACKING_FLY)
+		currentAnimation->Update(dt);
 }
 
 void BossMini::Render()

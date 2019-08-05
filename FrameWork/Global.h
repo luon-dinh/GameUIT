@@ -86,6 +86,14 @@ public:
 	static int ITEMLOOTERMAP2;
 	static int BLUESOLDIER;
 	static int REDROCKET;
+	static int DISAPPEARING_PLATFORM;
+	static int MOVING_PLATFORM;
+	static int GREENSOLDIER;
+	static int WHITEFLYINGROBOT;
+	static int WHITEROCKRTER;
+	static int CANNON;
+	static int EVIL_BAT;
+	static int ELECTRIC_BAT;
 };
 
 //Đây là class chứa trọng số vẽ.
@@ -106,6 +114,12 @@ struct PlayerInfo
 	float playerX;
 	float playerY;
 };
+
+struct CameraInfo
+{
+	float topLeftX;
+	float topLeftY;
+};
 //dung cho enemy
 enum RunType {
 	THREESHOOTER = 0,
@@ -120,6 +134,13 @@ enum RedRocketRobotType
 	TWOSIDED = 1,
 	TWOSIDEDNONLINEAR = 2,
 	ONESIDEDJUMPING = 3
+};
+
+enum MovingPlatformType
+{
+	CIRCLE = 0,
+	CROSSED = 1,
+	HORIZONTAL = 2
 };
 
 enum ItemType {
