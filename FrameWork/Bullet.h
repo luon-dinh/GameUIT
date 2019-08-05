@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"Object.h"
 #include"Camera.h"
-
+#include"SoundManager.h"
 class Bullet:public Object {
 public:
 	float speed;
@@ -33,7 +33,10 @@ public:
 		curDelayTime += dt;
 		this->animation->Update(dt);
 		if (curDelayTime > delayDisappear)
+		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
+		}
 	}
 
 	virtual void Render()

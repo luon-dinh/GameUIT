@@ -84,6 +84,7 @@ void EvilBat::Update(float dt) {
 
 void EvilBat::Explode() {
 	if (this->currentAnimation->curframeindex == 2) {
+		SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 		this->DeactivateObjectInGrid();
 	}
 }

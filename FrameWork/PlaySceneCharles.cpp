@@ -78,7 +78,6 @@ void PlaySceneCharles::ResetPlayerPosition()
 void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
-
 	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
 	if (!isCameraAlreadyLockedOnce)
 	{

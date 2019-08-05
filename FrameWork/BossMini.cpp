@@ -98,7 +98,10 @@ void BossMini::Update(float dt)
 {
 	//nếu hết animation explode
 	if (this->currentAnimation == this->explodeAnim&&this->currentAnimation->curframeindex == this->explodeAnim->toframe - 1)
+	{
 		DeactivateObjectInGrid();
+		SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
+	}
 	//nếu bị đánh 3 lần thì chuyển state điên
 	//nếu không collidedable thì cập nhật thời gian và set lại
 	if (!this->isCollidable)
@@ -272,7 +275,7 @@ void BossMini::Update(float dt)
 				return;
 			}
 			//nếu đến thời điểm ném, cho bullet bay
-			if (timeCurrentState < maxTimeAttack / 3*2 && timeCurrentState + defaultDT >maxTimeAttack /3* 2)
+			if (timeCurrentState < maxTimeAttack / 2 && timeCurrentState + defaultDT >maxTimeAttack / 2)
 			{
 				if (this->direction == MoveDirection::RightToLeft)
 				{

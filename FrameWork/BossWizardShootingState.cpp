@@ -47,6 +47,7 @@ void BossWizardShootingState::Update(float dt)
 			default:
 				break;
 			}
+			SoundManager::getinstance()->play(SoundManager::SoundName::wizard_fire);
 			scene->AddObjectToCurrentScene(bullet);
 			wizard->countBullet++;
 			wizard->ChangeState(State::STANDING);
@@ -87,6 +88,7 @@ void BossWizardShootingState::Update(float dt)
 				default:
 					break;
 				}
+				SoundManager::getinstance()->play(SoundManager::SoundName::wizard_fire);
 				scene->AddObjectToCurrentScene(bullet);
 				wizard->flyMode = 1;
 				wizard->ChangeState(State::FLYING);
@@ -137,6 +139,7 @@ void BossWizardShootingState::Update(float dt)
 			}
 			wizard->countBullet++;
 			wizard->ChangeState(State::STANDING);
+			SoundManager::getinstance()->play(SoundManager::SoundName::wizard_lazer);
 			scene->AddObjectToCurrentScene(bullet);
 		}
 	}

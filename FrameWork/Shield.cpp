@@ -362,6 +362,7 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 	{
 		if (object->type == Type::ONOFF)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 			SceneManager::getInstance()->TurnOnOffLight();
 		}
 	}

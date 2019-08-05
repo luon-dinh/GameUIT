@@ -134,6 +134,7 @@ void RedRocketRobotTwoSided::EnemyDeadUpdate(double dt)
 	{
 		if (currentStateTime > explodeTime)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 			return;
 		}
