@@ -16,7 +16,7 @@ public:
 	const int maxBullet=3;
 	const float speed = 2;
 	const float bulletSpeed = 3;
-	const float deltaToThrow = 50;
+	const float deltaToThrow = 60;
 	const float defaultDT = 30;
 	const float maxTimeNotCollidable = 1500;
 	const float maxTimeStateDelay = 1000;
@@ -31,7 +31,7 @@ public:
 	bool canNewBullet;//
 	BulletMiniSpecial* defaultBullet;
 
-
+	int GetCollisionDamage()override;
 	float getPosToBottom();
 	float getWidth();
 	float getHeight();

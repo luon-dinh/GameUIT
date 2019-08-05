@@ -23,8 +23,6 @@ public:
 	}
 
 	void Update(float dt)override {
-		if (animation->curframeindex == animationExplode->toframe-1)
-			DeactivateObjectInGrid();
 		animation->Update(dt);
 		this->pos.x += this->vx;
 		this->pos.y += this->vy;
@@ -32,7 +30,7 @@ public:
 
 	int GetCollisionDamage()override
 	{
-		return 2;
+		return 3;
 	}
 
 	void OnCollision(Object* object, collisionOut* colOut)override
@@ -42,20 +40,9 @@ public:
 
 	bool OnRectCollided(Object* object, CollisionSide side)override
 	{
-		switch (object->type)
-		{
-		case Type::GROUND:
-		case Type::SOLIDBOX:
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
-			return false;
-		default:
-			break;
-		}
 		if (object->tag == Tag::PLAYER)
 		{
-			this->animation = animationExplode;
-			this->vx = this->vy = 0;
+			this->isCollidable = false;
 			return true;
 		}
 	}

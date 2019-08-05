@@ -18,14 +18,14 @@ void SoundManager::Create(HWND hwnd)
 void SoundManager::loadResources()
 {
 	manager->Create(&sounds[action_theme], (char*)".\\..\\Resources\\Sounds\\action_theme.wav");
-	manager->Create(&sounds[boss_gragas_theme], (char*)".\\..\\Resources\\Sounds\\boss_gragras_theme.wav");
+	manager->Create(&sounds[boss_gragas_theme], (char*)".\\..\\Resources\\Sounds\\boss_gragas_theme.wav");
 	manager->Create(&sounds[boss_wizard_theme], (char*)".\\..\\Resources\\Sounds\\boss_wizard_theme.wav");
 	manager->Create(&sounds[door_open], (char*)".\\..\\Resources\\Sounds\\door_open.wav");
 	manager->Create(&sounds[item_exit_orb], (char*)".\\..\\Resources\\Sounds\\item_exit_orb.wav");
 	manager->Create(&sounds[item_holder], (char*)".\\..\\Resources\\Sounds\\item_holder.wav");
 	manager->Create(&sounds[item_hp], (char*)".\\..\\Resources\\Sounds\\item_hp.wav");
 	manager->Create(&sounds[item_normal], (char*)".\\..\\Resources\\Sounds\\item_normal.wav");
-	manager->Create(&sounds[main_theme], (char*)".\\..\\Resources\\Sounds\\main_them.wav");
+	manager->Create(&sounds[main_theme], (char*)".\\..\\Resources\\Sounds\\main_theme.wav");
 	manager->Create(&sounds[object_explode], (char*)".\\..\\Resources\\Sounds\\object_explode.wav");
 	manager->Create(&sounds[player_dash], (char*)".\\..\\Resources\\Sounds\\player_dash.wav");
 	manager->Create(&sounds[player_dead], (char*)".\\..\\Resources\\Sounds\\player_dead.wav");
@@ -45,7 +45,7 @@ void SoundManager::play(SoundName soundName, bool loop)
 {
 	if (loop)
 	{
-		sounds[soundName]->Play(0, 0, DSBPLAY_LOOPING);
+		sounds[soundName]->Play(0,0,0, DSBPLAY_LOOPING);
 	}
 	else
 	{
@@ -61,10 +61,11 @@ void SoundManager::stop(SoundName soundName)
 
 void SoundManager::stopAll()
 {
-	std::unordered_map<SoundName, CSound*>::iterator it;
-	for (it=sounds.begin();it!=sounds.end();it++)
+	std::unordered_map<SoundName, CSound *>::iterator it;
+	for (it=sounds.begin();it!=sounds.end();++it)
 	{
-		it->second->Stop();
+		if(it->second->IsSoundPlaying())
+			it->second->Stop();
 	}
 }
 

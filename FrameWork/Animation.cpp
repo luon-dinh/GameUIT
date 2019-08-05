@@ -55,10 +55,10 @@ void Animation::Render(D3DXVECTOR2 pos, float rotateRadian) {
 
 Animation::~Animation()
 {
-	for (auto s : sprites) 
+	/*for (auto s : sprites) 
 	{
 		s = nullptr;
-	}
+	}*/
 	sprites.clear();
 }
 
@@ -107,7 +107,6 @@ Animation::Animation(Tag tag, int first, int last, int timeperframe, bool _loop)
 	curframeindex = 0;
 	tiperframe = timeperframe;
 }
-
 
 int Animation::getWidth()
 {
