@@ -994,6 +994,9 @@ void Player::OnShieldFloatOnWater(Object* object) {
 	this->SetOnAirState(Object::OnAir::FloatAboveWater);
 	this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 + 8;
 }
+void Player::OnBeingCarried(Object* object) {
+	//this->carriedObj = object;
+}
 #pragma endregion
 
 

@@ -2,17 +2,19 @@
 
 SpriteManager* SpriteManager::instance = NULL;
 
-void SpriteManager::addSprite(Sprite *sprite)
-{
-	sprites[sprite->tag].push_back(sprite);
-}
-
 SpriteManager *SpriteManager::getInstance()
 {
 	if (!instance)
 		instance = new SpriteManager();
 	return instance;
 }
+
+void SpriteManager::addSprite(Sprite *sprite)
+{
+	sprites[sprite->tag].push_back(sprite);
+}
+
+
 
 void SpriteManager::LoadResources()
 {

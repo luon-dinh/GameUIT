@@ -358,11 +358,13 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 	//			break;
 	//	}
 	//}
-	SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-	if (this->state == ShieldState::Attack)
+	if(object->type==Type::BULLETTYPE||((object->type==Type::SOLIDBOX||object->type==Type::GROUND)&&this->state==State::SHIELD_DOWN))
+		SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+	else if (object->type == Type::ONOFF)
 	{
-		if (object->type == Type::ONOFF)
+		if (this->state == ShieldState::Attack)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 			SceneManager::getInstance()->TurnOnOffLight();
 		}
 	}
