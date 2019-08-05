@@ -382,7 +382,7 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 
 			else if (objectIDPerPosition[i][j] == ObjectID::REDROCKET)
 			{
-				if (currentItemNumber < maxItemAtOnce) {
+				if (currentItemNumber < maxEnemyAtOnce) {
 					switch (objectSpecialIDPerPosition[i][j])
 					{
 					case RedRocketRobotType::ONESIDED:
@@ -401,7 +401,9 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if(objectIDPerPosition[i][j] == ObjectID::GREENSOLDIER)
 			{
-				newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
+				if (currentItemNumber < maxEnemyAtOnce) {
+					newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
+				}
 			}
 			if (newObject == nullptr)
 				continue;
