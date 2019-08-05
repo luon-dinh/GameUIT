@@ -417,7 +417,21 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::CANNON)
 			{
-				newObject = new Canon(Canon::RotateDirection::Top, D3DXVECTOR2(j, i));
+				switch (objectSpecialIDPerPosition[i][j])
+				{
+				case 0:
+					newObject = new Canon(Canon::RotateDirection::Top, D3DXVECTOR2(j, i));
+					break;
+				case 90:
+					newObject = new Canon(Canon::RotateDirection::Right, D3DXVECTOR2(j, i));
+					break;
+				case 180:
+					newObject = new Canon(Canon::RotateDirection::Bottom, D3DXVECTOR2(j, i));
+					break;
+				case 270:
+					newObject = new Canon(Canon::RotateDirection::Left, D3DXVECTOR2(j, i));
+					break;
+				}
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::EVIL_BAT)
 			{
@@ -898,7 +912,7 @@ bool Grid::AddObjectAndIncreaseCounter(Object * object)
 		++currentItemNumber;
 	}
 		
-	else if (object->tag == Tag::ENERMY || object->type == Type::ENEMY)
+	else if ((object->tag != Tag::CANON)&&(object->tag == Tag::ENERMY || object->type == Type::ENEMY))
 	{
 		if (currentEnemyNumber >= maxEnemyAtOnce)
 			return false;
