@@ -136,7 +136,7 @@ void SceneManager::ChangeScene(MapName mapName)
 
 	playerSavedStatesWithPlayScene[currentScene] = playerInfo;
 
-	PlayScene * nextScene = fromMapNameToPlayScene(mapName);;
+	PlayScene * nextScene = fromMapNameToPlayScene(mapName);
 	if (nextScene == nullptr)
 		return;
 
@@ -153,6 +153,7 @@ void SceneManager::ChangeScene(MapName mapName)
 		player->pos.y = prevInfo.playerY;
 		player->ChangeState(State::STANDING);
 		player->SetOnAirState(Player::OnAir::None);
+		currentScene->UpdateCameraWithPlayerPos();
 	}
 	else
 	{
