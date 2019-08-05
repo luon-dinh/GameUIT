@@ -169,6 +169,8 @@ BoundingBox Player::getBoundingBox()
 
 void Player::Update(float dt)
 {
+	if (this->isLockInput)
+		return;
 	// Update state
 	this->playerstate->Update(dt);
 
@@ -644,6 +646,14 @@ float Player::getHeight()
 	return rect.top - rect.bottom;
 }
 
+void Player::LockInput() {
+	this->isLockInput = true;
+}
+
+void Player::UnlockInput() {
+	this->isLockInput = false;
+}
+
 void Player::OnJumping(int frames) {
 	if (frames < MIN_TIME_JUMP_1) {
 		// do nothing here
@@ -686,7 +696,7 @@ void Player::OnNotCollision(Object* object) {
 		//Trong trường hợp đã rơi khỏi ground hiện tại
 		if (this->GetOnAirState() == OnAir::None) {
 			if (this->StandOnCurrentGround() == FALSE && this->GetStandingGround() != NULL) {
-				this->OnFallingOffGround();
+ 				this->OnFallingOffGround();
 				return;
 			}
 		}
@@ -731,7 +741,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	switch (object->type) {
 		case Type::PLATFORM:
 		case Type::GROUND: {
-  			if (this->GetOnAirState() == OnAir::DropToWater)
+         		if (this->GetOnAirState() == OnAir::DropToWater)
 				return false;
 			if (this->GetOnAirState() == OnAir::Falling) {
 				// nếu trạng thái trước đó là none thì bỏ qua xét va chạm rect với GROUND
@@ -997,6 +1007,7 @@ void Player::OnShieldFloatOnWater(Object* object) {
 void Player::OnBeingCarried(Object* object) {
 	//this->carriedObj = object;
 }
+
 #pragma endregion
 
 
