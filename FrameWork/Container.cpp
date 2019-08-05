@@ -77,7 +77,9 @@ void Container::Render()
 {
 	D3DXVECTOR3 pos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x,this->pos.y,0));
 	//animation->Render(this->pos);
-	animation->getSprite(animation->curframeindex)->Render(pos);
+	//Xét không render nếu như đang tắt điện ở màn 2.
+	if (SceneManager::getInstance()->IsLightOn())
+		animation->getSprite(animation->curframeindex)->Render(pos);
 }
 
 BoundingBox Container::getBoundingBox()

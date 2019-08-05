@@ -55,10 +55,6 @@ void Animation::Render(D3DXVECTOR2 pos, float rotateRadian) {
 
 Animation::~Animation()
 {
-	/*for (auto s : sprites) 
-	{
-		s = nullptr;
-	}*/
 	sprites.clear();
 }
 

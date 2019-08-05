@@ -86,7 +86,7 @@ void WhiteFlyingRobot::EnemyAttackingUpdate(double dt)
 {
 	if (currentStateTime > delayAttackingAnim * 2)
 	{
-		int bulletX = (this->direction == MoveDirection::LeftToRight) ? (this->pos.x + 5) : (this->pos.x - 5);
+		int bulletX = (this->direction == MoveDirection::LeftToRight) ? (this->pos.x + 7) : (this->pos.x - 7);
 		int bulletY = this->pos.y;
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletWhiteFlyingRocketer(this->direction, bulletX, bulletY));
 		ChangeState(State::FLYING);

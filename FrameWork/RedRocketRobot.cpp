@@ -33,8 +33,13 @@ void RedRocketRobot::LoadAllAnimation()
 {
 	walking = new Animation(Tag::REDROCKERTER, 0, 3, walkingSpriteDelay);
 	standing = new Animation(Tag::REDROCKERTER, 0, 1);
-	crouching = new Animation(Tag::REDROCKERTER, 3, 4);
-	shocking = new Animation(Tag::REDROCKERTER, 4, 5);
+	standShooting = new Animation(Tag::REDROCKERTER, 3,4, standShootingAnimDelay);
+	
+	crouching = new Animation(Tag::REDROCKERTER, 4, 5);
+	crouchShooting = new Animation(Tag::REDROCKERTER, 5, 7, crouchShootingAnimDelay);
+
+	shocking = new Animation(Tag::REDROCKERTER, 7, 8);
+	
 }
 
 void RedRocketRobot::KillObject()

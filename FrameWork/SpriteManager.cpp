@@ -153,8 +153,12 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 0, 46, 24));
 	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 24, 46, 48));
 	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 48, 46, 72));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 0, 72, 46, 96)); //Đứng bắn.
 	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 46, 0, 92, 24));
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 46, 24, 92, 48)); //Ngồi bắn.
+	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 46, 48, 92, 72));
 	spriteManager->addSprite(new Sprite(Tag::REDROCKERTER, 92, 0, 138, 24));
+	
 	//cắt sprite cho white rockerter bullet
 	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 0, 0, 15, 15));
 	spriteManager->addSprite(new Sprite(Tag::WHITEROCKERTERBULLET, 0, 15, 15, 30));

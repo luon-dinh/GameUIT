@@ -171,11 +171,17 @@ void RedRocketRobotOneSided::EnemyAttackingUpdate(double dt)
 	if (robotState == State::DUCKING)
 	{
 		if (currentStateTime < attackingDelay)
+		{
 			return;
+		}	
 		else if (!isAttacked)
 		{
-			SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(this->direction, this->pos.x, this->pos.y, rocketSpeed));
-			isAttacked = true;
+			currentAnimation = crouchShooting;
+			if (currentAnimation->curframeindex == currentAnimation->toframe - 1)
+			{
+				SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(this->direction, this->pos.x, this->pos.y, rocketSpeed));
+				isAttacked = true;
+			}
 		}
 	}
 }

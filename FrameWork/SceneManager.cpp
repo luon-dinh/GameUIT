@@ -143,12 +143,15 @@ void SceneManager::ChangeScene(MapName mapName)
 	//Lưu lại thông tin của player hiện tại để phục vụ cho việc chuyển cảnh về sau trước khi đổi màn.
 	Player * player = Player::getInstance();
 	PlayerInfo playerInfo;
+	CameraInfo cameraInfo;
 	playerInfo.playerX = player->pos.x;
 	playerInfo.playerY = player->pos.y;
+	cameraInfo = Camera::getCameraInstance()->GetCurrentCameraPosition();
 
 	playerSavedStatesWithPlayScene[currentScene] = playerInfo;
+	cameraSavedStatesWithPlayScene[currentScene] = cameraInfo;
 
-	PlayScene * nextScene = fromMapNameToPlayScene(mapName);;
+	PlayScene * nextScene = fromMapNameToPlayScene(mapName);
 	if (nextScene == nullptr)
 		return;
 
@@ -165,6 +168,7 @@ void SceneManager::ChangeScene(MapName mapName)
 		player->pos.y = prevInfo.playerY;
 		player->ChangeState(State::STANDING);
 		player->SetOnAirState(Player::OnAir::None);
+		Camera::getCameraInstance()->SetPosition(cameraSavedStatesWithPlayScene[currentScene]);
 	}
 	else
 	{
