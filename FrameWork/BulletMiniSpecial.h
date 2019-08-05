@@ -34,9 +34,9 @@ public:
 		this->isCollidable = collide;
 	}
 	void Update(float dt)override {
-		if (animation->curframeindex == animationExplode->toframe - 1)
 		if (animation->curframeindex == animationExplode->toframe-1)
 		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 		}
 		animation->Update(dt);
