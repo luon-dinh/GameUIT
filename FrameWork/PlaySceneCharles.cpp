@@ -16,7 +16,6 @@
 #include "Shockwave.h"
 #include "Camera.h"	
 #include "Solder.h"
-#include "EletricBat.h"
 #include "GreenSolder.h"
 #include "Canon.h"
 #include"GreenSolder.h"
@@ -36,7 +35,7 @@ PlaySceneCharles::PlaySceneCharles()
 
 	/*grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));*/
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
-	//grid->Add(new WhiteFlyingRobot(200, 180));
+	grid->Add(new WhiteFlyingRobot(200, 180));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
 	//soldier->pos.x = 1500;
 	//soldier->pos.y = 180;
