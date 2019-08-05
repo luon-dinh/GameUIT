@@ -4,6 +4,11 @@
 #include "RedRocketRobotTwoSided.h"
 #include "RedRocketRobotTwoSidedNonLinear.h"
 #include "RedRocketRobotOneSidedJumping.h"
+#include "WhiteFlyingRobot.h"
+#include "EvilBat.h"
+#include "EletricBat.h"
+#include "Canon.h"
+#include "Door.h"
 #include <unordered_set>
 #include <set>
 #include <map>
@@ -193,6 +198,8 @@ void Grid::LoadMapObjects(const char * mapObjectFilePath)
 			entityTag = Type::ONOFF;
 		else if (objectID == ObjectID::DOOR)
 			entityTag = Type::DOOR;
+		else if (objectID == ObjectID::SPIKE)
+			entityTag = Type::SPIKE;
 
 		MapStaticObject* mapObject = new MapStaticObject();
 		mapObject->type = entityTag;
@@ -310,6 +317,10 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 				break;
 			}
 		}
+		else if (objectID == ObjectID::DOOR)
+		{
+			object = new Door(midX, midY);
+		}
 		if (object == nullptr)
 			continue;
 
@@ -397,6 +408,22 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			else if(objectIDPerPosition[i][j] == ObjectID::GREENSOLDIER)
 			{
 				newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::WHITEFLYINGROBOT)
+			{
+				newObject = new WhiteFlyingRobot(j, i);
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::CANNON)
+			{
+				newObject = new Canon(Canon::RotateDirection::Top, D3DXVECTOR2(j, i));
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::EVIL_BAT)
+			{
+				newObject = new EvilBat(D3DXVECTOR2(j, i));
+			}
+			else if (objectIDPerPosition[i][j] == ObjectID::ELECTRIC_BAT)
+			{
+				newObject = new EletricBat(D3DXVECTOR2(j, i));
 			}
 			if (newObject == nullptr)
 				continue;
