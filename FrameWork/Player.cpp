@@ -186,7 +186,7 @@ void Player::Update(float dt)
 	if (this->IsOnPlatform()) {
 		auto platform = this->GetStandingGround();
 		this->pos.x += platform->vx;
-		this->pos.y += platform->vy;
+		this->pos.y = platform->getBoundingBox().top + this->getHeight() / 2 - 2;
 	}
 
 	// Update animation
@@ -983,6 +983,9 @@ void Player::OnShockedElectric(Object* object) {
 void Player::OnShieldFloatOnWater(Object* object) {
 	this->SetOnAirState(Object::OnAir::FloatAboveWater);
 	this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 + 8;
+}
+void Player::OnBeingCarried(Object* object) {
+	//this->carriedObj = object;
 }
 #pragma endregion
 

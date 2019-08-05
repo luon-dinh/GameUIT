@@ -98,7 +98,8 @@ public:
 	Animation * curanimation;
 	PlayerState * playerstate;
 	ShieldReturnEdge edge;
-
+	Object* carriedObj;
+	bool isCarried;
 	D3DXVECTOR2 shieldReturnPos;
 
 	Player();
@@ -154,6 +155,7 @@ public:
 	void OnCollisionWithBullet(Bullet* bullet);
 	void OnShockedElectric(Object* object);
 	void OnShieldFloatOnWater(Object* object);
+	void OnBeingCarried(Object* object);
 
 #pragma endregion
 

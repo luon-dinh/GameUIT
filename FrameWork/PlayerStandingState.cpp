@@ -145,7 +145,7 @@ void PlayerStandingState::OnCollision(Object* object, collisionOut* collision) {
 
 	if (object->type == Type::BULLETTYPE) {
 		auto castBullet = (Bullet*)object;
-
+		
 		if (player->GetMoveDirection() != castBullet->GetMoveDirection() && !castBullet->CanGetThroughShield()) {
 			return;
 		}
