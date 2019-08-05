@@ -6,6 +6,7 @@ Door::Door(int posX, int posY)
 	this->pos.x = posX;
 	this->pos.y = posY;
 	this->vx = this->vy = 0;
+	delayDoorOpen = new Delay(openDoorTime);
 	LoadAllAnim();
 }
 
@@ -27,9 +28,19 @@ void Door::LoadAllAnim()
 void Door::Update(float dt)
 {
 	SetAnimOnLightStatus();
+	//Nếu cửa chưa được player chạm vào thì thôi, có gì đâu mà update.
+	if (!isDoorActivated)
+		return;
 	//Chặn không cho animation lặp lại.
 	if (currentAnim->curframeindex != currentAnim->toframe - 1)
 		currentAnim->Update(dt);
+	//Xem đã đủ thời gian chờ để qua màn khác chưa.
+	if (delayDoorOpen->GetDelayStatus(dt))
+	{
+		isDoorActivated = false;
+		currentAnim->curframeindex = 0;
+		SceneManager::getInstance()->GoToNextScene();
+	}
 }
 
 void Door::Render()
@@ -49,8 +60,20 @@ void Door::SetAnimOnLightStatus()
 BoundingBox Door::getBoundingBox()
 {
 	BoundingBox box = Object::getBoundingBox();
-	box.left += 5;
-	box.right -= 5;
+	box.left = this->pos.x - doorWidth / 2;
+	box.right = this->pos.x + doorWidth / 2;
+	box.top = this->pos.y + doorHeight / 2;
+	box.bottom = this->pos.y - doorHeight / 2;
 	box.vx = box.vy = 0;
 	return box;
+}
+
+bool Door::OnRectCollided(Object* object, CollisionSide colSide)
+{
+	if (object->tag == Tag::PLAYER && KeyboardManager::getInstance()->getKeyPressedOnce(DIK_UP))
+	{
+		isDoorActivated = true;
+		return true;
+	}
+	return false;
 }

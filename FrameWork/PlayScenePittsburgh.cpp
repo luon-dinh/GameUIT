@@ -31,6 +31,8 @@ void PlayScenePittsburgh::ResetPlayerPosition()
 	Player * player = Player::getInstance();
 	player->pos.x = 0;
 	player->pos.y = world->getMapHeight() - 50;
+	/*player->pos.x = 830;
+	player->pos.y = 350;*/
 	//player->pos.y = SCREEN_HEIGHT;
 	player->ChangeState(State::JUMPING);
 	player->SetOnAirState(Player::OnAir::Falling);
@@ -67,7 +69,11 @@ void PlayScenePittsburgh::Update(double dt)
 		ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 
 	//Kiểm tra xem player đã đi đến đích chưa.
-	GoToNextScene();
+	if (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT)
+	{
+		Done = true;
+		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
+	}
 		
 }
 
@@ -92,9 +98,5 @@ void PlayScenePittsburgh::GoToNextScene()
 		else
 			ReplaceToThisMap = MapName::PITTSBURGHPORTAL2DARK;
 	}
-	else if (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT)
-	{
-		Done = true;
-		ReplaceToThisMap = MapName::PITTSBURGHBOSS;
-	}
+
 }
