@@ -106,6 +106,7 @@ void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 	{
 		ChangeState(State::FLYING);
 		isCollidable = true;
+		return;
 	}		
 	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
 	isCollidable = false;
@@ -197,7 +198,7 @@ void WhiteFlyingRobot::OnCollision(Object* object, collisionOut* colout)
 		{
 			//Nếu không đang trong trạng thái beaten mới trừ máu.
 			if (robotState != State::BEATEN)
-				--health;
+				health -= object->GetCollisionDamage();
 			if (health <= 0)
 				ChangeState(State::FALLING);
 			else
@@ -211,6 +212,21 @@ void WhiteFlyingRobot::OnCollision(Object* object, collisionOut* colout)
 
 bool WhiteFlyingRobot::OnRectCollided(Object* object, CollisionSide side)
 {
+	if (object->tag == Tag::PLAYER || object->tag == Tag::PLAYER_PART)
+	{
+		if (robotState != State::BEATEN)
+		{
+			health -= object->GetCollisionDamage();
+			if (health <= 0)
+				ChangeState(State::FALLING);
+			else
+				ChangeState(State::BEATEN);
+		}
+	}
+	else if (object->tag == Tag::STATICOBJECT)
+	{
+		return false;
+	}
 	return true;
 }
 
