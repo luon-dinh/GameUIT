@@ -374,43 +374,37 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			}
 			else if (objectIDPerPosition[i][j] == ObjectID::BLUESOLDIER)
 			{
-				if (currentEnemyNumber < maxEnemyAtOnce)
-				{
-					newObject = new Solder((RunType)objectSpecialIDPerPosition[i][j],j,i);
-				}
+				newObject = new Solder((RunType)objectSpecialIDPerPosition[i][j],j,i);
 			}
 
 			else if (objectIDPerPosition[i][j] == ObjectID::REDROCKET)
 			{
-				if (currentItemNumber < maxEnemyAtOnce) {
-					switch (objectSpecialIDPerPosition[i][j])
-					{
-					case RedRocketRobotType::ONESIDED:
-						newObject = new RedRocketRobotOneSided(j, i);
-						break;
-					case RedRocketRobotType::TWOSIDED:
-						newObject = new RedRocketRobotTwoSided(j, i);
-						break;
-					case RedRocketRobotType::TWOSIDEDNONLINEAR:
-						newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
-						break;
-					case RedRocketRobotType::ONESIDEDJUMPING:
-						newObject = new RedRocketRobotOneSidedJumping(j, i);
-					}
+				switch (objectSpecialIDPerPosition[i][j])
+				{
+				case RedRocketRobotType::ONESIDED:
+					newObject = new RedRocketRobotOneSided(j, i);
+					break;
+				case RedRocketRobotType::TWOSIDED:
+					newObject = new RedRocketRobotTwoSided(j, i);
+					break;
+				case RedRocketRobotType::TWOSIDEDNONLINEAR:
+					newObject = new RedRocketRobotTwoSidedNonLinear(j, i);
+					break;
+				case RedRocketRobotType::ONESIDEDJUMPING:
+					newObject = new RedRocketRobotOneSidedJumping(j, i);
 				}
 			}
 			else if(objectIDPerPosition[i][j] == ObjectID::GREENSOLDIER)
 			{
-				if (currentItemNumber < maxEnemyAtOnce) {
-					newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
-				}
+				newObject = new GreenSolder((RunType)objectSpecialIDPerPosition[i][j], j, i);
 			}
 			if (newObject == nullptr)
 				continue;
 			newObject->pos.x = j;
 			newObject->pos.y = i;
 			//Sau đó thêm nó vào GRID luôn.
-			AddObjectAndIncreaseCounter(newObject);
+			if (!AddObjectAndIncreaseCounter(newObject))
+				delete newObject;
 		}
 	}
 }
