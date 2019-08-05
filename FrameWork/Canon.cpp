@@ -63,7 +63,7 @@ void Canon::Fire() {
 	}
 	this->curFrameFire = 0;
 
-	Bullet* bullet = new BulletSolder(this->direction);
+	CanonBullet* bullet = new CanonBullet(this->direction);
 	bullet->vx = BULLET_SPEED;
 	int corner = this->currentAnimation->curframeindex % 8;
 	// hướng qua phải

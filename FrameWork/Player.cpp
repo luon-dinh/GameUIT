@@ -806,10 +806,18 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 			return true;
 		}
 		case Type::ROPE: {
-			//if (this->GetOnAirState() == Player::OnAir::Falling) {
-			//	PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
-			//	SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
-			//}
+			break;
+		}
+		case Type::SPIKE: {
+			if (side == CollisionSide::bottom) {
+				if (!this->IsNonAttackable())
+					this->OnCollisionWithSpike(object);
+				else {
+					if (this->state != State::BEATEN)
+						this->OnStandingOnGround(object);
+				}
+				return true;
+			}
 		}
 	}
 	if (object->tag == Tag::ITEM) {
@@ -912,6 +920,7 @@ void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	}
 	}
 }
+
 void Player::OnHeadOnSolidBox(Object* solid) {
 	this->SetVy(0);
 }
@@ -987,6 +996,18 @@ void Player::OnShieldFloatOnWater(Object* object) {
 }
 void Player::OnBeingCarried(Object* object) {
 	//this->carriedObj = object;
+}
+void Player::OnCollisionWithSpike(Object* object) {
+	if (this->GetOnAirState() == OnAir::None) {
+		this->ChangeState(State::BEATEN);
+	}
+	else {
+		this->ChangeState(State::FLYING_BEATEN);
+	}
+	// sát thương khi va chạm enemy luôn là 1
+	this->BeingAttacked(2);
+	this->SetStandingGround(object);
+	this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 2;
 }
 
 #pragma endregion

@@ -33,4 +33,16 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 		player->OnCollisionWithSolidBox(object, collision);
 		return;
 	}
+
+	if (object->type == Type::SPIKE) {
+		if (side == CollisionSide::bottom){
+			if (player->IsNonAttackable()) {
+				player->OnStandingOnGround(object);
+			}
+			else {
+				player->OnCollisionWithSpike(object);
+			}
+			return;
+		}
+	}
 }

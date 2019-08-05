@@ -88,6 +88,8 @@ void PlayerShieldDownState::OnCollision(Object* object, collisionOut* collision)
 	}
 
 	if (object->type == Type::BULLETTYPE) {
+		if (side == CollisionSide::bottom)
+			return;
 		player->OnCollisionWithBullet((Bullet*)object);
 		return;
 	}

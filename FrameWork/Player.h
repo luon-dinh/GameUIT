@@ -158,7 +158,7 @@ public:
 	void OnShockedElectric(Object* object);
 	void OnShieldFloatOnWater(Object* object);
 	void OnBeingCarried(Object* object);
-	void OnCollisionWithDoor();
+	void OnCollisionWithSpike(Object* object);
 
 #pragma endregion
 

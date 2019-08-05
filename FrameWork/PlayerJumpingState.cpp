@@ -83,4 +83,15 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 		return;
 	}
 
+	if (object->type == Type::SPIKE) {
+		if (side == CollisionSide::bottom) {
+			if (player->IsNonAttackable()) {
+				player->OnStandingOnGround(object);
+			}
+			else {
+				player->OnCollisionWithSpike(object);
+			}
+		}
+	}
+
  }
