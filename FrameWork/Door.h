@@ -4,10 +4,10 @@
 class Door : public Object
 {
 	//Thời gian chuyển các frame trong việc mở cửa.
-	const int openDoorAnimDelay = 150;
+	const int openDoorAnimDelay = 4.0*1000/60;
 
 	//Thời gian của việc mở cửa.
-	const int openDoorTime = 700;
+	const int openDoorTime = openDoorAnimDelay*4;
 
 	Animation * doorDarkAnim;
 	Animation * doorLightAnim;

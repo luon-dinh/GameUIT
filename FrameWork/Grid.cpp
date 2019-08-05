@@ -9,6 +9,7 @@
 #include "EletricBat.h"
 #include "Canon.h"
 #include "Door.h"
+#include "Shockwave.h"
 #include <unordered_set>
 #include <set>
 #include <map>
@@ -321,6 +322,7 @@ void Grid::LoadSpawnPosition(const char * spawnInfoFilePath)
 		{
 			object = new Door(midX, midY);
 		}
+
 		if (object == nullptr)
 			continue;
 
@@ -425,6 +427,8 @@ void Grid::SpawnAllObjectsInCell(int cellX, int cellY)
 			{
 				newObject = new EletricBat(D3DXVECTOR2(j, i));
 			}
+			else if (objectIDPerPosition[i][j] == ObjectID::WAVE)
+				newObject = new Shockwave(j, i);
 			if (newObject == nullptr)
 				continue;
 			newObject->pos.x = j;
