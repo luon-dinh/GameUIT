@@ -577,8 +577,8 @@ void Player::UpdatePosition() {
 void Player::SetMoveDirection(MoveDirection moveDir) {
 	Object::SetMoveDirection(moveDir);
 
-	auto shield = Shield::getInstance();
-	shield->SetMoveDirection(this->direction);
+	//auto shield = Shield::getInstance();
+	//shield->SetMoveDirection(this->direction);
 }
 
 BOOL Player::GetCollisionAffect() {
@@ -828,7 +828,7 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 	return false;
 }
 void Player::OnFallingOffGround() {
-	if (this->GetOnAirState() == Player::OnAir::None) {
+ 	if (this->GetOnAirState() == Player::OnAir::None) {
 		if (this->IsFootStepOn() && this->GetStandingGround()->pos.y == 44)
 			this->SetOnAirState(Player::OnAir::DropToWater);
 		else
