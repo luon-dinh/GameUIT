@@ -50,3 +50,19 @@ void RedRocketRobot::KillObject()
 	this->health = 0;
 	ChangeState(State::BEATEN);
 }
+
+BoundingBox RedRocketRobot::getBoundingBox()
+{
+	BoundingBox box;
+	box.vx = this->vx;
+	box.vy = this->vy;
+	auto sprite = this->currentAnimation->getSprite(this->currentAnimation->curframeindex);
+	RECT rect = sprite->getRECT();
+	height = rect.top - rect.bottom;
+	width = rect.right - rect.left;
+	box.top = this->pos.y + height / 2;
+	box.bottom = this->pos.y - height / 2;
+	box.left = this->pos.x - width / 2;
+	box.right = this->pos.x + width / 2;
+	return box;
+}

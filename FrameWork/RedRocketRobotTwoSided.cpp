@@ -203,6 +203,7 @@ void RedRocketRobotTwoSided::EnemyJumpingUpdate(double dt)
 
 void RedRocketRobotTwoSided::ChangeState(State newState)
 {
+	float previousYToBottom = PosToBottom();
 	currentStateTime = 0;
 	switch (newState)
 	{
@@ -223,9 +224,13 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 		this->vy = 0;
 		break;
 	case State::DUCKING:
+	{
 		this->currentAnimation = crouching;
 		isAttacked = false;
+		float thisYToBottom = PosToBottom();
+		this->pos.y -= previousYToBottom - thisYToBottom;
 		break;
+	}
 	case State::DEAD:
 		this->currentAnimation = explodeAnim;
 		break;
@@ -247,6 +252,8 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 
 	previousState = this->robotState;
 	this->robotState = newState;
+
+	
 }
 
 void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
@@ -281,7 +288,7 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 				else
 					ChangeState(State::STANDING);
 					
-				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+				this->pos.y -= colOut->collisionTime * vy;
 			}
 			this->SetStandingGround(object);
 		}

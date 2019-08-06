@@ -119,6 +119,9 @@ void PlaySceneCharles::Update(double dt)
 		{
 			grid->StopEnemyBeatenCounter();
 			camera->UnlockCamera();
+			isUsingVirtualBound = true;
+			leftVirtualCameraBound = -1;
+			rightVirtualCameraBound = -1;
 		}
 	}
 

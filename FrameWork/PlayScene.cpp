@@ -112,10 +112,44 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	//Chuyển player từ world view sang view port để xét với các bound.
 	D3DXVECTOR3 playerViewPort = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(playerPos.x, playerPos.y, 0));
 
-	int leftBound = cameraBoundBox.left;
-	int rightBound = cameraBoundBox.right;
-	int topBound = cameraBoundBox.top;
-	int bottomBound = cameraBoundBox.bottom;
+	int leftBound;
+	int rightBound;
+	int topBound;
+	int bottomBound;
+
+	if (isUsingVirtualBound)
+	{
+		D3DXVECTOR3 playerCamPos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(player->pos.x, player->pos.y, 0));
+		if (leftVirtualCameraBound < 0)
+			leftVirtualCameraBound = (playerCamPos.x - playerWidth/2 > cameraBoundBox.left) ? (cameraBoundBox.left) : (playerCamPos.x - playerWidth/2);
+		if (rightVirtualCameraBound < 0)
+			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > cameraBoundBox.right) ? (cameraBoundBox.right) : (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2);
+		/*if (leftVirtualCameraBound < cameraBoundBox.left)
+			leftVirtualCameraBound = playerCamPos.x - player->getWidth() / 2;
+		if (rightVirtualCameraBound < cameraBoundBox.right)
+			rightVirtualCameraBound = SCREEN_WIDTH - playerCamPos.x + player->getWidth() / 2;
+		if (leftVirtualCameraBound >= cameraBoundBox.left && rightVirtualCameraBound >= cameraBoundBox.right)*/
+
+		if (leftVirtualCameraBound < cameraBoundBox.left)
+			leftVirtualCameraBound = (playerCamPos.x - playerWidth / 2 > leftVirtualCameraBound) ? (playerCamPos.x - playerWidth / 2 + 1) : (leftVirtualCameraBound);
+		else if (rightVirtualCameraBound < cameraBoundBox.right)
+			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > rightVirtualCameraBound) ? (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 - 1) : (rightVirtualCameraBound);
+		else
+			isUsingVirtualBound = false;
+
+		leftBound = leftVirtualCameraBound;
+		rightBound = rightVirtualCameraBound;
+		topBound = cameraBoundBox.top;
+		bottomBound = cameraBoundBox.bottom;
+	}
+	else
+	{
+		leftBound = cameraBoundBox.left;
+		rightBound = cameraBoundBox.right;
+		topBound = cameraBoundBox.top;
+		bottomBound = cameraBoundBox.bottom;
+	}
+	
 
 	int leftBoundAdvanced = cameraBoundBoxAdvanced.left;
 	int rightBoundAdvanced = cameraBoundBoxAdvanced.right;
@@ -149,6 +183,9 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	//	else if (fromPlayerToBottom < bottomBound && player->onAirState == Player::OnAir::None)
 	//		camera->MoveDown(bottomBound - fromPlayerToBottom);
 	//}
+
+	//Xét xem có đang dùng virtual bound hay không.
+
 
 	if (fromPlayerToTop < topBound)
 		camera->MoveUp(topBound - fromPlayerToTop);

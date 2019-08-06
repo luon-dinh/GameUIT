@@ -93,5 +93,4 @@ void PlayerJumpingState::OnCollision(Object* object, collisionOut* collision) {
 			}
 		}
 	}
-
  }

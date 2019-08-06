@@ -28,6 +28,9 @@ private:
 	//Tức là trong khoảng thời gian này là camera phải lết được lên đến player.
 	const int timeDelay = 500;
 
+	//Giới hạn pixel di chuyển tối đa trong 1 frame.
+	const int maxMoveLength = 999;
+
 	//DeltaX,Y dùng để set vị trí tương lai của player.
 	int DeltaX = 0;
 	int DeltaY = 0;
@@ -43,6 +46,9 @@ private:
 
 	//Biến dùng để giữ trạng thái khoá của Camera.
 	bool isCameraLocked = false;
+
+	int leftBoundTemp = leftBound;
+	int rightBoundTemp = rightBound;
 
 	static Camera * cameraInstance;
 
