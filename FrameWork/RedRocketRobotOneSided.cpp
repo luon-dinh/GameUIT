@@ -220,6 +220,7 @@ void RedRocketRobotOneSided::EnemyDeadUpdate(double dt)
 
 void RedRocketRobotOneSided::ChangeState(State newState)
 {
+	float previousYToBottom = PosToBottom();
 	currentStateTime = 0;
 	switch (newState)
 	{
@@ -262,9 +263,11 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 		else if (this->vy == 0)
 			this->vy = -1;
 	}
-
 	previousState = this->robotState;
 	this->robotState = newState;
+
+	float thisYToBottom = PosToBottom();
+	//this->pos.y -= previousYToBottom - thisYToBottom;
 }
 
 void RedRocketRobotOneSided::ChangeMoveDirection()
@@ -302,7 +305,7 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 				}
 				else
 					ChangeState(State::STANDING);
-				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
+				this->pos.y -= colOut->collisionTime * vy;
 			}
 			this->SetStandingGround(object);
 		}

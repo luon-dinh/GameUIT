@@ -106,4 +106,11 @@ public:
 	virtual void OnNotCollision(Object* object) override {};
 	int GetCollisionDamage() override { return 1; }
 	void KillObject() override;
+	BoundingBox getBoundingBox() override;
+	float PosToBottom()
+	{
+		auto sprite = this->currentAnimation->getSprite(this->currentAnimation->curframeindex);
+		RECT rect = sprite->getRECT();
+		return abs((rect.top + rect.bottom) / 2 - rect.bottom);
+	}
 };
