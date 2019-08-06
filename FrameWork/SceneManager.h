@@ -43,6 +43,9 @@ public:
 	//Hàm dùng để lấy tình trạng đèn đóm của Scene hiện tại.
 	bool IsLightOn() { return currentScene->getLightStatus(); }
 
+	//Hàm dùng để restart lại scene hiện tại.
+	void RestartCurrentScene();
+
 	//Hàm dùng để cho qua màn tiếp theo.
 	void GoToNextScene();
 private:

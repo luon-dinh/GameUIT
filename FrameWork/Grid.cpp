@@ -745,16 +745,17 @@ void Grid::CollisionProcessCellToCell(int firstCellX, int firstCellY, int second
 		//Nếu object không được activated thì ta không xét va chạm luôn.
 		if (!firstObj->GetActivatedInGridStatus())
 			continue;
-		if (!firstObj->IsCollidable())
-			continue;
 		for (auto secondObj : secondCell)
 		{
 			//Nếu object không được activated thì ta không xét va chạm luôn.
 			if (!secondObj->GetActivatedInGridStatus())
 				continue;
 			//Nếu object không xét được va chạm thì không xét va chạm luôn.
-			if (!secondObj->IsCollidable())
+			if (!firstObj->IsCollidable() || !secondObj->IsCollidable())
+			{
+				if (firstObj->tag != Tag::STATICOBJECT && firstObj->tag != Tag::ITEM && secondObj->tag != Tag::STATICOBJECT && secondObj->tag != Tag::ITEM)
 				continue;
+			}
 			//Xét việc va chạm 2 dynamic object với nhau.
 			CollisionProcessOfDynamicObjects(firstObj, secondObj);
 		}

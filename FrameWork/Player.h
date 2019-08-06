@@ -70,7 +70,9 @@ private:
 	const float ADDED_SPEED_1 = 0.09;
 	const float ADDED_SPEED_2 = 0.14;
 	
+	
 public:
+	const int MAX_HEART = 4;
 	bool detectRopeCollision;
 	bool shieldActive;
 	BOOL hasShield;

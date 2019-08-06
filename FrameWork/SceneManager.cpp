@@ -194,3 +194,28 @@ PlayScene* SceneManager::getCurrentScene()
 {
 	return currentScene;
 }
+
+void SceneManager::RestartCurrentScene()
+{
+	if (currentScene == charles)
+	{
+		charles = new PlaySceneCharles();
+		ReplaceScene(MapName::CHARLES);
+	}
+	else if (currentScene == charlesBoss)
+	{
+		charlesBoss = new PlaySceneCharlesBoss();
+		ReplaceScene(MapName::CHARLESBOSSLIGHT);
+	}
+	else if (currentScene == pittsburgh)
+	{
+		pittsburgh = new PlayScenePittsburgh();
+		ReplaceScene(MapName::PITTSBURGHDARK);
+	}
+	else if (currentScene == pittsburghBoss)
+	{
+		pittsburghBoss = new PlayScenePittsburghBoss();
+		ReplaceScene(MapName::PITTSBURGHBOSS);
+	}
+	Player::getInstance()->SetHeart(Player::getInstance()->MAX_HEART);
+}
