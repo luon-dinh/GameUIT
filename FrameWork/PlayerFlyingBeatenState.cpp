@@ -1,5 +1,5 @@
 #include "PlayerFlyingBeatenState.h"
-
+#include "SceneManager.h"
 
 PlayerFlyingBeatenState::PlayerFlyingBeatenState() {
 	this->state = State::BEATEN;
@@ -31,6 +31,12 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
+		return;
+	}
+
+	if (object->type == Type::ROPE) {
+		PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
+		SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
 		return;
 	}
 
