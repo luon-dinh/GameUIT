@@ -46,6 +46,5 @@ public:
 			}
 		}
 	}
-	bool OnRectCollided(Object* object, CollisionSide colSide) override { return true; };
 	void OnNotCollision(Object* object) override {};
 };

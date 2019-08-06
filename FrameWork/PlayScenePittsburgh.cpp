@@ -91,7 +91,7 @@ void PlayScenePittsburgh::Update(double dt)
 		//Thêm vào con robot đỏ bên phải.
 		if (!isAddSoldier)
 		{
-			WhiteRocketRobotNonShooting* redRobot = new WhiteRocketRobotNonShooting(550, 70);
+			Object* redRobot = new WhiteRocketRobotNonShooting(550, 67);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
 			else
