@@ -63,7 +63,7 @@ void Canon::Fire() {
 	}
 	this->curFrameFire = 0;
 
-	Bullet* bullet = new BulletSolder(this->direction);
+	CanonBullet* bullet = new CanonBullet(this->direction);
 	bullet->vx = BULLET_SPEED;
 	int corner = this->currentAnimation->curframeindex % 8;
 	// hướng qua phải
@@ -91,6 +91,7 @@ void Canon::Fire() {
 	}
 	bullet->pos.x = this->pos.x + 2 * bullet->vx;
 	bullet->pos.y = this->pos.y + 2 * bullet->vy;
+	SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 	SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 }
 

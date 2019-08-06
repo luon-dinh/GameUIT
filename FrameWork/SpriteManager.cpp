@@ -304,6 +304,9 @@ void SpriteManager::LoadResources()
 	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 16, 16, 32));
 	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 32, 16, 48));
 	spriteManager->addSprite(new Sprite(Tag::CARO_UP, 0, 48, 16, 64));
+
+	// Cắt sprite cho canon bullet
+	spriteManager->addSprite(new Sprite(Tag::GREENCANNONBULLET, 0, 0, 6, 6));
 }
 
 void SpriteManager::addSprite(Tag tag, int rowindex, int numberofsprites)

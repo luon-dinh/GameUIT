@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Bullet.h"
 #include"Equation.h"
 #include"Shield.h"
@@ -10,7 +10,7 @@ public:
 	bool isOnBossMini;
 	Equation *parapol;
 	Animation* anim = new Animation(Tag::BOSSMINIBULLET, 0, 1);
-
+	float minMap, maxMap;
 	/*bool CanGetThroughShield() override
 	{
 		return true;
@@ -24,6 +24,8 @@ public:
 		this->isOnBossMini = false;
 		this->isBeaten = false;
 		this->vx = this->vy = 0;
+		minMap = 0;
+		maxMap = 256;
 	}
 	~BulletMiniSpecial()
 	{
@@ -46,15 +48,37 @@ public:
 		this->pos.x += this->vx;
 
 		this->pos.y = this->parapol->GetYFromX(this->pos.x);*/
+		
 		if (parapol != NULL)
 		{
 			this->vy = (this->parapol->GetYFromX(this->pos.x + this->vx) - this->parapol->GetYFromX(this->pos.x));
 			if (vy < -3)
 				this->vx *= 0.9;
-			this->pos.x += this->vx;
 
+			this->pos.x += this->vx;
 			this->pos.y = this->parapol->GetYFromX(this->pos.x);
 
+			if (this->pos.x < minMap + this->getWidth() / 2 && this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
+			{
+				this->direction = MoveDirection::LeftToRight;
+				this->vx = 1;
+				this->vy = -1;
+				this->parapol = NULL;
+				return;
+			}
+			if (this->pos.x > maxMap - this->getWidth() / 2 && this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
+			{
+				this->direction = MoveDirection::RightToLeft;
+				this->vy = -1;
+				this->vx = -1;
+				this->parapol = NULL;
+				return;
+			}
+		}
+		else
+		{
+			this->pos.x += this->vx;
+			this->pos.y += this->vy;
 		}
 	}
 

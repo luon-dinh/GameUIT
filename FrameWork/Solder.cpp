@@ -249,22 +249,25 @@ void Solder::Update(float dt)
 						
 					auto bullet = new BulletSolder(this->direction);
 					bullet->existTime = 0;
-					bullet->pos.y = this->getBoundingBox().top - 4;
+					bullet->pos.y = this->getBoundingBox().top - 6;
 					bullet->pos.x = this->pos.x;
+					SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 					scene->AddObjectToCurrentScene(bullet);
 					if (runType == RunType::THREESHOOTER)
 					{
 						auto bullet1 = new BulletSolder(this->direction);
 						bullet1->vy = -this->bulletSpeedy;
 						bullet1->existTime = 0;
-						bullet1->pos.y = this->getBoundingBox().top - 4;
+						bullet1->pos.y = this->getBoundingBox().top - 6;
 						bullet1->pos.x = this->pos.x;
+						SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 						scene->AddObjectToCurrentScene(bullet1);
 						auto bullet2 = new BulletSolder(this->direction);
 						bullet2->vy = this->bulletSpeedy;
 						bullet2->existTime = 0;
-						bullet2->pos.y = this->getBoundingBox().top - 4;
+						bullet2->pos.y = this->getBoundingBox().top - 6;
 						bullet2->pos.x = this->pos.x;
+						SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 						scene->AddObjectToCurrentScene(bullet2);
 					}
 				}

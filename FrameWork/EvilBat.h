@@ -54,7 +54,7 @@ protected:
 	virtual bool IsFlyAgain();
 
 	void InnerRender();
-	void OnBeaten(Object* object);
+	void OnBeaten(Object* object, int customDamage);
 
 	const int Y_MOVING_LENGTH = 50;
 	const int TURN_AROUND_POINT_DENTA = 35;

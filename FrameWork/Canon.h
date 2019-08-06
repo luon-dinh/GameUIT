@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "Animation.h"
-#include "BulletSolder.h"
+#include "CanonBullet.h"
 #include "math.h"
 #include "SceneManager.h"
 
