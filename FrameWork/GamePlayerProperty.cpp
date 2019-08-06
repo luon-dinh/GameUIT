@@ -42,8 +42,13 @@ bool GamePlayerProperty::IsImmortal() {
 void GamePlayerProperty::UpdateNonAttackableState() {
 	this->nonAttackableFrameCount++;
 	
+
 	// rời khỏi trạng thái không thể tấn công
 	if (this->nonAttackableFrameCount > this->maxNonAttackableFrames) {
+		if (this->IsDead()) {
+			this->SetToImmortalState();
+			return;
+		}
 		SetToNormalState();
 	}
 }
