@@ -3,7 +3,7 @@
 
 PlayerHandOnRope::PlayerHandOnRope() {
 
-	this->tag = Tag::PLAYER_PART;
+	this->tag = Tag::PLAYER_HANG;
 
 	// cập nhật vị trí của tay đấm so với player
 	this->SetPositionToPlayer();
