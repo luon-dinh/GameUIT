@@ -38,7 +38,7 @@ void SoundManager::loadResources()
 	manager->Create(&sounds[wizard_fire], (char*)".\\..\\Resources\\Sounds\\wizard_fire.wav");
 	manager->Create(&sounds[wizard_flying], (char*)".\\..\\Resources\\Sounds\\wizard_flying.wav");
 	manager->Create(&sounds[wizard_lazer], (char*)".\\..\\Resources\\Sounds\\wizard_laze.wav");
-
+	manager->Create(&sounds[enemy_attack], (char*)".\\..\\Resources\\Sounds\\enemy_attack.wav");
 }
 
 void SoundManager::play(SoundName soundName, bool loop)

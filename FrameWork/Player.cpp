@@ -958,7 +958,7 @@ void Player::OnCollisionWithBullet(Bullet* bullet) {
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
 		this->pos.x -= 5;
 	}
-	else {
+	else { 
 		this->pos.x += 5;
 	}
 	this->SetVx(0);

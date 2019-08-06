@@ -27,6 +27,7 @@ public:
 		player_diving,
 		player_punch_kick,
 		player_rolling,
+		enemy_attack,
 		player_stand,//va cham
 		shield_attack, 
 		shield_collision,

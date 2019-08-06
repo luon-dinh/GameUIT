@@ -201,7 +201,7 @@ void BossMini::Update(float dt)
 					bullet->vx = -bulletSpeed;
 					bullet->pos.x = this->pos.x - this->getWidth() / 2;
 				}
-
+				SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 				SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 				countBullet++;
 			}
@@ -338,17 +338,17 @@ void BossMini::Update(float dt)
 	case State::DASHING:// state điên
 	{
 		this->onAirState = OnAir::None;
-		if (this->health <=0)
+		if (this->health <= 0)
 		{
 			ChangeState(State::DEAD);
 			return;
 		}
 		timeCurrentState += defaultDT;
-		if (this->pos.x < minMap+this->getWidth()/2&&this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
+		if (this->pos.x < minMap + this->getWidth() / 2 && this->direction == MoveDirection::RightToLeft) // đầu map thì chuyển direction
 		{
 			this->direction = MoveDirection::LeftToRight;
 		}
-		if (this->pos.x > maxMap-this->getWidth()/2&&this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
+		if (this->pos.x > maxMap - this->getWidth() / 2 && this->direction == MoveDirection::LeftToRight)// cuối map thì chuyển direction
 		{
 			this->direction = MoveDirection::RightToLeft;
 		}
@@ -369,15 +369,15 @@ void BossMini::Update(float dt)
 			bullet->pos.y = this->pos.y + 10;
 			if (this->direction == MoveDirection::LeftToRight)
 			{
-				bullet->vx = bulletSpeed*1.5;
+				bullet->vx = bulletSpeed * 1.5;
 				bullet->pos.x = this->pos.x + this->getWidth() / 2;
 			}
 			else
 			{
-				bullet->vx = -bulletSpeed*1.5;
+				bullet->vx = -bulletSpeed * 1.5;
 				bullet->pos.x = this->pos.x - this->getWidth() / 2;
 			}
-
+			SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
 			SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 		}
 		break;
@@ -386,7 +386,7 @@ void BossMini::Update(float dt)
 	{
 		this->vx = this->vy = 0;
 		this->onAirState = OnAir::None;
-		if (timeCurrentState < maxTimeStateDelay)
+		if (timeCurrentState < maxTimeStateDelay*2)
 			timeCurrentState += dt;
 		else
 		{
@@ -404,7 +404,7 @@ void BossMini::Update(float dt)
 
 void BossMini::Render()
 {
-	if (this->state != State::DEAD||(this->state==State::DEAD)&&(int)this->timeCurrentState%2==0)
+	if (this->state != State::DEAD||(this->state==State::DEAD &&(int)this->timeCurrentState%2==0))
 	{
 		D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
 
