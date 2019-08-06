@@ -1003,6 +1003,8 @@ void Player::OnCollisionWithEnemy(Object* enemy) {
 
 }
 void Player::OnCollisionWithBullet(Bullet* bullet) {
+	if (bullet->GetCollisionDamage() == 0)
+		return;
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
 		this->pos.x -= 5;
 	}
