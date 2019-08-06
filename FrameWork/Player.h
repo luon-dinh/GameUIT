@@ -60,6 +60,8 @@ private:
 	int flipRenderFrame;
 	bool isGroundVelocityApplied;
 	bool isLockInput;
+	int bufferDamageShocked;
+
 	const int FLIP_RENDER_FRAME = 10;
 	const int MIN_TIME_JUMP_1 = 20;
 	const int MIN_TIME_JUMP_2 = 30;
@@ -142,6 +144,7 @@ public:
 #pragma region Player Collision Handle
 
 	bool TryStandOnGround(Object* ground);
+	bool CanBlockDamageFromBullet(Object* object);
 
 	void DeactivateObjectInGrid()override {};
 

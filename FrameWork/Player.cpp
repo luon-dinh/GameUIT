@@ -27,7 +27,8 @@ Player::Player() : GamePlayerProperty()
 	this->SetMoveProperty(MoveProperties::StoppedBySolidBox);
 
 	this->flipRenderFrame = 0;
-
+	
+	this->bufferDamageShocked = 0;
 	this->SetHeart(4);
 }
 
@@ -819,6 +820,13 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				return true;
 			}
 		}
+		case Type::SHOCKWAVE: {
+			if (this->IsNonAttackable()) {
+				return false;
+			}
+			this->OnShockedElectric(object);
+			return true;
+		}
 	}
 	if (object->tag == Tag::ITEM) {
 		this->LootItem((Item*)object);
@@ -853,6 +861,21 @@ bool Player::TryStandOnGround(Object* ground) {
 		}
 	}
 	return FALSE;
+}
+
+bool Player::CanBlockDamageFromBullet(Object* object) {
+	auto shield = Shield::getInstance();
+	float posToShhield = abs(this->pos.x - shield->pos.x);
+	float posToPlayer = abs(this->pos.x - this->pos.x);
+	if (object->type == Type::BULLETTYPE)
+	{
+		bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
+		if (this->hasShield && shield->state == Shield::ShieldState::Defense && this->direction != this->direction && (posToShhield < posToPlayer) && collide)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 void Player::OnSmashSolidBox(Object* object, CollisionSide side) {
 	/*KeyboardManager *keyboard = KeyboardManager::getInstance();
@@ -954,14 +977,15 @@ void Player::OnCollisionWithEnemy(Object* enemy) {
 	else {
 		this->pos.x += 5;
 	}
+	// sát thương khi va chạm enemy luôn là 1
+	this->BeingAttacked(1);
 	if (this->GetOnAirState() == OnAir::None) {
 		this->ChangeState(State::BEATEN);
 	}
 	else {
 		this->ChangeState(State::FLYING_BEATEN);
 	}
-	// sát thương khi va chạm enemy luôn là 1
-	this->BeingAttacked(1);
+
 }
 void Player::OnCollisionWithBullet(Bullet* bullet) {
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
@@ -971,13 +995,14 @@ void Player::OnCollisionWithBullet(Bullet* bullet) {
 		this->pos.x += 5;
 	}
 	this->SetVx(0);
+	this->BeingAttacked(bullet->GetCollisionDamage());
 	if (this->GetOnAirState() == OnAir::None) {
 		this->ChangeState(State::BEATEN);
 	}
 	else {
 		this->ChangeState(State::FLYING_BEATEN);
 	}
-	this->BeingAttacked(bullet->GetBulletDamage());
+
 }
 void Player::OnShockedElectric(Object* object) {
 	if (this->GetMoveDirection() == MoveDirection::LeftToRight) {
@@ -987,8 +1012,18 @@ void Player::OnShockedElectric(Object* object) {
 		this->pos.x += 5;
 	}
 	this->SetVx(0);
+	if (object->type == Type::SHOCKWAVE) {
+		// chưa bị shock bởi shockwave trước đó
+		if (this->bufferDamageShocked == 0) {
+			this->bufferDamageShocked = this->GetHealth() / 2;
+		}
+		this->BeingAttacked(this->bufferDamageShocked);
+	}
+	else {
+		this->BeingAttacked(object->GetCollisionDamage());
+	}
 	this->ChangeState(State::SHOCKING);
-	this->BeingAttacked(object->GetCollisionDamage());
+
 }
 void Player::OnShieldFloatOnWater(Object* object) {
 	this->SetOnAirState(Object::OnAir::FloatAboveWater);
@@ -998,6 +1033,7 @@ void Player::OnBeingCarried(Object* object) {
 	//this->carriedObj = object;
 }
 void Player::OnCollisionWithSpike(Object* object) {
+	this->BeingAttacked(2);
 	if (this->GetOnAirState() == OnAir::None) {
 		this->ChangeState(State::BEATEN);
 	}
@@ -1005,7 +1041,7 @@ void Player::OnCollisionWithSpike(Object* object) {
 		this->ChangeState(State::FLYING_BEATEN);
 	}
 	// sát thương khi va chạm enemy luôn là 1
-	this->BeingAttacked(2);
+
 	this->SetStandingGround(object);
 	this->pos.y = object->getBoundingBox().top + this->getHeight() / 2 - 2;
 }

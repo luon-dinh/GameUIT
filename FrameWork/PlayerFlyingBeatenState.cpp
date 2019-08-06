@@ -28,6 +28,10 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 		}
 	}
 
+	if (object->type == Type::ROPE) {
+		player->OnClimbingTheRope(object);
+		return;
+	}
 
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
