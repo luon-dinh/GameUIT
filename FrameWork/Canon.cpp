@@ -91,7 +91,7 @@ void Canon::Fire() {
 	}
 	bullet->pos.x = this->pos.x + 2 * bullet->vx;
 	bullet->pos.y = this->pos.y + 2 * bullet->vy;
-	SoundManager::getinstance()->play(SoundManager::SoundName::enemy_attack);
+	SoundManager::getinstance()->play(SoundManager::SoundName::wizard_fire);
 	SceneManager::getInstance()->AddObjectToCurrentScene(bullet);
 }
 
