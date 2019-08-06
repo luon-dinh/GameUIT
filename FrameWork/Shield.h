@@ -3,7 +3,7 @@
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "Player.h"
-
+#include "Delay.h"
 class Shield : public Object
 {
 
@@ -18,6 +18,8 @@ private:
 	int framePerRound;
 	int restFrames;
 	BOOL beginRound;
+	bool canTurnOnOffLight;
+	Delay *delay=new Delay(100);
 	
 	const float SHIELD_INITIAL_SPEED = 12;
 

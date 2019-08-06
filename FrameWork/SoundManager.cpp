@@ -45,7 +45,8 @@ void SoundManager::play(SoundName soundName, bool loop)
 {
 	if (loop)
 	{
-		sounds[soundName]->Play(0,0,0, DSBPLAY_LOOPING);
+		//sounds[soundName]->Play(0,0,0, DSBPLAY_LOOPING);
+		sounds[soundName]->Play(0,DSBPLAY_LOOPING);
 	}
 	else
 	{

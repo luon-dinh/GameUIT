@@ -2,7 +2,7 @@
 #include"Camera.h"
 #include"Shield.h"
 #include"SceneManager.h"
-
+#include"Delay.h"
 
 Shield * Shield::instance = NULL;
 
@@ -52,7 +52,7 @@ Shield::Shield()
 	Player::MoveDirection direction = Player::getInstance()->GetMoveDirection();
 	this->SetShieldState(Shield::ShieldState::Defense);
 	this->beginRound = TRUE;
-
+	this->canTurnOnOffLight = false;
 
 	this->SetNumberOfRounds(1);
 	this->SetFramePerRound(50);
@@ -109,7 +109,17 @@ void Shield::Update(float dt)
 		return;
 	Player::MoveDirection direction = Player::getInstance()->GetMoveDirection();// lấy hướng di chuyển của player player
 	//kiểm tra nếu player đang giữ shield
+	if (this->canTurnOnOffLight == false)
+	{
+		if (delay->GetDelayStatus(dt))
+		{
+			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+			SceneManager::getInstance()->TurnOnOffLight();
+			this->canTurnOnOffLight = true;
+		}
+	}
 	if (player->hasShield) {
+		this->canTurnOnOffLight = true;
 		//nếu là shield up thì đổi sprite index
 		if (player->state == State::SHIELD_UP)
 		{
@@ -362,10 +372,10 @@ void Shield::OnCollision(Object* object, collisionOut* out)
 		SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 	else if (object->type == Type::ONOFF)
 	{
-		if (this->state == ShieldState::Attack)
+		if (this->state == ShieldState::Attack && this->canTurnOnOffLight)
 		{
-			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-			SceneManager::getInstance()->TurnOnOffLight();
+			this->canTurnOnOffLight = false;
+			//delay = new Delay(100);
 		}
 	}
 }
