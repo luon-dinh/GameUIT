@@ -146,7 +146,7 @@ void Grid::KillAllEnemyInActiveCells()
 			while (it != cells[i][j].end())
 			{
 				//Xét nếu là enemy thì mới giết nó.
-				if ((*it)->tag == Tag::ENERMY || (*it)->type == Type::ENEMY)
+				if ((*it)->tag == Tag::ENERMY || (*it)->type == Type::ENEMY || (*it)->tag == Tag::CANON)
 					(*it)->KillObject();
 				++it;
 			}
@@ -898,7 +898,7 @@ void Grid::DeleteObjectAndDecreaseCounter(Object * object)
 {
 	if (object->tag == Tag::ITEM)
 		--currentItemNumber;
-	else if (object->tag == Tag::ENERMY || object->type == Type::ENEMY)
+	else if ((object->tag != Tag::CANON)&&(object->tag == Tag::ENERMY || object->type == Type::ENEMY))
 		--currentEnemyNumber;
 	delete object;
 }

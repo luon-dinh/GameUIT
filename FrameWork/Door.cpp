@@ -76,6 +76,7 @@ bool Door::OnRectCollided(Object* object, CollisionSide colSide)
 	{
 		isDoorActivated = true;
 		Player::getInstance()->LockInput();
+		SoundManager::getinstance()->play(SoundManager::SoundName::door_open);
 		return true;
 	}
 	return false;

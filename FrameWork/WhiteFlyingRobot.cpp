@@ -109,7 +109,6 @@ void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 		return;
 	}		
 	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
-	isCollidable = false;
 	EnemyAliveUpdate(dt);
 }
 
@@ -171,8 +170,9 @@ void WhiteFlyingRobot::ChangeState(State state)
 	currentStateTime = 0;
 	switch (state)
 	{
-	case State::FLYING:
 	case State::BEATEN:
+		isCollidable = false;
+	case State::FLYING:
 		currentAnimation = stateAnim[State::FLYING];
 		break;
 	case State::FALLING:

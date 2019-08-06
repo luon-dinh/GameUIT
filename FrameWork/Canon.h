@@ -47,4 +47,5 @@ public:
 	void Update(float dt) override;
 
 	void OnStartRotate();
+	void KillObject() override;
 };

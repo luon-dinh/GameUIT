@@ -3,6 +3,7 @@
 RedRocketRobot::RedRocketRobot(int posX, int posY)
 {
 	this->tag = Tag::REDROCKERTER;
+	this->type = Type::ENEMY;
 	player = Player::getInstance();
 	this->LoadAllAnimation();
 	//Gán giá trị.

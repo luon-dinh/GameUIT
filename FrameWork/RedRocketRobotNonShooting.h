@@ -36,7 +36,7 @@ public:
 		if (object->tag == Tag::STATICOBJECT)
 		{
 			//Chỉ chuyển sang trạng thái standing khi đang rơi.
-			if (object->type == Type::GROUND && robotState == State::FALLING && colOut->side == CollisionSide::bottom)
+			if ( (object->type == Type::GROUND || object->type == Type::SOLIDBOX) && robotState == State::FALLING && colOut->side == CollisionSide::bottom)
 			{
 				ChangeState(State::WALKING);
 				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);

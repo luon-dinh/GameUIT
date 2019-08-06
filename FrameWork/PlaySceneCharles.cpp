@@ -35,7 +35,7 @@ PlaySceneCharles::PlaySceneCharles()
 
 	/*grid->Add(new GreenSolder(RunType::NOTRUN, 380, 80));*/
 	//grid->Add(new BulletWhiteFlyingRocketer(Object::MoveDirection::LeftToRight, 1500, SCREEN_HEIGHT));
-	grid->Add(new WhiteFlyingRobot(200, 180));
+	grid->Add(new WhiteFlyingRobot(200, 140));
 	//Solder* soldier = new Solder(RunType::NOTRUN);
 	//soldier->pos.x = 1500;
 	//soldier->pos.y = 180;

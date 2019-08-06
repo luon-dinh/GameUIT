@@ -115,7 +115,7 @@ void PlayScenePittsburgh::Update(double dt)
 		}
 	}
 	//Kiểm tra xem player đã đi đến đích chưa.
-	if (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT)
+	if ( (Player::getInstance()->CanGoNextScene()) && (player->pos.x >= world->getMapWidth() - 50 && player->pos.y <= SCREEN_HEIGHT))
 	{
 		Done = true;
 		ReplaceToThisMap = MapName::PITTSBURGHBOSS;

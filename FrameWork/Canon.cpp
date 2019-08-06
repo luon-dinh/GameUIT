@@ -125,3 +125,11 @@ void Canon::Render() {
 		this->currentAnimation->Render(pos);
 	}
 }
+
+void Canon::KillObject()
+{
+	this->vx = 0;
+	this->vy = 0;
+	this->health = 0;
+	ChangeState(State::BEATEN);
+}
