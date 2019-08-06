@@ -72,11 +72,14 @@ public:
 			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
 			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer)&&collide)
 			{
-				this->vy = abs(this->vx);
-				this->isCollidable = false;
-				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-				this->vx = 0;
-				return true;
+				if (side != CollisionSide::top&&side != CollisionSide::bottom)
+				{
+					this->vy = abs(this->vx);
+					this->isCollidable = false;
+					SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+					this->vx = 0;
+					return true;
+				}
 			}
 			//this->animation = animationExplode;
 			DeactivateObjectInGrid();
