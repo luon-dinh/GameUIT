@@ -98,7 +98,7 @@ void PlaySceneCharles::Update(double dt)
 		//Thêm vào con robot đỏ bên phải.
 		if (!isAddSoldier)
 		{
-			RedRocketRobotNonShooting* redRobot = new RedRocketRobotNonShooting(550, 90);
+			Object* redRobot = new RedRocketRobotNonShooting(550, 65);
 			if (!this->AddObjectToPlayScene(redRobot))
 				delete redRobot;
 			else

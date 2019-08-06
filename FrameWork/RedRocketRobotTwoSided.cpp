@@ -216,13 +216,20 @@ void RedRocketRobotTwoSided::ChangeState(State newState)
 			this->vx = Shield::getInstance()->vx / 10;
 		break;
 	case State::STANDING:
+	{
 		this->currentAnimation = standing;
 		isAttacked = false;
+		float thisYToBottom = PosToBottom();
+		this->pos.y -= previousYToBottom - thisYToBottom;
 		break;
+	}
 	case State::WALKING:
+	{
 		this->currentAnimation = walking;
 		this->vy = 0;
 		break;
+	}
+		
 	case State::DUCKING:
 	{
 		this->currentAnimation = crouching;

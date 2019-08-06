@@ -52,7 +52,7 @@ public:
 	//Hàm dùng để thay đổi hướng đi của robot.
 	void ChangeMoveDirection();
 	void ChangeState(State);
-	void OnCollision(Object* object, collisionOut* colout) override;
-	bool OnRectCollided(Object* object, CollisionSide side) override;
-	void OnNotCollision(Object* object) override;
+	virtual void OnCollision(Object* object, collisionOut* colout) override;
+	virtual bool OnRectCollided(Object* object, CollisionSide side) override;
+	virtual void OnNotCollision(Object* object) override;
 };
