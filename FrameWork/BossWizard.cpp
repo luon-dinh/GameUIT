@@ -258,10 +258,10 @@ void BossWizard::OnNotCollision(Object* object)
 
 bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 {
-	if (object->type == Type::GROUND || object->type == Type::SOLIDBOX)
+	/*if (object->type == Type::GROUND || object->type == Type::SOLIDBOX&& side==CollisionSide::bottom)
 	{
 		this->vy = 0;
-	}
+	}*/
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
 	{
 		// đổi map 
@@ -284,7 +284,7 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 				//isDead = true;
 				ChangeState(State::DEAD);
 			}
-			else if (this->state == State::FLYING && this->deltaY>4)
+			else if (this->state == State::FLYING && this->deltaY>4 && this->onAirState != OnAir::None)
 			{
 				ChangeState(State::BEATEN);
 			}

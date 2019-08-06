@@ -436,7 +436,7 @@ void Player::ChangeState(State stateName) {
 		return;
 	}
 	case State::DEAD: {
-		//SoundManager::getinstance()->play(SoundManager::SoundName::player_dead); chờ nào dead thật thì play
+		SoundManager::getinstance()->play(SoundManager::SoundName::player_dead); //chờ nào dead thật thì play
 		this->SetActive(false);
 		shield->SetShieldState(Shield::ShieldState::NotRender);
 		this->SetToNonAttackableState(300);
