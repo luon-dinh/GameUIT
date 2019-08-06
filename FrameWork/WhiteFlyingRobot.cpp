@@ -177,6 +177,7 @@ void WhiteFlyingRobot::ChangeState(State state)
 		break;
 	case State::FALLING:
 		currentAnimation = stateAnim[State::FALLING];
+		isCollidable = false;
 		break;
 	case State::DEAD:
 		currentAnimation = explodeAnim;

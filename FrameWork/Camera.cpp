@@ -36,6 +36,7 @@ RECT Camera::getBoundingBox()
 {
 	RECT boundBox;
 	boundBox.top = topBound;
+	//Cái nào nhỏ hơn thì lấy cái đó.
 	boundBox.left = leftBound;
 	boundBox.right = rightBound;
 	boundBox.bottom = bottomBound;
@@ -85,7 +86,14 @@ void Camera::MoveLeft(long s)
 	if (topLeftX - s < 0)
 		topLeftX = 0;
 	else
-		topLeftX -= s;
+	{
+		if (s < maxMoveLength)
+			topLeftX -= s;
+		else
+			topLeftX -= maxMoveLength;
+	}
+		
+		
 }
 
 void Camera::MoveRight(long s)
@@ -95,7 +103,13 @@ void Camera::MoveRight(long s)
 	if (topLeftX + SCREEN_WIDTH + s >= mapWidth)
 		topLeftX = mapWidth - SCREEN_WIDTH;
 	else
-		topLeftX += s;
+	{
+		if (s < maxMoveLength)
+			topLeftX += s;
+		else
+			topLeftX += maxMoveLength;
+	}
+		
 }
 
 void Camera::MoveUp(long s)
@@ -105,7 +119,13 @@ void Camera::MoveUp(long s)
 	if (topLeftY + s >= mapHeight)
 		topLeftY = mapHeight;
 	else
-		topLeftY += s;
+	{
+		if (s < maxMoveLength)
+			topLeftY += s;
+		else
+			topLeftY += maxMoveLength;
+	}
+		
 }
 
 void Camera::MoveDown(long s)
@@ -115,7 +135,13 @@ void Camera::MoveDown(long s)
 	if (topLeftY - SCREEN_HEIGHT - s < 0)
 		topLeftY = SCREEN_HEIGHT;
 	else
-		topLeftY -= s;
+	{
+		if (s < maxMoveLength)
+			topLeftY -= s;
+		else
+			topLeftY -= maxMoveLength;
+	}
+		
 }
 
 RECT Camera::getCameraRECT()

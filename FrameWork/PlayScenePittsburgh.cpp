@@ -112,6 +112,9 @@ void PlayScenePittsburgh::Update(double dt)
 		{
 			grid->StopEnemyBeatenCounter();
 			camera->UnlockCamera();
+			isUsingVirtualBound = true;
+			leftVirtualCameraBound = -1;
+			rightVirtualCameraBound = -1;
 		}
 	}
 	//Kiểm tra xem player đã đi đến đích chưa.

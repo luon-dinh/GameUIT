@@ -53,4 +53,9 @@ protected:
 	//Update, draw ta gọi Grid để nó quản lý.
 	Player* player;
 	Shield* shield;
+
+	bool isUsingVirtualBound = false;
+
+	int leftVirtualCameraBound = -1;
+	int rightVirtualCameraBound = -1;
 };
