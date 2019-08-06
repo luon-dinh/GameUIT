@@ -134,7 +134,7 @@ bool Solder::OnRectCollided(Object* object, CollisionSide side)
 	if (object->tag == Tag::PLAYER)
 	{
 		auto player = Player::getInstance();
-		this->health -= player->GetCollisionDamage();
+ 		this->health -= player->GetCollisionDamage();
 		if (this->health <= 0)
 		{
 			this->ChangeState(State::DEAD);

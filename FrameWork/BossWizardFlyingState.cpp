@@ -116,7 +116,7 @@ void BossWizardFlyingState::Fly(float dt)
 	default:
 		break;
 	}
-	if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 || wizard->pos.x > wizard->maxMap - wizard->getWidth() / 2&& wizard->deltaX>50)
+	if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 || wizard->pos.x > wizard->maxMap - wizard->getWidth() / 2)
 	{
 		if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 && wizard->direction == BossWizard::MoveDirection::RightToLeft)
 		{
