@@ -129,8 +129,7 @@ void Canon::Render() {
 
 void Canon::KillObject()
 {
-	this->vx = 0;
-	this->vy = 0;
 	this->health = 0;
-	ChangeState(State::BEATEN);
+	this->currentAnimation = this->explodeAnim;
+	this->DeactivateObjectInGrid();
 }
