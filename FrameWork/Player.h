@@ -155,7 +155,8 @@ public:
 	void OnFallingOffGround()											 override;
 	void OnSmashSolidBox(Object* solid, CollisionSide side)				 override;
 	void OnClimbingTheRope(Object* rope);
-
+	void ResetGameProperty() override;
+	void ResetGameProperty(bool afterDead);
 	void OnCollisionWithEnemy(Object* enemy);
 	void OnCollisionWithBullet(Bullet* bullet);
 	void OnShockedElectric(Object* object);

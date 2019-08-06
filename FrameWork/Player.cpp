@@ -678,6 +678,18 @@ void Player::OnJumping(int frames) {
 		}
 }
 
+void Player::ResetGameProperty() {
+	this->SetHeart(4);
+	this->SetOnAirState(OnAir::Falling);
+	this->ChangeState(State::JUMPING);
+}
+
+void Player::ResetGameProperty(bool afterDead) {
+	this->ResetGameProperty();
+	if (!afterDead) {
+		this->canGoToNextScene = false;
+	}
+}
 
 #pragma region Collison Handler Implementation
 void Player::OnCollision(Object* object, collisionOut* collisionOut) {

@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 
 PlayerFlyingBeatenState::PlayerFlyingBeatenState() {
-	this->state = State::BEATEN;
+	this->state = State::FLYING_BEATEN;
 	//this->currentFrame = 0;
 }
 
@@ -28,10 +28,10 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 		}
 	}
 
-	if (object->type == Type::ROPE) {
+	/*if (object->type == Type::ROPE) {
 		player->OnClimbingTheRope(object);
 		return;
-	}
+	}*/
 
 	if (object->type == Type::SOLIDBOX) {
 		player->OnCollisionWithSolidBox(object, collision);
