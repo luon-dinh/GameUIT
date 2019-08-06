@@ -83,6 +83,9 @@ void TextureManager::loadResources()
 	//texture dùng cho map cuối.
 	textures->addTexture(Tag::CARO_UP, (char*)".\\..\\Resources\\Images\\Maps\\PittsburghBoss\\CaroUp.png");
 	textures->addTexture(Tag::CARO_DOWN, (char*)".\\..\\Resources\\Images\\Maps\\PittsburghBoss\\CaroDown.png");
+
+	// canon bullet
+	textures->addTexture(Tag::GREENCANNONBULLET, (char*)".\\..\\Resources\\Images\\Enermy\\GreenCannonBullet.png");
 };
 void TextureManager::addTexture(Tag tag, const char* path)
 {

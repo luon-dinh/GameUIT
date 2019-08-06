@@ -479,7 +479,7 @@
     </ClCompile>
     <ClCompile Include="PlayerHandOnRope.cpp">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
-   </ClCompile>
+    </ClCompile>
     <ClCompile Include="BossWizardBeatenState.cpp">
       <Filter>Objects\Enemy\BossWizard</Filter>
     </ClCompile>
@@ -488,6 +488,9 @@
     </ClCompile>
     <ClCompile Include="PlayScenePittsburghBoss.cpp">
       <Filter>Scene\PlayScene\PlayScenePittsburghBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="CanonBullet.cpp">
+      <Filter>Objects\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,7 +844,7 @@
     </ClInclude>
     <ClInclude Include="PlayerHandOnRope.h">
       <Filter>Objects\Player\PlayerDistinctParts</Filter>
-   </ClInclude>
+    </ClInclude>
     <ClInclude Include="MapPittsburghBoss.h">
       <Filter>GameMap\TileMap\MapPittsburghBoss</Filter>
     </ClInclude>
@@ -850,6 +853,9 @@
     </ClInclude>
     <ClInclude Include="WhiteRocketRobotNonShooting.h">
       <Filter>Objects\Enemy\WhiteRocketRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="CanonBullet.h">
+      <Filter>Objects\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

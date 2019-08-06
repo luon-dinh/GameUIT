@@ -152,13 +152,13 @@ bool EvilBat::OnRectCollided(Object* object, CollisionSide side) {
 	}
 	switch (object->tag) {
 		case Tag::PLAYER:
-			OnBeaten(object);
+			OnBeaten(object, object->GetCollisionDamage());
 			return true;
 		case Tag::SHIELD: {
 			auto shield = Shield::getInstance();
 			// chỉ xét va chạm với shield khi shield đang attack
 			if (shield->state == Shield::ShieldState::Attack) {
-				OnBeaten(object);
+				OnBeaten(object, object->GetCollisionDamage());
 				return true;
 			}
 		}
@@ -313,10 +313,13 @@ void EvilBat::Move3() {
 	}
 }
 
-void EvilBat::OnBeaten(Object* object) {
+void EvilBat::OnBeaten(Object* object, int customDamage = 0) {
 	if (this->state == BatState::OnNeck) {
 		this->isCollidable = false;
 		this->isWakenUp = true;
+	}
+	if (customDamage <= 0) {
+		return;
 	}
 	GameObjectProperty::health--;
 	if (this->IsDead()) {
