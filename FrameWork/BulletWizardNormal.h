@@ -62,15 +62,16 @@ public:
 				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 				pos1.y = shield->pos.y;
 				pos2.y = shield->pos.y + 3;
+				pos1.x = this->pos.x;
 				if (this->direction == MoveDirection::LeftToRight)
 				{
-					pos1.x = shield->pos.x + 4;
-					pos2.x = pos1.x - 10;
+					//pos1.x = shield->pos.x;
+					pos2.x = pos1.x - 15;
 				}
 				else
 				{
-					pos1.x = shield->pos.x - 4;
-					pos2.x = pos1.x + 10;
+					//pos1.x = shield->pos.x ;
+					pos2.x = pos1.x + 15;
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);

@@ -446,6 +446,7 @@ float BossMini::getPosToBottom()
 	return((rect.top + rect.bottom) / 2 - rect.bottom);
 }
 
+
 void BossMini::ChangeState(State stateName)
 {
 	float pos1 = this->getPosToBottom();
@@ -463,8 +464,11 @@ void BossMini::ChangeState(State stateName)
 	this->state = stateName;
 	this->currentAnimation = animations[stateName];
 	float pos2 = this->getPosToBottom();
-	if (this->onAirState==OnAir::None)
+	if (this->onAirState == OnAir::None)
+	{
 		this->pos.y = this->pos.y + (pos2 - pos1);
+	}
+		
 	switch (stateName)
 	{
 	case State::STANDING:
