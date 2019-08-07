@@ -70,6 +70,9 @@ private:
 	const float ADDED_SPEED_1 = 0.09;
 	const float ADDED_SPEED_2 = 0.14;
 	
+
+	Player();
+	~Player();
 	
 public:
 	const int MAX_HEART = 4;
@@ -107,8 +110,6 @@ public:
 	bool isCarried;
 	D3DXVECTOR2 shieldReturnPos;
 
-	Player();
-	~Player();
 
 
 #pragma region MyRegion

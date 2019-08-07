@@ -170,6 +170,10 @@ BoundingBox Player::getBoundingBox()
 
 void Player::Update(float dt)
 {
+	if (KeyboardManager::getInstance()->isKeyDown(DIK_E)) {
+		this->canGoToNextScene = true;
+		ExitSignal::getInstance()->SetActive(true);
+	}
 	if (this->isLockInput)
 		return;
 	// Update state
@@ -843,6 +847,13 @@ bool Player::OnRectCollided(Object* object, CollisionSide side) {
 				return false;
 			}
 			this->OnShockedElectric(object);
+			return true;
+		}
+		case Type::BULLETTYPE: {
+			if (this->IsNonAttackable() || this->IsImmortal()) {
+				return false;
+			}
+			this->OnCollisionWithBullet((Bullet*)object);
 			return true;
 		}
 	}

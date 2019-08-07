@@ -130,7 +130,7 @@ public:
 
 	int GetCollisionDamage()
 	{
-		return 0;
+		return this->damage;
 	}
 
 	BoundingBox getBoundingBox()override
