@@ -217,4 +217,5 @@ void SceneManager::RestartCurrentScene()
 		pittsburghBoss = new PlayScenePittsburghBoss();
 		ReplaceScene(MapName::PITTSBURGHBOSS);
 	}
+	Player::getInstance()->SetHeart(Player::getInstance()->MAX_HEART);
 }
