@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"BossWizard.h"
 #include"BossMini.h"
+#include "Delay.h"
 
 class PlaySceneCharlesBoss : public PlaySceneWithLight
 {
@@ -21,4 +22,7 @@ private:
 	const char * world01BossTileDark = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_dark.png";
 	const char * world01BossMapObject = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_map_object.txt";
 	const char * world01BossSpawn = (char*)".\\..\\Resources\\Images\\Maps\\CharlesBoss\\charles_boss_spawn.txt";
+	Delay* bulletAppearDelay;
+	int noOfSpawnedObject = 0;
+	bool isRightBullet = true;
 };

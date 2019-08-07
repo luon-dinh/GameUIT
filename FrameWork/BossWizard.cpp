@@ -9,7 +9,7 @@ BossWizard::BossWizard()
 	LoadAllAnimations();
 	LoadAllStates();
 	this->pos.x = 200;
-	this->pos.y = 120;
+	this->pos.y = 200;
 	this->vx = 0;
 	this->vy = 0;
 	this->health = maxHelth;
