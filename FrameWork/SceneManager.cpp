@@ -116,7 +116,8 @@ PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
 void SceneManager::ReplaceScene(MapName mapName)
 {
 	//Reset lại cục exit khi qua màn.
-	Player::getInstance()->ResetGameProperty();
+	Player::getInstance()->ResetGameProperty(false);
+	Camera::getCameraInstance()->UnlockCamera();
 
 	PlayScene* nextScene = fromMapNameToPlayScene(mapName);
 	if (nextScene == nullptr)

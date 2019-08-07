@@ -179,7 +179,7 @@ void RedRocketRobotOneSided::EnemyAttackingUpdate(double dt)
 			currentAnimation = crouchShooting;
 			if (currentAnimation->curframeindex == currentAnimation->toframe - 1)
 			{
-				SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(this->direction, this->pos.x, this->pos.y, rocketSpeed));
+				SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(this->direction, this->pos.x, this->pos.y + 15, rocketSpeed));
 				isAttacked = true;
 			}
 		}
