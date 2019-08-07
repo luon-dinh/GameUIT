@@ -6,7 +6,7 @@ class BulletWizardNormal : public Bullet
 {
 	
 public:
-	const int damage = 3;
+	int damage = 0;
 	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 3, 4);
 	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 4, 5);
 	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 5, 6);
@@ -62,21 +62,24 @@ public:
 				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 				pos1.y = shield->pos.y;
 				pos2.y = shield->pos.y + 3;
+				pos1.x = this->pos.x;
 				if (this->direction == MoveDirection::LeftToRight)
 				{
-					pos1.x = shield->pos.x + 4;
-					pos2.x = pos1.x - 10;
+					//pos1.x = shield->pos.x;
+					pos2.x = pos1.x - 15;
 				}
 				else
 				{
-					pos1.x = shield->pos.x - 4;
-					pos2.x = pos1.x + 10;
+					//pos1.x = shield->pos.x ;
+					pos2.x = pos1.x + 15;
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);
+				this->damage = 0;
 				return;
 			}
-			player->BeingAttacked(damage);
+			this->damage = 3;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return ;
 		}
@@ -114,9 +117,11 @@ public:
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);
+				this->damage = 0;
 				return true;
 			}
-			player->BeingAttacked(5);
+			this->damage = 3;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return true;
 		}

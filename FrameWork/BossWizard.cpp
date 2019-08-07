@@ -173,7 +173,7 @@ void BossWizard::Render()
 		//return;
 	}
 
-	if (this->timeNotRender > 0||this->height<10)
+	if (this->timeNotRender > 0||this->health<10)
 	{
 		if ((int)timeNotRender % 2 == 0)
 		{
