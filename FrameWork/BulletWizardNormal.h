@@ -46,24 +46,40 @@ public:
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
 	
-		/*auto player = Player::getInstance();
+		auto player = Player::getInstance();
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
-		if (object->type == Type::NONE)
+		if (object->tag == Tag::PLAYER)
 		{
-			if (object->tag == Tag::PLAYER)
-			{
-				this->isCollidable = false;
-				if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
-				{
-					this->vy = -abs(this->vx);
-					this->vx = 0;
-					return;
-				}
+			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
 			
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer)&&collide)
+			{
+				D3DXVECTOR2 pos1;
+				D3DXVECTOR2 pos2;
+				this->isCollidable = false;
+				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+				pos1.y = shield->pos.y;
+				pos2.y = shield->pos.y + 3;
+				if (this->direction == MoveDirection::LeftToRight)
+				{
+					pos1.x = shield->pos.x + 4;
+					pos2.x = pos1.x - 10;
+				}
+				else
+				{
+					pos1.x = shield->pos.x - 4;
+					pos2.x = pos1.x + 10;
+				}
+				this->vx = -this->vx / 3;
+				this->parapol = new Equation(pos1, pos2);
+				return;
 			}
-		}*/
+			player->BeingAttacked(5);
+			DeactivateObjectInGrid();
+			return ;
+		}
 	
 	}
 
@@ -76,14 +92,16 @@ public:
 		float posToPlayer = abs(this->pos.x - player->pos.x);
 		if (object->tag == Tag::PLAYER)
 		{
-			this->isCollidable = false;
-			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
+			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
+
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer) && collide)
 			{
 				D3DXVECTOR2 pos1;
 				D3DXVECTOR2 pos2;
+				this->isCollidable = false;
+				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
 				pos1.y = shield->pos.y;
-				pos2.y = shield->pos.y+3;
+				pos2.y = shield->pos.y + 3;
 				if (this->direction == MoveDirection::LeftToRight)
 				{
 					pos1.x = shield->pos.x + 4;
@@ -94,11 +112,12 @@ public:
 					pos1.x = shield->pos.x - 4;
 					pos2.x = pos1.x + 10;
 				}
-				this->vx = -this->vx/3;
+				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);
 				return true;
 			}
-
+			player->BeingAttacked(5);
+			DeactivateObjectInGrid();
 			return true;
 		}
 		return false;
@@ -106,7 +125,7 @@ public:
 
 	int GetCollisionDamage()
 	{
-		return 5;
+		return 0;
 	}
 
 	BoundingBox getBoundingBox()override

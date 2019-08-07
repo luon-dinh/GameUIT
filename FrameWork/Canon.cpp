@@ -32,6 +32,17 @@ void Canon::Update(float dt) {
 		this->currentAnimation->Update(dt);
 		return;
 	}
+	else {
+		if (this->currentAnimation == explodeAnim) {
+			if (this->currentAnimation->curframeindex == 2) {
+				this->DeactivateObjectInGrid();
+			}
+			else {
+				this->currentAnimation->Update(dt);
+			}
+			return;
+		}
+	}
 
 	Fire();
 }
@@ -131,5 +142,5 @@ void Canon::KillObject()
 {
 	this->health = 0;
 	this->currentAnimation = this->explodeAnim;
-	this->DeactivateObjectInGrid();
+	
 }
