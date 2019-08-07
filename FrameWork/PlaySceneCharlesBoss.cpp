@@ -76,13 +76,13 @@ void PlaySceneCharlesBoss::Update(double dt)
 			if (isRightBullet)
 			{
 				bulletX = 256 - 10;
-				bulletY = 60;
+				bulletY = 64;
 				isRightBullet = false;
 			}
 			else
 			{
 				bulletX = 10;
-				bulletY = 60;
+				bulletY = 64;
 				isRightBullet = true;
 			}
 			int bulletXToPlayerX = player->pos.x - bulletX;
