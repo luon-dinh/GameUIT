@@ -4,7 +4,7 @@
 
 class PlayerDyingState : public PlayerState {
 private:
-	const int ANIMATION_FRAME = 8;
+	const int ANIMATION_FRAME = 60;
 	int currentFrame;
 public:
 	PlayerDyingState();

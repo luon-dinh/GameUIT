@@ -212,7 +212,8 @@ enum Tag {
 	ELECTRIC_SHOCKWAVE,
 	CANON,
 	CARO_UP,
-	CARO_DOWN
+	CARO_DOWN,
+	PLAYER_HANG
 };
 
 enum Type {
