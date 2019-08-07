@@ -436,6 +436,7 @@ void Player::ChangeState(State stateName) {
 		return;
 	}
 	case State::DEAD: {
+		SoundManager::getinstance()->stopAll();
 		SoundManager::getinstance()->play(SoundManager::SoundName::player_dead); //chờ nào dead thật thì play
 		this->SetActive(false);
 		shield->SetShieldState(Shield::ShieldState::NotRender);
@@ -1015,7 +1016,8 @@ void Player::OnShockedElectric(Object* object) {
 	if (object->type == Type::SHOCKWAVE) {
 		// chưa bị shock bởi shockwave trước đó
 		if (this->bufferDamageShocked == 0) {
-			this->bufferDamageShocked = this->GetHealth() / 2;
+			//this->bufferDamageShocked = this->GetHealth() / 2;
+			this->bufferDamageShocked = this->GetHealth() ;
 		}
 		this->BeingAttacked(this->bufferDamageShocked);
 	}
