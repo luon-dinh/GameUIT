@@ -35,30 +35,36 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		/*auto player = Player::getInstance();
+		auto player = Player::getInstance();
 		auto shield = Shield::getInstance();
 		float posToShhield = abs(this->pos.x - shield->pos.x);
 		float posToPlayer = abs(this->pos.x - player->pos.x);
 		if (object->tag == Tag::PLAYER)
 		{
-			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer))
+			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
+			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer) && collide)
 			{
-				this->vy = abs(this->vx);
-				this->isCollidable = false;
-				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-				this->vx = 0;
-				return;
+				if (colOut->side != CollisionSide::top&&colOut->side != CollisionSide::bottom)
+				{
+					this->vy = abs(this->vx);
+					this->isCollidable = false;
+					SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+					this->vx = 0;
+					return;
+				}
 			}
+			//this->animation = animationExplode;
+			player->BeingAttacked(1);
 			DeactivateObjectInGrid();
 			return;
 		}
-*/
+
 		
 	}
 	
 	int GetCollisionDamage()
 	{
-		return 1;
+		return 0;
 	}
 
 	bool OnRectCollided(Object* object, CollisionSide side)override
@@ -82,6 +88,7 @@ public:
 				}
 			}
 			//this->animation = animationExplode;
+			player->BeingAttacked(1);
 			DeactivateObjectInGrid();
 			return true;
 		}
