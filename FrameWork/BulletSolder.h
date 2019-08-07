@@ -10,7 +10,7 @@ public:
 	{
 		return true;
 	}*/
-
+	const int damge = 1;
 	BulletSolder(MoveDirection direction)
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
@@ -88,7 +88,7 @@ public:
 				}
 			}
 			//this->animation = animationExplode;
-			player->BeingAttacked(1);
+			player->BeingAttacked(damge);
 			DeactivateObjectInGrid();
 			return true;
 		}

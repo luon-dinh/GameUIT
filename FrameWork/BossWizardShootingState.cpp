@@ -138,9 +138,9 @@ void BossWizardShootingState::Update(float dt)
 				}
 			}
 			wizard->countBullet++;
-			wizard->ChangeState(State::STANDING);
 			SoundManager::getinstance()->play(SoundManager::SoundName::wizard_lazer);
 			scene->AddObjectToCurrentScene(bullet);
+			wizard->ChangeState(State::STANDING);
 		}
 	}
 }

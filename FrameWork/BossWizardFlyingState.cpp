@@ -120,14 +120,14 @@ void BossWizardFlyingState::Fly(float dt)
 	{
 		if (wizard->pos.x < wizard->minMap + wizard->getWidth() / 2 && wizard->direction == BossWizard::MoveDirection::RightToLeft)
 		{
-			wizard->pos.x = wizard->getWidth() / 2;
+			wizard->pos.x = wizard->getWidth() / 2 + wizard->vx;
 			wizard->flyMode = 3;
 			wizard->SetOnAirState(BossWizard::OnAir::Falling);
 			wizard->ChangeState(State::FLYING);
 		}
 		else if (wizard->direction == BossWizard::MoveDirection::LeftToRight)
 		{
-			wizard->pos.x = wizard->maxMap - wizard->getWidth() / 2;
+			wizard->pos.x = wizard->maxMap - wizard->getWidth() / 2 - wizard->vx;
 			wizard->flyMode = 3;
 			wizard->SetOnAirState(BossWizard::OnAir::Falling);
 			wizard->ChangeState(State::FLYING);

@@ -52,5 +52,6 @@ public:
 	void OnCollision(Object* object, collisionOut* colOut) override;
 	BoundingBox getBoundingBox() override;
 	int GetBulletDamage() override { return 2; }
+	int GetCollisionDamage() override { return GetBulletDamage(); }
 	bool CanGetThroughShield() override { return true; }
 };
