@@ -225,24 +225,37 @@ void RedRocketRobotOneSided::ChangeState(State newState)
 	switch (newState)
 	{
 	case State::BEATEN:
+	{
 		currentBeatenTick = 0;
 		flashingTick = 0;
 		isBeingBeaten = true;
 		this->currentAnimation = shocking;
 		if (health <= 0)
 			this->vx = Shield::getInstance()->vx / 10;
+		float thisYToBottom = PosToBottom();
+		this->pos.y -= previousYToBottom - thisYToBottom;
 		break;
+	}
 	case State::STANDING:
+	{
 		this->currentAnimation = standing;
 		this->vy = 0;
+		float thisYToBottom = PosToBottom();
+		this->pos.y -= previousYToBottom - thisYToBottom;
 		break;
+	}
+		
 	case State::WALKING:
 		this->currentAnimation = walking;
 		this->vy = 0;
 		break;
 	case State::DUCKING:
+	{
 		this->currentAnimation = crouching;
+		float thisYToBottom = PosToBottom();
+		this->pos.y -= previousYToBottom - thisYToBottom;
 		break;
+	}
 	case State::DEAD:
 		this->currentAnimation = explodeAnim;
 		this->vx = Shield::getInstance()->vx / 3;
@@ -301,11 +314,12 @@ void RedRocketRobotOneSided::OnCollision(Object* object, collisionOut* colOut)
 				if (isFirstTimeFalling)
 				{
 					isFirstTimeFalling = false;
+					this->pos.y += (2 * object->height / 3);
 					ChangeState(State::WALKING);
 				}
 				else
 					ChangeState(State::STANDING);
-				this->pos.y -= colOut->collisionTime * vy;
+				this->pos.y -= colOut->collisionTime * vy + (2 * object->height / 3);
 			}
 			this->SetStandingGround(object);
 		}

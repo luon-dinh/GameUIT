@@ -82,6 +82,8 @@ void PlayScenePittsburgh::Update(double dt)
 			isCameraAlreadyLockedOnce = true;
 			this->KillAllEnemyInActiveCells();
 			grid->StartEnemyBeatenCounter();
+			SoundManager::getinstance()->stop(SoundManager::SoundName::main_theme);
+			SoundManager::getinstance()->play(SoundManager::SoundName::action_theme);
 		}
 	}
 
@@ -115,6 +117,8 @@ void PlayScenePittsburgh::Update(double dt)
 			isUsingVirtualBound = true;
 			leftVirtualCameraBound = -1;
 			rightVirtualCameraBound = -1;
+			SoundManager::getinstance()->stop(SoundManager::SoundName::action_theme);
+			SoundManager::getinstance()->play(SoundManager::SoundName::main_theme);
 		}
 	}
 	//Kiểm tra xem player đã đi đến đích chưa.

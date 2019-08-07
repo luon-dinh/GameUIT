@@ -121,9 +121,9 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 	{
 		D3DXVECTOR3 playerCamPos = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(player->pos.x, player->pos.y, 0));
 		if (leftVirtualCameraBound < 0)
-			leftVirtualCameraBound = (playerCamPos.x - playerWidth/2 > cameraBoundBox.left) ? (cameraBoundBox.left) : (playerCamPos.x - playerWidth/2);
+			leftVirtualCameraBound = (playerCamPos.x - playerWidth/2 > cameraBoundBox.left) ? (cameraBoundBox.left) : (playerCamPos.x - playerWidth/2 + 1);
 		if (rightVirtualCameraBound < 0)
-			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > cameraBoundBox.right) ? (cameraBoundBox.right) : (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2);
+			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > cameraBoundBox.right) ? (cameraBoundBox.right) : (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 - 1);
 		/*if (leftVirtualCameraBound < cameraBoundBox.left)
 			leftVirtualCameraBound = playerCamPos.x - player->getWidth() / 2;
 		if (rightVirtualCameraBound < cameraBoundBox.right)
@@ -131,9 +131,9 @@ void PlayScene::UpdateCameraWithPlayerPos(double dt)
 		if (leftVirtualCameraBound >= cameraBoundBox.left && rightVirtualCameraBound >= cameraBoundBox.right)*/
 
 		if (leftVirtualCameraBound < cameraBoundBox.left)
-			leftVirtualCameraBound = (playerCamPos.x - playerWidth / 2 > leftVirtualCameraBound) ? (playerCamPos.x - playerWidth / 2 + 1) : (leftVirtualCameraBound);
+			leftVirtualCameraBound = (playerCamPos.x - playerWidth / 2 > leftVirtualCameraBound) ? (playerCamPos.x - playerWidth / 2) : (leftVirtualCameraBound);
 		else if (rightVirtualCameraBound < cameraBoundBox.right)
-			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > rightVirtualCameraBound) ? (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 - 1) : (rightVirtualCameraBound);
+			rightVirtualCameraBound = (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2 > rightVirtualCameraBound) ? (SCREEN_WIDTH - playerCamPos.x + playerWidth / 2) : (rightVirtualCameraBound);
 		else
 			isUsingVirtualBound = false;
 

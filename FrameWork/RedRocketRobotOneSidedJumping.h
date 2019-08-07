@@ -10,7 +10,7 @@ class RedRocketRobotOneSidedJumping : public RedRocketRobotOneSided
 	const int jumpLengthBackward = 20;
 
 	//Độ cao mà nó nhảy tới.
-	const int jumpHeightForward = 100;
+	const int jumpHeightForward = 90;
 
 	//Độ cao mà nó nhảy lùi.
 	const int jumpHeightBackward = 50;
@@ -19,29 +19,42 @@ public:
 	~RedRocketRobotOneSidedJumping() {};
 	void ChangeState(State newState) override
 	{
+		float previousYToBottom = PosToBottom();
 		currentStateTime = 0;
 		switch (newState)
 		{
 		case State::BEATEN:
+		{
 			currentBeatenTick = 0;
 			flashingTick = 0;
 			isBeingBeaten = true;
 			this->currentAnimation = shocking;
-			--health;
-			if (health == 0)
+			if (health <= 0)
 				this->vx = Shield::getInstance()->vx / 10;
+			float thisYToBottom = PosToBottom();
+			this->pos.y -= previousYToBottom - thisYToBottom;
 			break;
+		}	
 		case State::STANDING:
+		{
 			this->currentAnimation = standing;
 			this->vy = 0;
+			float thisYToBottom = PosToBottom();
+			this->pos.y -= previousYToBottom - thisYToBottom;
 			break;
+		}
 		case State::WALKING:
 			this->currentAnimation = walking;
 			this->vy = 0;
 			break;
 		case State::DUCKING:
+		{
 			this->currentAnimation = crouching;
+			this->vy = 0;
+			float thisYToBottom = PosToBottom();
+			this->pos.y -= previousYToBottom - thisYToBottom;
 			break;
+		}
 		case State::DEAD:
 			this->currentAnimation = explodeAnim;
 			this->vx = Shield::getInstance()->vx / 3;
