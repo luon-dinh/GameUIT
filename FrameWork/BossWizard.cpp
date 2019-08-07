@@ -140,7 +140,7 @@ void BossWizard::Update(float dt)
 	}
 
 	
-	if (!isCollidable)
+	if (!isCollidable||this->health < 10)
 	{
 		timeNotRender += dt;
 	}
@@ -173,7 +173,7 @@ void BossWizard::Render()
 		//return;
 	}
 
-	if (this->timeNotRender > 0||this->health<10)
+	if (this->timeNotRender > 0||this->health < 10)
 	{
 		if ((int)timeNotRender % 2 == 0)
 		{
