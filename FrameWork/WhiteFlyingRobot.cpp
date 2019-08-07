@@ -105,7 +105,6 @@ void WhiteFlyingRobot::EnemyBeatenUpdate(double dt)
 	if (currentStateTime > beatenTime)
 	{
 		ChangeState(State::FLYING);
-		isCollidable = true;
 		return;
 	}		
 	currentBeatenTick = fmod((currentBeatenTick + dt), delayBeatenSprite);
@@ -171,7 +170,6 @@ void WhiteFlyingRobot::ChangeState(State state)
 	switch (state)
 	{
 	case State::BEATEN:
-		isCollidable = false;
 	case State::FLYING:
 		currentAnimation = stateAnim[State::FLYING];
 		break;
@@ -234,4 +232,19 @@ bool WhiteFlyingRobot::OnRectCollided(Object* object, CollisionSide side)
 void WhiteFlyingRobot::OnNotCollision(Object* object)
 {
 
+}
+
+BoundingBox WhiteFlyingRobot::getBoundingBox()
+{
+	BoundingBox box;
+	if (robotState != State::BEATEN)
+		box = Object::getBoundingBox();
+	else
+	{
+		box.left = -1;
+		box.right = -1;
+		box.top = -1;
+		box.bottom = -1;
+	}
+	return box;
 }

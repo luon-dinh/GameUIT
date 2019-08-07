@@ -66,4 +66,5 @@ public:
 	void OnCollision(Object* object, collisionOut* colout) override;
 	bool OnRectCollided(Object* object, CollisionSide side) override;
 	void OnNotCollision(Object* object) override;
+	BoundingBox getBoundingBox() override;
 };
