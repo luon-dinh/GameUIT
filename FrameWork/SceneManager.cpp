@@ -115,6 +115,9 @@ PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
 
 void SceneManager::ReplaceScene(MapName mapName)
 {
+	//Reset lại cục exit khi qua màn.
+	Player::getInstance()->ResetGameProperty();
+
 	PlayScene* nextScene = fromMapNameToPlayScene(mapName);
 	if (nextScene == nullptr)
 		return;
@@ -219,7 +222,7 @@ void SceneManager::ExecuteRestartCurrentScene()
 		pittsburghBoss = new PlayScenePittsburghBoss();
 		ReplaceScene(MapName::PITTSBURGHBOSS);
 	}
-	Player::getInstance()->SetHeart(Player::getInstance()->MAX_HEART);
+	Player::getInstance()->ResetGameProperty(true);
 	isRestartCurrentScene = false;
 }
 
