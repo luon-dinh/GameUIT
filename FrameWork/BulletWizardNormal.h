@@ -6,7 +6,7 @@ class BulletWizardNormal : public Bullet
 {
 	
 public:
-	const int damage = 3;
+	int damage = 0;
 	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 3, 4);
 	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 4, 5);
 	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 5, 6);
@@ -75,9 +75,11 @@ public:
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);
+				this->damage = 0;
 				return;
 			}
-			player->BeingAttacked(damage);
+			this->damage = 3;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return ;
 		}
@@ -115,9 +117,11 @@ public:
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);
+				this->damage = 0;
 				return true;
 			}
-			player->BeingAttacked(5);
+			this->damage = 3;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return true;
 		}
