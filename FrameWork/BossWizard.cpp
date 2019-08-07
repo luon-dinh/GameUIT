@@ -412,7 +412,7 @@ void BossWizard::LoadAllAnimations()
 	animations[State::STAND_SMILE] = new Animation(Tag::BOSSWIZARD, 0, 3, 120/3);
 	animations[State::RUNNING] = new Animation(Tag::BOSSWIZARD, 3, 7);
 	animations[State::DEAD] = new Animation(Tag::BOSSWIZARD, 8, 10);
-	animations[State::ATTACK] = new Animation(Tag::BOSSWIZARD, 10, 13, 800/3);
+	animations[State::ATTACK] = new Animation(Tag::BOSSWIZARD, 10, 13);
 	animations[State::FLYING] = new Animation(Tag::BOSSWIZARD, 13, 16);
 	animations[State::STAND_PUNCH] = new Animation(Tag::BOSSWIZARD, 16, 18);
 	animations[State::BEATEN] = new Animation(Tag::BOSSWIZARD, 7, 8);
