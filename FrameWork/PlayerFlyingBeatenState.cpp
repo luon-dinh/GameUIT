@@ -23,6 +23,7 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 
 	if (object->type == Type::GROUND) {
 		if (side == CollisionSide::bottom) {
+			player->SetVx(0);
 			player->OnStandingOnGround(object);
 			return;
 		}
@@ -34,6 +35,7 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 	}*/
 
 	if (object->type == Type::SOLIDBOX) {
+		player->SetVx(0);
 		player->OnCollisionWithSolidBox(object, collision);
 		return;
 	}
