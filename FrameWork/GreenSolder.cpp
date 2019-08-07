@@ -12,7 +12,7 @@ GreenSolder::GreenSolder(RunType runType, float x, float y)
 	this->canJump = true;
 	this->health = 2;
 	this->standingTime = 300;
-	this->duckingTime = 1000;
+	this->duckingTime = 700;
 	this->runningTime = 1000;
 	this->onAirState = OnAir::None;
 	this->delayBeaten = 0;

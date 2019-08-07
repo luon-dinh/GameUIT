@@ -18,6 +18,6 @@ void BossWizardStandSmileState::Update(float dt)
 {
 	auto player = Player::getInstance();
 	auto wizard = BossWizard::getInstance();
-	if (player->vy!=0||player->GetPreOnAirState()!=Player::OnAir::None)
+	if ((player->GetStandingGround()!=NULL&&player->GetStandingGround()->type==Type::SOLIDBOX))
 		wizard->ChangeState(State::ATTACK);
 }

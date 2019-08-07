@@ -29,7 +29,7 @@ Player::Player() : GamePlayerProperty()
 	this->flipRenderFrame = 0;
 	
 	this->bufferDamageShocked = 0;
-	this->SetHeart(4);
+	this->SetHeart(1);
 }
 
 PlayerState* Player::GetPreviousState() {
