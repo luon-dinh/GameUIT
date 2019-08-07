@@ -691,7 +691,7 @@ void Player::ResetGameProperty() {
 
 void Player::ResetGameProperty(bool afterDead) {
 	if (!afterDead) {
-		this->canGoToNextScene = false;
+		this->ResetTransScene();
 	}
 	else {
 		this->ResetGameProperty();

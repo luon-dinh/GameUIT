@@ -61,6 +61,11 @@ void GamePlayerProperty::SetHealth(int health) {
 	}
 }
 
+void GamePlayerProperty::ResetTransScene() {
+	this->canGoToNextScene = false;
+	ExitSignal::getInstance()->SetActive(false);
+}
+
 bool GamePlayerProperty::IsNearlyDead() {
 	return this->isNearlyDead;
 }

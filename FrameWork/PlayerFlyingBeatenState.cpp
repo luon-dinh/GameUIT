@@ -41,9 +41,11 @@ void PlayerFlyingBeatenState::OnCollision(Object* object, collisionOut* collisio
 	}
 
 	if (object->type == Type::ROPE) {
-		PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
-		SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
-		return;
+		if (!player->IsDead()) {
+			PlayerHandOnRope* handOnRope = new PlayerHandOnRope();
+			SceneManager::getInstance()->AddObjectToCurrentScene(handOnRope);
+			return;
+		}
 	}
 
 	if (object->type == Type::SPIKE) {
