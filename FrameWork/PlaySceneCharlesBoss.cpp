@@ -22,8 +22,8 @@ PlaySceneCharlesBoss::PlaySceneCharlesBoss()
 	//Xét tạo Grid.
 	grid = new Grid(world->getMapWidth(), world->getMapHeight(), world01BossSpawn, world01BossMapObject);
 	//Thêm player và shield vào Grid.
-	grid->Add(BossWizard::getInstance());
-	//grid->Add(BossMini::getInstance());
+	/*grid->Add(BossWizard::getInstance());*/
+	bulletAppearDelay = new Delay(3000);
 }
 
 PlaySceneCharlesBoss::~PlaySceneCharlesBoss()
@@ -63,6 +63,61 @@ void PlaySceneCharlesBoss::Update(double dt)
 	{
 		GoToNextScene();
 	}*/
+	if (noOfSpawnedObject < 4 && bulletAppearDelay->GetDelayStatus(dt))
+	{
+		if (noOfSpawnedObject < 3)
+		{
+			BulletWizardNormal* bullet;
+			int bulletX;
+			int bulletY;
+			float bulletSpeed = BossWizard::getInstance()->bulletSpeed;
+			float bulletVX;
+			float bulletVY;
+			if (isRightBullet)
+			{
+				bulletX = 256 - 10;
+				bulletY = 60;
+				isRightBullet = false;
+			}
+			else
+			{
+				bulletX = 10;
+				bulletY = 60;
+				isRightBullet = true;
+			}
+			int bulletXToPlayerX = player->pos.x - bulletX;
+			int bulletYToPlayerY = player->pos.y - bulletY;
+			double degree = atan2(bulletYToPlayerY, bulletXToPlayerX);
+			if (degree > (double)PI / 4 && degree < (double)PI /2)
+				degree = PI / 4;
+			else if (degree > (double) PI / 2 && degree < (double)3*PI/4)
+				degree = 3 * PI / 4;
+			bulletVX = cos(degree) * bulletSpeed;
+			bulletVY = sin(degree) * bulletSpeed;
+			bullet = new BulletWizardNormal();
+			bullet->pos.x = bulletX;
+			bullet->pos.y = bulletY;
+			bullet->SetVx(bulletVX);
+			bullet->SetVy(bulletVY);
+			double absDegree = atan2(abs(bulletYToPlayerY), abs(bulletXToPlayerX));
+			if (absDegree < (double)PI / 20)
+				bullet->animation = bullet->animation3;
+			else if (absDegree < (double)PI / 4)
+				bullet->animation = bullet->animation2;
+			else
+				bullet->animation = bullet->animation1;
+			grid->Add(bullet);
+			++noOfSpawnedObject;
+		}
+		else
+		{
+			Object* newObject = BossWizard::getInstance();
+			grid->Add(newObject);
+			++noOfSpawnedObject;
+		}
+		
+		
+	}
 }
 
 void PlaySceneCharlesBoss::GoToNextScene()

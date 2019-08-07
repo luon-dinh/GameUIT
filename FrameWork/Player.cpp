@@ -188,6 +188,10 @@ void Player::Update(float dt)
 
 	if (this->IsOnPlatform()) {
     	auto platform = this->GetStandingGround();
+		auto topBox = platform->getBoundingBox().top;
+		if (topBox == -1) {
+			return;
+		}
 		this->pos.x += platform->vx;
 		this->pos.y = platform->getBoundingBox().top + this->getHeight() / 2 - 2;
 	}

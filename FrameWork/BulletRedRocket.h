@@ -30,5 +30,9 @@ public:
 	int GetBulletDamage() override {
 		return 1;
 	};
+	int GetCollisionDamage() override
+	{
+		return GetBulletDamage();
+	}
 	bool CanGetThroughShield() override { return true; }
 };
