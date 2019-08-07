@@ -7,7 +7,7 @@ class BulletSolder:public Bullet {
 private:
 	int damage =0;
 public:
-	float bulletSpeedx = 2;
+	float bulletSpeedx = 2.5;
 	/*bool CanGetThroughShield() override
 	{
 		return true;
