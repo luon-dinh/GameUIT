@@ -24,6 +24,7 @@ BossMini::BossMini()
 	this->onAirState = OnAir::Falling;
 	this->deltaX = 0;
 	this->canNewBullet = true;
+	this->canDash = true;
 	float deltaX = this->pos.x - player->pos.x;
 	if (deltaX > 0)
 		this->direction = MoveDirection::RightToLeft;
@@ -282,7 +283,7 @@ void BossMini::Update(float dt)
 				this->countTimesBeaten++;
 				if (this->countTimesBeaten >= maxTimesBeaten)
 				{
-					ChangeState(State::DASHING);
+					ChangeState(State::DEAD);
 					this->countTimesBeaten = 0;
 				}
 				else
@@ -387,10 +388,17 @@ void BossMini::Update(float dt)
 		this->vx = this->vy = 0;
 		this->onAirState = OnAir::None;
 		if (timeCurrentState < maxTimeStateDelay*2)
-			timeCurrentState += dt;
+			timeCurrentState += defaultDT;
 		else
 		{
-			this->currentAnimation = this->explodeAnim;
+			if (canDash)
+			{
+				ChangeState(State::DASHING);
+				canDash = false;
+			}
+			else {
+				this->currentAnimation = this->explodeAnim;
+			}
 			//timeCurrentState = 0;
 		}
 		break;
@@ -404,7 +412,19 @@ void BossMini::Update(float dt)
 
 void BossMini::Render()
 {
-	if (this->state != State::DEAD||(this->state==State::DEAD &&(int)this->timeCurrentState%2==0))
+	if ((this->state != State::DEAD&&state!=State::DASHING)||(this->state==State::DEAD &&(int)this->timeCurrentState%2==0&& canDash==false)|| (isCollidable == false && state == State::DASHING && (int)this->timeCurrentState % 2 == 0))
+	{
+		D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
+
+		if (this->direction == Player::MoveDirection::LeftToRight) {
+			// move from left to right
+			currentAnimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y), TransformationMode::FlipHorizontal);
+		}
+		else {
+			currentAnimation->Render(D3DXVECTOR2(vectortoDraw.x, vectortoDraw.y));
+		}
+	}
+	else if((state==State::DASHING&&isCollidable==true)||(state==State::DEAD&&canDash==true))
 	{
 		D3DXVECTOR3 vectortoDraw = Camera::getCameraInstance()->convertWorldToViewPort(D3DXVECTOR3(this->pos.x, pos.y, 0));
 
@@ -516,6 +536,7 @@ bool BossMini::OnRectCollided(Object* object, CollisionSide side)
 	{
 		auto player = Player::getInstance();
 		this->health -= object->GetCollisionDamage();
+		this->isCollidable = false;
 		player->ChangeState(State::SHOCKING);
 	}
 	return false;
