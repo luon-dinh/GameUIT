@@ -29,8 +29,8 @@ public:
 	const float flySpeedx1 = 1;
 	const float flySpeedx2 = 3;
 	const float flySpeedy = 2.5;
-	const float maxFlyy1 = 30;
-	const float maxXToFly1 = 80;
+	const float maxFlyy1 = 35;
+	const float maxXToFly1 = 100;
 	const float maxTimeNotRender = 1000;
 	const float maxHelth = 40;
 	const float bulletSpeed = 2.7;

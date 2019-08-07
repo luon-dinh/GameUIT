@@ -4,13 +4,14 @@
 #include"Player.h"
 #include"Shield.h"
 class BulletSolder:public Bullet {
+private:
+	int damage =0;
 public:
-	float bulletSpeedx = 2;
+	float bulletSpeedx = 2.5;
 	/*bool CanGetThroughShield() override
 	{
 		return true;
 	}*/
-
 	BulletSolder(MoveDirection direction)
 	{
 		this->animation = new Animation(Tag::BLUESOLDERBULLET, 0);
@@ -46,6 +47,7 @@ public:
 			{
 				if (colOut->side != CollisionSide::top&&colOut->side != CollisionSide::bottom)
 				{
+					this->damage = 0;
 					this->vy = abs(this->vx);
 					this->isCollidable = false;
 					SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
@@ -54,7 +56,8 @@ public:
 				}
 			}
 			//this->animation = animationExplode;
-			player->BeingAttacked(1);
+			this->damage = 1;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return;
 		}
@@ -64,7 +67,7 @@ public:
 	
 	int GetCollisionDamage()
 	{
-		return 0;
+		return damage;
 	}
 
 	bool OnRectCollided(Object* object, CollisionSide side)override
@@ -80,6 +83,7 @@ public:
 			{
 				if (side != CollisionSide::top&&side != CollisionSide::bottom)
 				{
+					this->damage = 0;
 					this->vy = abs(this->vx);
 					this->isCollidable = false;
 					SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
@@ -88,7 +92,8 @@ public:
 				}
 			}
 			//this->animation = animationExplode;
-			player->BeingAttacked(1);
+			this->damage = 1;
+			player->OnCollisionWithBullet(this);
 			DeactivateObjectInGrid();
 			return true;
 		}

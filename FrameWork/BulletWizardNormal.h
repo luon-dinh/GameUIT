@@ -6,7 +6,7 @@ class BulletWizardNormal : public Bullet
 {
 	
 public:
-	
+	const int damage = 3;
 	Animation* animation1 = new Animation(Tag::BOSSWIZARDBULLET, 3, 4);
 	Animation* animation2 = new Animation(Tag::BOSSWIZARDBULLET, 4, 5);
 	Animation* animation3 = new Animation(Tag::BOSSWIZARDBULLET, 5, 6);
@@ -76,7 +76,7 @@ public:
 				this->parapol = new Equation(pos1, pos2);
 				return;
 			}
-			player->BeingAttacked(5);
+			player->BeingAttacked(damage);
 			DeactivateObjectInGrid();
 			return ;
 		}

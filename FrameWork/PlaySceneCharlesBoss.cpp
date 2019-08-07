@@ -81,7 +81,7 @@ void PlaySceneCharlesBoss::Update(double dt)
 			if (isRightBullet)
 			{
 				bulletX = 256 - 10;
-				bulletY = 60;
+				bulletY = 64;
 				isRightBullet = false;
 				bulletXToPlayerX = player->pos.x - bulletX;
 				bulletYToPlayerY = player->pos.y - bulletY;
@@ -113,7 +113,7 @@ void PlaySceneCharlesBoss::Update(double dt)
 			else
 			{
 				bulletX = 10;
-				bulletY = 60;
+				bulletY = 64;
 				isRightBullet = true;
 				bulletXToPlayerX = player->pos.x - bulletX;
 				bulletYToPlayerY = player->pos.y - bulletY;
