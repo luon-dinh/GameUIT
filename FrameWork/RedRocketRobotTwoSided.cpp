@@ -309,7 +309,7 @@ void RedRocketRobotTwoSided::OnCollision(Object* object, collisionOut * colOut)
 void RedRocketRobotTwoSided::Fire()
 {
 	if (robotState == State::DUCKING)
-		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y, rocketSpeed));
+		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 12, rocketSpeed));
 	else
 		SceneManager::getInstance()->AddObjectToCurrentScene(new BulletRedRocketLinear(direction, this->pos.x, this->pos.y + 15, rocketSpeed));
 }
