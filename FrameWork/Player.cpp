@@ -440,6 +440,7 @@ void Player::ChangeState(State stateName) {
 		return;
 	}
 	case State::DEAD: {
+		this->SetVx(0);
 		SoundManager::getinstance()->stopAll();
 		SoundManager::getinstance()->play(SoundManager::SoundName::player_dead); //chờ nào dead thật thì play
 		this->SetActive(false);
