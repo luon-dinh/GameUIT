@@ -73,25 +73,73 @@ void PlaySceneCharlesBoss::Update(double dt)
 			float bulletSpeed = BossWizard::getInstance()->bulletSpeed;
 			float bulletVX;
 			float bulletVY;
+			int bulletXToPlayerX;
+			int bulletYToPlayerY;
+			double degree;
+
+			//Đạn được sinh ra ở phía bên phải.
 			if (isRightBullet)
 			{
 				bulletX = 256 - 10;
 				bulletY = 64;
 				isRightBullet = false;
+				bulletXToPlayerX = player->pos.x - bulletX;
+				bulletYToPlayerY = player->pos.y - bulletY;
+				degree = atan2(bulletYToPlayerY, bulletXToPlayerX);
+				if (degree < 0)
+					degree = PI;
+				else if (degree < 3 * PI / 4)
+					degree = 3 * PI / 4;
+				else if (degree < 8 * PI / 9)
+				{
+					double toUpperDegree = degree - 3 * PI / 4;
+					double toLowerDegree = 8 * PI / 9 - degree;
+					if (toUpperDegree > toLowerDegree)
+						degree = 8 * PI / 9;
+					else
+						degree = 3 * PI / 4;
+				}
+				else if (degree < PI)
+				{
+					double toUpperDegree = degree - 8 * PI / 9;
+					double toLowerDegree = PI - degree;
+					if (toUpperDegree > toLowerDegree)
+						degree = PI;
+					else
+						degree = 8 * PI / 9;
+				}
 			}
+			//Đạn được sinh ra ở phía bên trái.
 			else
 			{
 				bulletX = 10;
 				bulletY = 64;
 				isRightBullet = true;
+				bulletXToPlayerX = player->pos.x - bulletX;
+				bulletYToPlayerY = player->pos.y - bulletY;
+				degree = atan2(bulletYToPlayerY, bulletXToPlayerX);
+				if (degree < 0)
+					degree = 0;
+				else if (degree > PI / 4)
+					degree = PI / 4;
+				else if (degree > PI / 9)
+				{
+					double toUpperDegree = PI / 4 - degree;
+					double toLowerDegree = degree - PI / 9;
+					if (toUpperDegree > toLowerDegree)
+						degree = PI / 9;
+					else
+						degree = PI / 4;
+				}
+				else if (degree > 0)
+				{
+					double toUpperDegree = PI / 9 - degree;
+					double toLowerDegree = degree;
+					if (toUpperDegree < toLowerDegree)
+						degree = PI / 9;
+				}
 			}
-			int bulletXToPlayerX = player->pos.x - bulletX;
-			int bulletYToPlayerY = player->pos.y - bulletY;
-			double degree = atan2(bulletYToPlayerY, bulletXToPlayerX);
-			if (degree > (double)PI / 4 && degree < (double)PI /2)
-				degree = PI / 4;
-			else if (degree > (double) PI / 2 && degree < (double)3*PI/4)
-				degree = 3 * PI / 4;
+
 			bulletVX = cos(degree) * bulletSpeed;
 			bulletVY = sin(degree) * bulletSpeed;
 			bullet = new BulletWizardNormal();
@@ -115,8 +163,6 @@ void PlaySceneCharlesBoss::Update(double dt)
 			grid->Add(newObject);
 			++noOfSpawnedObject;
 		}
-		
-		
 	}
 }
 

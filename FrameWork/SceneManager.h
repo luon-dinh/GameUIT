@@ -49,6 +49,12 @@ public:
 	//Hàm dùng để cho qua màn tiếp theo.
 	void GoToNextScene();
 private:
+	//Biến dùng để xét xem hiện tại có restart scene hay không.
+	bool isRestartCurrentScene = false;
+
+	//Hàm thực thi việc restart scene hiện tại.
+	void ExecuteRestartCurrentScene();
+
 	static SceneManager * sceneManagerInstance;
 
 	PlayScene* charles;
