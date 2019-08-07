@@ -44,7 +44,9 @@ void SceneManager::Update(double dt)
 	MapName nextMap = currentScene->GetAndResetDestinationMap();
 	bool isCurrentSceneDone = currentScene->isDone();
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
-	if (!isCurrentSceneDone && nextMap == NOMAP) //Nếu vẫn là Scene hiện tại thì thôi.
+	if (isRestartCurrentScene)
+		ExecuteRestartCurrentScene();
+	else if (!isCurrentSceneDone && nextMap == NOMAP) //Nếu vẫn là Scene hiện tại thì thôi.
 		currentScene->Update(dt);
 	else if (!isCurrentSceneDone) //Nếu chỉ muốn thay đổi Scene (khi vào portal).
 	{
@@ -116,7 +118,7 @@ void SceneManager::ReplaceScene(MapName mapName)
 	PlayScene* nextScene = fromMapNameToPlayScene(mapName);
 	if (nextScene == nullptr)
 		return;
-
+	Camera::getCameraInstance()->ResetCameraPosition();
 	if (currentScene != nullptr)
 		delete currentScene;
 	currentScene = nextScene;
@@ -134,7 +136,7 @@ void SceneManager::ReplaceScene(MapName mapName)
 	currentScene->ResetCamera(); //Reset các thông số của Camera khi load map.
 	//Khi replace scene thì ta cũng add luôn các phần tử liên quan đến player vào grid.
 	currentScene->AddPlayerElementsToGrid();
-	
+
 }
 
 //ChangeScene sẽ đổi Scene, nhưng sẽ giữ Scene trước đó (không delete) và trạng thái của player khi đang ở Scene đó.
@@ -195,7 +197,7 @@ PlayScene* SceneManager::getCurrentScene()
 	return currentScene;
 }
 
-void SceneManager::RestartCurrentScene()
+void SceneManager::ExecuteRestartCurrentScene()
 {
 	if (currentScene == charles)
 	{
@@ -218,4 +220,10 @@ void SceneManager::RestartCurrentScene()
 		ReplaceScene(MapName::PITTSBURGHBOSS);
 	}
 	Player::getInstance()->SetHeart(Player::getInstance()->MAX_HEART);
+	isRestartCurrentScene = false;
+}
+
+void SceneManager::RestartCurrentScene()
+{
+	isRestartCurrentScene = true;
 }
