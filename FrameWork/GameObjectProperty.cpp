@@ -31,8 +31,5 @@ void GameObjectProperty::BeingAttacked(int objectDamage) {
 }
 
 bool GameObjectProperty::IsDead() {
-	if (this->health > 0)
-		return false;
-
-	return true;
+	return this->health <= 0;
 }

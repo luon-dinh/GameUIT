@@ -38,6 +38,7 @@ public:
 	int GetHeart();									// Lấy trái tim để render
 	void SetHeart(int heart);						// Set lại máu cho player
 
+	void ResetTransScene();
 	void LootItem(Item* item);						//	 khi va chạm với item thì loot item đó
 	void UpdateGameProperty()				 override;
 	void ResetGameProperty()				 override;
