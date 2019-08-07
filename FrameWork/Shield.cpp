@@ -399,6 +399,8 @@ void Shield::ShieldBackToPlayer() {
 	case State::FLOATING:
 	case State::ROLLING:
 	case State::DASHING:
+	case State::FLYING_BEATEN:
+	case State::BEATEN:
 		this->SetShieldState(ShieldState::NotRender);
 		break;
 	default:
