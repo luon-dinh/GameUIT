@@ -1049,6 +1049,7 @@ void Player::OnShockedElectric(Object* object) {
 			this->bufferDamageShocked = this->GetHealth() ;
 		}
 		this->BeingAttacked(this->bufferDamageShocked);
+		this->bufferDamageShocked = 0;
 	}
 	else {
 		this->BeingAttacked(object->GetCollisionDamage());
