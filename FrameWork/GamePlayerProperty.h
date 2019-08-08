@@ -13,6 +13,7 @@ protected:
 	
 	int maxiableHeart;		// số lượng máu tối đa của player
 	int damageAccelerator;	// lượng damage được cộng thêms
+	int powerUpCount;
 
 	bool isNonAttackable;
 	bool isNearlyDead;
@@ -25,7 +26,6 @@ protected:
 	void ScoreUp(int scores = 1);
 	void GemUp(int gems = 1);
 	void SetHealth(int health) override;
-
 
 	const int MAX_NON_ATTACKABLE_FRAME = 105;
 	const int HEALTH_PER_HEART = 4;
@@ -47,6 +47,9 @@ public:
 	virtual void SetToNonAttackableState(int frames = 105);
 	virtual void SetToNormalState();				// Chuyển sang trạng thái bình thường
 
+	int GetPowerUpCount();
+	void PowerUp();
+	void ResetPowerUp();
 	bool IsNearlyDead();
 	bool CanGoNextScene();
 	int GetHeart();									// Lấy trái tim để render
