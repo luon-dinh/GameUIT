@@ -87,6 +87,7 @@ void Game::Render()
 	while (!spriteHandler->Begin(D3DXSPRITE_ALPHABLEND));
 	SceneManager::getInstance()->Draw();
 	spriteHandler->End();
+	SceneManager::getInstance()->RenderText();
 	d3ddev->EndScene();
 	d3ddev->Present(NULL, NULL, NULL, NULL);
 }

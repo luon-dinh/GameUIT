@@ -160,6 +160,9 @@
     <Filter Include="Objects\Enemy\WhiteRocketRobot">
       <UniqueIdentifier>{558787e0-5ab5-43d4-a8ab-12aa88532e03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene\PauseScene">
+      <UniqueIdentifier>{a309dae7-44e1-4807-996e-4672e1ce5d14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -491,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="CanonBullet.cpp">
       <Filter>Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseScene.cpp">
+      <Filter>Scene\PlayScene\PauseScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -856,6 +862,9 @@
     </ClInclude>
     <ClInclude Include="CanonBullet.h">
       <Filter>Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScene.h">
+      <Filter>Scene\PlayScene\PauseScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

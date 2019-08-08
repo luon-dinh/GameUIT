@@ -225,7 +225,6 @@ void Player::Render()
 			}
 		}
 	}
-
 }
 
 void Player::InnerRender() {
@@ -270,7 +269,7 @@ int Player::GetDamage() {
 		default:
  			SetDamage(1);
 	}
-	return this->damage;
+	return GamePlayerProperty::GetDamage();
 }
 
 int Player::GetCollisionDamage() {

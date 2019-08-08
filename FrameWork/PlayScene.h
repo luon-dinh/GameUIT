@@ -21,6 +21,7 @@ class PlayScene : public Scene
 public:
 	virtual void Update(double dt);
 	virtual void Draw();
+	virtual void RenderText() {};
 	virtual void TurnOnOffLight() {};
 	virtual bool getLightStatus() { return true; };
 	virtual void setLightStatus(bool) {};
@@ -28,7 +29,7 @@ public:
 	MapName GetAndResetDestinationMap();
 	virtual void ResetCamera(); //Hàm dùng để reset camera lại (cập nhật lại vị trí, thông tin của map để camera biết).
 	virtual void ResetPlayerPosition() {}; //Nhớ override hàm setPlayer lại cho từng PlayScene khác nhau.
-	void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
+	virtual void AddPlayerElementsToGrid(); //Thêm vào grid các thành phần của player
 	bool AddObjectToPlayScene(Object*); //Thêm một object vào PlayScene.
 	virtual void GoToNextScene() {};
 	virtual void UpdateCameraWithPlayerPos(double dt = 0);
@@ -45,6 +46,7 @@ protected:
 	virtual void DrawDebugBoxForPlayer();
 	virtual void DrawDebugBoxForStaticObjects();
 	void KillAllEnemyInActiveCells() { grid->KillAllEnemyInActiveCells(); };
+
 	GameMap* world;
 	Grid* grid;
 	Camera * camera;

@@ -5,6 +5,10 @@ GamePlayerProperty::GamePlayerProperty() {
 	this->nonAttackableFrameCount = -1;
 	this->SetHealth(2 * HEALTH_PER_HEART);
 	this->power = 0;
+	
+	this->score = 0;
+	this->damageAccelerator = 0;
+	this->maxiableHeart = MAX_HEART_DEFAULT;
 	this->maxNonAttackableFrames = MAX_NON_ATTACKABLE_FRAME;
 }
 
@@ -54,6 +58,26 @@ void GamePlayerProperty::UpdateNonAttackableState() {
 	}
 }
 
+void GamePlayerProperty::ScoreUp(int scores) {
+	this->score += scores;
+}
+
+int GamePlayerProperty::GetScore() {
+	return this->score;
+}
+
+void GamePlayerProperty::GemUp(int gems) {
+	this->gems += gems;
+	if (this->gems >= POWER_UP_LOOTED_GEM) {
+		this->gems = 0;
+		// tăng lượng damage cơ bản
+		this->damageAccelerator += DAMAGE_ACCELERATOR;
+		// tăng lượng máu tối đa;
+		this->maxiableHeart++;
+		return;
+	}
+}
+
 void GamePlayerProperty::SetHealth(int health) {
 	GameObjectProperty::SetHealth(health);
 
@@ -77,8 +101,8 @@ bool GamePlayerProperty::CanGoNextScene() {
 
 void GamePlayerProperty::IncreaseHealth(int value) {
 	int newValue = this->health + value;
-	if (newValue > HEALTH_PER_HEART * MAX_HEART) {
-		this->SetHealth(HEALTH_PER_HEART * MAX_HEART);
+	if (newValue > HEALTH_PER_HEART * this->maxiableHeart) {
+		this->SetHealth(HEALTH_PER_HEART * this->maxiableHeart);
 		return;
 	}
 	this->SetHealth(newValue);
@@ -122,28 +146,28 @@ void GamePlayerProperty::LootItem(Item* item) {
 		case ItemType::HP: {
 			this->IncreaseHealth(1);
 			break;
-		}				   
-		case ItemType::SMALLGEM:
-		{
-			this->power += 1;
-			if (this->power >= MAX_POWER)
-			{
-				this->SetHeart(MAX_HEART);
-				this->power = 0;
-			}
+		}			
+		case ItemType::STAR: {
+			this->ScoreUp(SCORE_PER_STAR);
 			break;
 		}
-		case ItemType::GEM:
-		{
-			this->power += 2;
-			if (this->power >= MAX_POWER)
-			{
-				this->SetHeart(MAX_HEART);
-				this->power = 0;
-			}
+		case ItemType::UP: {
+			this->ScoreUp(SCORE_PER_STAR * 2);
+			break;
+		}			   
+		case ItemType::SMALLGEM:{
+			this->GemUp(1);		
+			break;
+		}
+		case ItemType::GEM:{
+			this->GemUp(2);
 			break;
 		}
 	}
+}
+
+int GamePlayerProperty::GetCurrentGem() {
+	return this->gems;
 }
 
 void GamePlayerProperty::ResetGameProperty() {
@@ -159,9 +183,13 @@ int GamePlayerProperty::GetHeart() {
 }
 
 void GamePlayerProperty::SetHeart(int heart) {
-	if (heart >= MAX_HEART) {
-		this->SetHealth(MAX_HEART * HEALTH_PER_HEART);
+	if (heart >= this->maxiableHeart) {
+		this->SetHealth(this->maxiableHeart * HEALTH_PER_HEART);
 		return;
 	}
 	this->SetHealth(heart * HEALTH_PER_HEART);
+}
+
+int GamePlayerProperty::GetDamage() {
+	return this->damage + this->damageAccelerator;
 }

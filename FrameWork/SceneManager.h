@@ -8,6 +8,7 @@
 #include "PlayScenePittsburghPortal01.h"
 #include "PlayScenePittsburghPortal02.h"
 #include "PlayScenePittsburghBoss.h"
+#include "PauseScene.h"
 
 class SceneManager
 {
@@ -37,6 +38,9 @@ public:
 	//Hàm dùng để vẽ những gì có trong Scene lên màn hình.
 	void Draw();
 
+	//Hàm dùng để vẽ những text đang có lên màn hình.
+	void RenderText();
+
 	//Hàm dùng để bật tắt đèn cho Scene hiện tại.
 	void TurnOnOffLight() { currentScene->TurnOnOffLight(); }
 
@@ -52,6 +56,9 @@ private:
 	//Biến dùng để xét xem hiện tại có restart scene hay không.
 	bool isRestartCurrentScene = false;
 
+	//Biến dùng để xét xem Scene hiện tại có phải đang được dừng lại hay không.
+	bool isCurrentScenePaused = false;
+
 	//Hàm thực thi việc restart scene hiện tại.
 	void ExecuteRestartCurrentScene();
 
@@ -63,6 +70,9 @@ private:
 	PlayScenePittsburghPortal01* pittsburghPortal01;
 	PlayScenePittsburghPortal02* pittsburghPortal02;
 	PlayScenePittsburghBoss* pittsburghBoss;
+	PauseScene* pauseScene;
+
+	MapName sceneBeforePause;
 
 	PlayScene* currentScene;
 
@@ -82,4 +92,6 @@ private:
 
 	//Hàm dùng để xử lý từ tên map thành con trỏ Scene.
 	PlayScene* fromMapNameToPlayScene(MapName);
+
+	MapName fromPlaySceneToMapName(PlayScene*);
 };

@@ -9,6 +9,7 @@ Canon::Canon(RotateDirection direction, D3DXVECTOR2 position) {
 	this->tag = Tag::CANON;
 	this->type = Type::ENEMY;
 	this->currentAnimation = new Animation(Tag::CANON, 0, 8, 10);
+	this->currentAnimation->SetReverseMode(true);
 	this->isDead = false;
 	this->SetVelocity(D3DXVECTOR2(0, 0));
 	this->curFrameRotate = this->curFrameFire = 0;
@@ -29,12 +30,15 @@ int Canon::GetCollisionDamage() {
 void Canon::Update(float dt) {
 	if (this->IsRotate()) {
 		this->Rotate();
+		// Quay canon ngược chiều kim đồng hồ
 		this->currentAnimation->Update(dt);
-		return;
 	}
 	else {
-		if (this->currentAnimation == explodeAnim) {
-			if (this->currentAnimation->curframeindex == 2) {
+		// nếu đang nổ
+		if (this->IsExplode()) {
+			// nếu đã nổ xong
+			if (this->IsExplodeDone()) {
+				// Deactivate canon khỏi grid
 				this->DeactivateObjectInGrid();
 			}
 			else {
@@ -52,19 +56,24 @@ bool Canon::IsRotate() {
 }
 
 void Canon::Rotate() {
-	/*
-	
-	*/
-	this->curFrameRotate++;
-	if (this->curFrameRotate == FRAME_PER_ROTATE) {
+	this->curFrameRotate--;
+	if (abs(this->curFrameRotate) == FRAME_PER_ROTATE) {
 		this->curFrameRotate = 0;
 		this->isRotate = false;
 		this->isCollidable = true;
 	}
 }
 
+bool Canon::IsExplode() {
+	return this->currentAnimation == this->explodeAnim;
+}
+
+bool Canon::IsExplodeDone() {
+	return this->IsExplode() && this->currentAnimation->curframeindex == 2;
+}
+
 void Canon::SetCanonDirection(Canon::RotateDirection direction) {
-	this->rotateRadian = this->currentAnimation->curframeindex = direction;
+	this->currentAnimation->curframeindex = direction;
 }
 
 void Canon::Fire() {

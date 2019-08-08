@@ -10,6 +10,7 @@ SceneManager::SceneManager()
 	pittsburghPortal01 = new PlayScenePittsburghPortal01();
 	pittsburghPortal02 = new PlayScenePittsburghPortal02();
 	pittsburghBoss = new PlayScenePittsburghBoss();
+	pauseScene = new PauseScene();
 	currentScene = nullptr;
 	ReplaceScene(MapName::CHARLES);
 }
@@ -31,6 +32,8 @@ SceneManager::~SceneManager()
 		delete pittsburghPortal02;
 	if (pittsburghBoss != nullptr)
 		delete pittsburghBoss;
+	if (pauseScene != nullptr)
+		delete pauseScene;
 }
 
 bool SceneManager::AddObjectToCurrentScene(Object *object)
@@ -40,9 +43,22 @@ bool SceneManager::AddObjectToCurrentScene(Object *object)
 
 void SceneManager::Update(double dt)
 {
-
 	MapName nextMap = currentScene->GetAndResetDestinationMap();
 	bool isCurrentSceneDone = currentScene->isDone();
+	KeyboardManager* kbManager = KeyboardManager::getInstance();
+	if (kbManager->getKeyPressedOnce(DIK_P))
+	{
+		isCurrentScenePaused = !isCurrentScenePaused;
+		if (isCurrentScenePaused)
+		{
+			sceneBeforePause = fromPlaySceneToMapName(currentScene);
+			ChangeScene(MapName::PAUSESCENEMAPNAME);
+		}
+		else
+		{
+			ChangeScene(sceneBeforePause);
+		}
+	}
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
 	if (isRestartCurrentScene)
 		ExecuteRestartCurrentScene();
@@ -58,6 +74,44 @@ void SceneManager::Update(double dt)
 	}
 	else
 		currentScene->Update(dt);
+}
+
+MapName SceneManager::fromPlaySceneToMapName(PlayScene* playScene)
+{
+	if (playScene == charles)
+		return MapName::CHARLES;
+	if (playScene == charlesBoss)
+	{
+		if (playScene->getLightStatus())
+			return MapName::CHARLESBOSSLIGHT;
+		else
+			return MapName::CHARLESBOSSDARK;
+	}
+	if (playScene == pittsburgh)
+	{
+		if (playScene->getLightStatus())
+			return MapName::PITTSBURGHLIGHT;
+		else
+			return MapName::PITTSBURGHDARK;
+	}
+	if (playScene == pittsburghPortal01)
+	{
+		if (playScene->getLightStatus())
+			return MapName::PITTSBURGHPORTAL1LIGHT;
+		else
+			return MapName::PITTSBURGHPORTAL1DARK;
+	}
+	if (playScene == pittsburghPortal02)
+	{
+		if (playScene->getLightStatus())
+			return MapName::PITTSBURGHPORTAL2LIGHT;
+		else
+			return MapName::PITTSBURGHPORTAL2DARK;
+	}
+	if (playScene == pittsburghBoss)
+	{
+		return MapName::PITTSBURGHBOSS;
+	}
 }
 
 PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
@@ -109,6 +163,8 @@ PlayScene* SceneManager::fromMapNameToPlayScene(MapName mapName)
 	{
 		nextScene = pittsburghBoss;
 	}
+	else if (mapName == MapName::PAUSESCENEMAPNAME)
+		nextScene = pauseScene;
 
 	return nextScene;
 }
@@ -194,6 +250,11 @@ void SceneManager::GoToNextScene()
 void SceneManager::Draw()
 {
 	currentScene->Draw();
+}
+
+void SceneManager::RenderText()
+{
+	currentScene->RenderText();
 }
 
 PlayScene* SceneManager::getCurrentScene()
