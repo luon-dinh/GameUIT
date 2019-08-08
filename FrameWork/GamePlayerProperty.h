@@ -9,6 +9,7 @@ protected:
 	int gems;
 	int nonAttackableFrameCount;
 	int maxNonAttackableFrames;
+	int power;
 
 	bool isNonAttackable;
 	bool isNearlyDead;
@@ -28,6 +29,7 @@ protected:
 	const int MAX_HEART = 5;
 	const int SCORE_PER_STAR = 3;
 	const int GEM_PER_HEART = 2;
+	const int MAX_POWER = 10;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();

@@ -4,6 +4,7 @@
 GamePlayerProperty::GamePlayerProperty() {
 	this->nonAttackableFrameCount = -1;
 	this->SetHealth(2 * HEALTH_PER_HEART);
+	this->power = 0;
 	this->maxNonAttackableFrames = MAX_NON_ATTACKABLE_FRAME;
 	this->score = 0;
 }
@@ -146,13 +147,25 @@ void GamePlayerProperty::LootItem(Item* item) {
 		case ItemType::UP: {
 			this->ScoreUp(SCORE_PER_STAR * 2);
 			break;
-		}
-		case ItemType::GEM: {
-			this->GemUp(GEM_PER_HEART);
+		}			   
+		case ItemType::SMALLGEM:
+		{
+			this->power += 1;
+			if (this->power >= MAX_POWER)
+			{
+				this->SetHeart(MAX_HEART);
+				this->power = 0;
+			}
 			break;
 		}
-		case ItemType::SMALLGEM: {
-			this->GemUp(GEM_PER_HEART / 2);
+		case ItemType::GEM:
+		{
+			this->power += 2;
+			if (this->power >= MAX_POWER)
+			{
+				this->SetHeart(MAX_HEART);
+				this->power = 0;
+			}
 			break;
 		}
 	}
