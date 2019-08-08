@@ -83,3 +83,34 @@ bool SoundManager::isPlaying(SoundName soundName)
 {
 	return sounds[soundName]->IsSoundPlaying();
 }
+
+std::vector<SoundManager::SoundName> SoundManager::getAllPlayingSound()
+{
+	std::vector<SoundManager::SoundName> listOfPlayingSound;
+	for (auto it = sounds.begin(); it != sounds.end(); ++it)
+	{
+		if (isPlaying(it->first))
+			listOfPlayingSound.push_back((it->first));
+	}
+	return listOfPlayingSound;
+}
+
+void SoundManager::playMultipleSound(std::vector<SoundName> soundNameList)
+{
+	for (auto soundName : soundNameList)
+	{
+		play(soundName);
+	}
+}
+
+void SoundManager::pauseAllSound()
+{
+	stopAll();
+	pausedSound.clear();
+	pausedSound = getAllPlayingSound();
+}
+
+void SoundManager::resumeAllSound()
+{
+	playMultipleSound(pausedSound);
+}

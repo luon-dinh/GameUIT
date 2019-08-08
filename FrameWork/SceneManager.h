@@ -97,4 +97,9 @@ private:
 
 	State playerStateBeforePause;
 	Player::OnAir playerOnAirStateBeforePause;
+
+	SoundManager::SoundName previousSoundName;
+
+	void SaveSoundBeforePause();
+	void ResumeSoundAfterPause();
 };

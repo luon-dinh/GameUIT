@@ -43,6 +43,14 @@ public:
 	void play(SoundName soundName, bool loop=false);
 	void stop(SoundName soundName);
 	bool isPlaying(SoundName soundName);
+
+	void pauseAllSound();
+	void resumeAllSound();
+
 	void stopAll();
 	void ReleaseAll();
+private:
+	std::vector<SoundName> pausedSound;
+	std::vector<SoundName> getAllPlayingSound();
+	void playMultipleSound(std::vector<SoundName> sound);
 };

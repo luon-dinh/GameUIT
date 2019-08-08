@@ -28,10 +28,18 @@ protected:
 	
 	const int fontHealthSize = 13;
 	const int fontScoreSize = 13;
+	const int fontGemSize = 16;
 	std::string sPlayerScore;
 	std::string sPlayerHealth;
+	std::string sPlayerGem;
+	std::string sPlayerPower;
+
 	RECT rectOfPlayerScore;
 	RECT rectOfPlayerHealth;
+	RECT rectOfPlayerGem;
+	RECT rectOfPlayerPower;
+
 	ID3DXFont *font = NULL;
 	ID3DXFont *fontScore = NULL;
+	ID3DXFont *gemFont = NULL;
 };

@@ -56,12 +56,14 @@ void SceneManager::Update(double dt)
 			playerStateBeforePause = player->state;
 			playerOnAirStateBeforePause = player->GetOnAirState();
 			ChangeScene(MapName::PAUSESCENEMAPNAME);
+			SoundManager::getinstance()->pauseAllSound();
 		}
 		else
 		{
 			ChangeScene(sceneBeforePause);
 			player->ChangeState(playerStateBeforePause);
 			player->SetOnAirState(playerOnAirStateBeforePause);
+			SoundManager::getinstance()->resumeAllSound();
 		}
 	}
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
@@ -296,4 +298,21 @@ void SceneManager::ExecuteRestartCurrentScene()
 void SceneManager::RestartCurrentScene()
 {
 	isRestartCurrentScene = true;
+}
+
+void SceneManager::SaveSoundBeforePause()
+{
+	if (Camera::getCameraInstance()->GetCameraLockState())
+		previousSoundName = SoundManager::SoundName::action_theme;
+	else if (currentScene == charles || currentScene == pittsburgh || currentScene == pittsburghPortal01 || currentScene == pittsburghPortal02)
+		previousSoundName = SoundManager::SoundName::main_theme;
+	else if (currentScene == charlesBoss)
+		previousSoundName = SoundManager::SoundName::boss_wizard_theme;
+	else if (currentScene == pittsburghBoss)
+		previousSoundName = SoundManager::SoundName::boss_gragas_theme;
+}
+
+void SceneManager::ResumeSoundAfterPause()
+{
+	SoundManager::getinstance()->play(previousSoundName);
 }
