@@ -81,6 +81,11 @@ public:
 			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
 			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer)&&collide)
 			{
+				if (this->vx == 0)
+				{
+					DeactivateObjectInGrid();
+					return true;
+				}
 				if (side != CollisionSide::top&&side != CollisionSide::bottom)
 				{
 					this->damage = 0;
