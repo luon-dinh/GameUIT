@@ -8,6 +8,7 @@ GamePlayerProperty::GamePlayerProperty() {
 	
 	this->score = 0;
 	this->damageAccelerator = 0;
+	this->powerUpCount = 0;
 	this->maxiableHeart = MAX_HEART_DEFAULT;
 	this->maxNonAttackableFrames = MAX_NON_ATTACKABLE_FRAME;
 }
@@ -70,12 +71,29 @@ void GamePlayerProperty::GemUp(int gems) {
 	this->gems += gems;
 	if (this->gems >= POWER_UP_LOOTED_GEM) {
 		this->gems = 0;
-		// tăng lượng damage cơ bản
-		this->damageAccelerator += DAMAGE_ACCELERATOR;
-		// tăng lượng máu tối đa;
-		this->maxiableHeart++;
+		// tăng sức mạnh của player lên
+		this->PowerUp();
 		return;
 	}
+}
+
+int GamePlayerProperty::GetPowerUpCount() {
+	return this->powerUpCount;
+}
+
+void GamePlayerProperty::PowerUp() {
+	// tăng lượng damage cơ bản
+	this->damageAccelerator += DAMAGE_ACCELERATOR;
+	// tăng lượng máu tối đa;
+	this->maxiableHeart++;
+	
+	this->powerUpCount++;
+}
+
+void GamePlayerProperty::ResetPowerUp() {
+	this->damageAccelerator = 0;
+	this->maxiableHeart = MAX_HEART_DEFAULT;
+	this->powerUpCount = 0;
 }
 
 void GamePlayerProperty::SetHealth(int health) {
