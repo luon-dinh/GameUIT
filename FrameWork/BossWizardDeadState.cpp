@@ -22,6 +22,7 @@ void BossWizardDeadState::Update(float dt)
 		timeDead += wizard->defaultDT;
 	else
 	{
+		Player::getInstance()->ScoreUp(wizard->score);
 		wizard->DeactivateObjectInGrid();
 		SceneManager::getInstance()->GoToNextScene();
 		//stop all sound in here

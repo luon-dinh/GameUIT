@@ -110,6 +110,7 @@ void BossMini::Update(float dt)
 	//nếu hết animation explode
 	if (this->currentAnimation == this->explodeAnim&&this->currentAnimation->curframeindex == this->explodeAnim->toframe - 1)
 	{
+		Player::getInstance()->ScoreUp(this->score);
 		DeactivateObjectInGrid();
 		SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 	}

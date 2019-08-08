@@ -87,6 +87,7 @@ protected:
 
 	//Biến cho biết trong trạng thái hiện tại robot đã tấn công hay chưa.
 	bool isAttacked = false;
+	const int score = 300;
 
 	virtual void LoadAllAnimation();
 public:

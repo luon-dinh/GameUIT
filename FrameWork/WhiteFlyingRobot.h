@@ -49,6 +49,7 @@ private:
 	//Trạng thái của Robot.
 	State robotState;
 
+	const int score = 300;
 	Player* player;
 public:
 	WhiteFlyingRobot(int posX, int posY);

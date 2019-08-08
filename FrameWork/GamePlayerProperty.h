@@ -22,7 +22,7 @@ protected:
 	void IncreaseHealth(int value);
 	void LoseHealth(int value);
 	void UpdateNonAttackableState();
-	void ScoreUp(int scores = 1);
+	
 	void GemUp(int gems = 1);
 	void SetHealth(int health) override;
 
@@ -47,6 +47,7 @@ public:
 	virtual void SetToNonAttackableState(int frames = 105);
 	virtual void SetToNormalState();				// Chuyển sang trạng thái bình thường
 
+	void ScoreUp(int scores = 1);
 	bool IsNearlyDead();
 	bool CanGoNextScene();
 	int GetHeart();									// Lấy trái tim để render

@@ -36,6 +36,7 @@ public:
 	const float bulletSpeed = 2.7;
 	const float defaultDT = 50;
 	const int minHealth = 10;
+	const int score = 2000;
 	bool canShootOnAir;
 	bool isCollide;
 	int hitTime;

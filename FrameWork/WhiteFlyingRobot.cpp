@@ -31,6 +31,7 @@ void WhiteFlyingRobot::EnemyDeadUpdate(double dt)
 	{
 		if (currentStateTime > explodeTime)
 		{
+			Player::getInstance()->ScoreUp(this->score);
 			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 			return;

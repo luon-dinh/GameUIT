@@ -63,11 +63,11 @@ protected:
 	const int PREPARE_TO_FLY_FRAME = 50;
 	const int FLIP_RENDER_FRAME = 5;
 	const int INCOLLIDABLE_FRAME = 90;
+	const int score = 100;
 
 public:
 	EvilBat(D3DXVECTOR2 position);
 	~EvilBat();
-
 	// Set dentaX bay tính sang 2 bên, từ vị trí ban đầu trừ đi leftDentaX đến vị trí ban đầu + rightDentaX
 	void SetXWidth(int leftDentaX, int rightDentaX);	
 	// Set dentaY mà dơi bay dọc ban đầu

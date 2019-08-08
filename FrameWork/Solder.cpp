@@ -195,6 +195,7 @@ void Solder::Update(float dt)
 	{
 		if (this->currentAnimation == explodeAnim && this->currentAnimation->curframeindex == this->currentAnimation->toframe - 1)
 		{
+			Player::getInstance()->ScoreUp(this->score);
 			SoundManager::getinstance()->play(SoundManager::SoundName::object_explode);
 			DeactivateObjectInGrid();
 		}

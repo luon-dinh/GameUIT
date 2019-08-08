@@ -26,6 +26,7 @@ public:
 	int countTimesBeaten;
 	const int maxTimesBeaten=3;
 	const int maxTimesBeaten2=10;
+	const int score = 2000;
 	int countBullet;
 	float timeCurrentState;
 	float deltaX;

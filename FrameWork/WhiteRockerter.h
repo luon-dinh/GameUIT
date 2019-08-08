@@ -4,6 +4,7 @@
 class WhiteRockerter :public Enemy
 {
 public:
+	const int score = 300;
 	WhiteRockerter();
 	~WhiteRockerter();
 	State stateName;

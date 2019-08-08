@@ -22,6 +22,7 @@ public:
 	float delayBeaten;
 	float delayToDead;
 	const float maxDelayBeaten=2000;
+	const int score = 200;
 	std::unordered_map<State, Animation*> animations;
 	virtual void LoadAllAnimation();
 	virtual void ChangeState(State state)override; 

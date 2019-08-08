@@ -8,6 +8,7 @@ public:
 	~RedRockerter();
 	State stateName;
 	bool canRun;
+	const int score = 300;
 	float timeCurrentState;
 	std::unordered_map<State, Animation*> animations;
 
