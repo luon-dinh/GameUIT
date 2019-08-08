@@ -88,7 +88,7 @@ void BossWizard::Update(float dt)
 {
 
 	//nửa máu thì có thể tắt đèn
-	if (health <= 10)
+	if (health <= minHealth)
 		this->turnOffLight = true;
 	else
 	{
@@ -140,7 +140,7 @@ void BossWizard::Update(float dt)
 	}
 
 	
-	if (!isCollidable||this->health <= 10)
+	if (!isCollidable||this->health <= minHealth)
 	{
 		timeNotRender += dt;
 	}
@@ -173,7 +173,7 @@ void BossWizard::Render()
 		//return;
 	}
 
-	if (this->timeNotRender > 0||this->health <= 10)
+	if (this->timeNotRender > 0||this->health <= minHealth)
 	{
 		if ((int)timeNotRender % 2 == 0)
 		{
