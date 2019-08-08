@@ -140,7 +140,7 @@ void BossWizard::Update(float dt)
 	}
 
 	
-	if (!isCollidable||this->health < 10)
+	if (!isCollidable||this->health <= 10)
 	{
 		timeNotRender += dt;
 	}
@@ -148,7 +148,7 @@ void BossWizard::Update(float dt)
 	//bị bắn 2 phát thì bay
 
 	//player đang đứng trên thanh ground thì cười
-	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->GetStandingGround()!=NULL&&this->GetStandingGround()->type==Type::SOLIDBOX)
+	if (player->GetStandingGround() != NULL && player->GetStandingGround()->type == Type::GROUND &&this->GetStandingGround()!=NULL&&this->GetStandingGround()->type==Type::SOLIDBOX && this->state!=State::FLYING)
 	{
 		this->vx = 0;
 		this->ChangeState(State::STAND_SMILE);
@@ -173,7 +173,7 @@ void BossWizard::Render()
 		//return;
 	}
 
-	if (this->timeNotRender > 0||this->health < 10)
+	if (this->timeNotRender > 0||this->health <= 10)
 	{
 		if ((int)timeNotRender % 2 == 0)
 		{
@@ -262,6 +262,8 @@ bool BossWizard::OnRectCollided(Object* object, CollisionSide side)
 	{
 		this->vy = 0;
 	}*/
+	if (object->type == Type::SOLIDBOX)
+		this->vy = 0;
 	if (object->type == Type::ONOFF&&this->state==State::STAND_PUNCH&& this->turnOffLight&&SceneManager::getInstance()->IsLightOn())
 	{
 		// đổi map 

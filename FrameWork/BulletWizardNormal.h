@@ -46,43 +46,43 @@ public:
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
 	
-		auto player = Player::getInstance();
-		auto shield = Shield::getInstance();
-		float posToShhield = abs(this->pos.x - shield->pos.x);
-		float posToPlayer = abs(this->pos.x - player->pos.x);
-		if (object->tag == Tag::PLAYER)
-		{
-			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
-			
-			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer)&&collide)
-			{
-				D3DXVECTOR2 pos1;
-				D3DXVECTOR2 pos2;
-				this->isCollidable = false;
-				SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-				pos1.y = shield->pos.y;
-				pos2.y = shield->pos.y + 3;
-				pos1.x = this->pos.x;
-				if (this->direction == MoveDirection::LeftToRight)
-				{
-					//pos1.x = shield->pos.x;
-					pos2.x = pos1.x - 15;
-				}
-				else
-				{
-					//pos1.x = shield->pos.x ;
-					pos2.x = pos1.x + 15;
-				}
-				this->vx = -this->vx / 3;
-				this->parapol = new Equation(pos1, pos2);
-				this->damage = 0;
-				return;
-			}
-			this->damage = 3;
-			player->OnCollisionWithBullet(this);
-			DeactivateObjectInGrid();
-			return ;
-		}
+		//auto player = Player::getInstance();
+		//auto shield = Shield::getInstance();
+		//float posToShhield = abs(this->pos.x - shield->pos.x);
+		//float posToPlayer = abs(this->pos.x - player->pos.x);
+		//if (object->tag == Tag::PLAYER)
+		//{
+		//	bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
+		//	
+		//	if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer)&&collide)
+		//	{
+		//		D3DXVECTOR2 pos1;
+		//		D3DXVECTOR2 pos2;
+		//		this->isCollidable = false;
+		//		SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+		//		pos1.y = shield->pos.y;
+		//		pos2.y = shield->pos.y + 3;
+		//		pos1.x = this->pos.x;
+		//		if (this->direction == MoveDirection::LeftToRight)
+		//		{
+		//			//pos1.x = shield->pos.x;
+		//			pos2.x = pos1.x - 15;
+		//		}
+		//		else
+		//		{
+		//			//pos1.x = shield->pos.x ;
+		//			pos2.x = pos1.x + 15;
+		//		}
+		//		this->vx = -this->vx / 3;
+		//		this->parapol = new Equation(pos1, pos2);
+		//		this->damage = 0;
+		//		return;
+		//	}
+		//	this->damage = 3;
+		//	player->OnCollisionWithBullet(this);
+		//	DeactivateObjectInGrid();
+		//	return ;
+		//}
 	
 	}
 
@@ -107,13 +107,17 @@ public:
 				pos2.y = shield->pos.y + 3;
 				if (this->direction == MoveDirection::LeftToRight)
 				{
-					pos1.x = shield->pos.x + 4;
-					pos2.x = pos1.x - 10;
+					/*pos1.x = shield->pos.x + 4;
+					pos2.x = pos1.x - 10;*/
+					pos1.x = this->pos.x;
+					pos2.x = pos1.x - 15;
 				}
 				else
 				{
-					pos1.x = shield->pos.x - 4;
-					pos2.x = pos1.x + 10;
+					/*pos1.x = shield->pos.x - 4;
+					pos2.x = pos1.x + 10;*/
+					pos1.x = this->pos.x;
+					pos2.x = pos1.x + 15;
 				}
 				this->vx = -this->vx / 3;
 				this->parapol = new Equation(pos1, pos2);

@@ -36,31 +36,31 @@ public:
 
 	void OnCollision(Object* object, collisionOut* colOut)override
 	{
-		auto player = Player::getInstance();
-		auto shield = Shield::getInstance();
-		float posToShhield = abs(this->pos.x - shield->pos.x);
-		float posToPlayer = abs(this->pos.x - player->pos.x);
-		if (object->tag == Tag::PLAYER)
-		{
-			bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
-			if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer) && collide)
-			{
-				if (colOut->side != CollisionSide::top&&colOut->side != CollisionSide::bottom)
-				{
-					this->damage = 0;
-					this->vy = abs(this->vx);
-					this->isCollidable = false;
-					SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
-					this->vx = 0;
-					return;
-				}
-			}
-			//this->animation = animationExplode;
-			this->damage = 1;
-			player->OnCollisionWithBullet(this);
-			DeactivateObjectInGrid();
-			return;
-		}
+		//auto player = Player::getInstance();
+		//auto shield = Shield::getInstance();
+		//float posToShhield = abs(this->pos.x - shield->pos.x);
+		//float posToPlayer = abs(this->pos.x - player->pos.x);
+		//if (object->tag == Tag::PLAYER)
+		//{
+		//	bool collide = Collision::getInstance()->IsCollide(shield->getBoundingBox(), this->getBoundingBox());
+		//	if (player->hasShield&&shield->state == Shield::ShieldState::Defense&&player->direction != this->direction && (posToShhield < posToPlayer) && collide)
+		//	{
+		//		if (colOut->side != CollisionSide::top&&colOut->side != CollisionSide::bottom)
+		//		{
+		//			this->damage = 0;
+		//			this->vy = abs(this->vx);
+		//			this->isCollidable = false;
+		//			SoundManager::getinstance()->play(SoundManager::SoundName::shield_collision);
+		//			this->vx = 0;
+		//			return;
+		//		}
+		//	}
+		//	//this->animation = animationExplode;
+		//	this->damage = 1;
+		//	player->OnCollisionWithBullet(this);
+		//	DeactivateObjectInGrid();
+		//	return;
+		//}
 
 		
 	}
