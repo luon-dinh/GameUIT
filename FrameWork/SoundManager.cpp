@@ -39,7 +39,7 @@ void SoundManager::loadResources()
 	manager->Create(&sounds[wizard_flying], (char*)".\\..\\Resources\\Sounds\\wizard_flying.wav");
 	manager->Create(&sounds[wizard_lazer], (char*)".\\..\\Resources\\Sounds\\wizard_laze.wav");
 	manager->Create(&sounds[enemy_attack], (char*)".\\..\\Resources\\Sounds\\enemy_attack.wav");
-	manager->Create(&sounds[pause_theme], (char*)".\\..\\Resources\\Sounds\\pause_theme.wav");
+	manager->Create(&sounds[pause_theme], (char*)".\\..\\Resources\\Sounds\\pause_theme_2.wav");
 }
 
 void SoundManager::play(SoundName soundName, bool loop)
