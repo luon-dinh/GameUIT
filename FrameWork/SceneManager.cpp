@@ -46,17 +46,22 @@ void SceneManager::Update(double dt)
 	MapName nextMap = currentScene->GetAndResetDestinationMap();
 	bool isCurrentSceneDone = currentScene->isDone();
 	KeyboardManager* kbManager = KeyboardManager::getInstance();
+	Player* player = Player::getInstance();
 	if (kbManager->getKeyPressedOnce(DIK_P))
 	{
 		isCurrentScenePaused = !isCurrentScenePaused;
 		if (isCurrentScenePaused)
 		{
 			sceneBeforePause = fromPlaySceneToMapName(currentScene);
+			playerStateBeforePause = player->state;
+			playerOnAirStateBeforePause = player->GetOnAirState();
 			ChangeScene(MapName::PAUSESCENEMAPNAME);
 		}
 		else
 		{
 			ChangeScene(sceneBeforePause);
+			player->ChangeState(playerStateBeforePause);
+			player->SetOnAirState(playerOnAirStateBeforePause);
 		}
 	}
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.

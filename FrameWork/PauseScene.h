@@ -26,11 +26,12 @@ protected:
 	void DrawDebugBoxForPlayer() override {};
 	void DrawDebugBoxForStaticObjects() override {};
 	
-	const int fontHeight = 13;
-	const int fontWidth = 13;
+	const int fontHealthSize = 13;
+	const int fontScoreSize = 13;
 	std::string sPlayerScore;
 	std::string sPlayerHealth;
 	RECT rectOfPlayerScore;
 	RECT rectOfPlayerHealth;
 	ID3DXFont *font = NULL;
+	ID3DXFont *fontScore = NULL;
 };

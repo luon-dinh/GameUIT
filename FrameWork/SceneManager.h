@@ -94,4 +94,7 @@ private:
 	PlayScene* fromMapNameToPlayScene(MapName);
 
 	MapName fromPlaySceneToMapName(PlayScene*);
+
+	State playerStateBeforePause;
+	Player::OnAir playerOnAirStateBeforePause;
 };
