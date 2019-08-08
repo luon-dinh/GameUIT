@@ -55,12 +55,13 @@ void PlaySceneCharles::ResetPlayerPosition()
 void PlaySceneCharles::Update(double dt)
 {
 	PlayScene::Update(dt);
+	CameraInfo camInfo = Camera::getCameraInstance()->GetCurrentCameraPosition();
 	//Nếu chưa từng khoá camera thì tới đúng thời điểm ta sẽ khoá.
 	if (!isCameraAlreadyLockedOnce)
 	{
 		//Xét nếu player nằm trong vùng lock thì lock camera lại.
 		auto inRange = [](int inputValue, int valueToCompare, int range = 10) {return ( (valueToCompare - range) < inputValue) && (inputValue < (valueToCompare + range)); };
-		if (inRange(player->pos.x, 415) && inRange(player->pos.y, 50, 100))
+		if (inRange(camInfo.topLeftX + (double)SCREEN_WIDTH / 2, 385) && inRange(player->pos.y, 50, 100))
 		{
 			camera->LockCamera();
 			isCameraAlreadyLockedOnce = true;
