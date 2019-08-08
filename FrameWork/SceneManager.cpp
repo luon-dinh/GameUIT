@@ -52,18 +52,20 @@ void SceneManager::Update(double dt)
 		isCurrentScenePaused = !isCurrentScenePaused;
 		if (isCurrentScenePaused)
 		{
+			SaveSoundBeforePause();
 			sceneBeforePause = fromPlaySceneToMapName(currentScene);
 			playerStateBeforePause = player->state;
 			playerOnAirStateBeforePause = player->GetOnAirState();
 			ChangeScene(MapName::PAUSESCENEMAPNAME);
-			SoundManager::getinstance()->pauseAllSound();
+			SoundManager::getinstance()->play(SoundManager::SoundName::pause_theme);
 		}
 		else
 		{
+			SoundManager::getinstance()->stopAll();
+			ResumeSoundAfterPause();
 			ChangeScene(sceneBeforePause);
 			player->ChangeState(playerStateBeforePause);
 			player->SetOnAirState(playerOnAirStateBeforePause);
-			SoundManager::getinstance()->resumeAllSound();
 		}
 	}
 	//Kiểm tra xem nếu scene hiện tại đã xong rồi thì ta chuyển Scene.
@@ -302,6 +304,7 @@ void SceneManager::RestartCurrentScene()
 
 void SceneManager::SaveSoundBeforePause()
 {
+	SoundManager::getinstance()->stopAll();
 	if (Camera::getCameraInstance()->GetCameraLockState())
 		previousSoundName = SoundManager::SoundName::action_theme;
 	else if (currentScene == charles || currentScene == pittsburgh || currentScene == pittsburghPortal01 || currentScene == pittsburghPortal02)
