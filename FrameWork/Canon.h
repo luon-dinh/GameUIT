@@ -8,7 +8,6 @@
 class Canon : public Enemy{
 protected:
 	Animation animation;
-	int rotateRadian;
 	int curFrameRotate;
 	int curFrameFire;
 	bool isRotate;
@@ -39,6 +38,8 @@ public:
 	void Rotate();
 
 	bool IsRotate();
+	bool IsExplode();
+	bool IsExplodeDone();
 
 	void SetCanonDirection(RotateDirection direction);
 

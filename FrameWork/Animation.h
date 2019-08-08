@@ -11,6 +11,7 @@ public:
 	int  tiperframe;
 	int ticurframe;
 	bool loop;
+	bool isReverse;
 	std::vector<Sprite*>sprites;
 	Tag tag;
 	~Animation();
@@ -32,5 +33,7 @@ public:
 	int curframeindex;
 	int getWidth();
 	int getHeight();
+
+	void SetReverseMode(bool value);		// set xem animation có render ngược hay xuôi
 };
 

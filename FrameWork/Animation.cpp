@@ -69,15 +69,28 @@ void Animation::Update(float dt)
 	if (ticurframe > tiperframe)
 	{
 		ticurframe = 0;
-		if (++curframeindex == toframe)
-		{
-			curframeindex = 0;
+		// display animation ngược 
+		if (this->isReverse) {
+			if (--this->curframeindex == -1) {
+				this->curframeindex = this->toframe - 1;
+			}
+		}
+		else {
+			// display animation xuôi
+			if (++this->curframeindex == this->toframe)
+			{
+				this->curframeindex = 0;
+			}
 		}
 	}
 	else
 	{
 		ticurframe += dt;
 	}
+}
+
+void Animation::SetReverseMode(bool value) {
+	this->isReverse = value;
 }
 
 Sprite* Animation::getSprite(int index)
