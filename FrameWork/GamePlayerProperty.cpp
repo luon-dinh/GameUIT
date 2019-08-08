@@ -4,6 +4,7 @@
 GamePlayerProperty::GamePlayerProperty() {
 	this->nonAttackableFrameCount = -1;
 	this->SetHealth(2 * HEALTH_PER_HEART);
+	this->power = 0;
 	this->maxNonAttackableFrames = MAX_NON_ATTACKABLE_FRAME;
 }
 
@@ -122,6 +123,26 @@ void GamePlayerProperty::LootItem(Item* item) {
 			this->IncreaseHealth(1);
 			break;
 		}				   
+		case ItemType::SMALLGEM:
+		{
+			this->power += 1;
+			if (this->power >= MAX_POWER)
+			{
+				this->SetHeart(MAX_HEART);
+				this->power = 0;
+			}
+			break;
+		}
+		case ItemType::GEM:
+		{
+			this->power += 2;
+			if (this->power >= MAX_POWER)
+			{
+				this->SetHeart(MAX_HEART);
+				this->power = 0;
+			}
+			break;
+		}
 	}
 }
 

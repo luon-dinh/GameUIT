@@ -7,6 +7,7 @@ class GamePlayerProperty : public GameObjectProperty {
 protected:
 	int nonAttackableFrameCount;
 	int maxNonAttackableFrames;
+	int power;
 
 	bool isNonAttackable;
 	bool isNearlyDead;
@@ -23,6 +24,7 @@ protected:
 	const int MAX_NON_ATTACKABLE_FRAME = 105;
 	const int HEALTH_PER_HEART = 4;
 	const int MAX_HEART = 5;
+	const int MAX_POWER = 10;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();
