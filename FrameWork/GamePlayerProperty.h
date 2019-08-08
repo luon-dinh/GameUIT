@@ -5,6 +5,8 @@
 
 class GamePlayerProperty : public GameObjectProperty {
 protected:
+	int score;
+	int gems;
 	int nonAttackableFrameCount;
 	int maxNonAttackableFrames;
 
@@ -16,13 +18,16 @@ protected:
 	void IncreaseHealth(int value);
 	void LoseHealth(int value);
 	void UpdateNonAttackableState();
-
+	void ScoreUp(int scores = 1);
+	void GemUp(int gems = 1);
 	void SetHealth(int health) override;
 
 
 	const int MAX_NON_ATTACKABLE_FRAME = 105;
 	const int HEALTH_PER_HEART = 4;
 	const int MAX_HEART = 5;
+	const int SCORE_PER_STAR = 3;
+	const int GEM_PER_HEART = 2;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();
@@ -36,8 +41,9 @@ public:
 	bool IsNearlyDead();
 	bool CanGoNextScene();
 	int GetHeart();									// Lấy trái tim để render
+	int GetScore();
 	void SetHeart(int heart);						// Set lại máu cho player
-
+	
 	void ResetTransScene();
 	void LootItem(Item* item);						//	 khi va chạm với item thì loot item đó
 	void UpdateGameProperty()				 override;

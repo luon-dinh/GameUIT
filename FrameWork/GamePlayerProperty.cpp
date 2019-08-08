@@ -5,6 +5,7 @@ GamePlayerProperty::GamePlayerProperty() {
 	this->nonAttackableFrameCount = -1;
 	this->SetHealth(2 * HEALTH_PER_HEART);
 	this->maxNonAttackableFrames = MAX_NON_ATTACKABLE_FRAME;
+	this->score = 0;
 }
 
 GamePlayerProperty::~GamePlayerProperty() {
@@ -50,6 +51,22 @@ void GamePlayerProperty::UpdateNonAttackableState() {
 			return;
 		}
 		SetToNormalState();
+	}
+}
+
+void GamePlayerProperty::ScoreUp(int scores) {
+	this->score += scores;
+}
+
+int GamePlayerProperty::GetScore() {
+	return this->score;
+}
+
+void GamePlayerProperty::GemUp(int gems) {
+	this->gems += gems;
+	if (this->gems >= GEM_PER_HEART) {
+		this->gems = 0;
+		this->IncreaseHealth(HEALTH_PER_HEART);
 	}
 }
 
@@ -121,7 +138,23 @@ void GamePlayerProperty::LootItem(Item* item) {
 		case ItemType::HP: {
 			this->IncreaseHealth(1);
 			break;
-		}				   
+		}			
+		case ItemType::STAR: {
+			this->ScoreUp(SCORE_PER_STAR);
+			break;
+		}
+		case ItemType::UP: {
+			this->ScoreUp(SCORE_PER_STAR * 2);
+			break;
+		}
+		case ItemType::GEM: {
+			this->GemUp(GEM_PER_HEART);
+			break;
+		}
+		case ItemType::SMALLGEM: {
+			this->GemUp(GEM_PER_HEART / 2);
+			break;
+		}
 	}
 }
 

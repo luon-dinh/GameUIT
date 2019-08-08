@@ -225,7 +225,6 @@ void Player::Render()
 			}
 		}
 	}
-
 }
 
 void Player::InnerRender() {
