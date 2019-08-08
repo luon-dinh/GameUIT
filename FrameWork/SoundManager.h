@@ -33,7 +33,8 @@ public:
 		shield_collision,
 		wizard_fire,// đạn thường
 		wizard_flying,
-		wizard_lazer// đạn special
+		wizard_lazer,// đạn special
+		pause_theme
 	};
 	std::unordered_map<SoundName, CSound *> sounds;
 
