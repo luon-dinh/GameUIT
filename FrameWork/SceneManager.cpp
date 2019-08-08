@@ -53,15 +53,15 @@ void SceneManager::Update(double dt)
 		if (isCurrentScenePaused)
 		{
 			SaveSoundBeforePause();
+			SoundManager::getinstance()->play(SoundManager::SoundName::pause_theme, true);
 			sceneBeforePause = fromPlaySceneToMapName(currentScene);
 			playerStateBeforePause = player->state;
 			playerOnAirStateBeforePause = player->GetOnAirState();
 			ChangeScene(MapName::PAUSESCENEMAPNAME);
-			SoundManager::getinstance()->play(SoundManager::SoundName::pause_theme);
 		}
 		else
 		{
-			SoundManager::getinstance()->stopAll();
+			SoundManager::getinstance()->stop(SoundManager::SoundName::pause_theme);
 			ResumeSoundAfterPause();
 			ChangeScene(sceneBeforePause);
 			player->ChangeState(playerStateBeforePause);
