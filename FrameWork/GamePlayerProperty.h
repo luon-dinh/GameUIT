@@ -10,6 +10,9 @@ protected:
 	int nonAttackableFrameCount;
 	int maxNonAttackableFrames;
 	int power;
+	
+	int maxiableHeart;		// số lượng máu tối đa của player
+	int damageAccelerator;	// lượng damage được cộng thêms
 
 	bool isNonAttackable;
 	bool isNearlyDead;
@@ -26,10 +29,14 @@ protected:
 
 	const int MAX_NON_ATTACKABLE_FRAME = 105;
 	const int HEALTH_PER_HEART = 4;
-	const int MAX_HEART = 5;
+	const int MAX_HEART_DEFAULT = 5;
 	const int SCORE_PER_STAR = 3;
 	const int GEM_PER_HEART = 2;
 	const int MAX_POWER = 10;
+	// lượng damage tăng thêm khi loot đủ gem
+	const int DAMAGE_ACCELERATOR = 1;
+	// lượng gem cân loot để power Up
+	const int POWER_UP_LOOTED_GEM = 10;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();
@@ -45,11 +52,11 @@ public:
 	int GetHeart();									// Lấy trái tim để render
 	int GetScore();
 	void SetHeart(int heart);						// Set lại máu cho player
-	
+	int GetCurrentGem();							// Get số gem đã loot được hiện tại
 	void ResetTransScene();
 	void LootItem(Item* item);						//	 khi va chạm với item thì loot item đó
 	void UpdateGameProperty()				 override;
 	void ResetGameProperty()				 override;
 	void BeingAttacked(int objectDamage)	 override;
-	virtual int GetDamage() 				 override { return GameObjectProperty::GetDamage(); };
+	virtual int GetDamage() 				 override;
 };
