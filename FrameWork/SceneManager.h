@@ -38,6 +38,9 @@ public:
 	//Hàm dùng để vẽ những gì có trong Scene lên màn hình.
 	void Draw();
 
+	//Hàm dùng để vẽ những text đang có lên màn hình.
+	void RenderText();
+
 	//Hàm dùng để bật tắt đèn cho Scene hiện tại.
 	void TurnOnOffLight() { currentScene->TurnOnOffLight(); }
 

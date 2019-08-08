@@ -12,6 +12,8 @@ public:
 	void AddPlayerElementsToGrid() override {}; //Thêm vào grid các thành phần của player
 	void UpdateCameraWithPlayerPos(double dt = 0) override {};
 
+	void RenderText() override;
+
 	PauseScene();
 	~PauseScene();
 protected:
@@ -23,5 +25,12 @@ protected:
 	void EnvironmentUpdate(double dt) override {};
 	void DrawDebugBoxForPlayer() override {};
 	void DrawDebugBoxForStaticObjects() override {};
-
+	
+	const int fontHeight = 13;
+	const int fontWidth = 13;
+	std::string sPlayerScore;
+	std::string sPlayerHealth;
+	RECT rectOfPlayerScore;
+	RECT rectOfPlayerHealth;
+	ID3DXFont *font = NULL;
 };

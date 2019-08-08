@@ -32,6 +32,8 @@ SceneManager::~SceneManager()
 		delete pittsburghPortal02;
 	if (pittsburghBoss != nullptr)
 		delete pittsburghBoss;
+	if (pauseScene != nullptr)
+		delete pauseScene;
 }
 
 bool SceneManager::AddObjectToCurrentScene(Object *object)
@@ -248,6 +250,11 @@ void SceneManager::GoToNextScene()
 void SceneManager::Draw()
 {
 	currentScene->Draw();
+}
+
+void SceneManager::RenderText()
+{
+	currentScene->RenderText();
 }
 
 PlayScene* SceneManager::getCurrentScene()

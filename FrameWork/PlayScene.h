@@ -21,6 +21,7 @@ class PlayScene : public Scene
 public:
 	virtual void Update(double dt);
 	virtual void Draw();
+	virtual void RenderText() {};
 	virtual void TurnOnOffLight() {};
 	virtual bool getLightStatus() { return true; };
 	virtual void setLightStatus(bool) {};
@@ -45,6 +46,7 @@ protected:
 	virtual void DrawDebugBoxForPlayer();
 	virtual void DrawDebugBoxForStaticObjects();
 	void KillAllEnemyInActiveCells() { grid->KillAllEnemyInActiveCells(); };
+
 	GameMap* world;
 	Grid* grid;
 	Camera * camera;
