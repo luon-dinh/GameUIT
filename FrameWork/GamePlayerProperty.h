@@ -36,7 +36,7 @@ protected:
 	// lượng damage tăng thêm khi loot đủ gem
 	const int DAMAGE_ACCELERATOR = 1;
 	// lượng gem cân loot để power Up
-	const int POWER_UP_LOOTED_GEM = 10;
+	const int POWER_UP_LOOTED_GEM = 6;
 public:
 	GamePlayerProperty();
 	~GamePlayerProperty();

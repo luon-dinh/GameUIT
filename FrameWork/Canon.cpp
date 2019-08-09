@@ -32,6 +32,7 @@ void Canon::Update(float dt) {
 		this->Rotate();
 		// Quay canon ngược chiều kim đồng hồ
 		this->currentAnimation->Update(dt);
+		return;
 	}
 	else {
 		// nếu đang nổ

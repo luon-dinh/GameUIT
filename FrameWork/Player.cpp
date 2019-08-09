@@ -452,7 +452,8 @@ void Player::ChangeState(State stateName) {
 		return;
 	}
 	case State::SHOCKING: {
-		shield->SetShieldState(Shield::ShieldState::NotRender);
+		if (this->hasShield)
+			shield->SetShieldState(Shield::ShieldState::NotRender);
 		this->SetToNonAttackableState();
 		return;
 	}
