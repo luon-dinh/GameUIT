@@ -6,6 +6,7 @@ giảng viên đã giao cho các nhớm tái hiện lại 2 màn của chơi c�
 Link video các màn chơi cần thực hiện:
 
 https://www.youtube.com/watch?v=nlX-7A4AFm4&start=25&end=30&fbclid=IwAR1diZm-JcZ92xJaGNKoQ0up_mGaFKFxn_KwMobnFDUpCMz908bBIymiA64
+
 Nhóm cần mô phỏng lại game với nhân vật Captain, từ phút 25:40 - 29:50.
 
 Một đồ án với áp lực về thời gian hoàn thành và các xử lí phức tạp với bộ kỹ năng của nhân vật Captain. Với nỗ lực của mình, 
